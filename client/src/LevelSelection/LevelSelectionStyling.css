@@ -1,0 +1,50 @@
+#level-container {
+  height: 100%;
+  width: 100vw;
+}
+
+.levelSelectionDiv1 {
+  height: 100%;
+  width: 100%;
+  background-image: url(../../public/images/mainMenu2.jpg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.levelSelect {
+  height: 80%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three columns of equal width */
+  grid-template-rows: auto auto;
+  gap: 8px;
+}
+
+.levelSelect > div {
+  background-color: black;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.1s ease all;
+}
+
+.levelSelect > div:hover {
+  background-color: white;
+}
+
+.buton {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.1s ease all;
+}
+
+.buton:hover {
+  scale: 95%;
+}
