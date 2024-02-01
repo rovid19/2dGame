@@ -18,6 +18,6 @@ const levelSelectionMenuNavigation = (): void => {
 
   levelSelectMainDiv?.addEventListener("click", () => {});
   backButton.addEventListener("click", (): void => {
-    menuStore.set("currentMenuNav", "play");
+    menuStore.set("currentMenuNav", "mainMenu");
   });
 };

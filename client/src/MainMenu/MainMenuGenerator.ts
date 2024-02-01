@@ -5,8 +5,8 @@ export const mainMenuGenerator = () => {
    
     <nav class="mainMenuNav"> 
    
-    <li class="play"> Play </li>
-    <li class="select"> Select Level </li>
+    <li id="play" class="sixtyfour-myapp"> <span class="liText" >Play </span></li>
+    <li id="select" class="sixtyfour-myapp"> <span class="liText" >Select Level</span> </li>
    
     </nav> 
 
