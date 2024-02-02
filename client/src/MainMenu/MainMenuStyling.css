@@ -14,11 +14,6 @@ body {
   font-variation-settings: "BLED" 0, "SCAN" 0;
 }
 
-#main-container {
-  height: 100%;
-  width: 100vw;
-}
-
 .mainMenuDiv1 {
   height: 100%;
   width: 100%;
@@ -30,10 +25,19 @@ body {
   background-position: center;
 }
 
+#mainMenuNav-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mainMenuNav {
+  position: relative;
   height: 30%;
   width: 50%;
-  background-color: rgba(50, 50, 50, 0.4);
+  background-color: rgba(50, 50, 50, 0.5);
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
@@ -41,6 +45,7 @@ body {
   flex-direction: column;
   border-radius: 20px;
   gap: 8px;
+  z-index: 20;
 }
 
 .mainMenuNav > li {
@@ -48,7 +53,6 @@ body {
   height: 30%;
   color: white;
   display: flex;
-
   justify-content: center;
   align-items: center;
   font-size: 48px;
@@ -56,6 +60,10 @@ body {
   cursor: pointer;
   transition: 0.1s ease all;
   position: relative;
+}
+
+.liText {
+  z-index: 3;
 }
 
 .mainMenuNav > li::before {
@@ -70,11 +78,13 @@ body {
   box-shadow: 0 0 15px 5px #ffffff; /* Enhanced glowing effect */
   transition: all 0.35s ease; /* Adjust timing as needed */
   border-radius: 20px;
-  z-index: 2;
+  z-index: 20;
 }
-.mainMenuNav > li:hover {
-  animation: shake 0.08s; /* Adjust duration as needed */
-  animation-timing-function: ease-in-out;
+
+.mainMenuNav > li:hover::before {
+  opacity: 100;
+  left: 0;
+  right: 0;
 }
 
 @keyframes shake {
@@ -97,12 +107,22 @@ body {
   }
 }
 
-.liText {
-  z-index: 3;
+.mainMenuNav > li:hover {
+  animation: shake 0.08s; /* Adjust duration as needed */
+  animation-timing-function: ease-in-out;
 }
 
-.mainMenuNav > li:hover::before {
-  opacity: 100;
-  left: 0;
-  right: 0;
+#main-container {
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+}
+
+.three-container {
+  position: absolute;
+  top: 0;
+  z-index: 11;
+  background-color: transparent;
 }
