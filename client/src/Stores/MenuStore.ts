@@ -1,11 +1,13 @@
 type InitialState = {
   [key: string]: any;
   currentMenuNav: string;
+  audioPlaying: boolean;
 };
 type Listener = (key: any, value: any) => void;
 
 const initialState = {
   currentMenuNav: "mainMenu",
+  audioPlaying: true,
 };
 class MenuStore {
   state: InitialState;

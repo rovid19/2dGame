@@ -1,3 +1,4 @@
+import { muteAudio, playAudio } from "../IconsExports.ts";
 import { generateLevelSelectionScreen } from "../LevelSelection/LevelSelectionLogic.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {
@@ -24,14 +25,18 @@ export const generateMainMenu = () => {
 export const mainMenuNavigation = (): void => {
   const play = document.getElementById("play");
   const selectLevel = document.getElementById("select");
-  console.log(play, selectLevel);
+  const audioButton = document.querySelector(".audioBtn") as HTMLElement;
+
   play?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "play");
   });
 
   selectLevel?.addEventListener("click", (): void => {
-    console.log("djaojsd");
     menuStore.set("currentMenuNav", "selectLevel");
+  });
+
+  audioButton.addEventListener("click", (): void => {
+    playOrMuteSoundtrack();
   });
 };
 
@@ -45,6 +50,24 @@ export const redirectAfterSelectingInMenu = (): void => {
     document.getElementById("level-container")?.remove();
     generateMainMenu();
   }
+};
+
+const playOrMuteSoundtrack = () => {
+  const audioPlaying = menuStore.get("audioPlaying") as boolean;
+  const audioElement = document.querySelector(".audio") as HTMLAudioElement;
+  const audioBtn = document.querySelector(".audioBtn") as HTMLElement;
+
+  if (audioPlaying) {
+    audioElement.pause();
+    menuStore.set("audioPlaying", false);
+    audioBtn.innerHTML = muteAudio;
+  } else {
+    audioElement.play();
+    menuStore.set("audioPlaying", true);
+    audioBtn.innerHTML = playAudio;
+  }
+
+  console.log(audioPlaying);
 };
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸

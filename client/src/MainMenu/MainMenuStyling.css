@@ -31,12 +31,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .mainMenuNav {
   position: relative;
   height: 30%;
-  width: 50%;
+  width: 45%;
   background-color: rgba(50, 50, 50, 0.5);
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.45);
   display: flex;
@@ -46,6 +47,8 @@ body {
   border-radius: 20px;
   gap: 8px;
   z-index: 20;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 
 .mainMenuNav > li {
@@ -125,4 +128,19 @@ body {
   top: 0;
   z-index: 11;
   background-color: transparent;
+}
+
+.audioBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 30;
+}
+
+.audioBtn:hover {
+  color: black;
 }
