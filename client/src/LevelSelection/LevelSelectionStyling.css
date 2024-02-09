@@ -1,27 +1,30 @@
 #level-container {
   height: 100%;
   width: 100vw;
+  z-index: 20;
+  overflow: hidden;
 }
 
 .levelSelectionDiv1 {
   height: 100%;
   width: 100%;
-  background-image: url(../../public/images/mainMenu2.jpg);
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: transparent;
   position: relative;
+  z-index: 100;
 }
 
 .levelSelect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 80%;
   width: 80%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Three columns of equal width */
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto auto;
   gap: 8px;
+  animation: LevelScreenIn 0.2s ease;
 }
 
 .levelSelect > div {
@@ -47,4 +50,38 @@
 
 .buton:hover {
   scale: 95%;
+}
+
+#levelSelectionOut {
+  animation: LevelScreenOut 0.2s ease;
+}
+
+/* LEVEL SCREEN IN AND OUT ANIMACIJE */
+
+@keyframes LevelScreenIn {
+  0% {
+    left: 110%;
+  }
+
+  50% {
+    left: 75%;
+  }
+
+  100% {
+    left: 50%;
+  }
+}
+
+@keyframes LevelScreenOut {
+  0% {
+    left: 50%;
+  }
+
+  50% {
+    left: 75%;
+  }
+
+  100% {
+    left: 110%;
+  }
 }

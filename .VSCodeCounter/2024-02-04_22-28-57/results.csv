@@ -1,0 +1,11 @@
+"filename", "language", "CSS", "TypeScript", "comment", "blank", "total"
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\IconsExports.ts", "TypeScript", 0, 7, 0, 2, 9
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\LevelSelection\LevelSelectionGenerator.ts", "TypeScript", 0, 19, 0, 6, 25
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\LevelSelection\LevelSelectionLogic.ts", "TypeScript", 0, 18, 0, 6, 24
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\LevelSelection\LevelSelectionStyling.css", "CSS", 44, 0, 0, 7, 51
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\MainMenu\MainMenuGenerator.ts", "TypeScript", 0, 22, 0, 10, 32
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\MainMenu\MainMenuLogic.ts", "TypeScript", 0, 140, 6, 36, 182
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\MainMenu\MainMenuStyling.css", "CSS", 174, 0, 11, 23, 208
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\Stores\MenuStore.ts", "TypeScript", 0, 39, 0, 9, 48
+"c:\Users\Ljubo\Documents\GitHub\2dGame\client\src\index.ts", "TypeScript", 0, 11, 0, 2, 13
+"Total", "-", 218, 256, 17, 101, 592

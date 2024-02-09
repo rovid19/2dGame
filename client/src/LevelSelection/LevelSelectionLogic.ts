@@ -1,11 +1,12 @@
+import { mainMenuNavGenerator } from "../MainMenu/MainMenuGenerator";
 import { menuStore } from "../Stores/MenuStore";
-import { levelSelectionGenerator } from "./LevelSelectionGenerator";
+import { levelSelectionUiGenerator } from "./LevelSelectionGenerator";
 
 export const generateLevelSelectionScreen = (): void => {
   const newEl = document.createElement("div");
   newEl.id = "level-container";
 
-  document.body.appendChild(newEl).appendChild(levelSelectionGenerator());
+  document.body.appendChild(newEl).appendChild(levelSelectionUiGenerator());
 
   setTimeout(() => {
     levelSelectionMenuNavigation();
@@ -13,7 +14,9 @@ export const generateLevelSelectionScreen = (): void => {
 };
 
 const levelSelectionMenuNavigation = (): void => {
-  const levelSelectMainDiv = document.querySelector(".levelSelect");
+  const levelSelectMainDiv = document.querySelector(
+    ".levelSelect"
+  ) as HTMLElement;
   const backButton = document.querySelector(".buton") as HTMLElement;
 
   levelSelectMainDiv?.addEventListener("click", () => {});

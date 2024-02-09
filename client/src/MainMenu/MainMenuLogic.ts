@@ -1,4 +1,5 @@
 import { muteAudio, playAudio } from "../IconsExports.ts";
+import { levelSelectionUiGenerator } from "../LevelSelection/LevelSelectionGenerator.ts";
 import { generateLevelSelectionScreen } from "../LevelSelection/LevelSelectionLogic.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {
@@ -33,6 +34,8 @@ export const mainMenuNavigation = (): void => {
 
   selectLevel?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "selectLevel");
+
+    console.log(menuStore.get("currentMenuNav"));
   });
 
   audioButton.addEventListener("click", (): void => {
@@ -42,13 +45,24 @@ export const mainMenuNavigation = (): void => {
 
 export const redirectAfterSelectingInMenu = (): void => {
   const currentSelection = menuStore.get("currentMenuNav") as string;
-  console.log(currentSelection);
+  const mainNavNav = document.getElementById("mainMenuNav") as HTMLElement;
+  const levelSelectMainDiv = document.querySelector(
+    ".levelSelect"
+  ) as HTMLElement;
+  console.log("ok");
   if (currentSelection === "selectLevel") {
-    document.getElementById("main-container")?.remove();
-    generateLevelSelectionScreen();
+    mainNavNav.className = "mainNavOut";
+    setTimeout(() => {
+      document.getElementById("mainMenuNav-container")?.remove();
+      generateLevelSelectionScreen();
+    }, 200);
   } else if (currentSelection === "mainMenu") {
-    document.getElementById("level-container")?.remove();
+    menuStore.set("menuAnimation", true);
+    levelSelectMainDiv.id = "levelSelectionOut";
     generateMainMenu();
+    setTimeout(() => {
+      document.getElementById("level-container")?.remove();
+    }, 200);
   }
 };
 

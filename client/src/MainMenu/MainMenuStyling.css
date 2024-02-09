@@ -44,18 +44,16 @@ body {
 #mainMenuNav-container {
   height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   position: relative;
 }
 
-.mainMenuNav {
+#mainMenuNav {
   position: relative;
   height: 50%;
   width: 35%;
   background-color: rgba(50, 50, 50, 0.5);
-  /*box-shadow: -40px 400px 20px rgba(0, 0, 0, 0.3);*/
+  box-shadow: -40px 50px 20px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,11 +63,13 @@ body {
   z-index: 20;
   padding-left: 32px;
   padding-right: 32px;
-
-  transform: skewY(-5deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) skewY(-5deg);
 }
 
-.mainMenuNav::after {
+#mainMenuNav::after {
   content: "";
   height: 100%;
   width: 50px;
@@ -81,7 +81,7 @@ body {
   transform: skewY(45deg);
 }
 
-.mainMenuNav::before {
+#mainMenuNav::before {
   content: "";
   position: absolute;
   top: -50px;
@@ -105,9 +105,9 @@ body {
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.45);
 }*/
 
-.mainMenuNav > li {
+#mainMenuNav > li {
   width: 100%;
-  height: 25%;
+  height: 20%;
   color: white;
   display: flex;
   justify-content: center;
@@ -123,7 +123,7 @@ body {
   z-index: 3;
 }
 
-.mainMenuNav > li::before {
+#mainMenuNav > li::before {
   opacity: 0;
   content: "";
   position: absolute;
@@ -138,7 +138,7 @@ body {
   z-index: 20;
 }
 
-.mainMenuNav > li:hover::before {
+#mainMenuNav > li:hover::before {
   opacity: 100;
   left: 0;
   right: 0;
@@ -164,7 +164,7 @@ body {
   }
 }
 
-.mainMenuNav > li:hover {
+#mainMenuNav > li:hover {
   animation: shake 0.08s; /* Adjust duration as needed */
   animation-timing-function: ease-in-out;
 }
@@ -204,4 +204,40 @@ body {
   color: white;
   font-size: 32px;
   text-align: center;
+}
+
+/* MAIN NAV ANIMACIJA */
+.mainNavOut {
+  animation: MainNavOut 0.2s ease !important;
+}
+.mainMenuIn {
+  animation: MainNavIn 0.2s ease !important;
+}
+
+@keyframes MainNavOut {
+  0% {
+    left: 50%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: -10%;
+  }
+}
+
+@keyframes MainNavIn {
+  0% {
+    left: -10%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: 50%;
+  }
 }

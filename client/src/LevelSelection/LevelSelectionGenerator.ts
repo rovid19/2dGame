@@ -1,4 +1,4 @@
-export const levelSelectionGenerator = () => {
+export const levelSelectionUiGenerator = (): HTMLElement => {
   const div = document.createElement("div");
   div.className = "levelSelectionDiv1";
   div.innerHTML = `
