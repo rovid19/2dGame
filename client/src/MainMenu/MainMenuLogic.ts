@@ -108,7 +108,21 @@ const playAnimation = () => {
   const newDiv = document.createElement("div");
   newDiv.id = "playAnimation";
 
+  const levelLoaderDiv = document.createElement("div");
+  levelLoaderDiv.id = "levelLoaderDiv";
+
   mainNavContainer.appendChild(newDiv);
+
+  setTimeout(() => {
+    document.getElementById("main-container")?.remove();
+    document.getElementById("mainMenuNav-container")?.remove();
+    document.querySelector(".three-container")?.remove();
+    document.body.appendChild(levelLoaderDiv);
+  }, 1000);
+
+  setTimeout(() => {
+    levelLoaderDiv.remove();
+  }, 2000);
 };
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸

@@ -250,13 +250,73 @@ body {
   left: 0;
 }
 
-#playanimation::before {
+#playAnimation::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
-  background-color: red;
+  width: 0%;
+  background-color: black;
   z-index: 50;
+  animation: CurtainClose 1s ease;
+}
+
+#playAnimation::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 50;
+  animation: CurtainClose 1s ease;
+}
+@keyframes CurtainClose {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 50%;
+  }
+}
+
+@keyframes CurtainOpen {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}
+
+#levelLoaderDiv {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  position: relative;
+}
+
+#levelLoaderDiv::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: black;
+  width: 50%;
+  animation: CurtainOpen 1s ease;
+}
+#levelLoaderDiv::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: black;
+  width: 50%;
+  animation: CurtainOpen 1s ease;
 }
