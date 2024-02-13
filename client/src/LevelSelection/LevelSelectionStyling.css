@@ -3,6 +3,8 @@
   width: 100vw;
   z-index: 20;
   overflow: hidden;
+  position: absolute;
+  background-color: transparent;
 }
 
 .levelSelectionDiv1 {
@@ -11,6 +13,7 @@
   background-color: transparent;
   position: relative;
   z-index: 100;
+  overflow: hidden;
 }
 
 .levelSelect {
@@ -84,4 +87,17 @@
   100% {
     left: 110%;
   }
+}
+
+.audioBtnLevel {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.audioBtnLevel:hover {
+  scale: 0.95;
 }

@@ -1,5 +1,4 @@
 import { muteAudio, playAudio } from "../IconsExports.ts";
-import { levelSelectionUiGenerator } from "../LevelSelection/LevelSelectionGenerator.ts";
 import { generateLevelSelectionScreen } from "../LevelSelection/LevelSelectionLogic.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {
@@ -9,13 +8,26 @@ import {
 import * as THREE from "three";
 
 export const generateMainMenu = () => {
+  const menuAni = menuStore.get("menuAnimation");
   const newEl = document.createElement("div");
   newEl.id = "main-container";
 
   const newNavEl = document.createElement("div");
   newNavEl.id = "mainMenuNav-container";
 
-  document.body.appendChild(newEl).appendChild(mainMenuGenerator());
+  if (!menuAni)
+    document.body.appendChild(newEl).appendChild(mainMenuGenerator());
+  document.body.appendChild(newNavEl).appendChild(mainMenuNavGenerator());
+
+  setTimeout(() => {
+    mainMenuNavigation();
+  }, 0);
+};
+
+const generateMainMenuNav = () => {
+  const newNavEl = document.createElement("div");
+  newNavEl.id = "mainMenuNav-container";
+
   document.body.appendChild(newNavEl).appendChild(mainMenuNavGenerator());
 
   setTimeout(() => {
@@ -30,12 +42,11 @@ export const mainMenuNavigation = (): void => {
 
   play?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "play");
+    playAnimation();
   });
 
   selectLevel?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "selectLevel");
-
-    console.log(menuStore.get("currentMenuNav"));
   });
 
   audioButton.addEventListener("click", (): void => {
@@ -59,17 +70,23 @@ export const redirectAfterSelectingInMenu = (): void => {
   } else if (currentSelection === "mainMenu") {
     menuStore.set("menuAnimation", true);
     levelSelectMainDiv.id = "levelSelectionOut";
-    generateMainMenu();
+    generateMainMenuNav();
     setTimeout(() => {
       document.getElementById("level-container")?.remove();
     }, 200);
   }
 };
 
-const playOrMuteSoundtrack = () => {
+export const playOrMuteSoundtrack = () => {
+  const userNav = menuStore.get("currentMenuNav");
+
   const audioPlaying = menuStore.get("audioPlaying") as boolean;
+  console.log(audioPlaying);
   const audioElement = document.querySelector(".audio") as HTMLAudioElement;
-  const audioBtn = document.querySelector(".audioBtn") as HTMLElement;
+  const audioBtn =
+    userNav === "mainMenu"
+      ? (document.querySelector(".audioBtn") as HTMLElement)
+      : (document.querySelector(".audioBtnLevel") as HTMLElement);
 
   if (audioPlaying) {
     audioElement.pause();
@@ -82,6 +99,16 @@ const playOrMuteSoundtrack = () => {
   }
 
   console.log(audioPlaying);
+};
+
+const playAnimation = () => {
+  const mainNavContainer = document.getElementById(
+    "mainMenuNav-container"
+  ) as HTMLElement;
+  const newDiv = document.createElement("div");
+  newDiv.id = "playAnimation";
+
+  mainNavContainer.appendChild(newDiv);
 };
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸

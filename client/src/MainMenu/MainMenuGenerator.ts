@@ -1,22 +1,17 @@
 import { muteAudio, playAudio } from "../IconsExports";
 import { menuStore } from "../Stores/MenuStore";
 
-const isAudioPlaying = menuStore.get("audioPlaying");
-
 export const mainMenuGenerator = (): HTMLElement => {
   const div = document.createElement("div");
   div.className = "mainMenuDiv1";
-  div.innerHTML = `
-   
-   
-
-   
+  div.innerHTML = `<div class="animate-circle"> </div>
   `;
 
   return div;
 };
 
 export const mainMenuNavGenerator = (): HTMLElement => {
+  const isAudioPlaying = menuStore.get("audioPlaying");
   const nav = document.createElement("nav");
   nav.id = "mainMenuNav";
   if (menuStore.get("menuAnimation")) {

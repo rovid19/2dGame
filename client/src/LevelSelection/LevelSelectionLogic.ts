@@ -1,4 +1,4 @@
-import { mainMenuNavGenerator } from "../MainMenu/MainMenuGenerator";
+import { playOrMuteSoundtrack } from "../MainMenu/MainMenuLogic";
 import { menuStore } from "../Stores/MenuStore";
 import { levelSelectionUiGenerator } from "./LevelSelectionGenerator";
 
@@ -8,6 +8,7 @@ export const generateLevelSelectionScreen = (): void => {
 
   document.body.appendChild(newEl).appendChild(levelSelectionUiGenerator());
 
+  console.log(menuStore.get("audioPlaying"));
   setTimeout(() => {
     levelSelectionMenuNavigation();
   }, 0);
@@ -18,9 +19,14 @@ const levelSelectionMenuNavigation = (): void => {
     ".levelSelect"
   ) as HTMLElement;
   const backButton = document.querySelector(".buton") as HTMLElement;
+  const audioBtn = document.querySelector(".audioBtnLevel") as HTMLElement;
 
   levelSelectMainDiv?.addEventListener("click", () => {});
   backButton.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "mainMenu");
+  });
+
+  audioBtn.addEventListener("click", (): void => {
+    playOrMuteSoundtrack();
   });
 };

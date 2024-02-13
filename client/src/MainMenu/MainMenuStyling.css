@@ -44,7 +44,6 @@ body {
 #mainMenuNav-container {
   height: 100%;
   width: 100%;
-
   position: relative;
 }
 
@@ -240,4 +239,24 @@ body {
   100% {
     left: 50%;
   }
+}
+
+#playAnimation {
+  height: 100%;
+  width: 100%;
+  z-index: 50;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#playanimation::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: red;
+  z-index: 50;
 }
