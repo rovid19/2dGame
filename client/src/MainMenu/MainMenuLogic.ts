@@ -118,11 +118,11 @@ const playAnimation = () => {
     document.getElementById("mainMenuNav-container")?.remove();
     document.querySelector(".three-container")?.remove();
     document.body.appendChild(levelLoaderDiv);
-  }, 1000);
+  }, 800);
 
   setTimeout(() => {
     levelLoaderDiv.remove();
-  }, 2000);
+  }, 1600);
 };
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸

@@ -259,7 +259,7 @@ body {
   width: 0%;
   background-color: black;
   z-index: 50;
-  animation: CurtainClose 1s ease;
+  animation: CurtainClose 0.8s ease;
 }
 
 #playAnimation::after {
@@ -271,7 +271,7 @@ body {
   width: 100%;
   background-color: black;
   z-index: 50;
-  animation: CurtainClose 1s ease;
+  animation: CurtainClose 0.8s ease;
 }
 @keyframes CurtainClose {
   0% {
@@ -308,7 +308,7 @@ body {
   height: 100%;
   background-color: black;
   width: 50%;
-  animation: CurtainOpen 1s ease;
+  animation: CurtainOpen 0.8s ease;
 }
 #levelLoaderDiv::after {
   content: "";
@@ -318,5 +318,5 @@ body {
   height: 100%;
   background-color: black;
   width: 50%;
-  animation: CurtainOpen 1s ease;
+  animation: CurtainOpen 0.8s ease;
 }
