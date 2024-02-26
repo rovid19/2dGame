@@ -1,5 +1,6 @@
 import { muteAudio, playAudio } from "../IconsExports.ts";
 import { generateLevelSelectionScreen } from "../LevelSelection/LevelSelectionLogic.ts";
+import { level1Generator } from "../Levels/Level1/Level1Generator.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {
   mainMenuGenerator,
@@ -43,6 +44,9 @@ export const mainMenuNavigation = (): void => {
   play?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "play");
     playAnimation();
+    setTimeout(() => {
+      document.body.appendChild(level1Generator());
+    }, 800);
   });
 
   selectLevel?.addEventListener("click", (): void => {
@@ -60,7 +64,7 @@ export const redirectAfterSelectingInMenu = (): void => {
   const levelSelectMainDiv = document.querySelector(
     ".levelSelect"
   ) as HTMLElement;
-  console.log("ok");
+
   if (currentSelection === "selectLevel") {
     mainNavNav.className = "mainNavOut";
     setTimeout(() => {
@@ -118,11 +122,11 @@ const playAnimation = () => {
     document.getElementById("mainMenuNav-container")?.remove();
     document.querySelector(".three-container")?.remove();
     document.body.appendChild(levelLoaderDiv);
-  }, 1000);
+  }, 800);
 
   setTimeout(() => {
     levelLoaderDiv.remove();
-  }, 2000);
+  }, 1600);
 };
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸
