@@ -24,6 +24,13 @@ const levelSelectionMenuNavigation = (): void => {
   levelSelectMainDiv?.addEventListener("click", () => {});
   backButton.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "mainMenu");
+    backButton.id = "backBtnOut";
+    audioBtn.id = "audioBtnOut";
+
+    setTimeout(() => {
+      backButton.removeAttribute("id");
+      audioBtn.removeAttribute("id");
+    }, 200);
   });
 
   audioBtn.addEventListener("click", (): void => {

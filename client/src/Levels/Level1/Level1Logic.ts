@@ -1,4 +1,4 @@
-import { levelResources } from "../../Stores/Resources";
+import { levelResources } from "../../Utils/Resources";
 import { level1Generator } from "./Level1Generator";
 
 export const generateLevel1 = (): void => {

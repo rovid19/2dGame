@@ -49,6 +49,8 @@
   border: none;
   cursor: pointer;
   transition: 0.1s ease all;
+  color: white;
+  animation: ButtonsIn 0.2s;
 }
 
 .buton:hover {
@@ -96,8 +98,38 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: white;
+  animation: ButtonsIn 0.2s;
 }
 
 .audioBtnLevel:hover {
   scale: 0.95;
+}
+
+@keyframes ButtonsIn {
+  0% {
+    top: -32px;
+  }
+
+  100% {
+    top: 32px;
+  }
+}
+
+@keyframes ButtonsOut {
+  0% {
+    top: 32px;
+  }
+
+  100% {
+    top: -32px;
+  }
+}
+
+#audioBtnOut {
+  animation: ButtonsOut 0.2s;
+}
+
+#backBtnOut {
+  animation: ButtonsOut 0.2s;
 }
