@@ -1,5 +1,5 @@
 import { menuStore } from "../Stores/MenuStore";
-import { playAudio, muteAudio } from "../IconsExports";
+import { playAudio, muteAudio } from "../Utils/IconsExports";
 
 export const levelSelectionUiGenerator = (): HTMLElement => {
   const isAudioPlaying = menuStore.get("audioPlaying");

@@ -1,4 +1,4 @@
-import { muteAudio, playAudio } from "../IconsExports";
+import { muteAudio, playAudio } from "../Utils/IconsExports";
 import { menuStore } from "../Stores/MenuStore";
 
 export const mainMenuGenerator = (): HTMLElement => {
