@@ -1,6 +1,5 @@
 import { muteAudio, playAudio } from "../Utils/IconsExports.ts";
 import { generateLevelSelectionScreen } from "../LevelSelection/LevelSelectionLogic.ts";
-import { level1Generator } from "../Levels/Level1/Level1Generator.ts";
 import { generateLevel1 } from "../Levels/Level1/Level1Logic.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {

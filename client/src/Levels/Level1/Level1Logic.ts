@@ -1,5 +1,6 @@
 import { levelResources } from "../../Utils/Resources";
 import { level1Generator } from "./Level1Generator";
+import { ImageInfo } from "../../Utils/TsTypes";
 
 export const generateLevel1 = (): void => {
   document.body.appendChild(level1Generator());

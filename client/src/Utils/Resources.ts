@@ -1,4 +1,4 @@
-import { toLoadType } from "../TsTypes";
+import { toLoadType } from "./TsTypes";
 
 class Resources {
   toLoad: toLoadType;
@@ -6,9 +6,9 @@ class Resources {
 
   constructor() {
     this.toLoad = {
-      sky: "./public/sprites/sky.png",
+      sky: "./public/sprites/sky.jpg",
       ground: "./public/sprites/ground.png",
-      hero: "./public/sprites/hero.png",
+      hero: "./public/sprites/hero-sheet.png",
       shadow: "./public/sprites/shadow.png",
     };
     this.images = {};
@@ -22,6 +22,7 @@ class Resources {
         image: img,
         isLoaded: false,
       };
+
       img.onload = () => {
         this.images[key].isLoaded = true;
       };
