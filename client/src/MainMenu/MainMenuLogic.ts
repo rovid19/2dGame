@@ -1,5 +1,5 @@
 import { muteAudio, playAudio } from "../Utils/IconsExports.ts";
-import { generateLevelSelectionScreen } from "../LevelSelection/LevelSelectionLogic.ts";
+import { generateLevelSelectionScreen } from "./LevelSelection/LevelSelectionLogic.ts";
 import { generateLevel1 } from "../Levels/Level1/Level1Logic.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {
@@ -16,16 +16,16 @@ export const generateMainMenu = () => {
   const newNavEl = document.createElement("div");
   newNavEl.id = "mainMenuNav-container";
 
-  if (!menuAni)
+  /*if (!menuAni)
     document.body.appendChild(newEl).appendChild(mainMenuGenerator());
   document.body.appendChild(newNavEl).appendChild(mainMenuNavGenerator());
-
+*/
   setTimeout(() => {
     mainMenuNavigation();
   }, 0);
 };
 
-const generateMainMenuNav = () => {
+/*const generateMainMenuNav = () => {
   const newNavEl = document.createElement("div");
   newNavEl.id = "mainMenuNav-container";
 
@@ -34,12 +34,14 @@ const generateMainMenuNav = () => {
   setTimeout(() => {
     mainMenuNavigation();
   }, 0);
-};
+};*/
 
 export const mainMenuNavigation = (): void => {
   const play = document.getElementById("play");
   const selectLevel = document.getElementById("select");
   const audioButton = document.querySelector(".audioBtn") as HTMLElement;
+
+  generateLevel1();
 
   play?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "play");
@@ -74,7 +76,7 @@ export const redirectAfterSelectingInMenu = (): void => {
   } else if (currentSelection === "mainMenu") {
     menuStore.set("menuAnimation", true);
     levelSelectMainDiv.id = "levelSelectionOut";
-    generateMainMenuNav();
+    //generateMainMenuNav();
     setTimeout(() => {
       document.getElementById("level-container")?.remove();
     }, 200);
@@ -85,7 +87,7 @@ export const playOrMuteSoundtrack = () => {
   const userNav = menuStore.get("currentMenuNav");
 
   const audioPlaying = menuStore.get("audioPlaying") as boolean;
-  console.log(audioPlaying);
+  audioPlaying;
   const audioElement = document.querySelector(".audio") as HTMLAudioElement;
   const audioBtn =
     userNav === "mainMenu"
@@ -101,8 +103,6 @@ export const playOrMuteSoundtrack = () => {
     menuStore.set("audioPlaying", true);
     audioBtn.innerHTML = playAudio;
   }
-
-  console.log(audioPlaying);
 };
 
 const playAnimation = () => {

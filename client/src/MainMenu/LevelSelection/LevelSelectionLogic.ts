@@ -1,5 +1,5 @@
-import { playOrMuteSoundtrack } from "../MainMenu/MainMenuLogic";
-import { menuStore } from "../Stores/MenuStore";
+import { playOrMuteSoundtrack } from "../MainMenuLogic";
+import { menuStore } from "../../Stores/MenuStore";
 import { levelSelectionUiGenerator } from "./LevelSelectionGenerator";
 
 export const generateLevelSelectionScreen = (): void => {
@@ -8,7 +8,6 @@ export const generateLevelSelectionScreen = (): void => {
 
   document.body.appendChild(newEl).appendChild(levelSelectionUiGenerator());
 
-  console.log(menuStore.get("audioPlaying"));
   setTimeout(() => {
     levelSelectionMenuNavigation();
   }, 0);
