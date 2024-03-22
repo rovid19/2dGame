@@ -10,14 +10,14 @@ export class Sprite {
   scale: any;
   position: any;
   constructor(
-    resource: any,
-    frameSize: any = new Vector2(16, 16),
-    hFrames: number = 1,
-    vFrames: number = 1,
-    frame: number = 0,
-    frameMap: Map<number, number> = new Map(),
-    scale: any = 1,
-    position: any = new Vector2()
+    resource: any, // to je slika
+    frameSize: any = new Vector2(16, 16), // velicina frame-a znaci 32px x 32px
+    hFrames: number = 1, // koliko spritesheet ima horizontalnih frejmova
+    vFrames: number = 1, // koliko spritesheet ima vertikalnih frejmova
+    frame: number = 0, // koji je trenutni frame na spritesheetu
+    frameMap: Map<number, number> = new Map(), // mapa koja odreduje poziciju za svaki frame na spritesheetu
+    scale: any = 1, // velicina
+    position: any = new Vector2() // pozicija spritea na canvasu
   ) {
     this.resource = resource;
     this.frameSize = frameSize;
@@ -48,37 +48,34 @@ export class Sprite {
     }
 
     // find correct sprite sheet frame to use
-    let frameCordX = 0;
-    let frameCordY = 0;
+    let frameX = 0;
+    let frameY = 0;
     const frame = this.frameMap.get(this.frame);
-    if (frame) {
-      frameCordX = this.frameSize.x;
-      frameCordY = this.frameSize.y;
+    if (frame.x > 0 || frame.y > 0) {
+      frameX = frame.x;
+      frameY = frame.y;
     }
-
-    const frameSizeX = this.frameSize.x;
-    const frameSizeY = this.frameSize.y;
 
     ctx.drawImage(
       this.resource.image,
-      frameCordX,
-      frameCordY,
-      frameSizeX, // how much to crop from sprite sheet
-      frameSizeY, // same crop
+      frameX,
+      frameY,
+      this.frameSize.x, // how much to crop from sprite sheet
+      this.frameSize.y, // same crop
       x, // where to place sprite on canvas
       y, // same place
-      frameSizeX * this.scale, //how large to scale it
-      frameSizeY * this.scale // same scale
-    );
-
-    console.log(
-      this.resource.image,
-      frameCordX,
-      frameCordY,
-      frameSizeX,
-      frameSizeY,
-      x,
-      y
+      this.frameSize.x * this.scale, //how large to scale it
+      this.frameSize.y * this.scale // same scale
     );
   }
 }
+
+/*
+canvasContext?.drawImage(
+hero, - slika
+64, 0, - x i y os na spritesheetu
+32, 32, - how big of a grab
+0, 0, - where do you want your crop to be placed
+32, 32 - size of a grab
+);
+*/

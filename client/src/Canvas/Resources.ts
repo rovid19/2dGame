@@ -21,12 +21,12 @@ export class LevelImages {
 
       img.onload = () => {
         this.images[key].isLoaded = true;
+
         const loadedImages = levelStore.get("loadedImages") as boolean[];
         const levelImages = Object.keys(path);
         levelStore.push("loadedImages", true);
-        console.log("ne");
+
         if (loadedImages.length === levelImages.length) {
-          console.log("da");
           drawLevel();
         }
       };
