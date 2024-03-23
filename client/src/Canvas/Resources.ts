@@ -1,11 +1,10 @@
-import { levelStore } from "../Stores/LevelStore";
 import { levelAssetsPath, toLoadType } from "../Utils/TsTypes";
 
 export class LevelImages {
   toLoad: toLoadType;
   images: { [key: string]: any };
 
-  constructor(path: levelAssetsPath, drawLevel: () => void) {
+  constructor(path: levelAssetsPath) {
     this.toLoad = path;
     this.images = {};
 
@@ -22,13 +21,13 @@ export class LevelImages {
       img.onload = () => {
         this.images[key].isLoaded = true;
 
-        const loadedImages = levelStore.get("loadedImages") as boolean[];
+        /*const loadedImages = levelStore.get("loadedImages") as boolean[];
         const levelImages = Object.keys(path);
         levelStore.push("loadedImages", true);
 
         if (loadedImages.length === levelImages.length) {
           drawLevel();
-        }
+        }*/
       };
     });
   }

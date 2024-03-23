@@ -1,11 +1,11 @@
 type InitialState = {
   [key: string]: any;
-  loadedImages: boolean[];
+  //loadedImages: boolean[];
 };
 type Listener = (key: any, value: any) => void;
 
 const initialState = {
-  loadedImages: [],
+  //loadedImages: [],
 };
 class levelsStore {
   state: InitialState;
@@ -16,7 +16,7 @@ class levelsStore {
     this.listeners = {};
   }
 
-  get(key: string): string | undefined | number | boolean {
+  get(key: string): string | undefined | number | boolean | boolean[] {
     return this.state[key];
   }
 
