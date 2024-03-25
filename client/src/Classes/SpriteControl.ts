@@ -16,7 +16,7 @@ export class Sprite {
     vFrames: number = 1, // koliko spritesheet ima vertikalnih frejmova
     frame: number = 0, // koji je trenutni frame na spritesheetu
     frameMap: Map<number, number> = new Map(), // mapa koja odreduje poziciju za svaki frame na spritesheetu
-    scale: any = 1, // velicina
+    scale: any = 2.5, // velicina
     position: any = new Vector2() // pozicija spritea na canvasu
   ) {
     this.resource = resource;
@@ -46,7 +46,7 @@ export class Sprite {
     if (!this.resource.isLoaded) {
       return;
     }
-
+    console.log(this);
     // find correct sprite sheet frame to use
     let frameX = 0;
     let frameY = 0;
