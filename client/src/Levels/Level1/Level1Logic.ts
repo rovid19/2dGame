@@ -147,45 +147,50 @@ function drawImageToFillCanvasSize(
 }
 
 function renderPlayerSpaceship() {
-  console.log(heroPos.x, heroPos.y, height - 34 * 2);
-  if (heroPos.x < 0) {
-    playerShip.drawImage(canvasContext, 0, heroPos.y);
+  stopSpaceshipFromGoingOutsideOfScreen();
+  //isSpaceshipOutsideOfTheScreen()
+}
+
+function stopSpaceshipFromGoingOutsideOfScreen() {
+  // prva 4 ifa proveravaju gornji lijevi, donji lijevi, gornji desni i donji desni kut jer za ta 4 kuta trebam 2 conditiona ispunjavat
+  if (heroPos.x < 0 && heroPos.y < 0) {
+    if (input.direction === "LEFT" || input.direction === "UP") {
+      input.direction = "";
+    }
+    playerShip.drawImage(canvasContext, 0, 0);
+  } else if (heroPos.y >= height - 34 * 2 && heroPos.x < 0) {
+    if (input.direction === "LEFT" || input.direction === "DOWN") {
+      input.direction = "";
+    }
+    playerShip.drawImage(canvasContext, 0, height - 34 * 2);
+  } else if (heroPos.y < 0 && heroPos.x >= width - 38 * 2) {
+    if (input.direction === "RIGHT" || input.direction === "UP") {
+      input.direction = "";
+    }
+    playerShip.drawImage(canvasContext, width - 38 * 2, 0);
+  } else if (heroPos.y >= height - 34 * 2 && heroPos.x >= width - 38 * 2) {
+    if (input.direction === "RIGHT" || input.direction === "DOWN") {
+      input.direction = "";
+    }
+    playerShip.drawImage(canvasContext, width - 38 * 2, height - 34 * 2);
+  } else if (heroPos.x < 0) {
     if (input.direction === "LEFT") input.direction = "";
-  } else if (heroPos.x === width) {
-    playerShip.drawImage(canvasContext, width, heroPos.y);
+    playerShip.drawImage(canvasContext, 0, heroPos.y);
+  } else if (heroPos.x >= width - 38 * 2) {
+    if (input.direction === "RIGHT") input.direction = "";
+    playerShip.drawImage(canvasContext, width - 38 * 2, heroPos.y);
   } else if (heroPos.y < 0) {
-    playerShip.drawImage(canvasContext, heroPos.x, 0);
     if (input.direction === "UP") input.direction = "";
+    playerShip.drawImage(canvasContext, heroPos.x, 0);
   } else if (heroPos.y >= height - 34 * 2) {
-    playerShip.drawImage(canvasContext, heroPos.x, height);
+    if (input.direction === "DOWN") input.direction = "";
+    playerShip.drawImage(canvasContext, heroPos.x, height - 34 * 2);
   } else {
     playerShip.drawImage(canvasContext, heroPos.x, heroPos.y);
   }
-  /*const isOutside = isSpaceshipOutsideOfTheScreen();
-  //console.log("width", heroPos.x, width, "height", heroPos.y, height);
-  //console.log(isOutside);
-  if (isOutside.isOutside) {
-    if (isOutside.position === "x") {
-      if (isOutside.onWhichSide === "left") {
-        console.log("left", isOutside);
-        playerShip.drawImage(canvasContext, heroPos.x + width + 38, heroPos.y);
-      } else {
-        console.log("right", isOutside);
-        playerShip.drawImage(canvasContext, heroPos.x - width - 38, heroPos.y);
-      }
-    } else {
-      if (isOutside.onWhichSide === "up") {
-        console.log("up", isOutside);
-        playerShip.drawImage(canvasContext, heroPos.x, heroPos.y + height + 34);
-      } else {
-        ("down", isOutside);
-        playerShip.drawImage(canvasContext, heroPos.x, heroPos.y - height - 34);
-      }
-    }
-  } */
 }
 
-function isSpaceshipOutsideOfTheScreen(): isOutside {
+const ifSpaceshipIsOutsideOfTheScreenReturnAnObject = (): isOutside => {
   let isOutside = {
     isOutside: false,
     onWhichSide: "",
@@ -215,4 +220,28 @@ function isSpaceshipOutsideOfTheScreen(): isOutside {
   }
 
   return isOutside;
+};
+function isSpaceshipOutsideOfTheScreen() {
+  /*const isOutside = ifSpaceshipIsOutsideOfTheScreenReturnAnObject();
+  //console.log("width", heroPos.x, width, "height", heroPos.y, height);
+  //console.log(isOutside);
+  if (isOutside.isOutside) {
+    if (isOutside.position === "x") {
+      if (isOutside.onWhichSide === "left") {
+        console.log("left", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x + width + 38, heroPos.y);
+      } else {
+        console.log("right", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x - width - 38, heroPos.y);
+      }
+    } else {
+      if (isOutside.onWhichSide === "up") {
+        console.log("up", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x, heroPos.y + height + 34);
+      } else {
+        ("down", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x, heroPos.y - height - 34);
+      }
+    }
+  } */
 }
