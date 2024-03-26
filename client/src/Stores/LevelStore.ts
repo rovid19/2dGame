@@ -1,11 +1,21 @@
+import { isOutside } from "../Utils/TsTypes";
+
 type InitialState = {
   [key: string]: any;
-  //loadedImages: boolean[];
+  isOutside: {
+    isOutside: boolean;
+    position: string;
+    onWhichSide: string;
+  };
 };
 type Listener = (key: any, value: any) => void;
 
 const initialState = {
-  //loadedImages: [],
+  isOutside: {
+    isOutside: false,
+    position: "",
+    onWhichSide: "",
+  },
 };
 class levelsStore {
   state: InitialState;
@@ -16,11 +26,16 @@ class levelsStore {
     this.listeners = {};
   }
 
-  get(key: string): string | undefined | number | boolean | boolean[] {
+  get(
+    key: string
+  ): string | undefined | number | boolean | boolean[] | isOutside {
     return this.state[key];
   }
 
-  set(key: string, value: string | number | boolean): void {
+  set(
+    key: string,
+    value: string | number | boolean | CanvasRenderingContext2D
+  ): void {
     if (this.state[key] !== value) {
       this.state[key] = value;
       this.notify(key, value);
@@ -30,7 +45,10 @@ class levelsStore {
     this.state[key].push(value);
   }
 
-  notify(key: string, value: string | number | boolean): void {
+  notify(
+    key: string,
+    value: string | number | boolean | CanvasRenderingContext2D
+  ): void {
     if (this.listeners[key]) {
       this.listeners[key].forEach((listener) => listener(key, value));
     }

@@ -10,3 +10,9 @@ export type ImageInfo = {
 export type levelAssetsPath = {
   [key: string]: string;
 };
+
+export type isOutside = {
+  isOutside: boolean;
+  position: string;
+  whichSide: string;
+};

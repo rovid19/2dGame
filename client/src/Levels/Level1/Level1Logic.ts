@@ -4,7 +4,8 @@ import { level1Generator } from "./Level1Generator";
 import { LevelImages } from "../../Classes/LevelImages";
 import { GameLoop } from "../../Classes/GameLoop";
 import { Input, UP, DOWN, LEFT, RIGHT } from "../../Classes/Input";
-
+import { isOutside } from "../../Utils/TsTypes";
+let canvasContext: any;
 const height = window.innerHeight;
 const width = window.innerWidth;
 
@@ -14,11 +15,20 @@ const level1Images = new LevelImages({
   hero: "../public/sprites/hero-sheet.png",
   shadow: "../public/sprites/shadow.png",
   playerShip: "../public/sprites/2.png",
+  speed: "../public/sprites/speed.png",
 });
 
 const skySprite = new Sprite(
   level1Images.images.sky,
   new Vector2(width, height)
+);
+
+const shipSteeringEffect = new Sprite(
+  level1Images.images.speed,
+  new Vector2(
+    level1Images.images.speed.image.width,
+    level1Images.images.speed.image.height
+  )
 );
 
 const groundSprite = new Sprite(
@@ -39,20 +49,40 @@ const input = new Input();
 
 const update = () => {
   if (input.direction === UP) {
-    heroPos.y -= 1;
-    hero.frame = 6;
+    heroPos.y -= 10;
+    playerShip.drawEffectOnSprite(
+      groundSprite.resource.image,
+      canvasContext,
+      heroPos.x,
+      heroPos.y
+    );
   }
   if (input.direction === DOWN) {
-    heroPos.y += 1;
-    hero.frame = 0;
+    heroPos.y += 10;
+    playerShip.drawEffectOnSprite(
+      groundSprite.resource.image,
+      canvasContext,
+      heroPos.x,
+      heroPos.y
+    );
   }
   if (input.direction === LEFT) {
-    heroPos.x -= 1;
-    hero.frame = 9;
+    heroPos.x -= 10;
+    playerShip.drawEffectOnSprite(
+      groundSprite.resource.image,
+      canvasContext,
+      heroPos.x,
+      heroPos.y
+    );
   }
   if (input.direction === RIGHT) {
-    heroPos.x += 1;
-    hero.frame = 3;
+    heroPos.x += 10;
+    playerShip.drawEffectOnSprite(
+      groundSprite.resource.image,
+      canvasContext,
+      heroPos.x,
+      heroPos.y
+    );
   }
 };
 
@@ -65,13 +95,15 @@ export const generateLevel1 = (): void => {
 
 export function drawLevel1() {
   const canvas = document.querySelector(".level1Canvas") as HTMLCanvasElement;
+
   if (!canvas) {
     waitForCanvasToLoad();
   } else {
     canvas.height = height;
     canvas.width = width;
-    const canvasContext = canvas.getContext("2d");
-    drawImageToCanvasSize(
+    canvasContext = canvas.getContext("2d");
+
+    drawImageToFillCanvasSize(
       width,
       height,
       canvasContext,
@@ -80,7 +112,7 @@ export function drawLevel1() {
     //skySprite.drawImage(canvasContext, 0, 0);
     //groundSprite.drawImage(canvasContext, 0, 0);
     //hero.drawImage(canvasContext, heroPos.x, heroPos.y);
-    playerShip.drawImage(canvasContext, heroPos.x, heroPos.y);
+    renderPlayerSpaceship();
   }
 }
 
@@ -94,7 +126,7 @@ const waitForCanvasToLoad = () => {
   }, 1);
 };
 
-function drawImageToCanvasSize(
+function drawImageToFillCanvasSize(
   canvasWidth: number,
   canvasHeight: number,
   canvasContext: any,
@@ -104,7 +136,7 @@ function drawImageToCanvasSize(
   const imageHeight = image.height;
 
   const scale = Math.max(canvasWidth / imageWidth, canvasHeight / imageHeight);
-  console.log(scale);
+
   const width = imageWidth * scale;
   const height = imageHeight * scale;
 
@@ -112,4 +144,75 @@ function drawImageToCanvasSize(
   const y = canvasHeight / 2 - height / 2;
 
   canvasContext.drawImage(image, x, y, width, height);
+}
+
+function renderPlayerSpaceship() {
+  console.log(heroPos.x, heroPos.y, height - 34 * 2);
+  if (heroPos.x < 0) {
+    playerShip.drawImage(canvasContext, 0, heroPos.y);
+    if (input.direction === "LEFT") input.direction = "";
+  } else if (heroPos.x === width) {
+    playerShip.drawImage(canvasContext, width, heroPos.y);
+  } else if (heroPos.y < 0) {
+    playerShip.drawImage(canvasContext, heroPos.x, 0);
+    if (input.direction === "UP") input.direction = "";
+  } else if (heroPos.y >= height - 34 * 2) {
+    playerShip.drawImage(canvasContext, heroPos.x, height);
+  } else {
+    playerShip.drawImage(canvasContext, heroPos.x, heroPos.y);
+  }
+  /*const isOutside = isSpaceshipOutsideOfTheScreen();
+  //console.log("width", heroPos.x, width, "height", heroPos.y, height);
+  //console.log(isOutside);
+  if (isOutside.isOutside) {
+    if (isOutside.position === "x") {
+      if (isOutside.onWhichSide === "left") {
+        console.log("left", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x + width + 38, heroPos.y);
+      } else {
+        console.log("right", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x - width - 38, heroPos.y);
+      }
+    } else {
+      if (isOutside.onWhichSide === "up") {
+        console.log("up", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x, heroPos.y + height + 34);
+      } else {
+        ("down", isOutside);
+        playerShip.drawImage(canvasContext, heroPos.x, heroPos.y - height - 34);
+      }
+    }
+  } */
+}
+
+function isSpaceshipOutsideOfTheScreen(): isOutside {
+  let isOutside = {
+    isOutside: false,
+    onWhichSide: "",
+    position: "",
+  };
+
+  if (heroPos.x + 38 * 2 < 0) {
+    isOutside.isOutside = true;
+    isOutside.onWhichSide = "left";
+    isOutside.position = "x";
+    return isOutside;
+  } else if (heroPos.x > width) {
+    isOutside.isOutside = true;
+    isOutside.onWhichSide = "right";
+    isOutside.position = "x";
+    return isOutside;
+  } else if (heroPos.y + 34 * 2 < 0) {
+    isOutside.isOutside = true;
+    isOutside.onWhichSide = "up";
+    isOutside.position = "y";
+    return isOutside;
+  } else if (heroPos.y > height) {
+    isOutside.isOutside = true;
+    isOutside.onWhichSide = "down";
+    isOutside.position = "y";
+    return isOutside;
+  }
+
+  return isOutside;
 }
