@@ -1,6 +1,6 @@
 import { muteAudio, playAudio } from "../Utils/IconsExports.ts";
 import { generateLevelSelectionScreen } from "./LevelSelection/LevelSelectionLogic.ts";
-import { generateLevel1 } from "../Levels/Level1/Level1Logic.ts";
+import { generateLevel } from "../Level/LevelLogic/mainLevelLogic.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {
   mainMenuGenerator,
@@ -41,13 +41,13 @@ export const mainMenuNavigation = (): void => {
   const selectLevel = document.getElementById("select");
   const audioButton = document.querySelector(".audioBtn") as HTMLElement;
 
-  generateLevel1();
+  generateLevel();
 
   play?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "play");
     playAnimation();
     setTimeout(() => {
-      generateLevel1();
+      generateLevel();
     }, 800);
   });
 

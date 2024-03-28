@@ -1,5 +1,3 @@
-import { update } from "three/examples/jsm/libs/tween.module.js";
-
 export const UP = "UP";
 export const DOWN = "DOWN";
 export const LEFT = "LEFT";
@@ -38,5 +36,35 @@ export class Input {
         this.direction = "";
       }
     });*/
+  }
+}
+
+export class PlayerSpells {
+  spell: string = "";
+
+  constructor() {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "KeyP") {
+        this.spell = "P";
+      }
+      if (e.code === "KeyŠ") {
+        this.spell = "Š";
+      }
+      if (e.code === "KeyĐ") {
+        this.spell = "Đ";
+      }
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (e.code === "KeyP") {
+        this.spell = "";
+      }
+      if (e.code === "KeyŠ") {
+        this.spell = "";
+      }
+      if (e.code === "KeyĐ") {
+        this.spell = "";
+      }
+    });
   }
 }

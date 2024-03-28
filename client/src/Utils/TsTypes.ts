@@ -14,5 +14,10 @@ export type levelAssetsPath = {
 export type isOutside = {
   isOutside: boolean;
   position: string;
-  whichSide: string;
+  onWhichSide: string;
+};
+
+export type Vector = {
+  x: number;
+  y: number;
 };
