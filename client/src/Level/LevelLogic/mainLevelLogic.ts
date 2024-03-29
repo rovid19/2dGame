@@ -19,7 +19,9 @@ import {
 } from "./canvasLogic.ts";
 import { renderPlayerSpaceship } from "./spaceshipLogic.ts";
 
-export let canvasContext: any;
+import { Projectile } from "../../Classes/Projectile.ts";
+
+export let canvasContext: CanvasRenderingContext2D;
 
 const level1Images = new LevelImages({
   sky: "../public/sprites/5.png",
@@ -39,7 +41,7 @@ const skySprite = new Sprite(
   new Vector2(width, height)
 );
 
-const projectile = new Sprite(
+export const projectile = new Sprite(
   level1Images.images.projectile,
   new Vector2(32, 32)
 );
@@ -53,7 +55,7 @@ const shipSteeringEffect = new Sprite(
   )
 );
 
-const groundSprite = new Sprite(
+export const groundSprite = new Sprite(
   level1Images.images.ground,
   new Vector2(width, height)
 );
@@ -66,6 +68,9 @@ playerShip.scale = 2;
 
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
+export let projectiles = new Projectile();
+projectiles.updateProjectileBaseCoordinates();
+
 //
 //
 //
@@ -75,10 +80,8 @@ const playerSpellInput = new PlayerSpells();
 
 export const playerMovement = () => {
   if (playerSpellInput.spell === "P") {
-    /*projectileFireSystem.fireProjectile();
-    console.log(prjPosL.y);
-    prjPosL.y = prjPosL.y - height;
-    console.log(prjPosL.y);*/
+    projectiles.fireProjectile();
+    console.log(shipPosition.y, height);
   }
   if (playerMovementInput.direction === UP) {
     shipPosition.y -= 10;
@@ -113,7 +116,7 @@ export function renderLevel() {
   } else {
     canvas.height = height;
     canvas.width = width;
-    canvasContext = canvas.getContext("2d");
+    canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
 
     drawImageToFillCanvasSize(
       width,

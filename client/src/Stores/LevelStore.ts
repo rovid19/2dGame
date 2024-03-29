@@ -7,6 +7,7 @@ type InitialState = {
     position: string;
     onWhichSide: string;
   };
+  isCanvasReady: boolean;
 };
 type Listener = (key: any, value: any) => void;
 
@@ -16,6 +17,7 @@ const initialState = {
     position: "",
     onWhichSide: "",
   },
+  isCanvasReady: false,
 };
 class levelsStore {
   state: InitialState;

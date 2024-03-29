@@ -6,6 +6,9 @@ import {
   playerShip,
   shipPosition,
 } from "./mainLevelLogic";
+import { projectiles } from "./mainLevelLogic";
+
+console.log("1");
 
 export function renderPlayerSpaceship() {
   stopSpaceshipFromGoingOutsideOfScreen();
@@ -13,6 +16,7 @@ export function renderPlayerSpaceship() {
 }
 
 function stopSpaceshipFromGoingOutsideOfScreen() {
+  //console.log(projectiles);
   // prva 4 ifa proveravaju gornji lijevi, donji lijevi, gornji desni i donji desni kut jer za ta 4 kuta trebam 2 conditiona ispunjavat
   if (shipPosition.x < 0 && shipPosition.y < 0) {
     if (
@@ -71,6 +75,7 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     playerShip.drawImage(canvasContext, shipPosition.x, height - 34 * 2);
   } else {
     playerShip.drawImage(canvasContext, shipPosition.x, shipPosition.y);
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
   }
 }
 
