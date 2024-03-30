@@ -1,64 +1,168 @@
-import { height } from "../Level/LevelLogic/canvasLogic";
 import { shipPosition } from "../Level/LevelLogic/mainLevelLogic";
+import { ProjectileArray } from "../Utils/TsTypes";
 
 // prj -> projectile, L - left, R - right
 export class Projectile {
   prjDirections: any = {
-    prjL: { 1: { x: 0, y: 0 } },
-    prjR: { 1: { x: 0, y: 0 } },
+    prjL: [{ x: 0, y: 0 }],
+    prjR: [{ x: 0, y: 0 }],
   };
-  prjSpeed: number = 30;
-  prjLAmount: number = 1;
-  prjRAmount: number = 1;
+  prjSpeed: number = 15;
+  prjAmount: number = 1;
   isFiring: boolean = false;
   fireRate: number = 0;
   isReady: boolean = false;
-  constructor() {
-    console.log("defined");
-  }
+  constructor() {}
 
-  renderLeftProjectile = (
+  renderProjectile = (
     ctx: CanvasRenderingContext2D,
     projectileImage: HTMLImageElement,
-    x: number,
-    y: number
+    projectileArray: ProjectileArray,
+    projectileAmount: number
   ) => {
-    ctx.drawImage(projectileImage, x, y);
+    switch (projectileAmount) {
+      case 1:
+        this.drawProjectile(
+          ctx,
+          projectileImage,
+          projectileArray,
+          projectileAmount
+        );
+        break;
+      case 2:
+        this.drawProjectile(
+          ctx,
+          projectileImage,
+          projectileArray,
+          projectileAmount
+        );
+
+        break;
+      case 3:
+        this.drawProjectile(
+          ctx,
+          projectileImage,
+          projectileArray,
+          projectileAmount
+        );
+        break;
+      case 4:
+        this.drawProjectile(
+          ctx,
+          projectileImage,
+          projectileArray,
+          projectileAmount
+        );
+        break;
+    }
   };
-  renderRightProjectile = (
+
+  drawProjectile(
     ctx: CanvasRenderingContext2D,
     projectileImage: HTMLImageElement,
-    x: number,
-    y: number
-  ) => {
-    ctx.drawImage(projectileImage, x, y);
-  };
+    projectileArray: ProjectileArray,
+    projectileAmount: number
+  ) {
+    for (let i = 0; i < projectileAmount; i++) {
+      /*ctx.save();
+      ctx.translate(projectileArray[i].x, projectileArray[i].y);
+
+      if (projectileArray[i].rotation > 0) {
+        ctx.rotate(projectileArray[i].rotation);
+      }
+*/
+      ctx.drawImage(
+        projectileImage,
+        projectileArray[i].x,
+        projectileArray[i].y
+      );
+
+      //ctx.restore();
+    }
+  }
 
   fireProjectile = () => {
     if (!this.isFiring) this.isFiring = true;
-    //const distanceToEndOfScreen = shipPosition.y + 44;
+    const distanceToEndOfScreen = shipPosition.y + 34 * 2;
 
-    this.prjDirections.prjL["1"].y -= this.prjSpeed;
-    this.prjDirections.prjR["1"].y -= this.prjSpeed;
-    this.fireRate += 1;
-    if (this.fireRate === 30) {
+    this.prjDirections.prjL[0].y -= this.prjSpeed;
+    this.prjDirections.prjR[0].y -= this.prjSpeed;
+    this.fireRate += this.prjSpeed;
+
+    if (this.fireRate >= distanceToEndOfScreen) {
       this.fireRate = 0;
       this.isFiring = false;
       this.updateProjectileBaseCoordinates();
     }
   };
 
-  howManyProjectiles = () => {};
+  /*updateProjectileAmount = () => {
+    const projectileObject = {
+      x: 0,
+      y: 0,
+      rotation: 0,
+    };
+    for (let i = 0; i < this.prjAmount; i++) {
+      this.prjDirections.prjL.push({
+        ...projectileObject,
+      });
+      this.prjDirections.prjR.push({
+        ...projectileObject,
+      });
+    }
+    console.log(this.prjDirections);
+    this.updateProjectileBaseCoordinates();
+  };*/
 
   updateProjectileBaseCoordinates() {
-    this.prjDirections.prjL["1"].x = shipPosition.x + 7;
-    this.prjDirections.prjL["1"].y = shipPosition.y + 10;
+    this.prjDirections.prjL[0].x = shipPosition.x + 7;
+    this.prjDirections.prjL[0].y = shipPosition.y + 10;
 
-    this.prjDirections.prjR["1"].x = shipPosition.x + 55;
-    this.prjDirections.prjR["1"].y = shipPosition.y + 10;
+    this.prjDirections.prjR[0].x = shipPosition.x + 55;
+    this.prjDirections.prjR[0].y = shipPosition.y + 10;
+    /*switch (this.prjAmount) {
+      case 1:
+        this.updateSingleProjectileCoordinates();
+        break;
+      case 2:
+        this.updateSingleProjectileCoordinates();
+        break;
+      case 3:
+        this.updateSingleProjectileCoordinates();
+        break;
+      case 4:
+        this.updateSingleProjectileCoordinates();
+        break;
+    }*/
 
     if (!this.isReady) {
       this.isReady = true;
     }
   }
+
+  /*updateSingleProjectileCoordinates = () => {
+    for (let i = 0; i < this.prjAmount; i++) {
+      this.prjDirections.prjL[i].x = shipPosition.x + 7;
+      this.prjDirections.prjL[i].y = shipPosition.y + 10;
+
+      this.prjDirections.prjR[i].x = shipPosition.x + 55;
+      this.prjDirections.prjR[i].y = shipPosition.y + 10;
+
+      switch (i) {
+        case 0:
+          this.prjDirections.prjL[i].rotation = (345 * Math.PI) / 180;
+          this.prjDirections.prjR[i].rotation = (5 * Math.PI) / 180;
+          break;
+        case 2:
+          this.prjDirections.prjL[i].rotation = (200 * Math.PI) / 180;
+          this.prjDirections.prjR[i].rotation = (20 * Math.PI) / 180;
+          break;
+        case 3:
+          this.prjDirections.prjL[i].rotation = (210 * Math.PI) / 180;
+          this.prjDirections.prjR[i].rotation = (30 * Math.PI) / 180;
+          break;
+      }
+    }
+    
+  };*/
 }

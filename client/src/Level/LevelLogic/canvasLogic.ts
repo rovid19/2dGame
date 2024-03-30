@@ -9,7 +9,6 @@ export const waitForCanvasToLoad = () => {
     canvas = document.querySelector(".level1Canvas") as HTMLCanvasElement;
     if (canvas) {
       clearInterval(checkForCanvas);
-
       levelStore.set("isCanvasReady", true);
     }
   }, 1);

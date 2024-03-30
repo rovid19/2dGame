@@ -8,8 +8,6 @@ import {
 } from "./mainLevelLogic";
 import { projectiles } from "./mainLevelLogic";
 
-console.log("1");
-
 export function renderPlayerSpaceship() {
   stopSpaceshipFromGoingOutsideOfScreen();
   //allowSpaceshipToGoOutsideOfTheScreen()
@@ -17,7 +15,7 @@ export function renderPlayerSpaceship() {
 
 function stopSpaceshipFromGoingOutsideOfScreen() {
   //console.log(projectiles);
-  // prva 4 ifa proveravaju gornji lijevi, donji lijevi, gornji desni i donji desni kut jer za ta 4 kuta trebam 2 conditiona ispunjavat
+  // prva 4 ifa proveravaju gornji lijevi gornji, donji lijevi, gornji desni i donji desni kut jer za ta 4 kuta trebam 2 conditiona ispunjavat
   if (shipPosition.x < 0 && shipPosition.y < 0) {
     if (
       playerMovementInput.direction === "LEFT" ||
@@ -33,6 +31,9 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     ) {
       playerMovementInput.direction = "";
     }
+    shipPosition.x = 0;
+    shipPosition.y = height - 34 * 2;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     playerShip.drawImage(canvasContext, 0, height - 34 * 2);
   } else if (shipPosition.y < 0 && shipPosition.x >= width - 38 * 2) {
     if (
@@ -52,26 +53,45 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     ) {
       playerMovementInput.direction = "";
     }
+    shipPosition.x = width - 38 * 2;
+    shipPosition.y = height - 34 * 2;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     playerShip.drawImage(canvasContext, width - 38 * 2, height - 34 * 2);
-  } else if (shipPosition.x < 0) {
+  }
+  // lijeva strana
+  else if (shipPosition.x < 0) {
     if (playerMovementInput.direction === "LEFT")
       playerMovementInput.direction = "";
 
+    shipPosition.x = 0;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     playerShip.drawImage(canvasContext, 0, shipPosition.y);
-  } else if (shipPosition.x >= width - 38 * 2) {
+  }
+  // desna strana
+  else if (shipPosition.x >= width - 38 * 2) {
     if (playerMovementInput.direction === "RIGHT")
       playerMovementInput.direction = "";
 
+    shipPosition.x = width - 38 * 2;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     playerShip.drawImage(canvasContext, width - 38 * 2, shipPosition.y);
-  } else if (shipPosition.y < 0) {
+  }
+  // gornja strana
+  else if (shipPosition.y < 0) {
     if (playerMovementInput.direction === "UP")
       playerMovementInput.direction = "";
 
+    shipPosition.y = 0;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     playerShip.drawImage(canvasContext, shipPosition.x, 0);
-  } else if (shipPosition.y >= height - 34 * 2) {
+  }
+  // donja strana
+  else if (shipPosition.y >= height - 34 * 2) {
     if (playerMovementInput.direction === "DOWN")
       playerMovementInput.direction = "";
 
+    shipPosition.y = height - 34 * 2;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     playerShip.drawImage(canvasContext, shipPosition.x, height - 34 * 2);
   } else {
     playerShip.drawImage(canvasContext, shipPosition.x, shipPosition.y);

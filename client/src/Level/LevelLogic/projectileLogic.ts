@@ -18,17 +18,17 @@ function renderProjectiles(): void {
       projectiles.fireProjectile();
     }
 
-    projectiles.renderLeftProjectile(
+    projectiles.renderProjectile(
       canvasContext,
       projectile.resource.image,
-      projectiles.prjDirections.prjL["1"].x,
-      projectiles.prjDirections.prjL["1"].y
+      projectiles.prjDirections.prjL,
+      projectiles.prjAmount
     );
-    projectiles.renderRightProjectile(
+    projectiles.renderProjectile(
       canvasContext,
       projectile.resource.image,
-      projectiles.prjDirections.prjR["1"].x,
-      projectiles.prjDirections.prjR["1"].y
+      projectiles.prjDirections.prjR,
+      projectiles.prjAmount
     );
   }
 }

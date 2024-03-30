@@ -21,3 +21,14 @@ export type Vector = {
   x: number;
   y: number;
 };
+
+interface Coordinates {
+  x: number;
+  y: number;
+  rotation: number;
+}
+
+export type ProjectileArray = {
+  prjL: Coordinates[];
+  prjR: Coordinates[];
+};

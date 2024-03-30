@@ -80,8 +80,9 @@ const playerSpellInput = new PlayerSpells();
 
 export const playerMovement = () => {
   if (playerSpellInput.spell === "P") {
-    projectiles.fireProjectile();
-    console.log(shipPosition.y, height);
+    if (shipPosition.y > 40) {
+      projectiles.fireProjectile();
+    }
   }
   if (playerMovementInput.direction === UP) {
     shipPosition.y -= 10;
