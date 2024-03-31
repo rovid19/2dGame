@@ -91,6 +91,8 @@ export class Projectile {
     this.prjDirections.prjR[0].y -= this.prjSpeed;
     this.fireRate += this.prjSpeed;
 
+    this.projectileCollisionDetection();
+
     if (this.fireRate >= distanceToEndOfScreen) {
       this.fireRate = 0;
       this.isFiring = false;
@@ -167,4 +169,6 @@ export class Projectile {
     }
     
   };*/
+
+  projectileCollisionDetection() {}
 }

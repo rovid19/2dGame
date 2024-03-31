@@ -29,6 +29,5 @@ interface Coordinates {
 }
 
 export type ProjectileArray = {
-  prjL: Coordinates[];
-  prjR: Coordinates[];
+  [key: string]: Coordinates[];
 };

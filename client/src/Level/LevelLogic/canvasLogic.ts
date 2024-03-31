@@ -33,3 +33,23 @@ export function drawImageToFillCanvasSize(
 
   canvasContext.drawImage(image, x, y, width, height);
 }
+
+//fisher yates shuffle alogirthm
+export function shuffleArray(array: any[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    console.log(j);
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+export function generateUniqueNumbers(arrayLength: number): number[] {
+  const array = [] as number[];
+
+  while (array.length < arrayLength) {
+    const randomNumber = Math.floor(Math.random() * arrayLength);
+    if (!array.includes(randomNumber)) array.push(randomNumber);
+  }
+  return array;
+}

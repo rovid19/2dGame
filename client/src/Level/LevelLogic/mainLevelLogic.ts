@@ -23,6 +23,7 @@ import { Projectile } from "../../Classes/Projectile.ts";
 import { renderProjectiles } from "./projectileLogic.ts";
 import { Enemy } from "../../Classes/EnemyAi.ts";
 import { renderEnemy } from "./enemyLogic.ts";
+import { Vector } from "../../Utils/TsTypes.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
@@ -71,17 +72,30 @@ export const playerShip = new Sprite(
 );
 playerShip.scale = 2;
 
+export const enemyPositionArray: Vector[] = [];
+
 export const enemy1Sprite = new Sprite(
   level1Images.images.enemy1,
-  new Vector2(25, 27)
+  new Vector2(24, 27)
 );
 enemy1Sprite.scale = 2;
+enemyPositionArray.push(enemy1Sprite.position);
+
+export const enemy3Sprite = new Sprite(
+  level1Images.images.enemy1,
+  new Vector2(24, 27)
+);
+enemy3Sprite.scale = 2;
+enemyPositionArray.push(enemy3Sprite.position);
 
 export const enemy2Sprite = new Sprite(
   level1Images.images.enemy2,
   new Vector2(51, 56)
 );
-enemy2Sprite.scale = 3;
+enemy2Sprite.scale = 2;
+enemyPositionArray.push(enemy2Sprite.position);
+
+console.log(enemy2Sprite);
 
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
@@ -91,8 +105,14 @@ export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 export let projectiles = new Projectile();
 projectiles.updateProjectileBaseCoordinates();
 
-export let enemy1 = new Enemy();
-export let enemy2 = new Enemy();
+export let enemy1 = new Enemy(1.5);
+enemy1.updateEnemyCoordinates(enemy1Sprite.position);
+
+export let enemy2 = new Enemy(2);
+enemy2.updateEnemyCoordinates(enemy2Sprite.position);
+
+export let enemy3 = new Enemy(1.2);
+enemy3.updateEnemyCoordinates(enemy3Sprite.position);
 
 //
 //
