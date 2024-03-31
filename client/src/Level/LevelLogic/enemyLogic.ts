@@ -15,7 +15,7 @@ export function renderEnemy() {
       enemy1Sprite.position.x,
       enemy1Sprite.position.y
     );
-    enemy1.followPlayer();
+    //enemy1.followPlayer();
     enemy2Sprite.drawImage(
       canvasContext,
       enemy2Sprite.position.x,
@@ -28,6 +28,6 @@ export function renderEnemy() {
       enemy3Sprite.position.x,
       enemy3Sprite.position.y
     );
-    enemy3.followPlayer();
+    // enemy3.followPlayer();
   }
 }

@@ -1,4 +1,7 @@
-import { shipPosition } from "../Level/LevelLogic/mainLevelLogic";
+import {
+  enemyPositionArray,
+  shipPosition,
+} from "../Level/LevelLogic/mainLevelLogic";
 import { ProjectileArray } from "../Utils/TsTypes";
 
 // prj -> projectile, L - left, R - right
@@ -13,6 +16,7 @@ export class Projectile {
   fireRate: number = 0;
   isReady: boolean = false;
   isRendered: boolean = false;
+  targetHit: boolean = false;
   constructor() {}
 
   renderProjectile = (
@@ -84,19 +88,23 @@ export class Projectile {
   }
 
   fireProjectile = () => {
-    if (!this.isFiring) this.isFiring = true;
-    const distanceToEndOfScreen = shipPosition.y + 34 * 2;
-
-    this.prjDirections.prjL[0].y -= this.prjSpeed;
-    this.prjDirections.prjR[0].y -= this.prjSpeed;
-    this.fireRate += this.prjSpeed;
-
-    this.projectileCollisionDetection();
-
-    if (this.fireRate >= distanceToEndOfScreen) {
-      this.fireRate = 0;
-      this.isFiring = false;
+    if (this.targetHit) {
       this.updateProjectileBaseCoordinates();
+    } else {
+      if (!this.isFiring) this.isFiring = true;
+      const distanceToEndOfScreen = shipPosition.y + 34 * 2;
+
+      this.prjDirections.prjL[0].y -= this.prjSpeed;
+      this.prjDirections.prjR[0].y -= this.prjSpeed;
+      this.fireRate += this.prjSpeed;
+
+      this.projectileCollisionDetection();
+
+      if (this.fireRate >= distanceToEndOfScreen) {
+        this.fireRate = 0;
+        this.isFiring = false;
+        this.updateProjectileBaseCoordinates();
+      }
     }
   };
 
@@ -170,5 +178,14 @@ export class Projectile {
     
   };*/
 
-  projectileCollisionDetection() {}
+  projectileCollisionDetection() {
+    enemyPositionArray.forEach((enemyPosition) => {
+      if (
+        this.prjDirections.prjL[0].y === enemyPosition.y &&
+        this.prjDirections.prjL[0].x === enemyPosition.x
+      ) {
+        console.log("KABOOM LEFT ");
+      }
+    });
+  }
 }

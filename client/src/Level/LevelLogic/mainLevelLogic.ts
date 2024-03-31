@@ -93,9 +93,8 @@ export const enemy2Sprite = new Sprite(
   new Vector2(51, 56)
 );
 enemy2Sprite.scale = 2;
+console.log(enemy2Sprite.resource.image.width * 2);
 enemyPositionArray.push(enemy2Sprite.position);
-
-console.log(enemy2Sprite);
 
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
@@ -110,6 +109,9 @@ enemy1.updateEnemyCoordinates(enemy1Sprite.position);
 
 export let enemy2 = new Enemy(2);
 enemy2.updateEnemyCoordinates(enemy2Sprite.position);
+enemy2.createHitboxForEnemy("basic2");
+
+enemy2.renderHealthBar();
 
 export let enemy3 = new Enemy(1.2);
 enemy3.updateEnemyCoordinates(enemy3Sprite.position);
@@ -124,6 +126,7 @@ const playerSpellInput = new PlayerSpells();
 export const playerMovement = () => {
   if (playerSpellInput.spell === "P") {
     if (shipPosition.y > 40) {
+      projectiles.targetHit = false;
       projectiles.fireProjectile();
     }
   }
@@ -172,14 +175,7 @@ export function renderLevel() {
       canvasContext,
       skySprite.resource.image
     );
-    console.log(
-      "ship",
-      //shipPosition.x,
-      shipPosition.y,
-      "projectile",
-      //projectiles.prjDirections.prjL[0].x,
-      projectiles.prjDirections.prjL[0].y
-    );
+
     renderProjectiles();
     renderPlayerSpaceship();
     renderEnemy();

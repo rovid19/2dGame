@@ -22,7 +22,7 @@ export class Input {
       }
     });
 
-    /*document.addEventListener("keyup", (e) => {
+    document.addEventListener("keyup", (e) => {
       if (e.code === "ArrowUp" || e.code === "KeyW") {
         this.direction = "";
       }
@@ -35,7 +35,7 @@ export class Input {
       if (e.code === "ArrowRight" || e.code === "KeyD") {
         this.direction = "";
       }
-    });*/
+    });
   }
 }
 

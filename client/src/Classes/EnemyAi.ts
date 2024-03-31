@@ -1,8 +1,8 @@
 import {
-  generateUniqueNumbers,
-  shuffleArray,
-} from "../Level/LevelLogic/canvasLogic";
-import { enemy1Sprite, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
+  enemyPositionArray,
+  projectiles,
+  shipPosition,
+} from "../Level/LevelLogic/mainLevelLogic";
 import { Vector } from "../Utils/TsTypes";
 
 export class Enemy {
@@ -10,6 +10,9 @@ export class Enemy {
   speed: number = 0;
   damage: number = 1;
   position: Vector = { x: 0, y: 0 };
+  hpBarDiv: HTMLElement = {} as HTMLElement;
+  hitboxX: number = 0;
+  hitboxY: number = 0;
 
   constructor(speed: number) {
     this.speed = speed;
@@ -32,6 +35,9 @@ export class Enemy {
     if (shipPosition.x < this.position.x) {
       this.position.x -= this.speed;
     }
+    this.moveHealthBarWithEnemy();
+    this.checkIfHitByProjectile();
+
     /*const biggerY = this.followBiggerOnY;
     const smallerY = this.followSmallerOnY;
     const biggerX = this.followBiggerOnX;
@@ -80,4 +86,90 @@ export class Enemy {
   updateEnemyCoordinates(enemyPosition: Vector) {
     this.position = enemyPosition;
   }
+
+  renderHealthBar = () => {
+    const div = document.createElement("div");
+    this.hpBarDiv = div;
+    document.body.appendChild(div);
+    div.className = "enemyHpBar";
+    div.style.top = `${this.position.y}px`;
+    div.style.left = `${this.position.x}px`;
+  };
+
+  moveHealthBarWithEnemy = () => {
+    this.hpBarDiv.style.top = `${this.position.y}px`;
+    this.hpBarDiv.style.left = `${this.position.x}px`;
+  };
+
+  createHitboxForEnemy = (enemy: string) => {
+    switch (enemy) {
+      case "basic":
+        break;
+      case "basic2":
+        this.hitboxX = 56 * 2;
+        this.hitboxY = 51 * 2;
+        break;
+      case "special":
+        break;
+      case "special2":
+        break;
+      case "asteroid":
+        break;
+      case "asteroid2":
+        break;
+      case "asteroid3":
+        break;
+      case "asteroid4":
+        break;
+    }
+  };
+
+  checkIfHitByProjectile = () => {
+    const hitboxArrayX = [] as number[];
+    const hitboxArrayY = [] as number[];
+    const halfOfHitboxX = this.hitboxX / 2;
+    const halfOfHitboxY = this.hitboxY / 2;
+    let currentX = this.position.x;
+    let currentY = this.position.y;
+
+    for (let i = 0; i < halfOfHitboxX; i++) {
+      hitboxArrayX.push(currentX);
+      currentX--;
+    }
+
+    currentX = this.position.x + 1;
+
+    for (let i = 0; i < halfOfHitboxX; i++) {
+      hitboxArrayX.push(currentX);
+      currentX++;
+    }
+
+    for (let i = 0; i < halfOfHitboxY; i++) {
+      hitboxArrayX.push(currentY);
+      currentY--;
+    }
+
+    currentY = this.position.y + 1;
+
+    for (let i = 0; i < halfOfHitboxY; i++) {
+      hitboxArrayY.push(currentY);
+      currentY++;
+    }
+
+    if (
+      hitboxArrayX.includes(
+        projectiles.prjDirections["prjL"][0].x ||
+          projectiles.prjDirections["prjR"][0].x
+      )
+    ) {
+      if (
+        hitboxArrayY.includes(
+          projectiles.prjDirections["prjL"][0].y ||
+            projectiles.prjDirections["prjR"][0].y
+        )
+      )
+        projectiles.targetHit = true;
+      console.log("kabooom");
+    }
+  };
 }
