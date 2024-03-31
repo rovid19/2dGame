@@ -4,14 +4,14 @@ import { canvasContext } from "./mainLevelLogic";
 import { projectiles } from "./mainLevelLogic";
 export const placeHolderFunction = () => {};
 
-const renderProjectilesLoop = new animationLoop(
+/*const renderProjectilesLoop = new animationLoop(
   placeHolderFunction,
   renderProjectiles
 );
 
-renderProjectilesLoop.start();
+renderProjectilesLoop.start();*/
 
-function renderProjectiles(): void {
+export function renderProjectiles(): void {
   if (!canvasContext || !projectiles) {
   } else {
     if (projectiles.isFiring) {

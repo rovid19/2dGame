@@ -12,6 +12,7 @@ export class Projectile {
   isFiring: boolean = false;
   fireRate: number = 0;
   isReady: boolean = false;
+  isRendered: boolean = false;
   constructor() {}
 
   renderProjectile = (
@@ -20,6 +21,7 @@ export class Projectile {
     projectileArray: ProjectileArray,
     projectileAmount: number
   ) => {
+    if (!this.isRendered) this.isRendered = true;
     switch (projectileAmount) {
       case 1:
         this.drawProjectile(

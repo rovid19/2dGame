@@ -20,6 +20,9 @@ import {
 import { renderPlayerSpaceship } from "./spaceshipLogic.ts";
 
 import { Projectile } from "../../Classes/Projectile.ts";
+import { renderProjectiles } from "./projectileLogic.ts";
+import { Enemy } from "../../Classes/EnemyAi.ts";
+import { renderEnemy } from "./enemyLogic.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
@@ -31,6 +34,8 @@ const level1Images = new LevelImages({
   playerShip: "../public/sprites/2.png",
   speed: "../public/sprites/speed.png",
   projectile: "../public/sprites/1.png",
+  enemy1: "../public/sprites/enemy1.png",
+  enemy2: "../public/sprites/enemy2.png",
 });
 
 //
@@ -66,10 +71,28 @@ export const playerShip = new Sprite(
 );
 playerShip.scale = 2;
 
+export const enemy1Sprite = new Sprite(
+  level1Images.images.enemy1,
+  new Vector2(25, 27)
+);
+enemy1Sprite.scale = 2;
+
+export const enemy2Sprite = new Sprite(
+  level1Images.images.enemy2,
+  new Vector2(51, 56)
+);
+enemy2Sprite.scale = 3;
+
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
+//
+//
+//
 export let projectiles = new Projectile();
 projectiles.updateProjectileBaseCoordinates();
+
+export let enemy1 = new Enemy();
+export let enemy2 = new Enemy();
 
 //
 //
@@ -86,15 +109,19 @@ export const playerMovement = () => {
   }
   if (playerMovementInput.direction === UP) {
     shipPosition.y -= 10;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
   }
   if (playerMovementInput.direction === DOWN) {
     shipPosition.y += 10;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
   }
   if (playerMovementInput.direction === LEFT) {
     shipPosition.x -= 10;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
   }
   if (playerMovementInput.direction === RIGHT) {
     shipPosition.x += 10;
+    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
   }
 };
 
@@ -125,7 +152,16 @@ export function renderLevel() {
       canvasContext,
       skySprite.resource.image
     );
-
+    console.log(
+      "ship",
+      //shipPosition.x,
+      shipPosition.y,
+      "projectile",
+      //projectiles.prjDirections.prjL[0].x,
+      projectiles.prjDirections.prjL[0].y
+    );
+    renderProjectiles();
     renderPlayerSpaceship();
+    renderEnemy();
   }
 }

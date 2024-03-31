@@ -95,7 +95,6 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     playerShip.drawImage(canvasContext, shipPosition.x, height - 34 * 2);
   } else {
     playerShip.drawImage(canvasContext, shipPosition.x, shipPosition.y);
-    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
   }
 }
 
