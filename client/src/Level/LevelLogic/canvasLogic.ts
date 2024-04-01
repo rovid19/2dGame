@@ -53,3 +53,16 @@ export function generateUniqueNumbers(arrayLength: number): number[] {
   }
   return array;
 }*/
+
+export function generateId(idLength: number): string {
+  const randomLettersAndNumbers = "qweidnvs21njdn1298dnasp1sijdi";
+  const randomLetterAndNumberArray = randomLettersAndNumbers.split("");
+  let newIdArray = [];
+
+  for (let i = 0; i < idLength; i++) {
+    const randomNumber = Math.floor(Math.random() * 26);
+    newIdArray.push(randomLetterAndNumberArray[randomNumber]);
+  }
+
+  return newIdArray.join("");
+}

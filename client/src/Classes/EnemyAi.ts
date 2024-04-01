@@ -1,16 +1,20 @@
 import {
-  enemyPositionArray,
+  enemyArray,
   projectiles,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
-import { Vector } from "../Utils/TsTypes";
+import { EnemyObject, Vector } from "../Utils/TsTypes";
 
 export class Enemy {
   health: number = 100;
+  maxHealth: number = 100;
   speed: number = 0;
-  damage: number = 1;
+  damage: number = 10;
   position: Vector = { x: 0, y: 0 };
   hpBarDiv: HTMLElement = {} as HTMLElement;
+  hpBar: HTMLElement = {} as HTMLElement;
+  hpBarWidth: number = 0;
+  hpBarPercentage: number = 100;
   hitboxX: number = 0;
   hitboxY: number = 0;
 
@@ -88,26 +92,38 @@ export class Enemy {
   }
 
   renderHealthBar = () => {
-    const div = document.createElement("div");
-    this.hpBarDiv = div;
-    document.body.appendChild(div);
-    div.className = "enemyHpBar";
-    div.style.top = `${this.position.y}px`;
-    div.style.left = `${this.position.x}px`;
+    // container
+    const hpBarContainer = document.createElement("div");
+    this.hpBarDiv = hpBarContainer;
+    document.body.appendChild(hpBarContainer);
+    hpBarContainer.className = "hpBarContainer";
+    hpBarContainer.style.top = `${this.position.y}px`;
+    hpBarContainer.style.left = `${this.position.x}px`;
+    hpBarContainer.style.width = `${this.hpBarWidth}px`;
+
+    // hpbar
+    const hpBar = document.createElement("div");
+    this.hpBar = hpBar;
+    hpBar.className = "hpBar";
+    hpBarContainer.appendChild(this.hpBar);
   };
 
   moveHealthBarWithEnemy = () => {
-    this.hpBarDiv.style.top = `${this.position.y}px`;
+    this.hpBarDiv.style.top = `${this.position.y - 5}px`;
     this.hpBarDiv.style.left = `${this.position.x}px`;
   };
 
-  createHitboxForEnemy = (enemy: string) => {
+  createHitboxForEnemy = (enemy: string, scale: number) => {
     switch (enemy) {
       case "basic":
+        this.hitboxY = 24 * scale;
+        this.hitboxX = 30 * scale;
+        this.hpBarWidth = 27 * scale;
         break;
       case "basic2":
-        this.hitboxX = 56 * 2;
-        this.hitboxY = 51 * 2;
+        this.hitboxY = 51 * scale;
+        this.hitboxX = 59 * scale;
+        this.hpBarWidth = 56 * scale;
         break;
       case "special":
         break;
@@ -125,36 +141,15 @@ export class Enemy {
   };
 
   checkIfHitByProjectile = () => {
-    const hitboxArrayX = [] as number[];
-    const hitboxArrayY = [] as number[];
     const halfOfHitboxX = this.hitboxX / 2;
     const halfOfHitboxY = this.hitboxY / 2;
     let currentX = this.position.x;
     let currentY = this.position.y;
+    const hitboxArrayX = [] as number[];
+    const hitboxArrayY = [] as number[];
 
-    for (let i = 0; i < halfOfHitboxX; i++) {
-      hitboxArrayX.push(currentX);
-      currentX--;
-    }
-
-    currentX = this.position.x + 1;
-
-    for (let i = 0; i < halfOfHitboxX; i++) {
-      hitboxArrayX.push(currentX);
-      currentX++;
-    }
-
-    for (let i = 0; i < halfOfHitboxY; i++) {
-      hitboxArrayX.push(currentY);
-      currentY--;
-    }
-
-    currentY = this.position.y + 1;
-
-    for (let i = 0; i < halfOfHitboxY; i++) {
-      hitboxArrayY.push(currentY);
-      currentY++;
-    }
+    this.returnArrayOfHitboxNumbers(currentX, halfOfHitboxX, hitboxArrayX);
+    this.returnArrayOfHitboxNumbers(currentY, halfOfHitboxY, hitboxArrayY);
 
     if (
       hitboxArrayX.includes(
@@ -167,9 +162,46 @@ export class Enemy {
           projectiles.prjDirections["prjL"][0].y ||
             projectiles.prjDirections["prjR"][0].y
         )
-      )
+      ) {
         projectiles.targetHit = true;
-      console.log("kabooom");
+        this.takeDamage();
+      }
+    }
+
+    if (this.health <= 0) {
+      this.removeEnemy();
     }
   };
+
+  returnArrayOfHitboxNumbers(
+    currentPosition: number,
+    hitbox: number,
+    hitboxArray: number[]
+  ) {
+    for (let i = 0; i < hitbox; i++) {
+      hitboxArray.push(currentPosition);
+      currentPosition--;
+    }
+
+    currentPosition = this.position.x + 1;
+
+    for (let i = 0; i < hitbox; i++) {
+      hitboxArray.push(currentPosition);
+      currentPosition++;
+    }
+  }
+
+  takeDamage = () => {
+    this.health -= projectiles.prjDamage;
+
+    console.log(this.health);
+
+    // calculate missing hp in percentages
+    const damageTaken = (projectiles.prjDamage / this.maxHealth) * 100;
+
+    this.hpBar.style.width = `${this.hpBarPercentage - damageTaken}%`;
+    this.hpBarPercentage = this.hpBarPercentage - damageTaken;
+  };
+
+  removeEnemy = () => {};
 }

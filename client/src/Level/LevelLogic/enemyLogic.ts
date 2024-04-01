@@ -15,19 +15,19 @@ export function renderEnemy() {
       enemy1Sprite.position.x,
       enemy1Sprite.position.y
     );
-    //enemy1.followPlayer();
+    enemy1.followPlayer();
     enemy2Sprite.drawImage(
       canvasContext,
       enemy2Sprite.position.x,
       enemy2Sprite.position.y
     );
-    enemy2.followPlayer();
+    //enemy2.followPlayer();
 
     enemy3Sprite.drawImage(
       canvasContext,
       enemy3Sprite.position.x,
       enemy3Sprite.position.y
     );
-    // enemy3.followPlayer();
+    //enemy3.followPlayer();
   }
 }

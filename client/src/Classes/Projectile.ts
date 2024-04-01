@@ -1,7 +1,4 @@
-import {
-  enemyPositionArray,
-  shipPosition,
-} from "../Level/LevelLogic/mainLevelLogic";
+import { enemyArray, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
 import { ProjectileArray } from "../Utils/TsTypes";
 
 // prj -> projectile, L - left, R - right
@@ -11,6 +8,7 @@ export class Projectile {
     prjR: [{ x: 0, y: 0 }],
   };
   prjSpeed: number = 15;
+  prjDamage: number = 10;
   prjAmount: number = 1;
   isFiring: boolean = false;
   fireRate: number = 0;
@@ -98,7 +96,7 @@ export class Projectile {
       this.prjDirections.prjR[0].y -= this.prjSpeed;
       this.fireRate += this.prjSpeed;
 
-      this.projectileCollisionDetection();
+      //this.projectileCollisionDetection();
 
       if (this.fireRate >= distanceToEndOfScreen) {
         this.fireRate = 0;
@@ -176,7 +174,7 @@ export class Projectile {
       }
     }
     
-  };*/
+  };
 
   projectileCollisionDetection() {
     enemyPositionArray.forEach((enemyPosition) => {
@@ -187,5 +185,5 @@ export class Projectile {
         console.log("KABOOM LEFT ");
       }
     });
-  }
+  }*/
 }

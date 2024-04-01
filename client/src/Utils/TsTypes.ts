@@ -31,3 +31,17 @@ interface Coordinates {
 export type ProjectileArray = {
   [key: string]: Coordinates[];
 };
+
+export type EnemyObject = {
+  health: number;
+  maxHealth: number;
+  speed: number;
+  damage: number;
+  position: Vector;
+  hpBarDiv: HTMLElement;
+  hpBar: HTMLElement;
+  hpBarWidth: number;
+  hpBarPercentage: number;
+  hitboxX: number;
+  hitboxY: number;
+};
