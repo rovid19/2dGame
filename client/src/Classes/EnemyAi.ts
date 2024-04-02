@@ -1,11 +1,10 @@
-import {
-  enemyArray,
-  projectiles,
-  shipPosition,
-} from "../Level/LevelLogic/mainLevelLogic";
-import { EnemyObject, Vector } from "../Utils/TsTypes";
+import { projectiles, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
+import { SpriteMethods, SpriteType, Vector } from "../Utils/TsTypes";
+import { Sprite } from "./Sprite";
+import { Vector2 } from "./Vector";
 
 export class Enemy {
+  sprite: SpriteMethods;
   health: number = 100;
   maxHealth: number = 100;
   speed: number = 0;
@@ -18,11 +17,16 @@ export class Enemy {
   hitboxX: number = 0;
   hitboxY: number = 0;
 
-  constructor(speed: number) {
+  constructor(
+    speed: number,
+    enemyImage: string,
+    frameHeight: number,
+    frameWidth: number
+  ) {
+    this.sprite = new Sprite(enemyImage, new Vector2(frameHeight, frameWidth));
     this.speed = speed;
   }
 
-  // follow player logic
   followPlayer() {
     if (shipPosition.y > this.position.y) {
       this.position.y += this.speed;
@@ -41,50 +45,7 @@ export class Enemy {
     }
     this.moveHealthBarWithEnemy();
     this.checkIfHitByProjectile();
-
-    /*const biggerY = this.followBiggerOnY;
-    const smallerY = this.followSmallerOnY;
-    const biggerX = this.followBiggerOnX;
-    const smallerX = this.followSmallerOnX;
-
-    const enemyPath = [biggerY, smallerY, biggerX, smallerX];
-
-    const uniqueNumberArray = generateUniqueNumbers(4);
-
-    uniqueNumberArray.forEach((number) => {
-      enemyPath[number]();
-    });*/
   }
-  // ova 4 if statementa stavljeni unutar funckija da bi mogao
-  // randomizirati walking trajectory svakog enemya posebno
-  /*followBiggerOnY = () => {
-    console.log("1");
-    if (shipPosition.y > this.position.y) {
-      this.position.y += this.speed;
-    }
-  };
-  followSmallerOnY = () => {
-    console.log("2");
-    if (shipPosition.y < this.position.y) {
-      this.position.y -= this.speed;
-    }
-  };
-  followBiggerOnX = () => {
-    console.log("3");
-    if (shipPosition.x > this.position.x) {
-      this.position.x += this.speed;
-    }
-  };
-  followSmallerOnX = () => {
-    console.log("4");
-    if (shipPosition.x < this.position.x) {
-      this.position.x -= this.speed;
-    }
-  };*/
-
-  //
-  //
-  //
 
   collisionDetection() {}
   updateEnemyCoordinates(enemyPosition: Vector) {
@@ -116,7 +77,7 @@ export class Enemy {
   createHitboxForEnemy = (enemy: string, scale: number) => {
     switch (enemy) {
       case "basic":
-        this.hitboxY = 24 * scale;
+        this.hitboxY = 35 * scale;
         this.hitboxX = 30 * scale;
         this.hpBarWidth = 27 * scale;
         break;
@@ -157,6 +118,7 @@ export class Enemy {
           projectiles.prjDirections["prjR"][0].x
       )
     ) {
+      console.log("da");
       if (
         hitboxArrayY.includes(
           projectiles.prjDirections["prjL"][0].y ||

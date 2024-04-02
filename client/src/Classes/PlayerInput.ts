@@ -1,3 +1,10 @@
+import {
+  playerMovementInput,
+  playerSpellInput,
+  projectiles,
+  shipPosition,
+} from "../Level/LevelLogic/mainLevelLogic";
+
 export const UP = "UP";
 export const DOWN = "DOWN";
 export const LEFT = "LEFT";
@@ -22,7 +29,7 @@ export class Input {
       }
     });
 
-    /* document.addEventListener("keyup", (e) => {
+    document.addEventListener("keyup", (e) => {
       if (e.code === "ArrowUp" || e.code === "KeyW") {
         this.direction = "";
       }
@@ -35,8 +42,33 @@ export class Input {
       if (e.code === "ArrowRight" || e.code === "KeyD") {
         this.direction = "";
       }
-    });*/
+    });
   }
+
+  playerMovement = () => {
+    if (playerSpellInput.spell === "P") {
+      if (shipPosition.y > 40) {
+        projectiles.targetHit = false;
+        projectiles.fireProjectile();
+      }
+    }
+    if (playerMovementInput.direction === UP) {
+      shipPosition.y -= 10;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+    }
+    if (playerMovementInput.direction === DOWN) {
+      shipPosition.y += 10;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+    }
+    if (playerMovementInput.direction === LEFT) {
+      shipPosition.x -= 10;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+    }
+    if (playerMovementInput.direction === RIGHT) {
+      shipPosition.x += 10;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+    }
+  };
 }
 
 export class PlayerSpells {

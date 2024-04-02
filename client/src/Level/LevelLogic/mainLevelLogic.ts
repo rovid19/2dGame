@@ -1,5 +1,5 @@
 import { Vector2 } from "../../Classes/Vector.ts";
-import { Sprite } from "../../Classes/SpriteControl.ts";
+import { Sprite } from "../../Classes/Sprite.ts";
 import { levelGenerator } from "../levelGenerator.ts";
 import { LevelImages } from "../../Classes/LevelImages.ts";
 import { animationLoop } from "../../Classes/AnimationLoop.ts";
@@ -18,16 +18,15 @@ import {
   width,
 } from "./canvasLogic.ts";
 import { renderPlayerSpaceship } from "./spaceshipLogic.ts";
-
 import { Projectile } from "../../Classes/Projectile.ts";
 import { renderProjectiles } from "./projectileLogic.ts";
 import { Enemy } from "../../Classes/EnemyAi.ts";
 import { renderEnemy } from "./enemyLogic.ts";
-import { EnemyObject, Vector } from "../../Utils/TsTypes.ts";
+import { EnemyObject } from "../../Utils/TsTypes.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
-const level1Images = new LevelImages({
+const levelImages = new LevelImages({
   sky: "../public/sprites/5.png",
   ground: "../public/sprites/groundLevel1.png",
   hero: "../public/sprites/hero-sheet.png",
@@ -43,37 +42,37 @@ const level1Images = new LevelImages({
 //
 // LOADING SPRITES
 const skySprite = new Sprite(
-  level1Images.images.sky,
+  levelImages.images.sky,
   new Vector2(width, height)
 );
 
 export const projectile = new Sprite(
-  level1Images.images.projectile,
+  levelImages.images.projectile,
   new Vector2(32, 32)
 );
 projectile.scale = 2;
 
 const shipSteeringEffect = new Sprite(
-  level1Images.images.speed,
+  levelImages.images.speed,
   new Vector2(
-    level1Images.images.speed.image.width,
-    level1Images.images.speed.image.height
+    levelImages.images.speed.image.width,
+    levelImages.images.speed.image.height
   )
 );
 
 export const groundSprite = new Sprite(
-  level1Images.images.ground,
+  levelImages.images.ground,
   new Vector2(width, height)
 );
 
 export const playerShip = new Sprite(
-  level1Images.images.playerShip,
+  levelImages.images.playerShip,
   new Vector2(34, 38)
 );
 playerShip.scale = 2;
 
 export const enemyArray: EnemyObject[] = [];
-
+/*
 export const enemy1Sprite = new Sprite(
   level1Images.images.enemy1,
   new Vector2(24, 27)
@@ -93,9 +92,9 @@ export const enemy2Sprite = new Sprite(
   new Vector2(51, 56)
 );
 enemy2Sprite.scale = 2;
-console.log(enemy2Sprite.resource.image.width * 2);
+console.log(enemy2Sprite.spriteImage.image.width * 2);
 enemyArray.push(enemy2Sprite.position);
-
+*/
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
 //
@@ -104,26 +103,26 @@ export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 export let projectiles = new Projectile();
 projectiles.updateProjectileBaseCoordinates();
 
-export let enemy1 = new Enemy(1.5);
-enemy1.updateEnemyCoordinates(enemy1Sprite.position);
-enemy1.createHitboxForEnemy("basic", enemy1Sprite.scale);
+export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27);
+enemy1.updateEnemyCoordinates(enemy1.sprite.position);
+enemy1.createHitboxForEnemy("basic", enemy1.sprite.scale);
 enemy1.renderHealthBar();
 
-export let enemy2 = new Enemy(2);
-enemy2.updateEnemyCoordinates(enemy2Sprite.position);
-enemy2.createHitboxForEnemy("basic2", enemy2Sprite.scale);
+export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56);
+enemy2.updateEnemyCoordinates(enemy2.sprite.position);
+enemy2.createHitboxForEnemy("basic2", enemy2.sprite.scale);
 
 enemy2.renderHealthBar();
 
-export let enemy3 = new Enemy(1.2);
-enemy3.updateEnemyCoordinates(enemy3Sprite.position);
+export let enemy3 = new Enemy(1.2, levelImages.images.enemy1, 24, 27);
+enemy3.updateEnemyCoordinates(enemy3.sprite.position);
 
 //
 //
 //
 // Player movement + spells
 export const playerMovementInput = new Input();
-const playerSpellInput = new PlayerSpells();
+export const playerSpellInput = new PlayerSpells();
 
 export const playerMovement = () => {
   if (playerSpellInput.spell === "P") {
@@ -154,7 +153,10 @@ export const playerMovement = () => {
 //
 //
 // Main render loop
-const renderLevelLoop = new animationLoop(playerMovement, renderLevel);
+const renderLevelLoop = new animationLoop(
+  playerMovementInput.playerMovement,
+  renderLevel
+);
 renderLevelLoop.start();
 
 export const generateLevel = (): void => {
@@ -175,7 +177,7 @@ export function renderLevel() {
       width,
       height,
       canvasContext,
-      skySprite.resource.image
+      skySprite.spriteImage.image
     );
 
     renderProjectiles();

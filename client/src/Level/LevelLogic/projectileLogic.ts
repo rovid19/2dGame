@@ -20,13 +20,13 @@ export function renderProjectiles(): void {
 
     projectiles.renderProjectile(
       canvasContext,
-      projectile.resource.image,
+      projectile.spriteImage.image,
       projectiles.prjDirections.prjL,
       projectiles.prjAmount
     );
     projectiles.renderProjectile(
       canvasContext,
-      projectile.resource.image,
+      projectile.spriteImage.image,
       projectiles.prjDirections.prjR,
       projectiles.prjAmount
     );

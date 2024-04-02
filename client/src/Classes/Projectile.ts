@@ -1,4 +1,4 @@
-import { enemyArray, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
+import { shipPosition } from "../Level/LevelLogic/mainLevelLogic";
 import { ProjectileArray } from "../Utils/TsTypes";
 
 // prj -> projectile, L - left, R - right
@@ -68,20 +68,11 @@ export class Projectile {
     projectileAmount: number
   ) {
     for (let i = 0; i < projectileAmount; i++) {
-      /*ctx.save();
-      ctx.translate(projectileArray[i].x, projectileArray[i].y);
-
-      if (projectileArray[i].rotation > 0) {
-        ctx.rotate(projectileArray[i].rotation);
-      }
-*/
       ctx.drawImage(
         projectileImage,
         projectileArray[i].x,
         projectileArray[i].y
       );
-
-      //ctx.restore();
     }
   }
 
@@ -96,8 +87,6 @@ export class Projectile {
       this.prjDirections.prjR[0].y -= this.prjSpeed;
       this.fireRate += this.prjSpeed;
 
-      //this.projectileCollisionDetection();
-
       if (this.fireRate >= distanceToEndOfScreen) {
         this.fireRate = 0;
         this.isFiring = false;
@@ -106,84 +95,15 @@ export class Projectile {
     }
   };
 
-  /*updateProjectileAmount = () => {
-    const projectileObject = {
-      x: 0,
-      y: 0,
-      rotation: 0,
-    };
-    for (let i = 0; i < this.prjAmount; i++) {
-      this.prjDirections.prjL.push({
-        ...projectileObject,
-      });
-      this.prjDirections.prjR.push({
-        ...projectileObject,
-      });
-    }
-    console.log(this.prjDirections);
-    this.updateProjectileBaseCoordinates();
-  };*/
-
   updateProjectileBaseCoordinates() {
     this.prjDirections.prjL[0].x = shipPosition.x + 7;
     this.prjDirections.prjL[0].y = shipPosition.y + 10;
 
     this.prjDirections.prjR[0].x = shipPosition.x + 55;
     this.prjDirections.prjR[0].y = shipPosition.y + 10;
-    /*switch (this.prjAmount) {
-      case 1:
-        this.updateSingleProjectileCoordinates();
-        break;
-      case 2:
-        this.updateSingleProjectileCoordinates();
-        break;
-      case 3:
-        this.updateSingleProjectileCoordinates();
-        break;
-      case 4:
-        this.updateSingleProjectileCoordinates();
-        break;
-    }*/
 
     if (!this.isReady) {
       this.isReady = true;
     }
   }
-
-  /*updateSingleProjectileCoordinates = () => {
-    for (let i = 0; i < this.prjAmount; i++) {
-      this.prjDirections.prjL[i].x = shipPosition.x + 7;
-      this.prjDirections.prjL[i].y = shipPosition.y + 10;
-
-      this.prjDirections.prjR[i].x = shipPosition.x + 55;
-      this.prjDirections.prjR[i].y = shipPosition.y + 10;
-
-      switch (i) {
-        case 0:
-          this.prjDirections.prjL[i].rotation = (345 * Math.PI) / 180;
-          this.prjDirections.prjR[i].rotation = (5 * Math.PI) / 180;
-          break;
-        case 2:
-          this.prjDirections.prjL[i].rotation = (200 * Math.PI) / 180;
-          this.prjDirections.prjR[i].rotation = (20 * Math.PI) / 180;
-          break;
-        case 3:
-          this.prjDirections.prjL[i].rotation = (210 * Math.PI) / 180;
-          this.prjDirections.prjR[i].rotation = (30 * Math.PI) / 180;
-          break;
-      }
-    }
-    
-  };
-
-  projectileCollisionDetection() {
-    enemyPositionArray.forEach((enemyPosition) => {
-      if (
-        this.prjDirections.prjL[0].y === enemyPosition.y &&
-        this.prjDirections.prjL[0].x === enemyPosition.x
-      ) {
-        console.log("KABOOM LEFT ");
-      }
-    });
-  }*/
 }

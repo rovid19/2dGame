@@ -22,26 +22,28 @@ export type Vector = {
   y: number;
 };
 
-interface Coordinates {
+export type Coordinates = {
   x: number;
   y: number;
-  rotation: number;
-}
+};
 
 export type ProjectileArray = {
   [key: string]: Coordinates[];
 };
 
 export type EnemyObject = {
-  health: number;
-  maxHealth: number;
-  speed: number;
-  damage: number;
-  position: Vector;
-  hpBarDiv: HTMLElement;
-  hpBar: HTMLElement;
-  hpBarWidth: number;
-  hpBarPercentage: number;
-  hitboxX: number;
-  hitboxY: number;
+  x: number;
+  y: number;
+  isAlive: boolean;
+};
+
+export type SpriteType = {
+  spriteImage: HTMLImageElement;
+  frameSize: Vector;
+  scale: number;
+  position: Coordinates;
+};
+
+export type SpriteMethods = {
+  drawImage(ctx: CanvasRenderingContext2D, x: number, y: number): void;
 };
