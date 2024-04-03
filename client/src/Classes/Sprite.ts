@@ -6,24 +6,23 @@ export class Sprite implements SpriteMethods {
   frameSize: Vector = new Vector2();
   scale: number = 0;
   position: Coordinates = { x: 0, y: 0 };
-  constructor(image: string, frameSize: Vector) {
+  constructor(image: HTMLImageElement, frameSize: Vector, scale: number) {
     this.spriteImage = image;
     this.frameSize = frameSize;
+    this.scale = scale;
   }
+
+  createImage() {}
 
   drawImage(ctx: any, x: number, y: number) {
     if (!this.spriteImage.isLoaded) {
       return;
     }
 
-    // find correct sprite sheet frame to use
-    let frameX = 0;
-    let frameY = 0;
-
     ctx.drawImage(
       this.spriteImage.image,
-      frameX,
-      frameY,
+      0,
+      0,
       this.frameSize.x, // how much to crop from sprite sheet
       this.frameSize.y, // same crop
       x, // where to place sprite on canvas

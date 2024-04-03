@@ -1,5 +1,5 @@
 import { projectiles, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
-import { SpriteMethods, SpriteType, Vector } from "../Utils/TsTypes";
+import { SpriteMethods, Vector } from "../Utils/TsTypes";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
 
@@ -19,11 +19,16 @@ export class Enemy {
 
   constructor(
     speed: number,
-    enemyImage: string,
+    enemyImage: HTMLImageElement,
     frameHeight: number,
-    frameWidth: number
+    frameWidth: number,
+    scale: number
   ) {
-    this.sprite = new Sprite(enemyImage, new Vector2(frameHeight, frameWidth));
+    this.sprite = new Sprite(
+      enemyImage,
+      new Vector2(frameHeight, frameWidth),
+      scale
+    );
     this.speed = speed;
   }
 

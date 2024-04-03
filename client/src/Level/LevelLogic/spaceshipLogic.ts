@@ -14,7 +14,6 @@ export function renderPlayerSpaceship() {
 }
 
 function stopSpaceshipFromGoingOutsideOfScreen() {
-  //console.log(projectiles);
   // prva 4 ifa proveravaju gornji lijevi gornji, donji lijevi, gornji desni i donji desni kut jer za ta 4 kuta trebam 2 conditiona ispunjavat
   if (shipPosition.x < 0 && shipPosition.y < 0) {
     if (
@@ -130,26 +129,41 @@ const ifSpaceshipIsOutsideOfTheScreenReturnAnObject = (): isOutside => {
   return isOutside;
 };
 function allowSpaceshipToGoOutsideOfTheScreen() {
-  /*const isOutside = ifSpaceshipIsOutsideOfTheScreenReturnAnObject();
-    //console.log("width", heroPos.x, width, "height", heroPos.y, height);
-    //console.log(isOutside);
-    if (isOutside.isOutside) {
-      if (isOutside.position === "x") {
-        if (isOutside.onWhichSide === "left") {
-          log("left", isOutside);
-          playerShip.drawImage(canvasContext, heroPos.x + width + 38, heroPos.y);
-        } else {
-          console.log("right", isOutside);
-          playerShip.drawImage(canvasContext, heroPos.x - width - 38, heroPos.y);
-        }
+  const isOutside = ifSpaceshipIsOutsideOfTheScreenReturnAnObject();
+
+  if (isOutside.isOutside) {
+    if (isOutside.position === "x") {
+      if (isOutside.onWhichSide === "left") {
+        console.log("left", isOutside);
+        playerShip.drawImage(
+          canvasContext,
+          shipPosition.x + width + 38,
+          shipPosition.y
+        );
       } else {
-        if (isOutside.onWhichSide === "up") {
-          console.log("up", isOutside);
-          playerShip.drawImage(canvasContext, heroPos.x, heroPos.y + height + 34);
-        } else {
-          ("down", isOutside);
-          playerShip.drawImage(canvasContext, heroPos.x, heroPos.y - height - 34);
-        }
+        console.log("right", isOutside);
+        playerShip.drawImage(
+          canvasContext,
+          shipPosition.x - width - 38,
+          shipPosition.y
+        );
       }
-    } */
+    } else {
+      if (isOutside.onWhichSide === "up") {
+        console.log("up", isOutside);
+        playerShip.drawImage(
+          canvasContext,
+          shipPosition.x,
+          shipPosition.y + height + 34
+        );
+      } else {
+        console.log("down", isOutside);
+        playerShip.drawImage(
+          canvasContext,
+          shipPosition.x,
+          shipPosition.y - height - 34
+        );
+      }
+    }
+  }
 }

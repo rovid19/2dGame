@@ -13,7 +13,7 @@ export function renderEnemy() {
       enemy2.sprite.position.x,
       enemy2.sprite.position.y
     );
-    //enemy2.followPlayer();
+    enemy2.followPlayer();
 
     enemy3.sprite.drawImage(
       canvasContext,

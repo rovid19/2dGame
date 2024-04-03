@@ -43,59 +43,33 @@ const levelImages = new LevelImages({
 // LOADING SPRITES
 const skySprite = new Sprite(
   levelImages.images.sky,
-  new Vector2(width, height)
+  new Vector2(width, height),
+  1
 );
 
 export const projectile = new Sprite(
   levelImages.images.projectile,
-  new Vector2(32, 32)
+  new Vector2(32, 32),
+  2
 );
-projectile.scale = 2;
 
-const shipSteeringEffect = new Sprite(
+/*const shipSteeringEffect = new Sprite(
   levelImages.images.speed,
   new Vector2(
     levelImages.images.speed.image.width,
     levelImages.images.speed.image.height
-  )
-);
-
-export const groundSprite = new Sprite(
-  levelImages.images.ground,
-  new Vector2(width, height)
-);
+  ),
+  1
+);*/
 
 export const playerShip = new Sprite(
   levelImages.images.playerShip,
-  new Vector2(34, 38)
+  new Vector2(34, 38),
+  2
 );
-playerShip.scale = 2;
+export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
 export const enemyArray: EnemyObject[] = [];
-/*
-export const enemy1Sprite = new Sprite(
-  level1Images.images.enemy1,
-  new Vector2(24, 27)
-);
-enemy1Sprite.scale = 2.5;
-enemyArray.push({ ...enemy1Sprite.position, isAlive: false });
-
-export const enemy3Sprite = new Sprite(
-  level1Images.images.enemy1,
-  new Vector2(24, 27)
-);
-enemy3Sprite.scale = 2;
-enemyArray.push(enemy3Sprite.position);
-
-export const enemy2Sprite = new Sprite(
-  level1Images.images.enemy2,
-  new Vector2(51, 56)
-);
-enemy2Sprite.scale = 2;
-console.log(enemy2Sprite.spriteImage.image.width * 2);
-enemyArray.push(enemy2Sprite.position);
-*/
-export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
 //
 //
@@ -103,18 +77,18 @@ export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 export let projectiles = new Projectile();
 projectiles.updateProjectileBaseCoordinates();
 
-export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27);
+export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27, 2.5);
 enemy1.updateEnemyCoordinates(enemy1.sprite.position);
 enemy1.createHitboxForEnemy("basic", enemy1.sprite.scale);
 enemy1.renderHealthBar();
 
-export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56);
+export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56, 2);
 enemy2.updateEnemyCoordinates(enemy2.sprite.position);
 enemy2.createHitboxForEnemy("basic2", enemy2.sprite.scale);
 
 enemy2.renderHealthBar();
 
-export let enemy3 = new Enemy(1.2, levelImages.images.enemy1, 24, 27);
+export let enemy3 = new Enemy(1.2, levelImages.images.enemy1, 24, 27, 2.5);
 enemy3.updateEnemyCoordinates(enemy3.sprite.position);
 
 //
