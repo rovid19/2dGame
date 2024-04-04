@@ -1,6 +1,13 @@
+.sixtyfour-myapp {
+  font-family: "Sixtyfour", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "BLED" 0, "SCAN" 0;
+}
+
 .hpBarContainer {
   position: relative;
-
   height: 20px;
   background-color: red;
   margin-top: -20px;
@@ -15,4 +22,184 @@
   width: 100%;
   background-color: green;
   border-radius: 6px;
+}
+.player-hp-bar-container {
+  position: absolute;
+  top: 1%;
+  left: 1%;
+  width: 15%;
+  height: 60px;
+}
+
+.player-hp-bar {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: 4px black solid;
+  image-rendering: pixelated;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.player-hp-bar::before {
+  content: "";
+  position: absolute;
+  height: 80%;
+  width: 95%;
+  border-radius: 6px;
+  background-color: #653b58;
+}
+
+.player-hp-bar::after {
+  content: "";
+  position: absolute;
+  height: 60%;
+  width: 90%;
+  background-color: #321d2c;
+}
+
+.player-hp-bar-filler-container {
+  position: absolute;
+  height: 80%;
+  width: 95%;
+  z-index: 5;
+}
+.player-hp-bar-filler {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  background: linear-gradient(
+    to bottom,
+    #9a3955 0%,
+    #cf4841 40%,
+    #cf4841 60%,
+    #9a3955 100%
+  );
+  image-rendering: pixelated;
+  border-radius: 6px;
+}
+
+.player-energy-bar {
+  position: relative;
+  width: 70%;
+  height: 25px;
+  background-color: white;
+  background: linear-gradient(to bottom, #6b8db8, #bdc1c3);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom: 4px black solid;
+  border-left: 4px black solid;
+  border-right: 4px black solid;
+  image-rendering: pixelated;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-energy-bar::before {
+  content: "";
+  position: absolute;
+  height: 80%;
+  width: 95%;
+  border-radius: 6px;
+  background-color: #653b58;
+}
+
+.player-energy-bar::after {
+  content: "";
+  position: absolute;
+  height: 55%;
+  width: 90%;
+  background-color: #321d2c;
+}
+
+.player-energy-filler-container {
+  position: absolute;
+  height: 80%;
+  width: 95%;
+  z-index: 5;
+}
+.player-energy-filler {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  background: linear-gradient(
+    to bottom,
+    #d47d31 0%,
+    #f5c34c 40%,
+    #f5c34c 60%,
+    #d47d31 100%
+  );
+  image-rendering: pixelated;
+  border-radius: 6px;
+}
+
+.player-spell-bar-container {
+  position: absolute;
+  right: 1%;
+  top: 1%;
+  width: 15%;
+  height: 60px;
+}
+
+.player-spell-bar {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  /*background-color: white;border: 4px black solid;
+  background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
+  */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  image-rendering: pixelated;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+/* SPELL 1*/
+
+.player-spell {
+  position: relative;
+  height: 50px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
+  border-radius: 30px;
+}
+
+.player-spell-img {
+  height: 80%;
+  width: 70%;
+}
+
+#player-spell-keybind {
+  position: absolute;
+  color: #bdc1c3;
+}
+
+.player-spell::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(0, 0, 0);
+  border-radius: 25px;
 }

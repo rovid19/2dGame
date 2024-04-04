@@ -23,6 +23,7 @@ import { renderProjectiles } from "./projectileLogic.ts";
 import { Enemy } from "../../Classes/EnemyAi.ts";
 import { renderEnemy } from "./enemyLogic.ts";
 import { EnemyObject } from "../../Utils/TsTypes.ts";
+import { Hud } from "../../Classes/Hud.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
@@ -90,7 +91,10 @@ enemy2.renderHealthBar();
 
 export let enemy3 = new Enemy(1.2, levelImages.images.enemy1, 24, 27, 2.5);
 enemy3.updateEnemyCoordinates(enemy3.sprite.position);
+enemy3.createHitboxForEnemy("basic", enemy3.sprite.scale);
+enemy3.renderHealthBar();
 
+const HUD = new Hud();
 //
 //
 //

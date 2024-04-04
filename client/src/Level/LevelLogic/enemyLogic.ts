@@ -20,6 +20,6 @@ export function renderEnemy() {
       enemy3.sprite.position.x,
       enemy3.sprite.position.y
     );
-    //enemy3.followPlayer();
+    enemy3.followPlayer();
   }
 }
