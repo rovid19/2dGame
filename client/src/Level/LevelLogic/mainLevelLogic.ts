@@ -24,6 +24,7 @@ import { Enemy } from "../../Classes/EnemyAi.ts";
 import { renderEnemy } from "./enemyLogic.ts";
 import { EnemyObject } from "../../Utils/TsTypes.ts";
 import { Hud } from "../../Classes/Hud.ts";
+import { Player } from "../../Classes/Player.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
@@ -63,11 +64,8 @@ export const projectile = new Sprite(
   1
 );*/
 
-export const playerShip = new Sprite(
-  levelImages.images.playerShip,
-  new Vector2(34, 38),
-  2
-);
+export const player = new Player(levelImages.images.playerShip, 34, 38, 2);
+
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
 export const enemyArray: EnemyObject[] = [];
@@ -79,19 +77,19 @@ export let projectiles = new Projectile();
 projectiles.updateProjectileBaseCoordinates();
 
 export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27, 2.5);
-enemy1.updateEnemyCoordinates(enemy1.sprite.position);
-enemy1.createHitboxForEnemy("basic", enemy1.sprite.scale);
+enemy1.updateEnemyCoordinates(enemy1.enemySprite.position);
+enemy1.createHitboxForEnemy("basic", enemy1.enemySprite.scale);
 enemy1.renderHealthBar();
 
 export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56, 2);
-enemy2.updateEnemyCoordinates(enemy2.sprite.position);
-enemy2.createHitboxForEnemy("basic2", enemy2.sprite.scale);
+enemy2.updateEnemyCoordinates(enemy2.enemySprite.position);
+enemy2.createHitboxForEnemy("basic2", enemy2.enemySprite.scale);
 
 enemy2.renderHealthBar();
 
 export let enemy3 = new Enemy(1.2, levelImages.images.enemy1, 24, 27, 2.5);
-enemy3.updateEnemyCoordinates(enemy3.sprite.position);
-enemy3.createHitboxForEnemy("basic", enemy3.sprite.scale);
+enemy3.updateEnemyCoordinates(enemy3.enemySprite.position);
+enemy3.createHitboxForEnemy("basic", enemy3.enemySprite.scale);
 enemy3.renderHealthBar();
 
 const HUD = new Hud();

@@ -99,4 +99,6 @@ export class PlayerSpells {
       }
     });
   }
+
+  // tu ide metoda koja ce triggerati playerspellactivated i onda accordignly aktivirati spell
 }

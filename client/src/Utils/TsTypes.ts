@@ -45,5 +45,18 @@ export type SpriteType = {
 };
 
 export type SpriteMethods = {
+  spriteImage: HTMLImageElement;
+  frameSize: Vector;
+  scale: number;
+  position: Coordinates;
   drawImage(ctx: CanvasRenderingContext2D, x: number, y: number): void;
+};
+
+export type PlayerMovementMethods = {
+  direction: string;
+  playerMovement(): void;
+};
+
+export type PlayerSpellMethods = {
+  spell: string;
 };

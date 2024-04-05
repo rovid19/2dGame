@@ -8,7 +8,7 @@
 
 /* HP BAR */
 
-.hpBarContainer {
+.enemy-hp-bar-container {
   position: relative;
   height: 20px;
   background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
@@ -23,10 +23,31 @@
   border-radius: 6px;
 }
 
-.hpBar {
+.enemy-hp-bar-container::before {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  height: 70%;
+  width: 95%;
+  border-radius: 6px;
+  background-color: #653b58;
+}
+
+.enemy-hp-bar-container::after {
+  content: "";
+  position: absolute;
+  height: 60%;
+  width: 90%;
+  background-color: #321d2c;
+}
+
+.enemy-hp-bar-filler-container {
+  position: absolute;
+  height: 80%;
+  width: 95%;
+  z-index: 2;
+}
+
+.enemy-hp-bar-filler {
   height: 100%;
   width: 100%;
   background: linear-gradient(
@@ -38,13 +59,16 @@
   );
   image-rendering: pixelated;
   border-radius: 6px;
+  z-index: 2;
 }
+
 .player-hp-bar-container {
   position: absolute;
   top: 1%;
   left: 1%;
   width: 15%;
   height: 60px;
+  z-index: 3;
 }
 
 .player-hp-bar {

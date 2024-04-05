@@ -4,18 +4,19 @@ import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
 
 export class Enemy {
-  sprite: SpriteMethods;
-  health: number = 100;
-  maxHealth: number = 100;
-  speed: number = 0;
-  damage: number = 10;
-  position: Vector = { x: 0, y: 0 };
-  hpBarDiv: HTMLElement = {} as HTMLElement;
-  hpBar: HTMLElement = {} as HTMLElement;
-  hpBarWidth: number = 0;
-  hpBarPercentage: number = 100;
-  hitboxX: number = 0;
-  hitboxY: number = 0;
+  enemySprite: SpriteMethods;
+  enemyHp: number = 100;
+  enemyMaxHp: number = 100;
+  enemySpeed: number = 0;
+  enemyDamage: number = 10;
+  enemyPosition: Vector = { x: 0, y: 0 };
+  enemyHpBarContainer: HTMLElement = document.createElement("div");
+  enemyHpBarFillerContainer: HTMLElement = document.createElement("div");
+  enemyHpBarFiller: HTMLElement = document.createElement("div");
+  enemyHpBarWidth: number = 0;
+  enemyHpBarPercentage: number = 100;
+  enemyHitboxX: number = 0;
+  enemyHitboxY: number = 0;
 
   constructor(
     speed: number,
@@ -24,29 +25,29 @@ export class Enemy {
     frameWidth: number,
     scale: number
   ) {
-    this.sprite = new Sprite(
+    this.enemySprite = new Sprite(
       enemyImage,
       new Vector2(frameHeight, frameWidth),
       scale
     );
-    this.speed = speed;
+    this.enemySpeed = speed;
   }
 
   followPlayer() {
-    if (shipPosition.y > this.position.y) {
-      this.position.y += this.speed;
+    if (shipPosition.y > this.enemyPosition.y) {
+      this.enemyPosition.y += this.enemySpeed;
     }
 
-    if (shipPosition.y < this.position.y) {
-      this.position.y -= this.speed;
+    if (shipPosition.y < this.enemyPosition.y) {
+      this.enemyPosition.y -= this.enemySpeed;
     }
 
-    if (shipPosition.x > this.position.x) {
-      this.position.x += this.speed;
+    if (shipPosition.x > this.enemyPosition.x) {
+      this.enemyPosition.x += this.enemySpeed;
     }
 
-    if (shipPosition.x < this.position.x) {
-      this.position.x -= this.speed;
+    if (shipPosition.x < this.enemyPosition.x) {
+      this.enemyPosition.x -= this.enemySpeed;
     }
     this.moveHealthBarWithEnemy();
     this.checkIfHitByProjectile();
@@ -54,42 +55,40 @@ export class Enemy {
 
   collisionDetection() {}
   updateEnemyCoordinates(enemyPosition: Vector) {
-    this.position = enemyPosition;
+    this.enemyPosition = enemyPosition;
   }
 
   renderHealthBar = () => {
     // container
-    const hpBarContainer = document.createElement("div");
-    this.hpBarDiv = hpBarContainer;
-    document.body.appendChild(hpBarContainer);
-    hpBarContainer.className = "hpBarContainer";
-    hpBarContainer.style.top = `${this.position.y}px`;
-    hpBarContainer.style.left = `${this.position.x}px`;
-    hpBarContainer.style.width = `${this.hpBarWidth}px`;
+    document.body.appendChild(this.enemyHpBarContainer);
+    this.enemyHpBarContainer.className = "enemy-hp-bar-container";
+    this.enemyHpBarContainer.style.top = `${this.enemyPosition.y}px`;
+    this.enemyHpBarContainer.style.left = `${this.enemyPosition.x}px`;
+    this.enemyHpBarContainer.style.width = `${this.enemyHpBarWidth}px`;
 
     // hpbar
-    const hpBar = document.createElement("div");
-    this.hpBar = hpBar;
-    hpBar.className = "hpBar";
-    hpBarContainer.appendChild(this.hpBar);
+    this.enemyHpBarContainer.appendChild(this.enemyHpBarFillerContainer);
+    this.enemyHpBarFillerContainer.appendChild(this.enemyHpBarFiller);
+    this.enemyHpBarFillerContainer.className = "enemy-hp-bar-filler-container";
+    this.enemyHpBarFiller.className = "enemy-hp-bar-filler";
   };
 
   moveHealthBarWithEnemy = () => {
-    this.hpBarDiv.style.top = `${this.position.y - 5}px`;
-    this.hpBarDiv.style.left = `${this.position.x}px`;
+    this.enemyHpBarContainer.style.top = `${this.enemyPosition.y - 5}px`;
+    this.enemyHpBarContainer.style.left = `${this.enemyPosition.x}px`;
   };
 
   createHitboxForEnemy = (enemy: string, scale: number) => {
     switch (enemy) {
       case "basic":
-        this.hitboxY = 35 * scale;
-        this.hitboxX = 30 * scale;
-        this.hpBarWidth = 27 * scale;
+        this.enemyHitboxY = 35 * scale;
+        this.enemyHitboxX = 30 * scale;
+        this.enemyHpBarWidth = 27 * scale;
         break;
       case "basic2":
-        this.hitboxY = 51 * scale;
-        this.hitboxX = 59 * scale;
-        this.hpBarWidth = 56 * scale;
+        this.enemyHitboxY = 51 * scale;
+        this.enemyHitboxX = 59 * scale;
+        this.enemyHpBarWidth = 56 * scale;
         break;
       case "special":
         break;
@@ -107,10 +106,10 @@ export class Enemy {
   };
 
   checkIfHitByProjectile = () => {
-    const halfOfHitboxX = this.hitboxX / 2;
-    const halfOfHitboxY = this.hitboxY / 2;
-    let currentX = this.position.x;
-    let currentY = this.position.y;
+    const halfOfHitboxX = this.enemyHitboxX / 2;
+    const halfOfHitboxY = this.enemyHitboxY / 2;
+    let currentX = this.enemyPosition.x;
+    let currentY = this.enemyPosition.y;
     const hitboxArrayX = [] as number[];
     const hitboxArrayY = [] as number[];
 
@@ -134,7 +133,7 @@ export class Enemy {
       }
     }
 
-    if (this.health <= 0) {
+    if (this.enemyHp <= 0) {
       this.removeEnemy();
     }
   };
@@ -149,7 +148,7 @@ export class Enemy {
       currentPosition--;
     }
 
-    currentPosition = this.position.x + 1;
+    currentPosition = this.enemyPosition.x + 1;
 
     for (let i = 0; i < hitbox; i++) {
       hitboxArray.push(currentPosition);
@@ -158,15 +157,15 @@ export class Enemy {
   }
 
   takeDamage = () => {
-    this.health -= projectiles.prjDamage;
-
-    console.log(this.health);
+    this.enemyHp -= projectiles.prjDamage;
 
     // calculate missing hp in percentages
-    const damageTaken = (projectiles.prjDamage / this.maxHealth) * 100;
+    const damageTaken = (projectiles.prjDamage / this.enemyMaxHp) * 100;
 
-    this.hpBar.style.width = `${this.hpBarPercentage - damageTaken}%`;
-    this.hpBarPercentage = this.hpBarPercentage - damageTaken;
+    this.enemyHpBarFiller.style.width = `${
+      this.enemyHpBarPercentage - damageTaken
+    }%`;
+    this.enemyHpBarPercentage = this.enemyHpBarPercentage - damageTaken;
   };
 
   removeEnemy = () => {};

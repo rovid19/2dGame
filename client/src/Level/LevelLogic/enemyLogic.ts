@@ -2,23 +2,23 @@ import { canvasContext, enemy1, enemy2, enemy3 } from "./mainLevelLogic";
 
 export function renderEnemy() {
   if (canvasContext) {
-    enemy1.sprite.drawImage(
+    enemy1.enemySprite.drawImage(
       canvasContext,
-      enemy1.sprite.position.x,
-      enemy1.sprite.position.y
+      enemy1.enemySprite.position.x,
+      enemy1.enemySprite.position.y
     );
     enemy1.followPlayer();
-    enemy2.sprite.drawImage(
+    enemy2.enemySprite.drawImage(
       canvasContext,
-      enemy2.sprite.position.x,
-      enemy2.sprite.position.y
+      enemy2.enemySprite.position.x,
+      enemy2.enemySprite.position.y
     );
     enemy2.followPlayer();
 
-    enemy3.sprite.drawImage(
+    enemy3.enemySprite.drawImage(
       canvasContext,
-      enemy3.sprite.position.x,
-      enemy3.sprite.position.y
+      enemy3.enemySprite.position.x,
+      enemy3.enemySprite.position.y
     );
     enemy3.followPlayer();
   }

@@ -2,8 +2,8 @@ import { isOutside } from "../../Utils/TsTypes";
 import { height, width } from "./canvasLogic";
 import {
   canvasContext,
+  player,
   playerMovementInput,
-  playerShip,
   shipPosition,
 } from "./mainLevelLogic";
 import { projectiles } from "./mainLevelLogic";
@@ -22,7 +22,7 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     ) {
       playerMovementInput.direction = "";
     }
-    playerShip.drawImage(canvasContext, 0, 0);
+    player.playerSprite.drawImage(canvasContext, 0, 0);
   } else if (shipPosition.y >= height - 34 * 2 && shipPosition.x < 0) {
     if (
       playerMovementInput.direction === "LEFT" ||
@@ -33,7 +33,7 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     shipPosition.x = 0;
     shipPosition.y = height - 34 * 2;
     if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-    playerShip.drawImage(canvasContext, 0, height - 34 * 2);
+    player.playerSprite.drawImage(canvasContext, 0, height - 34 * 2);
   } else if (shipPosition.y < 0 && shipPosition.x >= width - 38 * 2) {
     if (
       playerMovementInput.direction === "RIGHT" ||
@@ -41,7 +41,7 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     ) {
       playerMovementInput.direction = "";
     }
-    playerShip.drawImage(canvasContext, width - 38 * 2, 0);
+    player.playerSprite.drawImage(canvasContext, width - 38 * 2, 0);
   } else if (
     shipPosition.y >= height - 34 * 2 &&
     shipPosition.x >= width - 38 * 2
@@ -55,7 +55,11 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
     shipPosition.x = width - 38 * 2;
     shipPosition.y = height - 34 * 2;
     if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-    playerShip.drawImage(canvasContext, width - 38 * 2, height - 34 * 2);
+    player.playerSprite.drawImage(
+      canvasContext,
+      width - 38 * 2,
+      height - 34 * 2
+    );
   }
   // lijeva strana
   else if (shipPosition.x < 0) {
@@ -64,7 +68,7 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
 
     shipPosition.x = 0;
     if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-    playerShip.drawImage(canvasContext, 0, shipPosition.y);
+    player.playerSprite.drawImage(canvasContext, 0, shipPosition.y);
   }
   // desna strana
   else if (shipPosition.x >= width - 38 * 2) {
@@ -73,7 +77,11 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
 
     shipPosition.x = width - 38 * 2;
     if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-    playerShip.drawImage(canvasContext, width - 38 * 2, shipPosition.y);
+    player.playerSprite.drawImage(
+      canvasContext,
+      width - 38 * 2,
+      shipPosition.y
+    );
   }
   // gornja strana
   else if (shipPosition.y < 0) {
@@ -82,7 +90,7 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
 
     shipPosition.y = 0;
     if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-    playerShip.drawImage(canvasContext, shipPosition.x, 0);
+    player.playerSprite.drawImage(canvasContext, shipPosition.x, 0);
   }
   // donja strana
   else if (shipPosition.y >= height - 34 * 2) {
@@ -91,9 +99,17 @@ function stopSpaceshipFromGoingOutsideOfScreen() {
 
     shipPosition.y = height - 34 * 2;
     if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-    playerShip.drawImage(canvasContext, shipPosition.x, height - 34 * 2);
+    player.playerSprite.drawImage(
+      canvasContext,
+      shipPosition.x,
+      height - 34 * 2
+    );
   } else {
-    playerShip.drawImage(canvasContext, shipPosition.x, shipPosition.y);
+    player.playerSprite.drawImage(
+      canvasContext,
+      shipPosition.x,
+      shipPosition.y
+    );
   }
 }
 
@@ -135,14 +151,14 @@ function allowSpaceshipToGoOutsideOfTheScreen() {
     if (isOutside.position === "x") {
       if (isOutside.onWhichSide === "left") {
         console.log("left", isOutside);
-        playerShip.drawImage(
+        player.playerSprite.drawImage(
           canvasContext,
           shipPosition.x + width + 38,
           shipPosition.y
         );
       } else {
         console.log("right", isOutside);
-        playerShip.drawImage(
+        player.playerSprite.drawImage(
           canvasContext,
           shipPosition.x - width - 38,
           shipPosition.y
@@ -151,14 +167,14 @@ function allowSpaceshipToGoOutsideOfTheScreen() {
     } else {
       if (isOutside.onWhichSide === "up") {
         console.log("up", isOutside);
-        playerShip.drawImage(
+        player.playerSprite.drawImage(
           canvasContext,
           shipPosition.x,
           shipPosition.y + height + 34
         );
       } else {
         console.log("down", isOutside);
-        playerShip.drawImage(
+        player.playerSprite.drawImage(
           canvasContext,
           shipPosition.x,
           shipPosition.y - height - 34

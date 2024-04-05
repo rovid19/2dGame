@@ -1,9 +1,21 @@
-import { SpriteMethods } from "../Utils/TsTypes";
+import {
+  PlayerMovementMethods,
+  SpriteMethods,
+  PlayerSpellMethods,
+  Vector,
+} from "../Utils/TsTypes";
+import { Input, PlayerSpells } from "./PlayerInput";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
 
 export class Player {
-  sprite: SpriteMethods;
+  playerSprite: SpriteMethods;
+  playerHp: number = 100;
+  playerEnergy: number = 100;
+  playerSpeed: number = 1;
+  playerMovement: PlayerMovementMethods = new Input();
+  playerSpells: PlayerSpellMethods = new PlayerSpells();
+  playerSpellActivated: boolean = false;
 
   constructor(
     spaceshipImage: HTMLImageElement,
@@ -11,7 +23,7 @@ export class Player {
     frameWidth: number,
     scale: number
   ) {
-    this.sprite = new Sprite(
+    this.playerSprite = new Sprite(
       spaceshipImage,
       new Vector2(frameHeight, frameWidth),
       scale
