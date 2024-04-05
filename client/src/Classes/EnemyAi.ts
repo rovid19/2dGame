@@ -123,7 +123,6 @@ export class Enemy {
           projectiles.prjDirections["prjR"][0].x
       )
     ) {
-      console.log("da");
       if (
         hitboxArrayY.includes(
           projectiles.prjDirections["prjL"][0].y ||

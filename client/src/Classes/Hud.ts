@@ -57,6 +57,7 @@ export class Hud {
     this.playerSpell1Keybind.id = "player-spell-keybind";
     this.playerSpell1Keybind.textContent = "I";
 
+    //spell 2
     this.playerSpellBar.appendChild(this.playerSpell2);
     this.playerSpell2Image.src = "../public//sprites/fx-6.png";
     this.playerSpell2.appendChild(this.playerSpell2Image);
@@ -67,6 +68,7 @@ export class Hud {
     this.playerSpell2Keybind.id = "player-spell-keybind";
     this.playerSpell2Keybind.textContent = "O";
 
+    //spell 3
     this.playerSpellBar.appendChild(this.playerSpell3);
     this.playerSpell3Image.src = "../public//sprites/explosion.png";
     this.playerSpell3.appendChild(this.playerSpell3Image);

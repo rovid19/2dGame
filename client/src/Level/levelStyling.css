@@ -6,10 +6,19 @@
   font-variation-settings: "BLED" 0, "SCAN" 0;
 }
 
+/* HP BAR */
+
 .hpBarContainer {
   position: relative;
   height: 20px;
-  background-color: red;
+  background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  image-rendering: pixelated;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: -20px;
   border-radius: 6px;
 }
@@ -20,7 +29,14 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: green;
+  background: linear-gradient(
+    to bottom,
+    #9a3955 0%,
+    #cf4841 40%,
+    #cf4841 60%,
+    #9a3955 100%
+  );
+  image-rendering: pixelated;
   border-radius: 6px;
 }
 .player-hp-bar-container {
@@ -71,6 +87,7 @@
   width: 95%;
   z-index: 5;
 }
+
 .player-hp-bar-filler {
   position: absolute;
   height: 100%;
@@ -86,6 +103,8 @@
   image-rendering: pixelated;
   border-radius: 6px;
 }
+
+/* ENERGY BAR */
 
 .player-energy-bar {
   position: relative;
@@ -156,9 +175,6 @@
   position: relative;
   width: 100%;
   height: 50px;
-  /*background-color: white;border: 4px black solid;
-  background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
-  */
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -170,7 +186,7 @@
   gap: 8px;
 }
 
-/* SPELL 1*/
+/* SPELLS */
 
 .player-spell {
   position: relative;
