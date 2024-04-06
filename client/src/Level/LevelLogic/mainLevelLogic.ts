@@ -35,6 +35,7 @@ const levelImages = new LevelImages({
   shadow: "../public/sprites/shadow.png",
   playerShip: "../public/sprites/2.png",
   speed: "../public/sprites/speed.png",
+  shield: "../public/sprites/shield-1.png",
   projectile: "../public/sprites/1.png",
   enemy1: "../public/sprites/enemy1.png",
   enemy2: "../public/sprites/enemy2.png",
@@ -47,6 +48,12 @@ const skySprite = new Sprite(
   levelImages.images.sky,
   new Vector2(width, height),
   1
+);
+
+export const shield = new Sprite(
+  levelImages.images.shield,
+  new Vector2(61, 61),
+  2
 );
 
 export const projectile = new Sprite(
@@ -155,7 +162,7 @@ export function renderLevel() {
       canvasContext,
       skySprite.spriteImage.image
     );
-
+    player.activateSpell();
     renderProjectiles();
     renderPlayerSpaceship();
     renderEnemy();

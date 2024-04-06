@@ -42,7 +42,7 @@
 
 .enemy-hp-bar-filler-container {
   position: absolute;
-  height: 80%;
+  height: 75%;
   width: 95%;
   z-index: 2;
 }

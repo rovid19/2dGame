@@ -1,4 +1,5 @@
 import {
+  player,
   playerMovementInput,
   playerSpellInput,
   projectiles,
@@ -9,6 +10,11 @@ export const UP = "UP";
 export const DOWN = "DOWN";
 export const LEFT = "LEFT";
 export const RIGHT = "RIGHT";
+
+export const PROJECTILE = "KeyP";
+export const SPELL1 = "KeyO";
+export const SPELL2 = "KeyŠ";
+export const SPELL3 = "KeyĐ";
 
 export class Input {
   direction: string = "";
@@ -76,29 +82,43 @@ export class PlayerSpells {
 
   constructor() {
     document.addEventListener("keydown", (e) => {
-      if (e.code === "KeyP") {
-        this.spell = "P";
+      if (e.code === PROJECTILE) {
+        this.activateSpell("Projectile");
       }
-      if (e.code === "KeyŠ") {
-        this.spell = "Š";
+      if (e.code === SPELL1) {
+        console.log("shield");
+        this.activateSpell("Shield");
       }
-      if (e.code === "KeyĐ") {
-        this.spell = "Đ";
+      if (e.code === SPELL2) {
+        this.activateSpell("Wall");
+      }
+      if (e.code === SPELL3) {
+        this.activateSpell("Explosion");
       }
     });
 
     document.addEventListener("keyup", (e) => {
-      if (e.code === "KeyP") {
+      if (e.code === PROJECTILE) {
         this.spell = "";
       }
-      if (e.code === "KeyŠ") {
+      if (e.code === SPELL1) {
         this.spell = "";
+        player.playerSpellActivated = false;
       }
-      if (e.code === "KeyĐ") {
+      if (e.code === SPELL2) {
         this.spell = "";
+        player.playerSpellActivated = false;
+      }
+      if (e.code === SPELL3) {
+        this.spell = "";
+        player.playerSpellActivated = false;
       }
     });
   }
 
   // tu ide metoda koja ce triggerati playerspellactivated i onda accordignly aktivirati spell
+  activateSpell = (spellValue: string) => {
+    this.spell = spellValue;
+    if (spellValue !== "Projectile") player.playerSpellActivated = true;
+  };
 }

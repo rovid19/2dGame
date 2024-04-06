@@ -1,4 +1,10 @@
 import {
+  canvasContext,
+  playerSpellInput,
+  shield,
+  shipPosition,
+} from "../Level/LevelLogic/mainLevelLogic";
+import {
   PlayerMovementMethods,
   SpriteMethods,
   PlayerSpellMethods,
@@ -11,6 +17,8 @@ import { Vector2 } from "./Vector";
 export class Player {
   playerSprite: SpriteMethods;
   playerHp: number = 100;
+  playerShield: number = 0;
+  playerShieldDuration: number = 0;
   playerEnergy: number = 100;
   playerSpeed: number = 1;
   playerMovement: PlayerMovementMethods = new Input();
@@ -28,5 +36,24 @@ export class Player {
       new Vector2(frameHeight, frameWidth),
       scale
     );
+  }
+
+  activateSpell() {
+    if (this.playerSpellActivated || this.playerShieldDuration > 0) {
+      if (playerSpellInput.spell === "Shield") {
+        console.log("da22");
+        this.playerShieldDuration = 4;
+        const shieldMinusShipHeight = 122 - 68;
+        const centerShield = shieldMinusShipHeight / 2;
+
+        const shieldMinusShipWidth = 122 - 76;
+        const centerShieldX = shieldMinusShipWidth / 2;
+        shield.drawImage(
+          canvasContext,
+          shipPosition.x - centerShieldX,
+          shipPosition.y - centerShield
+        );
+      }
+    }
   }
 }
