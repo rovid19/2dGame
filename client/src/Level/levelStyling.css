@@ -222,6 +222,7 @@
   border: 2px solid black;
   background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
   border-radius: 30px;
+  overflow: hidden;
 }
 
 .player-spell-img {
@@ -234,12 +235,13 @@
   color: #bdc1c3;
 }
 
-.player-spell::before {
+.cooldown1 {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 0%;
   width: 100%;
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 25px;
 }

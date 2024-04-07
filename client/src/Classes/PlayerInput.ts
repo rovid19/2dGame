@@ -1,4 +1,5 @@
 import {
+  HUD,
   player,
   playerMovementInput,
   playerSpellInput,
@@ -79,6 +80,10 @@ export class Input {
 
 export class PlayerSpells {
   spell: string = "";
+  spellsOnCooldown: string[] = [];
+  playerShieldAmount: number = 0;
+  playerShieldCooldown: number = 0;
+  playerShieldDuration: number = 0;
 
   constructor() {
     document.addEventListener("keydown", (e) => {
@@ -86,8 +91,11 @@ export class PlayerSpells {
         this.activateSpell("Projectile");
       }
       if (e.code === SPELL1) {
-        console.log("shield");
-        this.activateSpell("Shield");
+        if (this.spellsOnCooldown.includes("Shield")) {
+          console.log("shield on cd");
+        } else {
+          this.activateSpell("Shield");
+        }
       }
       if (e.code === SPELL2) {
         this.activateSpell("Wall");
@@ -102,7 +110,6 @@ export class PlayerSpells {
         this.spell = "";
       }
       if (e.code === SPELL1) {
-        this.spell = "";
         player.playerSpellActivated = false;
       }
       if (e.code === SPELL2) {
@@ -118,7 +125,32 @@ export class PlayerSpells {
 
   // tu ide metoda koja ce triggerati playerspellactivated i onda accordignly aktivirati spell
   activateSpell = (spellValue: string) => {
-    this.spell = spellValue;
-    if (spellValue !== "Projectile") player.playerSpellActivated = true;
+    if (this.spellsOnCooldown.includes("Shield")) {
+    } else {
+      this.setActiveSpell(spellValue);
+      this.spell = spellValue;
+      if (spellValue !== "Projectile") player.playerSpellActivated = true;
+    }
+  };
+
+  setActiveSpell = (spellValue: string) => {
+    if (spellValue === "Shield") {
+      this.playerShieldAmount = 100;
+      this.playerShieldDuration = 240;
+    }
+  };
+
+  activateSpellCooldown = () => {
+    this.spellsOnCooldown.forEach((spell, i) => {
+      if (spell === "Shield") {
+        this.playerShieldCooldown--;
+        HUD.playerSpell1Cooldown.style.height = `${this.playerShieldCooldown}%`;
+        if (this.playerShieldCooldown === 0) {
+          this.spellsOnCooldown.splice(i, 1);
+        }
+      } else if (spell === "Explosion") {
+      } else {
+      }
+    });
   };
 }

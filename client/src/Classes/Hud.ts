@@ -9,6 +9,7 @@ export class Hud {
   playerSpellBarContainer: HTMLElement = document.createElement("div");
   playerSpellBar: HTMLElement = document.createElement("div");
   playerSpell1: HTMLElement = document.createElement("div");
+  playerSpell1Cooldown: HTMLElement = document.createElement("div");
   playerSpell1Image: HTMLImageElement = document.createElement("img");
   playerSpell1Keybind: HTMLElement = document.createElement("h3");
   playerSpell2: HTMLElement = document.createElement("div");
@@ -52,17 +53,18 @@ export class Hud {
     this.playerSpell1Image.src = "../public//sprites/shield-1.png";
     this.playerSpell1.appendChild(this.playerSpell1Image);
     this.playerSpell1.appendChild(this.playerSpell1Keybind);
+    this.playerSpell1.appendChild(this.playerSpell1Cooldown);
     this.playerSpell1Image.className = "player-spell-img";
     this.playerSpell1Keybind.className = "sixtyfour-myapp";
     this.playerSpell1Keybind.id = "player-spell-keybind";
-    this.playerSpell1Keybind.textContent = "I";
+    this.playerSpell1Cooldown.className = "cooldown1";
+    this.playerSpell1Keybind.textContent = "O";
 
     //spell 2
     this.playerSpellBar.appendChild(this.playerSpell2);
     this.playerSpell2Image.src = "../public//sprites/fx-6.png";
     this.playerSpell2.appendChild(this.playerSpell2Image);
     this.playerSpell2.appendChild(this.playerSpell2Keybind);
-    this.playerSpell2.className = "player-spell";
     this.playerSpell2Image.className = "player-spell-img";
     this.playerSpell2Keybind.className = "sixtyfour-myapp";
     this.playerSpell2Keybind.id = "player-spell-keybind";
@@ -73,7 +75,6 @@ export class Hud {
     this.playerSpell3Image.src = "../public//sprites/explosion.png";
     this.playerSpell3.appendChild(this.playerSpell3Image);
     this.playerSpell3.appendChild(this.playerSpell3Keybind);
-    this.playerSpell3.className = "player-spell";
     this.playerSpell3Image.className = "player-spell-img";
     this.playerSpell3Keybind.className = "sixtyfour-myapp";
     this.playerSpell3Keybind.id = "player-spell-keybind";

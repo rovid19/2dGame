@@ -59,4 +59,9 @@ export type PlayerMovementMethods = {
 
 export type PlayerSpellMethods = {
   spell: string;
+  spellsOnCooldown: string[];
+  playerShieldDuration: number;
+  playerShieldCooldown: number;
+  playerShieldAmount: number;
+  activateSpellCooldown(): void;
 };

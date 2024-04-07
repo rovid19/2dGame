@@ -99,7 +99,7 @@ enemy3.updateEnemyCoordinates(enemy3.enemySprite.position);
 enemy3.createHitboxForEnemy("basic", enemy3.enemySprite.scale);
 enemy3.renderHealthBar();
 
-const HUD = new Hud();
+export const HUD = new Hud();
 //
 //
 //
@@ -163,6 +163,7 @@ export function renderLevel() {
       skySprite.spriteImage.image
     );
     player.activateSpell();
+    player.playerSpells.activateSpellCooldown();
     renderProjectiles();
     renderPlayerSpaceship();
     renderEnemy();
