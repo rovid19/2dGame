@@ -85,21 +85,22 @@ projectiles.updateProjectileBaseCoordinates();
 
 export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27, 2.5);
 enemy1.updateEnemyCoordinates(enemy1.enemySprite.position);
-enemy1.createHitboxForEnemy("basic", enemy1.enemySprite.scale);
+enemy1.createDetailsAboutEnemy("basic", enemy1.enemySprite.scale);
 enemy1.renderHealthBar();
 
 export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56, 2);
 enemy2.updateEnemyCoordinates(enemy2.enemySprite.position);
-enemy2.createHitboxForEnemy("basic2", enemy2.enemySprite.scale);
+enemy2.createDetailsAboutEnemy("basic2", enemy2.enemySprite.scale);
 
 enemy2.renderHealthBar();
 
 export let enemy3 = new Enemy(1.2, levelImages.images.enemy1, 24, 27, 2.5);
 enemy3.updateEnemyCoordinates(enemy3.enemySprite.position);
-enemy3.createHitboxForEnemy("basic", enemy3.enemySprite.scale);
+enemy3.createDetailsAboutEnemy("basic", enemy3.enemySprite.scale);
 enemy3.renderHealthBar();
 
 export const HUD = new Hud();
+player.setHpBar(HUD.hpBarFiller);
 //
 //
 //
@@ -166,6 +167,7 @@ export function renderLevel() {
     player.playerSpells.activateSpellCooldown();
     renderProjectiles();
     renderPlayerSpaceship();
+    player.checkIfHitByAnEnemy();
     renderEnemy();
   }
 }

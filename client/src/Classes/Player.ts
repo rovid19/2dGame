@@ -1,6 +1,7 @@
 import {
   HUD,
   canvasContext,
+  enemyArray,
   playerSpellInput,
   shield,
   shipPosition,
@@ -9,7 +10,6 @@ import {
   PlayerMovementMethods,
   SpriteMethods,
   PlayerSpellMethods,
-  Vector,
 } from "../Utils/TsTypes";
 import { Input, PlayerSpells } from "./PlayerInput";
 import { Sprite } from "./Sprite";
@@ -18,11 +18,16 @@ import { Vector2 } from "./Vector";
 export class Player {
   playerSprite: SpriteMethods;
   playerHp: number = 100;
+  playerMaxHP: number = 100;
+  playerHpBarPercentage: number = 100;
+  playerHpBar: HTMLElement = document.createElement("div");
   playerEnergy: number = 100;
   playerSpeed: number = 1;
   playerMovement: PlayerMovementMethods = new Input();
   playerSpells: PlayerSpellMethods = new PlayerSpells();
   playerSpellActivated: boolean = false;
+  playerHitboxY: number;
+  playerHitboxX: number;
 
   constructor(
     spaceshipImage: HTMLImageElement,
@@ -35,6 +40,77 @@ export class Player {
       new Vector2(frameHeight, frameWidth),
       scale
     );
+    this.playerHitboxY = 34 * this.playerSprite.scale;
+    this.playerHitboxX = 38 * this.playerSprite.scale;
+  }
+
+  checkIfHitByAnEnemy = () => {
+    const halfOfHitboxX = this.playerHitboxX / 2;
+    const halfOfHitboxY = this.playerHitboxY / 2;
+    let currentX = shipPosition.x;
+    let currentY = shipPosition.y;
+    const hitboxArrayX = [] as number[];
+    const hitboxArrayY = [] as number[];
+
+    this.returnArrayOfHitboxNumbers(
+      currentX,
+      halfOfHitboxX,
+      hitboxArrayX,
+      currentX + 1
+    );
+    this.returnArrayOfHitboxNumbers(
+      currentY,
+      halfOfHitboxY,
+      hitboxArrayY,
+      currentY + 1
+    );
+
+    enemyArray.forEach((enemyPosition) => {
+      if (hitboxArrayX.includes(enemyPosition.position.x)) {
+        if (hitboxArrayY.includes(enemyPosition.position.y)) {
+          if (enemyPosition.enemyAttack.enemyAttackCooldown === 60) {
+            this.takeDamage(enemyPosition.enemyAttack.enemyDamage);
+            enemyPosition.enemyAttack.isEnemyAttackOnCooldown = true;
+
+            console.log(this.playerHp);
+          }
+        }
+      }
+    });
+  };
+
+  takeDamage(enemyDamage: number) {
+    this.playerHp = this.playerHp - enemyDamage;
+    this.renderTakenDamageInHpBar(enemyDamage);
+  }
+
+  setHpBar(htmlElement: HTMLElement) {
+    this.playerHpBar = htmlElement;
+  }
+
+  renderTakenDamageInHpBar(enemyDamage: number) {
+    const damageTaken = (enemyDamage / this.playerMaxHP) * 100;
+    this.playerHpBar.style.width = `${
+      this.playerHpBarPercentage - damageTaken
+    }%`;
+    this.playerHpBarPercentage = this.playerHpBarPercentage - damageTaken;
+  }
+
+  returnArrayOfHitboxNumbers(
+    currentPosition: number,
+    hitbox: number,
+    hitboxArray: number[],
+    newCurrentPosition: number
+  ) {
+    for (let i = 0; i < hitbox; i++) {
+      hitboxArray.push(currentPosition);
+      currentPosition--;
+    }
+
+    for (let i = 0; i < hitbox; i++) {
+      hitboxArray.push(newCurrentPosition);
+      newCurrentPosition++;
+    }
   }
 
   activateSpell() {

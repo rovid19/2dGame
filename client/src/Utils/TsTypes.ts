@@ -31,10 +31,15 @@ export type ProjectileArray = {
   [key: string]: Coordinates[];
 };
 
+export type EnemyAttack = {
+  enemyDamage: number;
+  enemyAttackCooldown: number;
+  isEnemyAttackOnCooldown: boolean;
+};
+
 export type EnemyObject = {
-  x: number;
-  y: number;
-  isAlive: boolean;
+  position: { x: number; y: number };
+  enemyAttack: EnemyAttack;
 };
 
 export type SpriteType = {

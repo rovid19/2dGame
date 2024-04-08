@@ -1,5 +1,9 @@
-import { projectiles, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
-import { SpriteMethods, Vector } from "../Utils/TsTypes";
+import {
+  enemyArray,
+  projectiles,
+  shipPosition,
+} from "../Level/LevelLogic/mainLevelLogic";
+import { EnemyAttack, SpriteMethods, Vector } from "../Utils/TsTypes";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
 
@@ -17,6 +21,11 @@ export class Enemy {
   enemyHpBarPercentage: number = 100;
   enemyHitboxX: number = 0;
   enemyHitboxY: number = 0;
+  enemyAttack: EnemyAttack = {
+    enemyDamage: 10,
+    enemyAttackCooldown: 60,
+    isEnemyAttackOnCooldown: false,
+  };
 
   constructor(
     speed: number,
@@ -31,6 +40,7 @@ export class Enemy {
       scale
     );
     this.enemySpeed = speed;
+    this.setEnemyPositionIntoAnEnemyArray();
   }
 
   followPlayer() {
@@ -53,7 +63,26 @@ export class Enemy {
     this.checkIfHitByProjectile();
   }
 
-  collisionDetection() {}
+  setEnemyPositionIntoAnEnemyArray() {
+    const enemyObject = {
+      position: this.enemySprite.position,
+      enemyAttack: this.enemyAttack,
+    };
+    enemyArray.push(enemyObject);
+  }
+
+  setEnemyAttackOnCooldown() {
+    if (this.enemyAttack.isEnemyAttackOnCooldown) {
+      console.log(this.enemyAttack.isEnemyAttackOnCooldown);
+      this.enemyAttack.enemyAttackCooldown--;
+
+      if (this.enemyAttack.enemyAttackCooldown === 0) {
+        this.enemyAttack.enemyAttackCooldown = 60;
+        this.enemyAttack.isEnemyAttackOnCooldown = false;
+      }
+    }
+  }
+
   updateEnemyCoordinates(enemyPosition: Vector) {
     this.enemyPosition = enemyPosition;
   }
@@ -78,17 +107,19 @@ export class Enemy {
     this.enemyHpBarContainer.style.left = `${this.enemyPosition.x}px`;
   };
 
-  createHitboxForEnemy = (enemy: string, scale: number) => {
+  createDetailsAboutEnemy = (enemy: string, scale: number) => {
     switch (enemy) {
       case "basic":
         this.enemyHitboxY = 35 * scale;
         this.enemyHitboxX = 30 * scale;
         this.enemyHpBarWidth = 27 * scale;
+        this.enemyAttack.enemyDamage = 10;
         break;
       case "basic2":
         this.enemyHitboxY = 51 * scale;
         this.enemyHitboxX = 59 * scale;
         this.enemyHpBarWidth = 56 * scale;
+        this.enemyAttack.enemyDamage = 20;
         break;
       case "special":
         break;
@@ -113,8 +144,18 @@ export class Enemy {
     const hitboxArrayX = [] as number[];
     const hitboxArrayY = [] as number[];
 
-    this.returnArrayOfHitboxNumbers(currentX, halfOfHitboxX, hitboxArrayX);
-    this.returnArrayOfHitboxNumbers(currentY, halfOfHitboxY, hitboxArrayY);
+    this.returnArrayOfHitboxNumbers(
+      currentX,
+      halfOfHitboxX,
+      hitboxArrayX,
+      currentX + 1
+    );
+    this.returnArrayOfHitboxNumbers(
+      currentY,
+      halfOfHitboxY,
+      hitboxArrayY,
+      currentY + 1
+    );
 
     if (
       hitboxArrayX.includes(
@@ -141,18 +182,17 @@ export class Enemy {
   returnArrayOfHitboxNumbers(
     currentPosition: number,
     hitbox: number,
-    hitboxArray: number[]
+    hitboxArray: number[],
+    newCurrentPosition: number
   ) {
     for (let i = 0; i < hitbox; i++) {
       hitboxArray.push(currentPosition);
       currentPosition--;
     }
 
-    currentPosition = this.enemyPosition.x + 1;
-
     for (let i = 0; i < hitbox; i++) {
-      hitboxArray.push(currentPosition);
-      currentPosition++;
+      hitboxArray.push(newCurrentPosition);
+      newCurrentPosition++;
     }
   }
 

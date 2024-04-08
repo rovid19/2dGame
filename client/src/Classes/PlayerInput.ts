@@ -84,6 +84,7 @@ export class PlayerSpells {
   playerShieldAmount: number = 0;
   playerShieldCooldown: number = 0;
   playerShieldDuration: number = 0;
+  intervalRunning: boolean = false;
 
   constructor() {
     document.addEventListener("keydown", (e) => {
@@ -107,7 +108,6 @@ export class PlayerSpells {
 
     document.addEventListener("keyup", (e) => {
       if (e.code === PROJECTILE) {
-        this.spell = "";
       }
       if (e.code === SPELL1) {
         player.playerSpellActivated = false;
@@ -143,8 +143,9 @@ export class PlayerSpells {
   activateSpellCooldown = () => {
     this.spellsOnCooldown.forEach((spell, i) => {
       if (spell === "Shield") {
+        this.cooldownTimerCounter(this.playerShieldCooldown);
         this.playerShieldCooldown--;
-        HUD.playerSpell1Cooldown.style.height = `${this.playerShieldCooldown}%`;
+
         if (this.playerShieldCooldown === 0) {
           this.spellsOnCooldown.splice(i, 1);
         }
@@ -152,5 +153,26 @@ export class PlayerSpells {
       } else {
       }
     });
+  };
+
+  cooldownTimerCounter = (frames: number) => {
+    if (!this.intervalRunning) {
+      this.intervalRunning = true;
+      const cooldownDurationMilliseconds = 1000 / frames;
+      console.log(cooldownDurationMilliseconds);
+      let currentWidthPercentage = 100;
+      const interval = setInterval(() => {
+        HUD.playerSpell1Cooldown.style.width = `${
+          currentWidthPercentage - cooldownDurationMilliseconds
+        }%`;
+        currentWidthPercentage -= cooldownDurationMilliseconds;
+
+        if (currentWidthPercentage <= 0) {
+          clearInterval(interval);
+
+          this.intervalRunning = false;
+        }
+      }, 100);
+    }
   };
 }

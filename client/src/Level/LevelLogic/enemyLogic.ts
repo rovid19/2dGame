@@ -8,12 +8,14 @@ export function renderEnemy() {
       enemy1.enemySprite.position.y
     );
     enemy1.followPlayer();
-    enemy2.enemySprite.drawImage(
+    enemy1.setEnemyAttackOnCooldown();
+    /*enemy2.enemySprite.drawImage(
       canvasContext,
       enemy2.enemySprite.position.x,
       enemy2.enemySprite.position.y
     );
     enemy2.followPlayer();
+    enemy2.setEnemyAttackOnCooldown();
 
     enemy3.enemySprite.drawImage(
       canvasContext,
@@ -21,5 +23,6 @@ export function renderEnemy() {
       enemy3.enemySprite.position.y
     );
     enemy3.followPlayer();
+    enemy3.setEnemyAttackOnCooldown();*/
   }
 }
