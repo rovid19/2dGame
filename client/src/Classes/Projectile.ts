@@ -11,7 +11,7 @@ export class Projectile {
   prjDamage: number = 10;
   prjAmount: number = 1;
   isFiring: boolean = false;
-  fireRate: number = 0;
+  projectileDistanceTraveled: number = 0;
   isReady: boolean = false;
   isRendered: boolean = false;
   targetHit: boolean = false;
@@ -77,18 +77,21 @@ export class Projectile {
   }
 
   fireProjectile = () => {
+    // return projectiles to ship position
     if (this.targetHit) {
       this.updateProjectileBaseCoordinates();
     } else {
+      // fire projectile
       if (!this.isFiring) this.isFiring = true;
+
       const distanceToEndOfScreen = shipPosition.y + 34 * 2;
 
       this.prjDirections.prjL[0].y -= this.prjSpeed;
       this.prjDirections.prjR[0].y -= this.prjSpeed;
-      this.fireRate += this.prjSpeed;
+      this.projectileDistanceTraveled += this.prjSpeed;
 
-      if (this.fireRate >= distanceToEndOfScreen) {
-        this.fireRate = 0;
+      if (this.projectileDistanceTraveled >= distanceToEndOfScreen) {
+        this.projectileDistanceTraveled = 0;
         this.isFiring = false;
         this.updateProjectileBaseCoordinates();
       }
