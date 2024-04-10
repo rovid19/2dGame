@@ -80,7 +80,7 @@ export const enemyArray: EnemyObject[] = [];
 //
 //
 //
-export let projectiles = new Projectile();
+export let projectiles = new Projectile(shipPosition);
 projectiles.updateProjectileBaseCoordinates();
 
 export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27, 2.5);

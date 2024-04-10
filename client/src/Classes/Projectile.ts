@@ -1,5 +1,5 @@
-import { shipPosition } from "../Level/LevelLogic/mainLevelLogic";
-import { ProjectileArray } from "../Utils/TsTypes";
+import { ProjectileArray, Vector } from "../Utils/TsTypes";
+import { Vector2 } from "./Vector";
 
 // prj -> projectile, L - left, R - right
 export class Projectile {
@@ -15,7 +15,10 @@ export class Projectile {
   isReady: boolean = false;
   isRendered: boolean = false;
   targetHit: boolean = false;
-  constructor() {}
+  shipPosition: Vector = new Vector2();
+  constructor(shipPosition: Vector) {
+    this.shipPosition = shipPosition;
+  }
 
   renderProjectile = (
     ctx: CanvasRenderingContext2D,
@@ -67,12 +70,26 @@ export class Projectile {
     projectileArray: ProjectileArray,
     projectileAmount: number
   ) {
-    for (let i = 0; i < projectileAmount; i++) {
+    for (const key in projectileArray) {
+      if (projectileArray.hasOwnProperty(key)) {
+        const projectiles = projectileArray[key];
+
+        // Now, projectiles is an array of Coordinates you can iterate over
+        for (let i = 0; i < projectiles.length; i++) {
+          ctx.drawImage(
+            projectileImage,
+            projectiles[i].x, // This is now valid, as projectiles is an array of Coordinates
+            projectiles[i].y
+          );
+        }
+      }
+      /*  for (let i = 0; i < projectileAmount; i++) {
       ctx.drawImage(
         projectileImage,
         projectileArray[i].x,
         projectileArray[i].y
       );
+    }*/
     }
   }
 
@@ -84,7 +101,7 @@ export class Projectile {
       // fire projectile
       if (!this.isFiring) this.isFiring = true;
 
-      const distanceToEndOfScreen = shipPosition.y + 34 * 2;
+      const distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
 
       this.prjDirections.prjL[0].y -= this.prjSpeed;
       this.prjDirections.prjR[0].y -= this.prjSpeed;
@@ -99,11 +116,11 @@ export class Projectile {
   };
 
   updateProjectileBaseCoordinates() {
-    this.prjDirections.prjL[0].x = shipPosition.x + 7;
-    this.prjDirections.prjL[0].y = shipPosition.y + 10;
+    this.prjDirections.prjL[0].x = this.shipPosition.x + 7;
+    this.prjDirections.prjL[0].y = this.shipPosition.y + 10;
 
-    this.prjDirections.prjR[0].x = shipPosition.x + 55;
-    this.prjDirections.prjR[0].y = shipPosition.y + 10;
+    this.prjDirections.prjR[0].x = this.shipPosition.x + 55;
+    this.prjDirections.prjR[0].y = this.shipPosition.y + 10;
 
     if (!this.isReady) {
       this.isReady = true;
