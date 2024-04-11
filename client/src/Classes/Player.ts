@@ -2,7 +2,6 @@ import {
   HUD,
   canvasContext,
   enemyArray,
-  playerSpellInput,
   shield,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
@@ -11,7 +10,8 @@ import {
   SpriteMethods,
   PlayerSpellMethods,
 } from "../Utils/TsTypes";
-import { Input, PlayerSpells } from "./PlayerInput";
+import { Input } from "./PlayerInput";
+import { PlayerSpells } from "./PlayerSpells";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
 
@@ -118,7 +118,7 @@ export class Player {
       this.playerSpellActivated ||
       this.playerSpells.playerShieldDuration > 0
     ) {
-      if (playerSpellInput.spell === "Shield") {
+      if (this.playerSpells.spell === "Shield") {
         this.playerSpells.playerShieldDuration--;
 
         //render shield in the middle of spaceship sprite

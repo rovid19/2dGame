@@ -3,14 +3,7 @@ import { Sprite } from "../../Classes/Sprite.ts";
 import { levelGenerator } from "../levelGenerator.ts";
 import { LevelImages } from "../../Classes/LevelImages.ts";
 import { animationLoop } from "../../Classes/AnimationLoop.ts";
-import {
-  Input,
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT,
-  PlayerSpells,
-} from "../../Classes/PlayerInput.ts";
+import { Input } from "../../Classes/PlayerInput.ts";
 import {
   drawImageToFillCanvasSize,
   height,
@@ -80,7 +73,7 @@ export const enemyArray: EnemyObject[] = [];
 //
 //
 //
-export let projectiles = new Projectile(shipPosition);
+export const projectiles = new Projectile(shipPosition);
 projectiles.updateProjectileBaseCoordinates();
 
 export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27, 2.5);
@@ -106,39 +99,13 @@ player.setHpBar(HUD.hpBarFiller);
 //
 // Player movement + spells
 export const playerMovementInput = new Input();
-export const playerSpellInput = new PlayerSpells();
-
-export const playerMovement = () => {
-  if (playerSpellInput.spell === "P") {
-    if (shipPosition.y > 40) {
-      projectiles.targetHit = false;
-      projectiles.fireProjectile();
-    }
-  }
-  if (playerMovementInput.direction === UP) {
-    shipPosition.y -= 10;
-    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-  }
-  if (playerMovementInput.direction === DOWN) {
-    shipPosition.y += 10;
-    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-  }
-  if (playerMovementInput.direction === LEFT) {
-    shipPosition.x -= 10;
-    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-  }
-  if (playerMovementInput.direction === RIGHT) {
-    shipPosition.x += 10;
-    if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-  }
-};
 
 //
 //
 //
 // Main render loop
 const renderLevelLoop = new animationLoop(
-  playerMovementInput.playerMovement,
+  playerMovementInput.playerInput,
   renderLevel
 );
 renderLevelLoop.start();
@@ -163,11 +130,17 @@ export function renderLevel() {
       canvasContext,
       skySprite.spriteImage.image
     );
-    player.activateSpell();
-    player.playerSpells.activateSpellCooldown();
+
+    playerMethods();
     renderProjectiles();
     renderPlayerSpaceship();
-    player.checkIfHitByAnEnemy();
     renderEnemy();
   }
+}
+
+function playerMethods() {
+  projectiles.reloadProjectile();
+  player.activateSpell();
+  player.playerSpells.activateSpellCooldown();
+  player.checkIfHitByAnEnemy();
 }

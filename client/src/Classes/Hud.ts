@@ -6,6 +6,9 @@ export class Hud {
   energyBar: HTMLElement = document.createElement("div");
   energyBarFillerContainer: HTMLElement = document.createElement("div");
   energyBarFiller: HTMLElement = document.createElement("div");
+  playerReloadBarContainer: HTMLElement = document.createElement("div");
+  playerReloadBar: HTMLElement = document.createElement("div");
+  playerReloadBarFiller: HTMLElement = document.createElement("div");
   playerSpellBarContainer: HTMLElement = document.createElement("div");
   playerSpellBar: HTMLElement = document.createElement("div");
   playerSpell1: HTMLElement = document.createElement("div");
@@ -47,6 +50,14 @@ export class Hud {
     this.playerSpellBarContainer.appendChild(this.playerSpellBar);
     this.playerSpellBarContainer.className = "player-spell-bar-container";
     this.playerSpellBar.className = "player-spell-bar";
+
+    // reload bar
+    document.body.appendChild(this.playerReloadBarContainer);
+    this.playerReloadBarContainer.className = "player-reload-bar-container";
+    this.playerReloadBarContainer.appendChild(this.playerReloadBar);
+    this.playerReloadBar.className = "player-reload-bar";
+    this.playerReloadBar.appendChild(this.playerReloadBarFiller);
+    this.playerReloadBarFiller.className = "player-reload-bar-filler";
 
     //spell 1
     this.playerSpellBar.appendChild(this.playerSpell1);

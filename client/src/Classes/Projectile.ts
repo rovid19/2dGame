@@ -1,21 +1,26 @@
-import { ProjectileArray, Vector } from "../Utils/TsTypes";
+import { HUD, projectiles } from "../Level/LevelLogic/mainLevelLogic";
+import { levelStore } from "../Stores/LevelStore";
+import { Vector } from "../Utils/TsTypes";
 import { Vector2 } from "./Vector";
 
-// prj -> projectile, L - left, R - right
 export class Projectile {
-  prjDirections: any = {
-    prjL: [{ x: 0, y: 0 }],
-    prjR: [{ x: 0, y: 0 }],
-  };
+  prjDirectionsLeft: Vector = { x: 0, y: 0 };
+  prjDirectionsRight: Vector = { x: 0, y: 0 };
   prjSpeed: number = 15;
   prjDamage: number = 10;
   prjAmount: number = 1;
+  prjReloadCooldown: number = 30;
+  prjReloadSpeed: number = 30;
+  isReloading: boolean = false;
+  reloadElementPercentage: number = 100;
+  reloadElementMaxPercentage: number = 100;
   isFiring: boolean = false;
   projectileDistanceTraveled: number = 0;
   isReady: boolean = false;
   isRendered: boolean = false;
   targetHit: boolean = false;
   shipPosition: Vector = new Vector2();
+  distanceToEndOfScreen: number = 0;
   constructor(shipPosition: Vector) {
     this.shipPosition = shipPosition;
   }
@@ -23,77 +28,15 @@ export class Projectile {
   renderProjectile = (
     ctx: CanvasRenderingContext2D,
     projectileImage: HTMLImageElement,
-    projectileArray: ProjectileArray,
-    projectileAmount: number
+    x: number,
+    y: number
   ) => {
     if (!this.isRendered) this.isRendered = true;
-    switch (projectileAmount) {
-      case 1:
-        this.drawProjectile(
-          ctx,
-          projectileImage,
-          projectileArray,
-          projectileAmount
-        );
-        break;
-      case 2:
-        this.drawProjectile(
-          ctx,
-          projectileImage,
-          projectileArray,
-          projectileAmount
-        );
 
-        break;
-      case 3:
-        this.drawProjectile(
-          ctx,
-          projectileImage,
-          projectileArray,
-          projectileAmount
-        );
-        break;
-      case 4:
-        this.drawProjectile(
-          ctx,
-          projectileImage,
-          projectileArray,
-          projectileAmount
-        );
-        break;
-    }
+    ctx.drawImage(projectileImage, x, y);
   };
 
-  drawProjectile(
-    ctx: CanvasRenderingContext2D,
-    projectileImage: HTMLImageElement,
-    projectileArray: ProjectileArray,
-    projectileAmount: number
-  ) {
-    for (const key in projectileArray) {
-      if (projectileArray.hasOwnProperty(key)) {
-        const projectiles = projectileArray[key];
-
-        // Now, projectiles is an array of Coordinates you can iterate over
-        for (let i = 0; i < projectiles.length; i++) {
-          ctx.drawImage(
-            projectileImage,
-            projectiles[i].x, // This is now valid, as projectiles is an array of Coordinates
-            projectiles[i].y
-          );
-        }
-      }
-      /*  for (let i = 0; i < projectileAmount; i++) {
-      ctx.drawImage(
-        projectileImage,
-        projectileArray[i].x,
-        projectileArray[i].y
-      );
-    }*/
-    }
-  }
-
-  fireProjectile = () => {
+  firingAnimation = () => {
     // return projectiles to ship position
     if (this.targetHit) {
       this.updateProjectileBaseCoordinates();
@@ -101,13 +44,12 @@ export class Projectile {
       // fire projectile
       if (!this.isFiring) this.isFiring = true;
 
-      const distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
-
-      this.prjDirections.prjL[0].y -= this.prjSpeed;
-      this.prjDirections.prjR[0].y -= this.prjSpeed;
+      this.prjDirectionsLeft.y -= this.prjSpeed;
+      this.prjDirectionsRight.y -= this.prjSpeed;
       this.projectileDistanceTraveled += this.prjSpeed;
 
-      if (this.projectileDistanceTraveled >= distanceToEndOfScreen) {
+      if (this.projectileDistanceTraveled >= this.distanceToEndOfScreen) {
+        this.isReloading = true;
         this.projectileDistanceTraveled = 0;
         this.isFiring = false;
         this.updateProjectileBaseCoordinates();
@@ -116,14 +58,57 @@ export class Projectile {
   };
 
   updateProjectileBaseCoordinates() {
-    this.prjDirections.prjL[0].x = this.shipPosition.x + 7;
-    this.prjDirections.prjL[0].y = this.shipPosition.y + 10;
+    this.prjDirectionsLeft.x = this.shipPosition.x + 7;
+    this.prjDirectionsLeft.y = this.shipPosition.y + 10;
 
-    this.prjDirections.prjR[0].x = this.shipPosition.x + 55;
-    this.prjDirections.prjR[0].y = this.shipPosition.y + 10;
+    this.prjDirectionsRight.x = this.shipPosition.x + 55;
+    this.prjDirectionsRight.y = this.shipPosition.y + 10;
 
     if (!this.isReady) {
       this.isReady = true;
+    }
+  }
+
+  calculateSpeedOfProjectilesBasedOnSpaceshipPosition = () => {
+    if (this.shipPosition.y > 750) {
+      this.prjSpeed = 20;
+    } else if (this.shipPosition.y > 550) {
+      this.prjSpeed = 18;
+    } else if (this.shipPosition.y > 250) {
+      this.prjSpeed = 16;
+    } else {
+      this.prjSpeed = 14;
+    }
+  };
+
+  reloadProjectile = () => {
+    if (this.isReloading) {
+      this.prjReloadCooldown--;
+
+      this.renderReloadHudElement();
+      if (this.prjReloadCooldown === 0) {
+        this.isReloading = false;
+        this.prjReloadCooldown = this.prjReloadSpeed;
+        this.reloadElementPercentage = 100;
+        HUD.playerReloadBarFiller.style.width = `95%`;
+      }
+    }
+  };
+
+  renderReloadHudElement() {
+    const reduceMaxReloadPercentageBy = 100 / this.prjReloadSpeed;
+    this.reloadElementPercentage =
+      this.reloadElementPercentage - reduceMaxReloadPercentageBy;
+    HUD.playerReloadBarFiller.style.width = `${this.reloadElementPercentage}%`;
+  }
+
+  fireProjectile() {
+    if (!this.isReloading) {
+      this.distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
+      this.calculateSpeedOfProjectilesBasedOnSpaceshipPosition();
+      this.firingAnimation();
+    } else {
+      console.log("reloading");
     }
   }
 }

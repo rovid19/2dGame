@@ -40,7 +40,7 @@ export class Enemy {
       scale
     );
     this.enemySpeed = speed;
-    this.setEnemyPositionIntoAnEnemyArray();
+    this.setEnemyDetailsIntoAnEnemyArray();
   }
 
   followPlayer() {
@@ -63,7 +63,7 @@ export class Enemy {
     this.checkIfHitByProjectile();
   }
 
-  setEnemyPositionIntoAnEnemyArray() {
+  setEnemyDetailsIntoAnEnemyArray() {
     const enemyObject = {
       position: this.enemySprite.position,
       enemyAttack: this.enemyAttack,
@@ -73,7 +73,6 @@ export class Enemy {
 
   setEnemyAttackOnCooldown() {
     if (this.enemyAttack.isEnemyAttackOnCooldown) {
-      console.log(this.enemyAttack.isEnemyAttackOnCooldown);
       this.enemyAttack.enemyAttackCooldown--;
 
       if (this.enemyAttack.enemyAttackCooldown === 0) {
@@ -159,14 +158,12 @@ export class Enemy {
 
     if (
       hitboxArrayX.includes(
-        projectiles.prjDirections["prjL"][0].x ||
-          projectiles.prjDirections["prjR"][0].x
+        projectiles.prjDirectionsLeft.x || projectiles.prjDirectionsRight.x
       )
     ) {
       if (
         hitboxArrayY.includes(
-          projectiles.prjDirections["prjL"][0].y ||
-            projectiles.prjDirections["prjR"][0].y
+          projectiles.prjDirectionsLeft.y || projectiles.prjDirectionsRight.y
         )
       ) {
         projectiles.targetHit = true;
