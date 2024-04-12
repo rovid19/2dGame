@@ -55,6 +55,7 @@ export class Input {
       projectiles.projectileDistanceTraveled === 0
     ) {
       if (shipPosition.y > 100) {
+        projectiles.targetHit = false;
         projectiles.fireProjectile();
       }
     }

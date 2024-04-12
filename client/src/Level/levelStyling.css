@@ -247,18 +247,18 @@
 
 /* Reload bar */
 
-.player-reload-bar-container {
+.player-exp-bar-container {
   position: absolute;
   bottom: 2%;
   left: 1%;
-  height: 30px;
+  height: 60px;
   width: 100px;
 }
 
-.player-reload-bar {
+.player-exp-bar {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 50%;
   background-color: white;
   background: linear-gradient(to bottom, #bdc1c3, #6b8db8);
   border-top-right-radius: 10px;
@@ -270,7 +270,7 @@
   align-items: center;
 }
 
-.player-reload-bar::before {
+.player-exp-bar::before {
   content: "";
   position: absolute;
   height: 80%;
@@ -279,7 +279,7 @@
   background-color: #653b58;
 }
 
-.player-reload-bar::after {
+.player-exp-bar::after {
   content: "";
   position: absolute;
   height: 60%;
@@ -287,11 +287,11 @@
   background-color: #321d2c;
 }
 
-.player-reload-bar-filler {
+.player-exp-bar-filler {
   position: absolute;
   left: 2px;
   height: 80%;
-  width: 95%;
+  width: 0%;
   z-index: 5;
   background: linear-gradient(
     to bottom,
@@ -302,4 +302,9 @@
   );
   image-rendering: pixelated;
   border-radius: 6px;
+}
+
+#player-exp-bar-heading {
+  color: white;
+  font-size: 16px;
 }

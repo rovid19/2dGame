@@ -1,5 +1,5 @@
-import { HUD, projectiles } from "../Level/LevelLogic/mainLevelLogic";
-import { levelStore } from "../Stores/LevelStore";
+import { enemyArray } from "../Level/LevelLogic/mainLevelLogic";
+import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import { Vector } from "../Utils/TsTypes";
 import { Vector2 } from "./Vector";
 
@@ -12,8 +12,6 @@ export class Projectile {
   prjReloadCooldown: number = 30;
   prjReloadSpeed: number = 30;
   isReloading: boolean = false;
-  reloadElementPercentage: number = 100;
-  reloadElementMaxPercentage: number = 100;
   isFiring: boolean = false;
   projectileDistanceTraveled: number = 0;
   isReady: boolean = false;
@@ -21,8 +19,49 @@ export class Projectile {
   targetHit: boolean = false;
   shipPosition: Vector = new Vector2();
   distanceToEndOfScreen: number = 0;
+  prjHitboxX: number = 32;
+  prjHitboxY: number = 32;
+  prjArrHitboxXleft: number[] = [];
+  prjArrHitboxXright: number[] = [];
+  prjArrHitboxYleft: number[] = [];
+  prjArrHitboxYright: number[] = [];
+
   constructor(shipPosition: Vector) {
     this.shipPosition = shipPosition;
+  }
+
+  setProjectileHitboxArray() {
+    this.prjArrHitboxXleft = [];
+    this.prjArrHitboxXright = [];
+    this.prjArrHitboxYleft = [];
+    this.prjArrHitboxYright = [];
+    returnArrayOfHitboxNumbers(
+      Math.round(this.prjDirectionsLeft.x),
+      this.prjHitboxX,
+      this.prjArrHitboxXleft,
+      Math.round(this.prjDirectionsLeft.x + 1)
+    );
+
+    returnArrayOfHitboxNumbers(
+      Math.round(this.prjDirectionsRight.x),
+      this.prjHitboxX,
+      this.prjArrHitboxXright,
+      Math.round(this.prjDirectionsRight.x + 1)
+    );
+
+    returnArrayOfHitboxNumbers(
+      Math.round(this.prjDirectionsLeft.y),
+      this.prjHitboxY,
+      this.prjArrHitboxYleft,
+      Math.round(this.prjDirectionsLeft.y + 1)
+    );
+
+    returnArrayOfHitboxNumbers(
+      Math.round(this.prjDirectionsRight.y),
+      this.prjHitboxY,
+      this.prjArrHitboxYright,
+      Math.round(this.prjDirectionsRight.y + 1)
+    );
   }
 
   renderProjectile = (
@@ -37,10 +76,13 @@ export class Projectile {
   };
 
   firingAnimation = () => {
+    console.log("za dom");
     // return projectiles to ship position
     if (this.targetHit) {
+      console.log("spremni");
       this.updateProjectileBaseCoordinates();
     } else {
+      console.log("za");
       // fire projectile
       if (!this.isFiring) this.isFiring = true;
 
@@ -54,6 +96,8 @@ export class Projectile {
         this.isFiring = false;
         this.updateProjectileBaseCoordinates();
       }
+      this.setProjectileHitboxArray();
+      this.checkIfProjectileHitEnemy();
     }
   };
 
@@ -64,6 +108,7 @@ export class Projectile {
     this.prjDirectionsRight.x = this.shipPosition.x + 55;
     this.prjDirectionsRight.y = this.shipPosition.y + 10;
 
+    this.setProjectileHitboxArray();
     if (!this.isReady) {
       this.isReady = true;
     }
@@ -85,30 +130,46 @@ export class Projectile {
     if (this.isReloading) {
       this.prjReloadCooldown--;
 
-      this.renderReloadHudElement();
       if (this.prjReloadCooldown === 0) {
         this.isReloading = false;
         this.prjReloadCooldown = this.prjReloadSpeed;
-        this.reloadElementPercentage = 100;
-        HUD.playerReloadBarFiller.style.width = `95%`;
       }
     }
   };
 
-  renderReloadHudElement() {
-    const reduceMaxReloadPercentageBy = 100 / this.prjReloadSpeed;
-    this.reloadElementPercentage =
-      this.reloadElementPercentage - reduceMaxReloadPercentageBy;
-    HUD.playerReloadBarFiller.style.width = `${this.reloadElementPercentage}%`;
-  }
-
   fireProjectile() {
     if (!this.isReloading) {
+      this.targetHit = false;
       this.distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
       this.calculateSpeedOfProjectilesBasedOnSpaceshipPosition();
       this.firingAnimation();
     } else {
       console.log("reloading");
     }
+  }
+
+  checkIfProjectileHitEnemy() {
+    console.log("ka");
+    enemyArray.forEach((enemy) => {
+      if (this.prjArrHitboxYleft.includes(Math.round(enemy.position.y))) {
+        if (
+          this.prjArrHitboxXleft.includes(Math.round(enemy.position.x)) ||
+          this.prjArrHitboxXright.includes(Math.round(enemy.position.x))
+        ) {
+          console.log(
+            Math.round(enemy.position.x),
+            Math.round(enemy.position.y),
+            "X",
+            this.prjArrHitboxXleft,
+            this.prjArrHitboxXright,
+            "Y",
+            this.prjArrHitboxYleft,
+            this.prjArrHitboxYright
+          );
+
+          this.targetHit = true;
+        }
+      }
+    });
   }
 }

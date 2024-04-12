@@ -3,6 +3,7 @@ import {
   projectiles,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
+import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import { EnemyAttack, SpriteMethods, Vector } from "../Utils/TsTypes";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
@@ -60,7 +61,7 @@ export class Enemy {
       this.enemyPosition.x -= this.enemySpeed;
     }
     this.moveHealthBarWithEnemy();
-    this.checkIfHitByProjectile();
+    //this.checkIfHitByProjectile();
   }
 
   setEnemyDetailsIntoAnEnemyArray() {
@@ -135,7 +136,7 @@ export class Enemy {
     }
   };
 
-  checkIfHitByProjectile = () => {
+  /*checkIfHitByProjectile = () => {
     const halfOfHitboxX = this.enemyHitboxX / 2;
     const halfOfHitboxY = this.enemyHitboxY / 2;
     let currentX = this.enemyPosition.x;
@@ -143,13 +144,13 @@ export class Enemy {
     const hitboxArrayX = [] as number[];
     const hitboxArrayY = [] as number[];
 
-    this.returnArrayOfHitboxNumbers(
+    returnArrayOfHitboxNumbers(
       currentX,
       halfOfHitboxX,
       hitboxArrayX,
       currentX + 1
     );
-    this.returnArrayOfHitboxNumbers(
+    returnArrayOfHitboxNumbers(
       currentY,
       halfOfHitboxY,
       hitboxArrayY,
@@ -174,24 +175,7 @@ export class Enemy {
     if (this.enemyHp <= 0) {
       this.removeEnemy();
     }
-  };
-
-  returnArrayOfHitboxNumbers(
-    currentPosition: number,
-    hitbox: number,
-    hitboxArray: number[],
-    newCurrentPosition: number
-  ) {
-    for (let i = 0; i < hitbox; i++) {
-      hitboxArray.push(currentPosition);
-      currentPosition--;
-    }
-
-    for (let i = 0; i < hitbox; i++) {
-      hitboxArray.push(newCurrentPosition);
-      newCurrentPosition++;
-    }
-  }
+  };*/
 
   takeDamage = () => {
     this.enemyHp -= projectiles.prjDamage;
