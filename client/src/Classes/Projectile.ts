@@ -9,8 +9,8 @@ export class Projectile {
   prjSpeed: number = 15;
   prjDamage: number = 10;
   prjAmount: number = 1;
-  prjReloadCooldown: number = 30;
-  prjReloadSpeed: number = 30;
+  prjReloadCooldown: number = 10;
+  prjReloadSpeed: number = 10;
   isReloading: boolean = false;
   isFiring: boolean = false;
   projectileDistanceTraveled: number = 0;
@@ -19,8 +19,8 @@ export class Projectile {
   targetHit: boolean = false;
   shipPosition: Vector = new Vector2();
   distanceToEndOfScreen: number = 0;
-  prjHitboxX: number = 32;
-  prjHitboxY: number = 32;
+  prjHitboxX: number = 45;
+  prjHitboxY: number = 45;
   prjArrHitboxXleft: number[] = [];
   prjArrHitboxXright: number[] = [];
   prjArrHitboxYleft: number[] = [];
@@ -76,13 +76,10 @@ export class Projectile {
   };
 
   firingAnimation = () => {
-    console.log("za dom");
     // return projectiles to ship position
     if (this.targetHit) {
-      console.log("spremni");
       this.updateProjectileBaseCoordinates();
     } else {
-      console.log("za");
       // fire projectile
       if (!this.isFiring) this.isFiring = true;
 
@@ -90,16 +87,21 @@ export class Projectile {
       this.prjDirectionsRight.y -= this.prjSpeed;
       this.projectileDistanceTraveled += this.prjSpeed;
 
-      if (this.projectileDistanceTraveled >= this.distanceToEndOfScreen) {
-        this.isReloading = true;
-        this.projectileDistanceTraveled = 0;
-        this.isFiring = false;
-        this.updateProjectileBaseCoordinates();
-      }
       this.setProjectileHitboxArray();
       this.checkIfProjectileHitEnemy();
+
+      if (this.projectileDistanceTraveled >= this.distanceToEndOfScreen) {
+        this.targetHitOrProjectileOutsideOFScreen();
+      }
     }
   };
+
+  targetHitOrProjectileOutsideOFScreen() {
+    this.isReloading = true;
+    this.projectileDistanceTraveled = 0;
+    this.isFiring = false;
+    this.updateProjectileBaseCoordinates();
+  }
 
   updateProjectileBaseCoordinates() {
     this.prjDirectionsLeft.x = this.shipPosition.x + 7;
@@ -139,7 +141,7 @@ export class Projectile {
 
   fireProjectile() {
     if (!this.isReloading) {
-      this.targetHit = false;
+      if (this.targetHit) this.targetHit = false;
       this.distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
       this.calculateSpeedOfProjectilesBasedOnSpaceshipPosition();
       this.firingAnimation();
@@ -149,25 +151,15 @@ export class Projectile {
   }
 
   checkIfProjectileHitEnemy() {
-    console.log("ka");
     enemyArray.forEach((enemy) => {
       if (this.prjArrHitboxYleft.includes(Math.round(enemy.position.y))) {
         if (
           this.prjArrHitboxXleft.includes(Math.round(enemy.position.x)) ||
           this.prjArrHitboxXright.includes(Math.round(enemy.position.x))
         ) {
-          console.log(
-            Math.round(enemy.position.x),
-            Math.round(enemy.position.y),
-            "X",
-            this.prjArrHitboxXleft,
-            this.prjArrHitboxXright,
-            "Y",
-            this.prjArrHitboxYleft,
-            this.prjArrHitboxYright
-          );
-
           this.targetHit = true;
+          enemy.takeDamage();
+          this.targetHitOrProjectileOutsideOFScreen();
         }
       }
     });

@@ -19,6 +19,7 @@ export class Player {
   playerSprite: SpriteMethods;
   playerHp: number = 100;
   playerMaxHP: number = 100;
+  playerLevel: number = 1;
   playerHpBarPercentage: number = 100;
   playerHpBar: HTMLElement = document.createElement("div");
   playerEnergy: number = 100;

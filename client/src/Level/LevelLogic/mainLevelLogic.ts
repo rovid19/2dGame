@@ -18,10 +18,11 @@ import { renderEnemy } from "./enemyLogic.ts";
 import { EnemyObject } from "../../Utils/TsTypes.ts";
 import { Hud } from "../../Classes/Hud.ts";
 import { Player } from "../../Classes/Player.ts";
+import { EnemySpawner } from "../../Classes/EnemySpawner.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
-const levelImages = new LevelImages({
+export const levelImages = new LevelImages({
   sky: "../public/sprites/5.png",
   ground: "../public/sprites/groundLevel1.png",
   hero: "../public/sprites/hero-sheet.png",
@@ -30,6 +31,8 @@ const levelImages = new LevelImages({
   speed: "../public/sprites/speed.png",
   shield: "../public/sprites/shield-1.png",
   projectile: "../public/sprites/1.png",
+
+  // ENEMIES
   enemy1: "../public/sprites/enemy1.png",
   enemy2: "../public/sprites/enemy2.png",
 });
@@ -69,19 +72,20 @@ export const player = new Player(levelImages.images.playerShip, 34, 38, 2);
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
 export const enemyArray: EnemyObject[] = [];
-
+const enemySpawner = new EnemySpawner(enemyArray);
 //
 //
 //
 export const projectiles = new Projectile(shipPosition);
 projectiles.updateProjectileBaseCoordinates();
 
+/*
 export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27, 2.5);
 enemy1.updateEnemyCoordinates(enemy1.enemySprite.position);
 enemy1.createDetailsAboutEnemy("basic", enemy1.enemySprite.scale);
 enemy1.renderHealthBar();
 
-/*export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56, 2);
+export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56, 2);
 enemy2.updateEnemyCoordinates(enemy2.enemySprite.position);
 enemy2.createDetailsAboutEnemy("basic2", enemy2.enemySprite.scale);
 
@@ -90,8 +94,8 @@ enemy2.renderHealthBar();
 export let enemy3 = new Enemy(1.2, levelImages.images.enemy1, 24, 27, 2.5);
 enemy3.updateEnemyCoordinates(enemy3.enemySprite.position);
 enemy3.createDetailsAboutEnemy("basic", enemy3.enemySprite.scale);
-enemy3.renderHealthBar();*/
-
+enemy3.renderHealthBar();
+*/
 export const HUD = new Hud();
 player.setHpBar(HUD.hpBarFiller);
 //
@@ -130,7 +134,8 @@ export function renderLevel() {
       canvasContext,
       skySprite.spriteImage.image
     );
-
+    enemySpawner.spawnEnemies();
+    enemySpawner.renderEnemies();
     playerMethods();
     renderProjectiles();
     renderPlayerSpaceship();

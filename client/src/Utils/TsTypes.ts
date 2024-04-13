@@ -40,6 +40,8 @@ export type EnemyAttack = {
 export type EnemyObject = {
   position: { x: number; y: number };
   enemyAttack: EnemyAttack;
+  takeDamage(): void;
+  isAlive: boolean;
 };
 
 export type SpriteType = {
@@ -69,4 +71,28 @@ export type PlayerSpellMethods = {
   playerShieldCooldown: number;
   playerShieldAmount: number;
   activateSpellCooldown(): void;
+};
+
+export type EnemyType = {
+  image: HTMLImageElement;
+  title: string;
+};
+
+export type EnemyInstance = {
+  enemySprite: SpriteMethods;
+  enemyHp: number;
+  enemyMaxHp: number;
+  enemySpeed: number;
+  enemyHpBarContainer: HTMLElement;
+  enemyHpBarFillerContainer: HTMLElement;
+  enemyHpBarFiller: HTMLElement;
+  enemyHpBarWidth: number;
+  enemyHpBarPercentage: number;
+  enemyHitboxX: number;
+  enemyHitboxY: number;
+  enemyAttack: EnemyAttack;
+  removeEnemy(): void;
+  renderHealthBar(): void;
+  takeDamage(): void;
+  followPlayer(): void;
 };

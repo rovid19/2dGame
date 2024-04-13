@@ -3,7 +3,6 @@ import {
   projectiles,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
-import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import { EnemyAttack, SpriteMethods, Vector } from "../Utils/TsTypes";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
@@ -13,8 +12,7 @@ export class Enemy {
   enemyHp: number = 100;
   enemyMaxHp: number = 100;
   enemySpeed: number = 0;
-  enemyDamage: number = 10;
-  enemyPosition: Vector = { x: 0, y: 0 };
+  //enemyPosition: Vector = { x: 0, y: 0 };
   enemyHpBarContainer: HTMLElement = document.createElement("div");
   enemyHpBarFillerContainer: HTMLElement = document.createElement("div");
   enemyHpBarFiller: HTMLElement = document.createElement("div");
@@ -33,7 +31,8 @@ export class Enemy {
     enemyImage: HTMLImageElement,
     frameHeight: number,
     frameWidth: number,
-    scale: number
+    scale: number,
+    enemy: string
   ) {
     this.enemySprite = new Sprite(
       enemyImage,
@@ -42,23 +41,26 @@ export class Enemy {
     );
     this.enemySpeed = speed;
     this.setEnemyDetailsIntoAnEnemyArray();
+    //this.updateEnemyCoordinates()
+    this.createDetailsAboutEnemy(enemy, scale);
+    this.renderHealthBar();
   }
 
   followPlayer() {
-    if (shipPosition.y > this.enemyPosition.y) {
-      this.enemyPosition.y += this.enemySpeed;
+    if (shipPosition.y > this.enemySprite.position.y) {
+      this.enemySprite.position.y += this.enemySpeed;
     }
 
-    if (shipPosition.y < this.enemyPosition.y) {
-      this.enemyPosition.y -= this.enemySpeed;
+    if (shipPosition.y < this.enemySprite.position.y) {
+      this.enemySprite.position.y -= this.enemySpeed;
     }
 
-    if (shipPosition.x > this.enemyPosition.x) {
-      this.enemyPosition.x += this.enemySpeed;
+    if (shipPosition.x > this.enemySprite.position.x) {
+      this.enemySprite.position.x += this.enemySpeed;
     }
 
-    if (shipPosition.x < this.enemyPosition.x) {
-      this.enemyPosition.x -= this.enemySpeed;
+    if (shipPosition.x < this.enemySprite.position.x) {
+      this.enemySprite.position.x -= this.enemySpeed;
     }
     this.moveHealthBarWithEnemy();
     //this.checkIfHitByProjectile();
@@ -68,6 +70,8 @@ export class Enemy {
     const enemyObject = {
       position: this.enemySprite.position,
       enemyAttack: this.enemyAttack,
+      takeDamage: this.takeDamage,
+      isAlive: true,
     };
     enemyArray.push(enemyObject);
   }
@@ -84,15 +88,15 @@ export class Enemy {
   }
 
   updateEnemyCoordinates(enemyPosition: Vector) {
-    this.enemyPosition = enemyPosition;
+    this.enemySprite.position = enemyPosition;
   }
 
   renderHealthBar = () => {
     // container
     document.body.appendChild(this.enemyHpBarContainer);
     this.enemyHpBarContainer.className = "enemy-hp-bar-container";
-    this.enemyHpBarContainer.style.top = `${this.enemyPosition.y}px`;
-    this.enemyHpBarContainer.style.left = `${this.enemyPosition.x}px`;
+    this.enemyHpBarContainer.style.top = `${this.enemySprite.position.y}px`;
+    this.enemyHpBarContainer.style.left = `${this.enemySprite.position.x}px`;
     this.enemyHpBarContainer.style.width = `${this.enemyHpBarWidth}px`;
 
     // hpbar
@@ -103,8 +107,8 @@ export class Enemy {
   };
 
   moveHealthBarWithEnemy = () => {
-    this.enemyHpBarContainer.style.top = `${this.enemyPosition.y - 5}px`;
-    this.enemyHpBarContainer.style.left = `${this.enemyPosition.x}px`;
+    this.enemyHpBarContainer.style.top = `${this.enemySprite.position.y - 5}px`;
+    this.enemyHpBarContainer.style.left = `${this.enemySprite.position.x}px`;
   };
 
   createDetailsAboutEnemy = (enemy: string, scale: number) => {
@@ -135,47 +139,6 @@ export class Enemy {
         break;
     }
   };
-
-  /*checkIfHitByProjectile = () => {
-    const halfOfHitboxX = this.enemyHitboxX / 2;
-    const halfOfHitboxY = this.enemyHitboxY / 2;
-    let currentX = this.enemyPosition.x;
-    let currentY = this.enemyPosition.y;
-    const hitboxArrayX = [] as number[];
-    const hitboxArrayY = [] as number[];
-
-    returnArrayOfHitboxNumbers(
-      currentX,
-      halfOfHitboxX,
-      hitboxArrayX,
-      currentX + 1
-    );
-    returnArrayOfHitboxNumbers(
-      currentY,
-      halfOfHitboxY,
-      hitboxArrayY,
-      currentY + 1
-    );
-
-    if (
-      hitboxArrayX.includes(
-        projectiles.prjDirectionsLeft.x || projectiles.prjDirectionsRight.x
-      )
-    ) {
-      if (
-        hitboxArrayY.includes(
-          projectiles.prjDirectionsLeft.y || projectiles.prjDirectionsRight.y
-        )
-      ) {
-        projectiles.targetHit = true;
-        this.takeDamage();
-      }
-    }
-
-    if (this.enemyHp <= 0) {
-      this.removeEnemy();
-    }
-  };*/
 
   takeDamage = () => {
     this.enemyHp -= projectiles.prjDamage;
