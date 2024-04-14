@@ -1,9 +1,13 @@
-import { canvasContext, levelImages } from "../Level/LevelLogic/mainLevelLogic";
-import { EnemyInstance, EnemyObject, EnemyType } from "../Utils/TsTypes";
+import {
+  canvasContext,
+  levelImages,
+  player,
+} from "../Level/LevelLogic/mainLevelLogic";
+import { EnemyInstance, EnemyType } from "../Utils/TsTypes";
 import { Enemy } from "./EnemyAi";
 
 export class EnemySpawner {
-  enemyArray: EnemyObject[] = [];
+  enemyArray: EnemyInstance[][] = [];
   enemyBasic: EnemyType = {
     image: new Image(),
     title: "basic",
@@ -14,41 +18,42 @@ export class EnemySpawner {
     title: "basic2",
   };
   enemyBasic2Array: EnemyInstance[] = [];
-  enemyBasicSpawnCD: number = 340;
-  enemyBasicSpawn: number = 340;
+  enemyBasicSpawnCD: number = 480; // 480
+  enemyBasicSpawnMaxCD: number = 480; // 480
   isEnemyBasicReady: boolean = true;
-  enemyBasic2Spawn: number = 540;
+  enemyBasic2SpawnCD: number = 1800; // 1800
+  enemyBasic2SpawnMaxCD: number = 1800; // 1800
   isEnemyBasic2Ready: boolean = false;
 
-  constructor(enemyArray: EnemyObject[]) {
+  constructor() {
     this.setEnemy();
-    this.enemyArray = enemyArray;
+    this.enemyArray = [this.enemyBasicArray, this.enemyBasic2Array];
   }
 
   setEnemy() {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 2; i++) {
       if (i === 0) {
         this.enemyBasic.image = levelImages.images.enemy1;
       }
       if (i === 1) {
-        this.enemyBasic.image = levelImages.images.enemy2;
+        this.enemyBasic2.image = levelImages.images.enemy2;
       }
     }
   }
 
   enemySpawnCooldown(whichEnemy: string) {
     if (whichEnemy === "basic") {
-      console.log(this.enemyBasicSpawn);
-      this.enemyBasicSpawn--;
-      if (this.enemyBasicSpawn === 0) {
-        this.enemyBasicSpawn = this.enemyBasicSpawnCD;
+      this.enemyBasicSpawnCD--;
+      if (this.enemyBasicSpawnCD === 0) {
+        this.enemyBasicSpawnCD = this.enemyBasicSpawnMaxCD;
         this.isEnemyBasicReady = true;
       }
     }
     if (whichEnemy === "basic2") {
-      this.enemyBasic2Spawn--;
-      if (this.enemyBasic2Spawn === 0) {
-        this.enemyBasic2Spawn = 60;
+      this.enemyBasic2SpawnCD--;
+      if (this.enemyBasic2SpawnCD === 0) {
+        this.enemyBasic2SpawnCD = this.enemyBasic2SpawnMaxCD;
+        this.isEnemyBasic2Ready = true;
       }
     }
   }
@@ -67,7 +72,7 @@ export class EnemySpawner {
       );
       this.enemyBasicArray.push(enemy);
       this.isEnemyBasicReady = false;
-      console.log(enemy);
+      enemy.renderHealthBar();
     }
     if (whichEnemy === "basic2") {
       const randomSpeed = 1.5 + Math.random() * (3 - 1.5);
@@ -86,29 +91,52 @@ export class EnemySpawner {
   }
 
   spawnEnemies() {
-    if (this.isEnemyBasicReady) {
-      this.createInstanceOfEnemy("basic");
-    } else {
-      this.enemySpawnCooldown("basic");
-    }
-    if (this.isEnemyBasic2Ready) {
-      this.createInstanceOfEnemy("basic2");
-    } else {
-      this.enemySpawnCooldown("basic2");
+    if (player.isPlayerAlive) {
+      if (this.isEnemyBasicReady) {
+        this.createInstanceOfEnemy("basic");
+      } else {
+        this.enemySpawnCooldown("basic");
+      }
+      if (this.isEnemyBasic2Ready) {
+        this.createInstanceOfEnemy("basic2");
+      } else {
+        this.enemySpawnCooldown("basic2");
+      }
     }
   }
 
   renderEnemies() {
+    this.spawnEnemies();
+
     if (canvasContext) {
       this.enemyBasicArray.forEach((enemy) => {
+        if (enemy.isEnemyAlive) {
+          enemy.enemySprite.drawImage(
+            canvasContext,
+            enemy.enemySprite.position.x,
+            enemy.enemySprite.position.y
+          );
+          if (player.isPlayerAlive) enemy.followPlayer();
+          enemy.setEnemyAttackOnCooldown();
+        }
+      });
+
+      this.enemyBasic2Array.forEach((enemy) => {
         enemy.enemySprite.drawImage(
           canvasContext,
           enemy.enemySprite.position.x,
           enemy.enemySprite.position.y
         );
 
-        enemy.followPlayer();
+        if (player.isPlayerAlive) enemy.followPlayer();
+        enemy.setEnemyAttackOnCooldown();
       });
     }
+  }
+
+  resetEnemies() {
+    this.enemyBasicArray = [];
+    this.enemyBasic2Array = [];
+    this.enemyArray = [this.enemyBasicArray, this.enemyBasic2Array];
   }
 }

@@ -1,4 +1,8 @@
-import { enemyArray } from "../Level/LevelLogic/mainLevelLogic";
+import {
+  enemyArray,
+  enemySpawner,
+  shipPosition,
+} from "../Level/LevelLogic/mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import { Vector } from "../Utils/TsTypes";
 import { Vector2 } from "./Vector";
@@ -7,10 +11,10 @@ export class Projectile {
   prjDirectionsLeft: Vector = { x: 0, y: 0 };
   prjDirectionsRight: Vector = { x: 0, y: 0 };
   prjSpeed: number = 15;
-  prjDamage: number = 10;
+  prjDamage: number = 50;
   prjAmount: number = 1;
   prjReloadCooldown: number = 10;
-  prjReloadSpeed: number = 10;
+  prjReloadSpeed: number = 20;
   isReloading: boolean = false;
   isFiring: boolean = false;
   projectileDistanceTraveled: number = 0;
@@ -151,17 +155,53 @@ export class Projectile {
   }
 
   checkIfProjectileHitEnemy() {
-    enemyArray.forEach((enemy) => {
-      if (this.prjArrHitboxYleft.includes(Math.round(enemy.position.y))) {
+    enemySpawner.enemyArray.forEach((item) => {
+      item.forEach((enemy, i) => {
         if (
-          this.prjArrHitboxXleft.includes(Math.round(enemy.position.x)) ||
-          this.prjArrHitboxXright.includes(Math.round(enemy.position.x))
+          this.prjArrHitboxYleft.includes(
+            Math.round(enemy.enemySprite.position.y)
+          )
         ) {
-          this.targetHit = true;
-          enemy.takeDamage();
-          this.targetHitOrProjectileOutsideOFScreen();
+          if (
+            this.prjArrHitboxXleft.includes(
+              Math.round(enemy.enemySprite.position.x)
+            ) ||
+            this.prjArrHitboxXright.includes(
+              Math.round(enemy.enemySprite.position.x)
+            )
+          ) {
+            this.targetHit = true;
+            enemy.takeDamage(item, i);
+            this.targetHitOrProjectileOutsideOFScreen();
+          }
         }
-      }
+      });
     });
+  }
+
+  resetProjectile() {
+    this.prjDirectionsLeft = { x: 0, y: 0 };
+    this.prjDirectionsRight = { x: 0, y: 0 };
+    this.prjSpeed = 15;
+    this.prjDamage = 50;
+    this.prjAmount = 1;
+    this.prjReloadCooldown = 10;
+    this.prjReloadSpeed = 20;
+    this.isReloading = false;
+    this.isFiring = false;
+    this.projectileDistanceTraveled = 0;
+    this.isReady = false;
+    this.isRendered = false;
+    this.targetHit = false;
+    this.shipPosition = shipPosition;
+    this.distanceToEndOfScreen = 0;
+    this.prjHitboxX = 45;
+    this.prjHitboxY = 45;
+    this.prjArrHitboxXleft = [];
+    this.prjArrHitboxXright = [];
+    this.prjArrHitboxYleft = [];
+    this.prjArrHitboxYright = [];
+
+    this.updateProjectileBaseCoordinates();
   }
 }

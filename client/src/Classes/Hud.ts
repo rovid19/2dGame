@@ -1,3 +1,10 @@
+import {
+  enemySpawner,
+  player,
+  playerMovementInput,
+  projectiles,
+} from "../Level/LevelLogic/mainLevelLogic";
+
 export class Hud {
   hpBarContainer: HTMLElement = document.createElement("div");
   hpBar: HTMLElement = document.createElement("div");
@@ -22,7 +29,12 @@ export class Hud {
   playerSpell3: HTMLElement = document.createElement("div");
   playerSpell3Image: HTMLImageElement = document.createElement("img");
   playerSpell3Keybind: HTMLElement = document.createElement("h3");
-
+  playerIsDeadContainer: HTMLElement = document.createElement("div");
+  playerIsDeadMainDiv: HTMLElement = document.createElement("div");
+  playerIsDeadHeading: HTMLElement = document.createElement("h1");
+  playerIsDeadButtonContainer: HTMLElement = document.createElement("div");
+  playerIsDeadButton1: HTMLElement = document.createElement("button");
+  playerIsDeadButton2: HTMLElement = document.createElement("div");
   constructor() {
     this.setHud();
   }
@@ -99,5 +111,75 @@ export class Hud {
     this.playerSpell1.className = "player-spell";
     this.playerSpell2.className = "player-spell";
     this.playerSpell3.className = "player-spell";
+  }
+
+  renderGainedExp() {
+    const expNeededForLvlUp = player.playerExpNeeded;
+    const currentPlayerExp = player.playerExp;
+
+    const increaseWidthBy = (currentPlayerExp / expNeededForLvlUp) * 100;
+    this.playerExpBarFiller.style.width = `${increaseWidthBy}%`;
+  }
+
+  resetExpBarAfterLevelUp() {
+    this.playerExpBarHeading.textContent = `Lvl ${player.playerLevel}`;
+    this.playerExpBarFiller.style.width = "0%";
+  }
+
+  renderPlayerTakenDamageInHpBar(enemyDamage: number) {
+    const damageTaken = (enemyDamage / player.playerMaxHP) * 100;
+    player.playerHpBar.style.width = `${
+      player.playerHpBarPercentage - damageTaken
+    }%`;
+    player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;
+  }
+
+  playerDied() {
+    document.body.appendChild(this.playerIsDeadContainer);
+    this.playerIsDeadContainer.className = "player-is-dead-container";
+    this.playerIsDeadContainer.appendChild(this.playerIsDeadMainDiv);
+    this.playerIsDeadMainDiv.className = "player-is-dead-main-div";
+    this.playerIsDeadMainDiv.appendChild(this.playerIsDeadHeading);
+    this.playerIsDeadHeading.id = "player-is-dead-heading";
+    this.playerIsDeadHeading.className = "sixtyfour-myapp";
+    this.playerIsDeadHeading.textContent = "You have died";
+    this.playerIsDeadMainDiv.appendChild(this.playerIsDeadButtonContainer);
+    this.playerIsDeadButtonContainer.appendChild(this.playerIsDeadButton1);
+    this.playerIsDeadButtonContainer.appendChild(this.playerIsDeadButton2);
+    this.playerIsDeadButtonContainer.className =
+      "player-is-dead-button-container";
+    this.playerIsDeadButton1.id = "player-is-dead-button";
+    this.playerIsDeadButton1.className = "sixtyfour-myapp";
+    this.playerIsDeadButton1.textContent = "Retry";
+    this.playerIsDeadButton1.id = "player-is-dead-button";
+    this.playerIsDeadButton2.id = "player-is-dead-button";
+    this.playerIsDeadButton2.className = "sixtyfour-myapp";
+    this.playerIsDeadButton2.textContent = "Exit";
+
+    this.playerDiedScreenButtonActions();
+    playerMovementInput.removeEventListener();
+    player.playerSpells.removeEventListener();
+  }
+
+  playerDiedScreenButtonActions() {
+    this.playerIsDeadButton1.addEventListener("click", () => {
+      this.resetHud();
+      player.resetPlayer();
+      enemySpawner.resetEnemies();
+      projectiles.resetProjectile();
+      playerMovementInput.resetInput();
+      player.playerSpells.resetSpells();
+      this.playerIsDeadContainer.remove();
+    });
+  }
+
+  resetHud() {
+    this.hpBarFiller.style.width = "100%";
+    document.querySelectorAll(".enemy-hp-bar-container").forEach((hpBar) => {
+      hpBar.remove();
+    });
+    this.energyBarFiller.style.width = "100%";
+    this.playerExpBarFiller.style.width = "0%";
+    this.playerExpBarHeading.textContent = "Lvl 1";
   }
 }

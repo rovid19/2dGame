@@ -1,18 +1,23 @@
 import {
-  enemyArray,
+  HUD,
+  enemySpawner,
+  player,
   projectiles,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
-import { EnemyAttack, SpriteMethods, Vector } from "../Utils/TsTypes";
+import { EnemyInstance, SpriteMethods } from "../Utils/TsTypes";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
 
 export class Enemy {
   enemySprite: SpriteMethods;
+  enemyDamage: number = 10;
+  enemyAttackCooldown: number = 60;
+  isEnemyAttackOnCooldown: boolean = false;
+  enemyExp: number = 0;
   enemyHp: number = 100;
   enemyMaxHp: number = 100;
   enemySpeed: number = 0;
-  //enemyPosition: Vector = { x: 0, y: 0 };
   enemyHpBarContainer: HTMLElement = document.createElement("div");
   enemyHpBarFillerContainer: HTMLElement = document.createElement("div");
   enemyHpBarFiller: HTMLElement = document.createElement("div");
@@ -20,11 +25,8 @@ export class Enemy {
   enemyHpBarPercentage: number = 100;
   enemyHitboxX: number = 0;
   enemyHitboxY: number = 0;
-  enemyAttack: EnemyAttack = {
-    enemyDamage: 10,
-    enemyAttackCooldown: 60,
-    isEnemyAttackOnCooldown: false,
-  };
+  whichEnemy: string = "";
+  isEnemyAlive: boolean = true;
 
   constructor(
     speed: number,
@@ -40,8 +42,6 @@ export class Enemy {
       scale
     );
     this.enemySpeed = speed;
-    this.setEnemyDetailsIntoAnEnemyArray();
-    //this.updateEnemyCoordinates()
     this.createDetailsAboutEnemy(enemy, scale);
     this.renderHealthBar();
   }
@@ -63,37 +63,34 @@ export class Enemy {
       this.enemySprite.position.x -= this.enemySpeed;
     }
     this.moveHealthBarWithEnemy();
-    //this.checkIfHitByProjectile();
-  }
-
-  setEnemyDetailsIntoAnEnemyArray() {
-    const enemyObject = {
-      position: this.enemySprite.position,
-      enemyAttack: this.enemyAttack,
-      takeDamage: this.takeDamage,
-      isAlive: true,
-    };
-    enemyArray.push(enemyObject);
   }
 
   setEnemyAttackOnCooldown() {
-    if (this.enemyAttack.isEnemyAttackOnCooldown) {
-      this.enemyAttack.enemyAttackCooldown--;
+    if (this.isEnemyAttackOnCooldown) {
+      console.log(this.enemyAttackCooldown);
+      this.enemyAttackCooldown--;
 
-      if (this.enemyAttack.enemyAttackCooldown === 0) {
-        this.enemyAttack.enemyAttackCooldown = 60;
-        this.enemyAttack.isEnemyAttackOnCooldown = false;
+      if (this.enemyAttackCooldown === 0) {
+        this.enemyAttackCooldown = 60;
+        this.isEnemyAttackOnCooldown = false;
       }
     }
   }
 
-  updateEnemyCoordinates(enemyPosition: Vector) {
-    this.enemySprite.position = enemyPosition;
+  enemyAttack() {
+    if (!this.isEnemyAttackOnCooldown) {
+      player.playerHp = player.playerHp - this.enemyDamage;
+      this.isEnemyAttackOnCooldown = true;
+      HUD.renderPlayerTakenDamageInHpBar(this.enemyDamage);
+    }
   }
 
   renderHealthBar = () => {
     // container
-    document.body.appendChild(this.enemyHpBarContainer);
+    document.body.insertBefore(
+      this.enemyHpBarContainer,
+      document.querySelector(".level1Canvas")
+    );
     this.enemyHpBarContainer.className = "enemy-hp-bar-container";
     this.enemyHpBarContainer.style.top = `${this.enemySprite.position.y}px`;
     this.enemyHpBarContainer.style.left = `${this.enemySprite.position.x}px`;
@@ -117,13 +114,19 @@ export class Enemy {
         this.enemyHitboxY = 35 * scale;
         this.enemyHitboxX = 30 * scale;
         this.enemyHpBarWidth = 27 * scale;
-        this.enemyAttack.enemyDamage = 10;
+        this.whichEnemy = "basic";
+        this.enemyExp = 50;
+        this.enemyAttackCooldown = 100;
+        this.enemyDamage = 10;
         break;
       case "basic2":
         this.enemyHitboxY = 51 * scale;
         this.enemyHitboxX = 59 * scale;
         this.enemyHpBarWidth = 56 * scale;
-        this.enemyAttack.enemyDamage = 20;
+        this.whichEnemy = "basic2";
+        this.enemyExp = 100;
+        this.enemyAttackCooldown = 70;
+        this.enemyDamage = 20;
         break;
       case "special":
         break;
@@ -140,7 +143,7 @@ export class Enemy {
     }
   };
 
-  takeDamage = () => {
+  takeDamage = (item: EnemyInstance[], i: number) => {
     this.enemyHp -= projectiles.prjDamage;
 
     // calculate missing hp in percentages
@@ -150,7 +153,24 @@ export class Enemy {
       this.enemyHpBarPercentage - damageTaken
     }%`;
     this.enemyHpBarPercentage = this.enemyHpBarPercentage - damageTaken;
+
+    if (this.enemyHp <= 0) {
+      this.removeEnemy(item, i);
+      player.gainExpIfEnemyIsKilled(this.enemyExp);
+    }
   };
 
-  removeEnemy = () => {};
+  removeEnemy = (item: EnemyInstance[], i: number) => {
+    this.isEnemyAlive = false;
+    this.enemyHpBarContainer.remove();
+    this.removeEnemyFromEnemyArray(item, i);
+  };
+
+  // mutating isnt the best practice, I'm aware.
+  // But avoiding mutation in an array inside another array
+  // gives me a special kind of headache
+  removeEnemyFromEnemyArray(item: EnemyInstance[], i: number) {
+    item.splice(i, 1);
+    console.log(enemySpawner.enemyArray);
+  }
 }

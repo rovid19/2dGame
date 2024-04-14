@@ -13,8 +13,7 @@ import {
 import { renderPlayerSpaceship } from "./spaceshipLogic.ts";
 import { Projectile } from "../../Classes/Projectile.ts";
 import { renderProjectiles } from "./projectileLogic.ts";
-import { Enemy } from "../../Classes/EnemyAi.ts";
-import { renderEnemy } from "./enemyLogic.ts";
+
 import { EnemyObject } from "../../Utils/TsTypes.ts";
 import { Hud } from "../../Classes/Hud.ts";
 import { Player } from "../../Classes/Player.ts";
@@ -72,19 +71,16 @@ export const player = new Player(levelImages.images.playerShip, 34, 38, 2);
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
 export const enemyArray: EnemyObject[] = [];
-const enemySpawner = new EnemySpawner(enemyArray);
+export const enemySpawner = new EnemySpawner();
 //
 //
 //
 export const projectiles = new Projectile(shipPosition);
 projectiles.updateProjectileBaseCoordinates();
 
+//enemy1.createDetailsAboutEnemy("basic", enemy1.enemySprite.scale);
+//enemy1.renderHealthBar();
 /*
-export let enemy1 = new Enemy(1.5, levelImages.images.enemy1, 24, 27, 2.5);
-enemy1.updateEnemyCoordinates(enemy1.enemySprite.position);
-enemy1.createDetailsAboutEnemy("basic", enemy1.enemySprite.scale);
-enemy1.renderHealthBar();
-
 export let enemy2 = new Enemy(2, levelImages.images.enemy2, 51, 56, 2);
 enemy2.updateEnemyCoordinates(enemy2.enemySprite.position);
 enemy2.createDetailsAboutEnemy("basic2", enemy2.enemySprite.scale);
@@ -134,12 +130,10 @@ export function renderLevel() {
       canvasContext,
       skySprite.spriteImage.image
     );
-    enemySpawner.spawnEnemies();
     enemySpawner.renderEnemies();
-    playerMethods();
     renderProjectiles();
     renderPlayerSpaceship();
-    renderEnemy();
+    playerMethods();
   }
 }
 
@@ -148,4 +142,5 @@ function playerMethods() {
   player.activateSpell();
   player.playerSpells.activateSpellCooldown();
   player.checkIfHitByAnEnemy();
+  player.checkIfPlayerIsDead();
 }

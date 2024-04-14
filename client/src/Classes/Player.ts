@@ -1,10 +1,13 @@
+import { height, width } from "../Level/LevelLogic/canvasLogic";
 import {
   HUD,
   canvasContext,
   enemyArray,
+  enemySpawner,
   shield,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
+import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import {
   PlayerMovementMethods,
   SpriteMethods,
@@ -17,7 +20,7 @@ import { Vector2 } from "./Vector";
 
 export class Player {
   playerSprite: SpriteMethods;
-  playerHp: number = 100;
+  playerHp: number = 20;
   playerMaxHP: number = 100;
   playerLevel: number = 1;
   playerHpBarPercentage: number = 100;
@@ -29,6 +32,9 @@ export class Player {
   playerSpellActivated: boolean = false;
   playerHitboxY: number;
   playerHitboxX: number;
+  playerExp: number = 0;
+  playerExpNeeded: number = 100;
+  isPlayerAlive: boolean = true;
 
   constructor(
     spaceshipImage: HTMLImageElement,
@@ -46,6 +52,7 @@ export class Player {
   }
 
   checkIfHitByAnEnemy = () => {
+    console.log("da");
     const halfOfHitboxX = this.playerHitboxX / 2;
     const halfOfHitboxY = this.playerHitboxY / 2;
     let currentX = shipPosition.x;
@@ -53,65 +60,32 @@ export class Player {
     const hitboxArrayX = [] as number[];
     const hitboxArrayY = [] as number[];
 
-    this.returnArrayOfHitboxNumbers(
-      currentX,
+    returnArrayOfHitboxNumbers(
+      Math.round(currentX),
       halfOfHitboxX,
       hitboxArrayX,
-      currentX + 1
+      Math.round(currentX + 1)
     );
-    this.returnArrayOfHitboxNumbers(
-      currentY,
+    returnArrayOfHitboxNumbers(
+      Math.round(currentY),
       halfOfHitboxY,
       hitboxArrayY,
-      currentY + 1
+      Math.round(currentY + 1)
     );
 
-    enemyArray.forEach((enemyPosition) => {
-      if (hitboxArrayX.includes(enemyPosition.position.x)) {
-        if (hitboxArrayY.includes(enemyPosition.position.y)) {
-          if (enemyPosition.enemyAttack.enemyAttackCooldown === 60) {
-            this.takeDamage(enemyPosition.enemyAttack.enemyDamage);
-            enemyPosition.enemyAttack.isEnemyAttackOnCooldown = true;
-
-            console.log(this.playerHp);
+    enemySpawner.enemyArray.forEach((array) => {
+      array.forEach((enemy) => {
+        if (hitboxArrayY.includes(Math.round(enemy.enemySprite.position.y))) {
+          if (hitboxArrayX.includes(Math.round(enemy.enemySprite.position.x))) {
+            enemy.enemyAttack();
           }
         }
-      }
+      });
     });
   };
 
-  takeDamage(enemyDamage: number) {
-    this.playerHp = this.playerHp - enemyDamage;
-    this.renderTakenDamageInHpBar(enemyDamage);
-  }
-
   setHpBar(htmlElement: HTMLElement) {
     this.playerHpBar = htmlElement;
-  }
-
-  renderTakenDamageInHpBar(enemyDamage: number) {
-    const damageTaken = (enemyDamage / this.playerMaxHP) * 100;
-    this.playerHpBar.style.width = `${
-      this.playerHpBarPercentage - damageTaken
-    }%`;
-    this.playerHpBarPercentage = this.playerHpBarPercentage - damageTaken;
-  }
-
-  returnArrayOfHitboxNumbers(
-    currentPosition: number,
-    hitbox: number,
-    hitboxArray: number[],
-    newCurrentPosition: number
-  ) {
-    for (let i = 0; i < hitbox; i++) {
-      hitboxArray.push(currentPosition);
-      currentPosition--;
-    }
-
-    for (let i = 0; i < hitbox; i++) {
-      hitboxArray.push(newCurrentPosition);
-      newCurrentPosition++;
-    }
   }
 
   activateSpell() {
@@ -142,5 +116,42 @@ export class Player {
         }
       }
     }
+  }
+
+  gainExpIfEnemyIsKilled(expAmountGained: number) {
+    this.playerExp += expAmountGained;
+    HUD.renderGainedExp();
+    if (this.playerExp >= this.playerExpNeeded) {
+      this.playerExp = 0;
+      this.playerLevel++;
+      this.playerExpNeeded = this.playerExpNeeded * 2;
+
+      HUD.resetExpBarAfterLevelUp();
+    }
+  }
+
+  checkIfPlayerIsDead() {
+    if (this.playerHp <= 0) {
+      if (this.isPlayerAlive) HUD.playerDied();
+      this.isPlayerAlive = false;
+    }
+  }
+
+  resetPlayer() {
+    this.playerHp = 100;
+    this.playerMaxHP = 100;
+    this.playerLevel = 1;
+    this.playerHpBarPercentage = 100;
+    this.playerEnergy = 100;
+    this.playerSpeed = 1;
+    this.playerSpellActivated = false;
+    this.playerHitboxY = 34 * this.playerSprite.scale;
+    this.playerHitboxX = 38 * this.playerSprite.scale;
+    this.playerExp = 0;
+    this.playerExpNeeded = 100;
+    this.isPlayerAlive = true;
+    console.log(height, width);
+    shipPosition.x = width / 2 - 38;
+    shipPosition.y = height - 100;
   }
 }

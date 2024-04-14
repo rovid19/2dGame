@@ -1,9 +1,26 @@
 import { HUD, player } from "../Level/LevelLogic/mainLevelLogic";
+import { InputSpellType } from "../Utils/TsTypes";
 
 export const PROJECTILE = "KeyP";
 export const SPELL1 = "KeyO";
 export const SPELL2 = "KeyŠ";
 export const SPELL3 = "KeyĐ";
+
+function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
+  if (e.code === SPELL1) {
+    if (this.spellsOnCooldown.includes("Shield")) {
+      console.log("shield on cd");
+    } else {
+      this.activateSpell("Shield");
+    }
+  }
+  if (e.code === SPELL2) {
+    this.activateSpell("Wall");
+  }
+  if (e.code === SPELL3) {
+    this.activateSpell("Explosion");
+  }
+}
 
 export class PlayerSpells {
   spell: string = "";
@@ -12,23 +29,11 @@ export class PlayerSpells {
   playerShieldCooldown: number = 0;
   playerShieldDuration: number = 0;
   intervalRunning: boolean = false;
+  keydownFunction: (e: KeyboardEvent) => void;
 
   constructor() {
-    document.addEventListener("keydown", (e) => {
-      if (e.code === SPELL1) {
-        if (this.spellsOnCooldown.includes("Shield")) {
-          console.log("shield on cd");
-        } else {
-          this.activateSpell("Shield");
-        }
-      }
-      if (e.code === SPELL2) {
-        this.activateSpell("Wall");
-      }
-      if (e.code === SPELL3) {
-        this.activateSpell("Explosion");
-      }
-    });
+    this.keydownFunction = keydownFunction.bind(this);
+    document.addEventListener("keydown", this.keydownFunction);
 
     document.addEventListener("keyup", (e) => {
       if (e.code === SPELL1) {
@@ -97,4 +102,11 @@ export class PlayerSpells {
       }, 100);
     }
   };
+
+  removeEventListener() {
+    document.removeEventListener("keydown", this.keydownFunction);
+  }
+  resetSpells() {
+    document.addEventListener("keydown", this.keydownFunction);
+  }
 }

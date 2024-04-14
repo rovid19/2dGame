@@ -71,6 +71,8 @@ export type PlayerSpellMethods = {
   playerShieldCooldown: number;
   playerShieldAmount: number;
   activateSpellCooldown(): void;
+  removeEventListener(): void;
+  resetSpells(): void;
 };
 
 export type EnemyType = {
@@ -80,6 +82,10 @@ export type EnemyType = {
 
 export type EnemyInstance = {
   enemySprite: SpriteMethods;
+  enemyDamage: number;
+  enemyAttackCooldown: number;
+  isEnemyAttackOnCooldown: boolean;
+  enemyExp: number;
   enemyHp: number;
   enemyMaxHp: number;
   enemySpeed: number;
@@ -90,9 +96,34 @@ export type EnemyInstance = {
   enemyHpBarPercentage: number;
   enemyHitboxX: number;
   enemyHitboxY: number;
-  enemyAttack: EnemyAttack;
-  removeEnemy(): void;
+  isEnemyAlive: boolean;
+  whichEnemy: string;
+  enemyAttack(): void;
+  setEnemyAttackOnCooldown(): void;
+  removeEnemy(item: EnemyInstance[], i: number): void;
   renderHealthBar(): void;
-  takeDamage(): void;
+  takeDamage(item: EnemyInstance[], i: number): void;
   followPlayer(): void;
+};
+
+export type InputType = {
+  direction: string;
+  fireProjectile: boolean;
+  playerInput(): void;
+  playerMovement(): void;
+  removeEventListenerAndHardcodeShipPosition(): void;
+  resetInput(): void;
+};
+
+export type InputSpellType = {
+  spell: string;
+  spellsOnCooldown: string[];
+  playerShieldAmount: number;
+  playerShieldCooldown: number;
+  playerShieldDuration: number;
+  intervalRunning: boolean;
+  activateSpell(spellValue: string): void;
+  setActiveSpell(spellValue: string): void;
+  activateSpellCooldown(): void;
+  cooldownTimerCounter(): void;
 };
