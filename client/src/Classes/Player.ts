@@ -2,7 +2,6 @@ import { height, width } from "../Level/LevelLogic/canvasLogic";
 import {
   HUD,
   canvasContext,
-  enemyArray,
   enemySpawner,
   shield,
   shipPosition,
@@ -11,7 +10,7 @@ import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import {
   PlayerMovementMethods,
   SpriteMethods,
-  PlayerSpellMethods,
+  InputSpellType,
 } from "../Utils/TsTypes";
 import { Input } from "./PlayerInput";
 import { PlayerSpells } from "./PlayerSpells";
@@ -28,7 +27,7 @@ export class Player {
   playerEnergy: number = 100;
   playerSpeed: number = 1;
   playerMovement: PlayerMovementMethods = new Input();
-  playerSpells: PlayerSpellMethods = new PlayerSpells();
+  playerSpells: InputSpellType = new PlayerSpells();
   playerSpellActivated: boolean = false;
   playerHitboxY: number;
   playerHitboxX: number;

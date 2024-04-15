@@ -1,8 +1,4 @@
-import {
-  enemyArray,
-  enemySpawner,
-  shipPosition,
-} from "../Level/LevelLogic/mainLevelLogic";
+import { enemySpawner, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import { Vector } from "../Utils/TsTypes";
 import { Vector2 } from "./Vector";

@@ -32,5 +32,3 @@ export class LevelImages {
     });
   }
 }
-
-//export const levelResources = new Resources();

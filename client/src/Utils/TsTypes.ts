@@ -64,17 +64,6 @@ export type PlayerMovementMethods = {
   playerMovement(): void;
 };
 
-export type PlayerSpellMethods = {
-  spell: string;
-  spellsOnCooldown: string[];
-  playerShieldDuration: number;
-  playerShieldCooldown: number;
-  playerShieldAmount: number;
-  activateSpellCooldown(): void;
-  removeEventListener(): void;
-  resetSpells(): void;
-};
-
 export type EnemyType = {
   image: HTMLImageElement;
   title: string;
@@ -111,7 +100,7 @@ export type InputType = {
   fireProjectile: boolean;
   playerInput(): void;
   playerMovement(): void;
-  removeEventListenerAndHardcodeShipPosition(): void;
+  removeEventListener(): void;
   resetInput(): void;
 };
 
@@ -125,5 +114,7 @@ export type InputSpellType = {
   activateSpell(spellValue: string): void;
   setActiveSpell(spellValue: string): void;
   activateSpellCooldown(): void;
-  cooldownTimerCounter(): void;
+  cooldownTimerCounter(frames: number): void;
+  removeEventListener(): void;
+  resetSpells(): void;
 };

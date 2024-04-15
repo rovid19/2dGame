@@ -1,5 +1,6 @@
 import {
   enemySpawner,
+  levelImages,
   player,
   playerMovementInput,
   projectiles,
@@ -78,7 +79,7 @@ export class Hud {
 
     //spell 1
     this.playerSpellBar.appendChild(this.playerSpell1);
-    this.playerSpell1Image.src = "../public//sprites/shield-1.png";
+    this.playerSpell1Image.src = "../public/sprites/spells/spellShield.png";
     this.playerSpell1.appendChild(this.playerSpell1Image);
     this.playerSpell1.appendChild(this.playerSpell1Keybind);
     this.playerSpell1.appendChild(this.playerSpell1Cooldown);
@@ -90,7 +91,7 @@ export class Hud {
 
     //spell 2
     this.playerSpellBar.appendChild(this.playerSpell2);
-    this.playerSpell2Image.src = "../public//sprites/fx-6.png";
+    this.playerSpell2Image.src = "../public/sprites/spells/spellWalls.png";
     this.playerSpell2.appendChild(this.playerSpell2Image);
     this.playerSpell2.appendChild(this.playerSpell2Keybind);
     this.playerSpell2Image.className = "player-spell-img";
@@ -100,7 +101,7 @@ export class Hud {
 
     //spell 3
     this.playerSpellBar.appendChild(this.playerSpell3);
-    this.playerSpell3Image.src = "../public//sprites/explosion.png";
+    this.playerSpell3Image.src = "../public/sprites/spells/spellExplosion.png";
     this.playerSpell3.appendChild(this.playerSpell3Image);
     this.playerSpell3.appendChild(this.playerSpell3Keybind);
     this.playerSpell3Image.className = "player-spell-img";
