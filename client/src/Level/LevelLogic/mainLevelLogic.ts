@@ -164,4 +164,5 @@ function playerMethods() {
   player.playerSpells.activateSpellCooldown();
   player.checkIfHitByAnEnemy();
   player.checkIfPlayerIsDead();
+  HUD.openMenu();
 }

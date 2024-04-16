@@ -1,12 +1,13 @@
 import {
   enemySpawner,
-  levelImages,
   player,
   playerMovementInput,
   projectiles,
 } from "../Level/LevelLogic/mainLevelLogic";
+import { backIcon } from "../Utils/Icons";
 
 export class Hud {
+  // HP BAR AND ENERGY BARD
   hpBarContainer: HTMLElement = document.createElement("div");
   hpBar: HTMLElement = document.createElement("div");
   hpBarFillerContainer: HTMLElement = document.createElement("div");
@@ -14,10 +15,14 @@ export class Hud {
   energyBar: HTMLElement = document.createElement("div");
   energyBarFillerContainer: HTMLElement = document.createElement("div");
   energyBarFiller: HTMLElement = document.createElement("div");
+
+  // EXP BAR
   playerExpBarContainer: HTMLElement = document.createElement("div");
   playerExpBar: HTMLElement = document.createElement("div");
   playerExpBarHeading: HTMLElement = document.createElement("div");
   playerExpBarFiller: HTMLElement = document.createElement("div");
+
+  // SPELL BAR
   playerSpellBarContainer: HTMLElement = document.createElement("div");
   playerSpellBar: HTMLElement = document.createElement("div");
   playerSpell1: HTMLElement = document.createElement("div");
@@ -30,12 +35,28 @@ export class Hud {
   playerSpell3: HTMLElement = document.createElement("div");
   playerSpell3Image: HTMLImageElement = document.createElement("img");
   playerSpell3Keybind: HTMLElement = document.createElement("h3");
+
+  // PLAYER DIED POPUP
   playerIsDeadContainer: HTMLElement = document.createElement("div");
   playerIsDeadMainDiv: HTMLElement = document.createElement("div");
+  playerIsDeadHeadingContainer: HTMLElement = document.createElement("div");
+  playerIsDeadSubheading: HTMLElement = document.createElement("h3");
   playerIsDeadHeading: HTMLElement = document.createElement("h1");
   playerIsDeadButtonContainer: HTMLElement = document.createElement("div");
   playerIsDeadButton1: HTMLElement = document.createElement("button");
   playerIsDeadButton2: HTMLElement = document.createElement("div");
+
+  // MENU
+  menuContainer: HTMLElement = document.createElement("div");
+  menuMainDiv: HTMLElement = document.createElement("div");
+  menuButton1: HTMLElement = document.createElement("button");
+  menuButton2: HTMLElement = document.createElement("button2");
+  menuNote: HTMLElement = document.createElement("h4");
+  settingsMainDiv: HTMLElement = document.createElement("div");
+  settingsBackButton: HTMLElement = document.createElement("button");
+
+  inputBeingChanged: HTMLElement = document.createElement("div");
+
   constructor() {
     this.setHud();
   }
@@ -135,12 +156,178 @@ export class Hud {
     player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;
   }
 
-  playerDied() {
+  createMenuPopup() {
+    document.body.appendChild(this.menuContainer);
+    this.menuContainer.className = "menu-container";
+    this.menuContainer.appendChild(this.menuMainDiv);
+    this.menuMainDiv.className = "menu-main-div";
+    this.menuMainDiv.appendChild(this.menuButton1);
+    this.menuMainDiv.appendChild(this.menuButton2);
+    this.menuMainDiv.appendChild(this.menuNote);
+    this.menuNote.id = "menu-note";
+    this.menuNote.className = "sixtyfour-myapp";
+    this.menuNote.textContent = "press escape to exit";
+    this.menuButton1.id = "menu-button";
+    this.menuButton1.textContent = "Settings";
+    this.menuButton1.className = "sixtyfour-myapp";
+    this.menuButton2.id = "menu-button";
+    this.menuButton2.textContent = "Exit to main menu";
+    this.menuButton2.className = "sixtyfour-myapp";
+  }
+
+  createMenuEventListeners() {
+    this.menuButton1.addEventListener("click", () => {
+      player.playerSpells.menu = "settings";
+    });
+
+    this.menuButton2.addEventListener("click", () => {
+      player.playerSpells.menu = "home";
+    });
+  }
+
+  addOrRemoveAttributesFromSettingSubmenu(value: string) {
+    if (value === "add") {
+      this.settingsMainDiv.setAttribute("ani", "close");
+      document.querySelectorAll(".setting-container").forEach((con) => {
+        con.setAttribute("ani", "closeRest");
+      });
+      this.settingsBackButton.setAttribute("ani", "closeRest");
+    } else {
+      this.settingsMainDiv.removeAttribute("ani");
+      document.querySelectorAll(".setting-container").forEach((con) => {
+        con.removeAttribute("ani");
+      });
+      this.settingsBackButton.removeAttribute("ani");
+    }
+  }
+
+  openMenu() {
+    if (player.playerSpells.menu === "menu") {
+      if (!document.querySelector(".menu-container")) {
+        playerMovementInput.removeEventListener();
+        player.isPlayerAlive = false;
+        this.createMenuPopup();
+        this.createMenuEventListeners();
+      }
+    } else if (player.playerSpells.menu === "closeMenu") {
+      player.isPlayerAlive = true;
+      this.resetSettingContainerValues();
+      this.menuContainer.remove();
+      this.settingsMainDiv.remove();
+    } else if (player.playerSpells.menu === "settings") {
+      if (!document.querySelector(".settings-main-div")) {
+        this.createSettingsPopup();
+        this.addOrRemoveAttributesFromSettingSubmenu("remove");
+        this.createSettingsEventListeners();
+      }
+    }
+  }
+
+  createSettingsEventListeners() {
+    this.settingsBackButton.addEventListener("click", () => {
+      this.addOrRemoveAttributesFromSettingSubmenu("add");
+      setTimeout(() => {
+        player.playerSpells.menu = "menu";
+        this.resetSettingContainerValues();
+        this.settingsMainDiv.remove();
+      }, 1000);
+    });
+  }
+
+  resetSettingContainerValues() {
+    document.querySelectorAll("#setting-input").forEach((setting, i) => {
+      const element = setting as HTMLElement;
+      element.style.fontSize = "16px";
+
+      switch (i) {
+        case 0:
+          setting.textContent = SPELL1.slice(3);
+          break;
+        case 1:
+          setting.textContent = SPELL2.slice(3);
+          break;
+        case 2:
+          setting.textContent = SPELL3.slice(3);
+          break;
+        case 3:
+          setting.textContent = PROJECTILE.slice(3);
+      }
+    });
+  }
+
+  createSettingContainers() {
+    if (!document.querySelector(".setting-container")) {
+      for (let i = 0; i < 5; i++) {
+        const settingContainer = document.createElement("div") as HTMLElement;
+        const settingHeading = document.createElement("h3") as HTMLElement;
+        const settingInput = document.createElement("div") as HTMLElement;
+
+        this.settingsMainDiv.appendChild(settingContainer);
+        settingContainer.appendChild(settingHeading);
+        settingContainer.appendChild(settingInput);
+
+        settingContainer.className = "setting-container";
+        settingHeading.className = "sixtyfour-myapp";
+        settingHeading.id = "setting-heading";
+        settingInput.className = "sixtyfour-myapp";
+        settingInput.id = "setting-input";
+
+        switch (i) {
+          case 0:
+            settingHeading.textContent = "spell 1";
+            settingInput.textContent = SPELL1.slice(3);
+            break;
+          case 1:
+            settingHeading.textContent = "spell 2";
+            settingInput.textContent = SPELL2.slice(3);
+            break;
+          case 2:
+            settingHeading.textContent = "spell 3";
+            settingInput.textContent = SPELL3.slice(3);
+            break;
+          case 3:
+            settingHeading.textContent = "fire projectile";
+            settingInput.textContent = PROJECTILE.slice(3);
+            break;
+          case 4:
+            settingHeading.textContent = "rotate spaceship";
+            break;
+        }
+
+        settingInput.addEventListener("click", () => {
+          if (!player.playerSpells.isChangingSpell) {
+            player.playerSpells.isChangingSpell = true;
+            settingInput.textContent = "press any key to save changes";
+            settingInput.style.fontSize = "8px";
+            this.inputBeingChanged = settingInput;
+          }
+        });
+      }
+    }
+  }
+
+  createSettingsPopup() {
+    this.menuContainer.appendChild(this.settingsMainDiv);
+    this.settingsMainDiv.className = "settings-main-div";
+    this.settingsMainDiv.appendChild(this.settingsBackButton);
+    this.settingsBackButton.className = "settings-back-button";
+    this.settingsBackButton.innerHTML = backIcon;
+    this.createSettingContainers();
+  }
+
+  createPlayerDiedPopup() {
     document.body.appendChild(this.playerIsDeadContainer);
     this.playerIsDeadContainer.className = "player-is-dead-container";
     this.playerIsDeadContainer.appendChild(this.playerIsDeadMainDiv);
     this.playerIsDeadMainDiv.className = "player-is-dead-main-div";
-    this.playerIsDeadMainDiv.appendChild(this.playerIsDeadHeading);
+    this.playerIsDeadMainDiv.appendChild(this.playerIsDeadHeadingContainer);
+    this.playerIsDeadHeadingContainer.className =
+      "player-is-dead-heading-container";
+    this.playerIsDeadHeadingContainer.appendChild(this.playerIsDeadHeading);
+    this.playerIsDeadHeadingContainer.appendChild(this.playerIsDeadSubheading);
+    this.playerIsDeadSubheading.className = "sixtyfour-myapp";
+    this.playerIsDeadSubheading.id = "player-is-dead-subheading";
+    this.playerIsDeadSubheading.textContent = "Your score: ";
     this.playerIsDeadHeading.id = "player-is-dead-heading";
     this.playerIsDeadHeading.className = "sixtyfour-myapp";
     this.playerIsDeadHeading.textContent = "You have died";

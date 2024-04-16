@@ -51,7 +51,6 @@ export class Player {
   }
 
   checkIfHitByAnEnemy = () => {
-    console.log("da");
     const halfOfHitboxX = this.playerHitboxX / 2;
     const halfOfHitboxY = this.playerHitboxY / 2;
     let currentX = shipPosition.x;
@@ -131,7 +130,7 @@ export class Player {
 
   checkIfPlayerIsDead() {
     if (this.playerHp <= 0) {
-      if (this.isPlayerAlive) HUD.playerDied();
+      if (this.isPlayerAlive) HUD.createPlayerDiedPopup();
       this.isPlayerAlive = false;
     }
   }
@@ -149,7 +148,7 @@ export class Player {
     this.playerExp = 0;
     this.playerExpNeeded = 100;
     this.isPlayerAlive = true;
-    console.log(height, width);
+
     shipPosition.x = width / 2 - 38;
     shipPosition.y = height - 100;
   }

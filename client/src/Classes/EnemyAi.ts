@@ -66,22 +66,25 @@ export class Enemy {
   }
 
   setEnemyAttackOnCooldown() {
-    if (this.isEnemyAttackOnCooldown) {
-      console.log(this.enemyAttackCooldown);
-      this.enemyAttackCooldown--;
+    if (player.isPlayerAlive) {
+      if (this.isEnemyAttackOnCooldown) {
+        this.enemyAttackCooldown--;
 
-      if (this.enemyAttackCooldown === 0) {
-        this.enemyAttackCooldown = 60;
-        this.isEnemyAttackOnCooldown = false;
+        if (this.enemyAttackCooldown === 0) {
+          this.enemyAttackCooldown = 60;
+          this.isEnemyAttackOnCooldown = false;
+        }
       }
     }
   }
 
   enemyAttack() {
-    if (!this.isEnemyAttackOnCooldown) {
-      player.playerHp = player.playerHp - this.enemyDamage;
-      this.isEnemyAttackOnCooldown = true;
-      HUD.renderPlayerTakenDamageInHpBar(this.enemyDamage);
+    if (player.isPlayerAlive) {
+      if (!this.isEnemyAttackOnCooldown) {
+        player.playerHp = player.playerHp - this.enemyDamage;
+        this.isEnemyAttackOnCooldown = true;
+        HUD.renderPlayerTakenDamageInHpBar(this.enemyDamage);
+      }
     }
   }
 
@@ -171,6 +174,5 @@ export class Enemy {
   // gives me a special kind of headache
   removeEnemyFromEnemyArray(item: EnemyInstance[], i: number) {
     item.splice(i, 1);
-    console.log(enemySpawner.enemyArray);
   }
 }

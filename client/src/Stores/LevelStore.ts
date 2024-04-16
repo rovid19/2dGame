@@ -8,6 +8,8 @@ type InitialState = {
     onWhichSide: string;
   };
   isCanvasReady: boolean;
+  isChangingKey: boolean;
+  inputBeingChanged: HTMLElement;
 };
 type Listener = (key: any, value: any) => void;
 
@@ -18,6 +20,8 @@ const initialState = {
     onWhichSide: "",
   },
   isCanvasReady: false,
+  isChangingKey: false,
+  inputBeingChanged: document.createElement("div"),
 };
 class levelsStore {
   state: InitialState;
@@ -36,7 +40,13 @@ class levelsStore {
 
   set(
     key: string,
-    value: string | number | boolean | CanvasRenderingContext2D | isOutside
+    value:
+      | string
+      | number
+      | boolean
+      | CanvasRenderingContext2D
+      | isOutside
+      | HTMLElement
   ): void {
     if (this.state[key] !== value) {
       this.state[key] = value;
@@ -49,7 +59,13 @@ class levelsStore {
 
   notify(
     key: string,
-    value: string | number | boolean | CanvasRenderingContext2D | isOutside
+    value:
+      | string
+      | number
+      | boolean
+      | CanvasRenderingContext2D
+      | isOutside
+      | HTMLElement
   ): void {
     if (this.listeners[key]) {
       this.listeners[key].forEach((listener) => listener(key, value));

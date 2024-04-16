@@ -104,7 +104,17 @@ export type InputType = {
   resetInput(): void;
 };
 
+export type SpellObject = {
+  name: string;
+  value: string;
+};
+
 export type InputSpellType = {
+  spell1: SpellObject;
+  spell2: SpellObject;
+  spell3: SpellObject;
+  menu: string;
+  isChangingSpell: boolean;
   spell: string;
   spellsOnCooldown: string[];
   playerShieldAmount: number;

@@ -1,28 +1,51 @@
 import { HUD, player } from "../Level/LevelLogic/mainLevelLogic";
-import { InputSpellType } from "../Utils/TsTypes";
-
-export const PROJECTILE = "KeyP";
-export const SPELL1 = "KeyO";
-export const SPELL2 = "KeyŠ";
-export const SPELL3 = "KeyĐ";
+import { InputSpellType, SpellObject } from "../Utils/TsTypes";
 
 function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
-  if (e.code === SPELL1) {
-    if (this.spellsOnCooldown.includes("Shield")) {
-      console.log("shield on cd");
-    } else {
-      this.activateSpell("Shield");
+  if (this.isChangingSpell) {
+    HUD.inputBeingChanged.textContent = e.code;
+    HUD.inputBeingChanged.style.fontSize = "16px";
+    this.isChangingSpell = false;
+  } else {
+    if (e.code === this.spell1.value) {
+      if (this.spellsOnCooldown.includes("Shield")) {
+        console.log("shield on cd");
+      } else {
+        this.activateSpell("Shield");
+      }
+    }
+    if (e.code === this.spell2.value) {
+      this.activateSpell("Wall");
+    }
+    if (e.code === this.spell3.value) {
+      this.activateSpell("Explosion");
     }
   }
-  if (e.code === SPELL2) {
-    this.activateSpell("Wall");
-  }
-  if (e.code === SPELL3) {
-    this.activateSpell("Explosion");
+
+  if (e.code === "Escape") {
+    if (this.spell === "menu") {
+      this.menu = "closeMenu";
+    } else {
+      this.menu = "menu";
+    }
   }
 }
 
 export class PlayerSpells {
+  spell1: SpellObject = {
+    name: "Spell 1",
+    value: "KeyO",
+  };
+  spell2: SpellObject = {
+    name: "Spell 2",
+    value: "KeyŠ",
+  };
+  spell3: SpellObject = {
+    name: "Spell 3",
+    value: "KeyĐ",
+  };
+  menu: string = "";
+  isChangingSpell: boolean = false;
   spell: string = "";
   spellsOnCooldown: string[] = [];
   playerShieldAmount: number = 0;
@@ -36,14 +59,14 @@ export class PlayerSpells {
     document.addEventListener("keydown", this.keydownFunction);
 
     document.addEventListener("keyup", (e) => {
-      if (e.code === SPELL1) {
+      if (e.code === this.spell1.value) {
         player.playerSpellActivated = false;
       }
-      if (e.code === SPELL2) {
+      if (e.code === this.spell2.value) {
         this.spell = "";
         player.playerSpellActivated = false;
       }
-      if (e.code === SPELL3) {
+      if (e.code === this.spell3.value) {
         this.spell = "";
         player.playerSpellActivated = false;
       }

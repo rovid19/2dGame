@@ -7,16 +7,16 @@ import { InputType } from "../Utils/TsTypes";
 
 function keydownFunction(this: InputType, e: KeyboardEvent) {
   if (e.code === "ArrowUp" || e.code === "KeyW") {
-    this.direction = UP;
+    if (this.direction !== "settings") this.direction = UP;
   }
   if (e.code === "ArrowDown" || e.code === "KeyS") {
-    this.direction = DOWN;
+    if (this.direction !== "settings") this.direction = DOWN;
   }
   if (e.code === "ArrowLeft" || e.code === "KeyA") {
-    this.direction = LEFT;
+    if (this.direction !== "settings") this.direction = LEFT;
   }
   if (e.code === "ArrowRight" || e.code === "KeyD") {
-    this.direction = RIGHT;
+    if (this.direction !== "settings") this.direction = RIGHT;
   }
 
   if (e.code === "KeyP") {

@@ -325,8 +325,9 @@
 }
 
 .player-is-dead-main-div {
-  height: 40%;
-  width: 50%;
+  position: relative;
+  height: 50%;
+  width: 40%;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -338,9 +339,27 @@
   height: 50%;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
+  padding-bottom: 40px;
+}
+
+.player-is-dead-heading-container {
+  position: relative;
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  padding-top: 40px;
+}
+
+#player-is-dead-subheading {
+  color: rgb(161, 161, 161);
+  font-size: 10px;
 }
 
 #player-is-dead-heading {
@@ -350,11 +369,12 @@
 }
 
 #player-is-dead-button {
-  height: 50px;
-  width: 100px;
+  height: 100px;
+  width: 80%;
   border: 2px solid white;
   background: none;
   border-radius: 6px;
+  font-size: 24px;
   color: white;
   display: flex;
   justify-content: center;
@@ -365,4 +385,170 @@
 #player-is-dead-button:hover {
   background-color: white;
   color: black;
+}
+
+/* MENU */
+
+.menu-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.menu-main-div {
+  position: relative;
+  height: 50%;
+  width: 40%;
+  background-color: black;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#menu-button {
+  width: 80%;
+  height: 100px;
+  border: 2px solid white;
+  border-radius: 6px;
+  color: white;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+#menu-button:hover {
+  background-color: white;
+  color: black;
+}
+
+#menu-note {
+  position: absolute;
+  bottom: 40px;
+  color: rgb(161, 161, 161);
+  font-size: 10px;
+}
+
+/* settings */
+
+.settings-main-div {
+  position: relative;
+  height: 50%;
+  width: 40%;
+  background-color: black;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  animation: 1s ease ContainerOpening;
+}
+
+.settings-back-button {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  color: rgb(181, 181, 181);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  animation: 1s ease SettingContainerOpacity;
+}
+
+.settings-back-button:hover {
+  color: white;
+}
+
+.setting-container {
+  width: 80%;
+  height: 50px;
+  border: 2px solid white;
+  display: flex;
+  color: white;
+  background-color: transparent;
+  animation: 1s ease SettingContainerOpacity;
+}
+
+#setting-heading {
+  width: 50%;
+  font-size: 16px;
+  padding-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#setting-input {
+  width: 50%;
+  padding-left: 8px;
+  background: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+@keyframes ContainerOpening {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 40%;
+  }
+}
+
+@keyframes ContainerClosing {
+  0% {
+    width: 40%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}
+
+@keyframes SettingContainerOpacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes SettingContainerOpacityClose {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+[ani="close"] {
+  animation: 1s ease ContainerClosing;
+}
+
+[ani="closeRest"] {
+  animation: 1s ease SettingContainerOpacityClose;
 }
