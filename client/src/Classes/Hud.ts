@@ -4,7 +4,6 @@ import {
   playerMovementInput,
   projectiles,
 } from "../Level/LevelLogic/mainLevelLogic";
-import { backIcon } from "../Utils/Icons";
 
 export class Hud {
   // HP BAR AND ENERGY BARD
@@ -54,7 +53,6 @@ export class Hud {
   menuNote: HTMLElement = document.createElement("h4");
   settingsMainDiv: HTMLElement = document.createElement("div");
   settingsBackButton: HTMLElement = document.createElement("button");
-
   inputBeingChanged: HTMLElement = document.createElement("div");
 
   constructor() {
@@ -108,7 +106,8 @@ export class Hud {
     this.playerSpell1Keybind.className = "sixtyfour-myapp";
     this.playerSpell1Keybind.id = "player-spell-keybind";
     this.playerSpell1Cooldown.className = "cooldown1";
-    this.playerSpell1Keybind.textContent = "O";
+    this.playerSpell1Keybind.textContent =
+      player.playerSpells.spell1.value.slice(3);
 
     //spell 2
     this.playerSpellBar.appendChild(this.playerSpell2);
@@ -118,7 +117,8 @@ export class Hud {
     this.playerSpell2Image.className = "player-spell-img";
     this.playerSpell2Keybind.className = "sixtyfour-myapp";
     this.playerSpell2Keybind.id = "player-spell-keybind";
-    this.playerSpell2Keybind.textContent = "O";
+    this.playerSpell2Keybind.textContent =
+      player.playerSpells.spell2.value.slice(3);
 
     //spell 3
     this.playerSpellBar.appendChild(this.playerSpell3);
@@ -128,7 +128,8 @@ export class Hud {
     this.playerSpell3Image.className = "player-spell-img";
     this.playerSpell3Keybind.className = "sixtyfour-myapp";
     this.playerSpell3Keybind.id = "player-spell-keybind";
-    this.playerSpell3Keybind.textContent = "Š";
+    this.playerSpell3Keybind.textContent =
+      player.playerSpells.spell3.value.slice(3);
 
     this.playerSpell1.className = "player-spell";
     this.playerSpell2.className = "player-spell";
@@ -154,165 +155,6 @@ export class Hud {
       player.playerHpBarPercentage - damageTaken
     }%`;
     player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;
-  }
-
-  createMenuPopup() {
-    document.body.appendChild(this.menuContainer);
-    this.menuContainer.className = "menu-container";
-    this.menuContainer.appendChild(this.menuMainDiv);
-    this.menuMainDiv.className = "menu-main-div";
-    this.menuMainDiv.appendChild(this.menuButton1);
-    this.menuMainDiv.appendChild(this.menuButton2);
-    this.menuMainDiv.appendChild(this.menuNote);
-    this.menuNote.id = "menu-note";
-    this.menuNote.className = "sixtyfour-myapp";
-    this.menuNote.textContent = "press escape to exit";
-    this.menuButton1.id = "menu-button";
-    this.menuButton1.textContent = "Settings";
-    this.menuButton1.className = "sixtyfour-myapp";
-    this.menuButton2.id = "menu-button";
-    this.menuButton2.textContent = "Exit to main menu";
-    this.menuButton2.className = "sixtyfour-myapp";
-  }
-
-  createMenuEventListeners() {
-    this.menuButton1.addEventListener("click", () => {
-      player.playerSpells.menu = "settings";
-    });
-
-    this.menuButton2.addEventListener("click", () => {
-      player.playerSpells.menu = "home";
-    });
-  }
-
-  addOrRemoveAttributesFromSettingSubmenu(value: string) {
-    if (value === "add") {
-      this.settingsMainDiv.setAttribute("ani", "close");
-      document.querySelectorAll(".setting-container").forEach((con) => {
-        con.setAttribute("ani", "closeRest");
-      });
-      this.settingsBackButton.setAttribute("ani", "closeRest");
-    } else {
-      this.settingsMainDiv.removeAttribute("ani");
-      document.querySelectorAll(".setting-container").forEach((con) => {
-        con.removeAttribute("ani");
-      });
-      this.settingsBackButton.removeAttribute("ani");
-    }
-  }
-
-  openMenu() {
-    if (player.playerSpells.menu === "menu") {
-      if (!document.querySelector(".menu-container")) {
-        playerMovementInput.removeEventListener();
-        player.isPlayerAlive = false;
-        this.createMenuPopup();
-        this.createMenuEventListeners();
-      }
-    } else if (player.playerSpells.menu === "closeMenu") {
-      player.isPlayerAlive = true;
-      this.resetSettingContainerValues();
-      this.menuContainer.remove();
-      this.settingsMainDiv.remove();
-    } else if (player.playerSpells.menu === "settings") {
-      if (!document.querySelector(".settings-main-div")) {
-        this.createSettingsPopup();
-        this.addOrRemoveAttributesFromSettingSubmenu("remove");
-        this.createSettingsEventListeners();
-      }
-    }
-  }
-
-  createSettingsEventListeners() {
-    this.settingsBackButton.addEventListener("click", () => {
-      this.addOrRemoveAttributesFromSettingSubmenu("add");
-      setTimeout(() => {
-        player.playerSpells.menu = "menu";
-        this.resetSettingContainerValues();
-        this.settingsMainDiv.remove();
-      }, 1000);
-    });
-  }
-
-  resetSettingContainerValues() {
-    document.querySelectorAll("#setting-input").forEach((setting, i) => {
-      const element = setting as HTMLElement;
-      element.style.fontSize = "16px";
-
-      switch (i) {
-        case 0:
-          setting.textContent = SPELL1.slice(3);
-          break;
-        case 1:
-          setting.textContent = SPELL2.slice(3);
-          break;
-        case 2:
-          setting.textContent = SPELL3.slice(3);
-          break;
-        case 3:
-          setting.textContent = PROJECTILE.slice(3);
-      }
-    });
-  }
-
-  createSettingContainers() {
-    if (!document.querySelector(".setting-container")) {
-      for (let i = 0; i < 5; i++) {
-        const settingContainer = document.createElement("div") as HTMLElement;
-        const settingHeading = document.createElement("h3") as HTMLElement;
-        const settingInput = document.createElement("div") as HTMLElement;
-
-        this.settingsMainDiv.appendChild(settingContainer);
-        settingContainer.appendChild(settingHeading);
-        settingContainer.appendChild(settingInput);
-
-        settingContainer.className = "setting-container";
-        settingHeading.className = "sixtyfour-myapp";
-        settingHeading.id = "setting-heading";
-        settingInput.className = "sixtyfour-myapp";
-        settingInput.id = "setting-input";
-
-        switch (i) {
-          case 0:
-            settingHeading.textContent = "spell 1";
-            settingInput.textContent = SPELL1.slice(3);
-            break;
-          case 1:
-            settingHeading.textContent = "spell 2";
-            settingInput.textContent = SPELL2.slice(3);
-            break;
-          case 2:
-            settingHeading.textContent = "spell 3";
-            settingInput.textContent = SPELL3.slice(3);
-            break;
-          case 3:
-            settingHeading.textContent = "fire projectile";
-            settingInput.textContent = PROJECTILE.slice(3);
-            break;
-          case 4:
-            settingHeading.textContent = "rotate spaceship";
-            break;
-        }
-
-        settingInput.addEventListener("click", () => {
-          if (!player.playerSpells.isChangingSpell) {
-            player.playerSpells.isChangingSpell = true;
-            settingInput.textContent = "press any key to save changes";
-            settingInput.style.fontSize = "8px";
-            this.inputBeingChanged = settingInput;
-          }
-        });
-      }
-    }
-  }
-
-  createSettingsPopup() {
-    this.menuContainer.appendChild(this.settingsMainDiv);
-    this.settingsMainDiv.className = "settings-main-div";
-    this.settingsMainDiv.appendChild(this.settingsBackButton);
-    this.settingsBackButton.className = "settings-back-button";
-    this.settingsBackButton.innerHTML = backIcon;
-    this.createSettingContainers();
   }
 
   createPlayerDiedPopup() {

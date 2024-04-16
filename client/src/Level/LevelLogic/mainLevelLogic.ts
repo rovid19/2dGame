@@ -18,6 +18,7 @@ import { EnemyObject } from "../../Utils/TsTypes.ts";
 import { Hud } from "../../Classes/Hud.ts";
 import { Player } from "../../Classes/Player.ts";
 import { EnemySpawner } from "../../Classes/EnemySpawner.ts";
+import { Menu } from "../../Classes/InGameMenu.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
@@ -113,6 +114,7 @@ enemy3.updateEnemyCoordinates(enemy3.enemySprite.position);
 enemy3.createDetailsAboutEnemy("basic", enemy3.enemySprite.scale);
 enemy3.renderHealthBar();
 */
+export const menu = new Menu();
 export const HUD = new Hud();
 player.setHpBar(HUD.hpBarFiller);
 //
@@ -164,5 +166,5 @@ function playerMethods() {
   player.playerSpells.activateSpellCooldown();
   player.checkIfHitByAnEnemy();
   player.checkIfPlayerIsDead();
-  HUD.openMenu();
+  menu.openMenu();
 }

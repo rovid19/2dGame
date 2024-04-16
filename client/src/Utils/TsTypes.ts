@@ -110,11 +110,11 @@ export type SpellObject = {
 };
 
 export type InputSpellType = {
+  projectile: SpellObject;
   spell1: SpellObject;
   spell2: SpellObject;
   spell3: SpellObject;
-  menu: string;
-  isChangingSpell: boolean;
+  rotateSpaceship: SpellObject;
   spell: string;
   spellsOnCooldown: string[];
   playerShieldAmount: number;

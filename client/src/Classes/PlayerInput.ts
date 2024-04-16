@@ -1,4 +1,5 @@
 import {
+  player,
   playerMovementInput,
   projectiles,
   shipPosition,
@@ -19,7 +20,7 @@ function keydownFunction(this: InputType, e: KeyboardEvent) {
     if (this.direction !== "settings") this.direction = RIGHT;
   }
 
-  if (e.code === "KeyP") {
+  if (e.code === player.playerSpells.projectile.value) {
     this.fireProjectile = true;
   }
 }

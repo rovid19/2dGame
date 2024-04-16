@@ -2,36 +2,26 @@ import { HUD, player } from "../Level/LevelLogic/mainLevelLogic";
 import { InputSpellType, SpellObject } from "../Utils/TsTypes";
 
 function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
-  if (this.isChangingSpell) {
-    HUD.inputBeingChanged.textContent = e.code;
-    HUD.inputBeingChanged.style.fontSize = "16px";
-    this.isChangingSpell = false;
-  } else {
-    if (e.code === this.spell1.value) {
-      if (this.spellsOnCooldown.includes("Shield")) {
-        console.log("shield on cd");
-      } else {
-        this.activateSpell("Shield");
-      }
-    }
-    if (e.code === this.spell2.value) {
-      this.activateSpell("Wall");
-    }
-    if (e.code === this.spell3.value) {
-      this.activateSpell("Explosion");
+  if (e.code === this.spell1.value) {
+    if (this.spellsOnCooldown.includes("Shield")) {
+      console.log("shield on cd");
+    } else {
+      this.activateSpell("Shield");
     }
   }
-
-  if (e.code === "Escape") {
-    if (this.spell === "menu") {
-      this.menu = "closeMenu";
-    } else {
-      this.menu = "menu";
-    }
+  if (e.code === this.spell2.value) {
+    this.activateSpell("Wall");
+  }
+  if (e.code === this.spell3.value) {
+    this.activateSpell("Explosion");
   }
 }
 
 export class PlayerSpells {
+  projectile: SpellObject = {
+    name: "Projectile",
+    value: "KeyP",
+  };
   spell1: SpellObject = {
     name: "Spell 1",
     value: "KeyO",
@@ -44,8 +34,11 @@ export class PlayerSpells {
     name: "Spell 3",
     value: "KeyĐ",
   };
-  menu: string = "";
-  isChangingSpell: boolean = false;
+  rotateSpaceship: SpellObject = {
+    name: "Rotate spaceship",
+    value: "KeyR",
+  };
+
   spell: string = "";
   spellsOnCooldown: string[] = [];
   playerShieldAmount: number = 0;
