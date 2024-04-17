@@ -19,6 +19,7 @@ import { Hud } from "../../Classes/Hud.ts";
 import { Player } from "../../Classes/Player.ts";
 import { EnemySpawner } from "../../Classes/EnemySpawner.ts";
 import { Menu } from "../../Classes/InGameMenu.ts";
+import { PowerUp } from "../../Classes/PowerUp.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 
@@ -115,6 +116,7 @@ enemy3.createDetailsAboutEnemy("basic", enemy3.enemySprite.scale);
 enemy3.renderHealthBar();
 */
 export const menu = new Menu();
+export const powerUp = new PowerUp();
 export const HUD = new Hud();
 player.setHpBar(HUD.hpBarFiller);
 //

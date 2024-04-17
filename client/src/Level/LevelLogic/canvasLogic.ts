@@ -52,7 +52,7 @@ export function generateUniqueNumbers(arrayLength: number): number[] {
     if (!array.includes(randomNumber)) array.push(randomNumber);
   }
   return array;
-}*/
+}
 
 export function generateId(idLength: number): string {
   const randomLettersAndNumbers = "qweidnvs21njdn1298dnasp1sijdi";
@@ -65,4 +65,17 @@ export function generateId(idLength: number): string {
   }
 
   return newIdArray.join("");
+}
+*/
+export function generateArrayWithUniqueNumbers(numbers: number): number[] {
+  const unqiueNumberArray = [] as number[];
+
+  while (unqiueNumberArray.length < numbers) {
+    const randomNumber = Math.floor(Math.random() * numbers) + 1;
+    if (!unqiueNumberArray.includes(randomNumber)) {
+      unqiueNumberArray.push(randomNumber);
+    }
+  }
+
+  return unqiueNumberArray;
 }

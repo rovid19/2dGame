@@ -128,3 +128,10 @@ export type InputSpellType = {
   removeEventListener(): void;
   resetSpells(): void;
 };
+
+export type PowerUpType = {
+  name: string;
+  description: string;
+  value: number;
+  rarity: string;
+};

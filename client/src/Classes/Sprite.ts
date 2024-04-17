@@ -1,21 +1,20 @@
 import { Vector2 } from "three";
 import { Coordinates, SpriteMethods, Vector } from "../Utils/TsTypes";
-import { width } from "../Level/LevelLogic/canvasLogic";
+import { height, width } from "../Level/LevelLogic/canvasLogic";
 
-export class Sprite implements SpriteMethods {
+export class Sprite  {
   spriteImage: any = {};
   frameSize: Vector = new Vector2();
   scale: number = 0;
   position: Coordinates = { x: 0 + Math.random() * (width - 0), y: -100 };
+
   constructor(image: HTMLImageElement, frameSize: Vector, scale: number) {
     this.spriteImage = image;
     this.frameSize = frameSize;
     this.scale = scale;
   }
 
-  createImage() {}
-
-  drawImage(ctx: any, x: number, y: number) {
+  drawImage(ctx: CanvasRenderingContext2D, x: number, y: number) {
     if (!this.spriteImage.isLoaded) {
       return;
     }

@@ -1,3 +1,5 @@
+
+
 export function returnArrayOfHitboxNumbers(
   currentPosition: number,
   hitbox: number,
@@ -14,3 +16,5 @@ export function returnArrayOfHitboxNumbers(
     newCurrentPosition++;
   }
 }
+
+

@@ -3,6 +3,7 @@ import {
   HUD,
   canvasContext,
   enemySpawner,
+  powerUp,
   shield,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
@@ -120,12 +121,17 @@ export class Player {
     this.playerExp += expAmountGained;
     HUD.renderGainedExp();
     if (this.playerExp >= this.playerExpNeeded) {
-      this.playerExp = 0;
-      this.playerLevel++;
-      this.playerExpNeeded = this.playerExpNeeded * 2;
-
-      HUD.resetExpBarAfterLevelUp();
+      this.playerLevelUp();
     }
+  }
+
+  playerLevelUp() {
+    this.playerExp = 0;
+    this.playerLevel++;
+    this.playerExpNeeded = this.playerExpNeeded * 2;
+    powerUp.isPowerUpActive = true;
+    powerUp.openPowerUp();
+    HUD.resetExpBarAfterLevelUp();
   }
 
   checkIfPlayerIsDead() {

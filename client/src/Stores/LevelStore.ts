@@ -9,7 +9,7 @@ type InitialState = {
   };
   isCanvasReady: boolean;
   isChangingKey: boolean;
-  inputBeingChanged: HTMLElement;
+ 
 };
 type Listener = (key: any, value: any) => void;
 
@@ -21,7 +21,7 @@ const initialState = {
   },
   isCanvasReady: false,
   isChangingKey: false,
-  inputBeingChanged: document.createElement("div"),
+
 };
 class levelsStore {
   state: InitialState;
