@@ -12,7 +12,6 @@ import {
 } from "./canvasLogic.ts";
 import { renderPlayerSpaceship } from "./spaceshipLogic.ts";
 import { Projectile } from "../../Classes/Projectile.ts";
-import { renderProjectiles } from "./projectileLogic.ts";
 
 import { EnemyObject } from "../../Utils/TsTypes.ts";
 import { Hud } from "../../Classes/Hud.ts";
@@ -74,13 +73,13 @@ export const shield = new Sprite(
   2
 );
 
-export const projectile = new Sprite(
+/*export const projectile = new Sprite(
   levelImages.images.projectile1,
   new Vector2(32, 32),
   2
 );
 
-/*const shipSteeringEffect = new Sprite(
+const shipSteeringEffect = new Sprite(
   levelImages.images.speed,
   new Vector2(
     levelImages.images.speed.image.width,
@@ -98,7 +97,13 @@ export const enemySpawner = new EnemySpawner();
 //
 //
 //
-export const projectiles = new Projectile(shipPosition);
+export const projectiles = new Projectile(
+  shipPosition,
+  levelImages.images.projectile1,
+  32,
+  32,
+  1.2
+);
 projectiles.updateProjectileBaseCoordinates();
 
 //enemy1.createDetailsAboutEnemy("basic", enemy1.enemySprite.scale);
@@ -156,7 +161,7 @@ export function renderLevel() {
       backgroundSprite.spriteImage.image
     );
     enemySpawner.renderEnemies();
-    renderProjectiles();
+    projectiles.renderProjectile();
     renderPlayerSpaceship();
     playerMethods();
   }

@@ -67,11 +67,14 @@ export function generateId(idLength: number): string {
   return newIdArray.join("");
 }
 */
-export function generateArrayWithUniqueNumbers(numbers: number): number[] {
+export function generateArrayWithUniqueNumbers(
+  amountOfNumbers: number,
+  upTo: number
+): number[] {
   const unqiueNumberArray = [] as number[];
 
-  while (unqiueNumberArray.length < numbers) {
-    const randomNumber = Math.floor(Math.random() * numbers) + 1;
+  while (unqiueNumberArray.length < amountOfNumbers) {
+    const randomNumber = Math.floor(Math.random() * upTo) + 1;
     if (!unqiueNumberArray.includes(randomNumber)) {
       unqiueNumberArray.push(randomNumber);
     }

@@ -71,19 +71,19 @@ export class Input {
 
   playerMovement() {
     if (playerMovementInput.direction === UP) {
-      shipPosition.y -= 10;
+      shipPosition.y -= player.playerSpeed;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     }
     if (playerMovementInput.direction === DOWN) {
-      shipPosition.y += 10;
+      shipPosition.y += player.playerSpeed;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     }
     if (playerMovementInput.direction === LEFT) {
-      shipPosition.x -= 10;
+      shipPosition.x -= player.playerSpeed;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     }
     if (playerMovementInput.direction === RIGHT) {
-      shipPosition.x += 10;
+      shipPosition.x += player.playerSpeed;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
     }
   }

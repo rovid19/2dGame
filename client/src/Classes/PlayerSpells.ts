@@ -119,6 +119,8 @@ export class PlayerSpells {
     }
   };
 
+  decreaseStatByPercentage(stat: number, value: number) {}
+
   removeEventListener() {
     document.removeEventListener("keydown", this.keydownFunction);
   }

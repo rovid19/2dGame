@@ -3,7 +3,9 @@ import {
   HUD,
   canvasContext,
   enemySpawner,
+  player,
   powerUp,
+  projectiles,
   shield,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
@@ -12,6 +14,7 @@ import {
   PlayerMovementMethods,
   SpriteMethods,
   InputSpellType,
+  Projectile,
 } from "../Utils/TsTypes";
 import { Input } from "./PlayerInput";
 import { PlayerSpells } from "./PlayerSpells";
@@ -26,7 +29,7 @@ export class Player {
   playerHpBarPercentage: number = 100;
   playerHpBar: HTMLElement = document.createElement("div");
   playerEnergy: number = 100;
-  playerSpeed: number = 1;
+  playerSpeed: number = 5;
   playerMovement: PlayerMovementMethods = new Input();
   playerSpells: InputSpellType = new PlayerSpells();
   playerSpellActivated: boolean = false;
@@ -147,7 +150,7 @@ export class Player {
     this.playerLevel = 1;
     this.playerHpBarPercentage = 100;
     this.playerEnergy = 100;
-    this.playerSpeed = 1;
+    this.playerSpeed = 5;
     this.playerSpellActivated = false;
     this.playerHitboxY = 34 * this.playerSprite.scale;
     this.playerHitboxX = 38 * this.playerSprite.scale;
@@ -157,5 +160,44 @@ export class Player {
 
     shipPosition.x = width / 2 - 38;
     shipPosition.y = height - 100;
+  }
+
+  increasePlayerStatsAfterPowerUp(powerUp: string, value: number) {
+    switch (powerUp) {
+      case "Damage increase":
+        this.increaseStatByPercentage(projectiles, value);
+        break;
+
+      case "Movement speed increase":
+        this.increaseStatByPercentage(player, value);
+        break;
+      case "Reload speed increase":
+        console.log(projectiles.prjReloadCooldown);
+        this.decreaseStatByPercentage(projectiles, value);
+        console.log(projectiles.prjReloadCooldown);
+        break;
+      case "Projectile size increase":
+        projectiles.increaseProjectileSizeAndHitbox(value);
+        break;
+      case "Cooldown reduction":
+        player.playerSpells.decreaseStatByPercentage(2, value);
+        break;
+    }
+  }
+
+  increaseStatByPercentage(stat: Player | Projectile, value: number) {
+    if (stat instanceof Player) {
+      const increaseStatBy = stat.playerSpeed * (value / 100);
+      stat.playerSpeed = stat.playerSpeed + increaseStatBy;
+    } else {
+      const increaseStatBy = stat.prjDamage * (value / 100);
+      stat.prjDamage = stat.prjDamage + increaseStatBy;
+    }
+  }
+
+  decreaseStatByPercentage(stat: Projectile, value: number) {
+    const decreaseStatBy = stat.prjReloadCooldown * (value / 100);
+    stat.prjReloadCooldown = stat.prjReloadCooldown - decreaseStatBy;
+    stat.prjReloadSpeed = stat.prjReloadCooldown;
   }
 }

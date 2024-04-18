@@ -118,7 +118,7 @@ export class Enemy {
         this.enemyHitboxX = 30 * scale;
         this.enemyHpBarWidth = 27 * scale;
         this.whichEnemy = "basic";
-        this.enemyExp = 50;
+        this.enemyExp = 100;
         this.enemyAttackCooldown = 100;
         this.enemyDamage = 10;
         break;
@@ -127,7 +127,7 @@ export class Enemy {
         this.enemyHitboxX = 59 * scale;
         this.enemyHpBarWidth = 56 * scale;
         this.whichEnemy = "basic2";
-        this.enemyExp = 100;
+        this.enemyExp = 200;
         this.enemyAttackCooldown = 70;
         this.enemyDamage = 20;
         break;

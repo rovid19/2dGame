@@ -127,11 +127,36 @@ export type InputSpellType = {
   cooldownTimerCounter(frames: number): void;
   removeEventListener(): void;
   resetSpells(): void;
+  decreaseStatByPercentage(stat: number, value: number): void;
 };
 
 export type PowerUpType = {
-  name: string;
-  description: string;
-  value: number;
-  rarity: string;
+  name?: string;
+  description?: string;
+  value?: number;
+  rarity?: string;
+};
+
+export type Projectile = {
+  prjDirectionsLeft: Vector;
+  prjDirectionsRight: Vector;
+  prjSpeed: number;
+  prjDamage: number;
+  prjAmount: number;
+  prjReloadCooldown: number;
+  prjReloadSpeed: number;
+  isReloading: boolean;
+  isFiring: boolean;
+  projectileDistanceTraveled: number;
+  isReady: boolean;
+  isRendered: boolean;
+  targetHit: boolean;
+  shipPosition: Vector;
+  distanceToEndOfScreen: number;
+  prjHitboxX: number;
+  prjHitboxY: number;
+  prjArrHitboxXleft: number[];
+  prjArrHitboxXright: number[];
+  prjArrHitboxYleft: number[];
+  prjArrHitboxYright: number[];
 };

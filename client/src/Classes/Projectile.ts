@@ -1,16 +1,22 @@
-import { enemySpawner, shipPosition } from "../Level/LevelLogic/mainLevelLogic";
+import {
+  canvasContext,
+  enemySpawner,
+  shipPosition,
+} from "../Level/LevelLogic/mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
-import { Vector } from "../Utils/TsTypes";
+import { SpriteMethods, Vector } from "../Utils/TsTypes";
+import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector";
 
 export class Projectile {
+  prjSprite: SpriteMethods;
   prjDirectionsLeft: Vector = { x: 0, y: 0 };
   prjDirectionsRight: Vector = { x: 0, y: 0 };
   prjSpeed: number = 15;
-  prjDamage: number = 50;
+  prjDamage: number = 16;
   prjAmount: number = 1;
-  prjReloadCooldown: number = 10;
-  prjReloadSpeed: number = 20;
+  prjReloadCooldown: number = 30;
+  prjReloadSpeed: number = 30;
   isReloading: boolean = false;
   isFiring: boolean = false;
   projectileDistanceTraveled: number = 0;
@@ -26,8 +32,19 @@ export class Projectile {
   prjArrHitboxYleft: number[] = [];
   prjArrHitboxYright: number[] = [];
 
-  constructor(shipPosition: Vector) {
+  constructor(
+    shipPosition: Vector,
+    projectileImage: HTMLImageElement,
+    frameHeight: number,
+    frameWidth: number,
+    scale: number
+  ) {
     this.shipPosition = shipPosition;
+    this.prjSprite = new Sprite(
+      projectileImage,
+      new Vector2(frameHeight, frameWidth),
+      scale
+    );
   }
 
   setProjectileHitboxArray() {
@@ -64,15 +81,22 @@ export class Projectile {
     );
   }
 
-  renderProjectile = (
-    ctx: CanvasRenderingContext2D,
-    projectileImage: HTMLImageElement,
-    x: number,
-    y: number
-  ) => {
+  renderProjectile = () => {
     if (!this.isRendered) this.isRendered = true;
+    if (this.isFiring) {
+      this.firingAnimation();
+    }
 
-    ctx.drawImage(projectileImage, x, y);
+    this.prjSprite.drawImage(
+      canvasContext,
+      this.prjDirectionsLeft.x,
+      this.prjDirectionsLeft.y
+    );
+    this.prjSprite.drawImage(
+      canvasContext,
+      this.prjDirectionsRight.x,
+      this.prjDirectionsRight.y
+    );
   };
 
   firingAnimation = () => {
@@ -197,7 +221,20 @@ export class Projectile {
     this.prjArrHitboxXright = [];
     this.prjArrHitboxYleft = [];
     this.prjArrHitboxYright = [];
+    this.prjSprite.scale = 1.2;
 
     this.updateProjectileBaseCoordinates();
+  }
+
+  increaseProjectileSizeAndHitbox(value: number) {
+    const valueInPercentage = value / 100;
+    const increaseScaleBy = this.prjSprite.scale * valueInPercentage;
+    this.prjSprite.scale = this.prjSprite.scale + increaseScaleBy;
+
+    const increaseHitbox = this.prjHitboxX * valueInPercentage;
+    this.prjHitboxX = this.prjHitboxX + increaseHitbox;
+    this.prjHitboxY = this.prjHitboxY + increaseHitbox;
+
+    console.log(this.prjHitboxX, this.prjHitboxY, this.prjSprite.scale);
   }
 }
