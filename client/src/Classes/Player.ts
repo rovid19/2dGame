@@ -172,9 +172,9 @@ export class Player {
         this.increaseStatByPercentage(player, value);
         break;
       case "Reload speed increase":
-        console.log(projectiles.prjReloadCooldown);
+        console.log(projectiles.prjReloadCooldown, projectiles.prjSpeed);
         this.decreaseStatByPercentage(projectiles, value);
-        console.log(projectiles.prjReloadCooldown);
+        console.log(projectiles.prjReloadCooldown, projectiles.prjSpeed);
         break;
       case "Projectile size increase":
         projectiles.increaseProjectileSizeAndHitbox(value);
@@ -197,7 +197,19 @@ export class Player {
 
   decreaseStatByPercentage(stat: Projectile, value: number) {
     const decreaseStatBy = stat.prjReloadCooldown * (value / 100);
-    stat.prjReloadCooldown = stat.prjReloadCooldown - decreaseStatBy;
+    stat.prjReloadCooldown = Math.floor(
+      stat.prjReloadCooldown - decreaseStatBy
+    );
     stat.prjReloadSpeed = stat.prjReloadCooldown;
+
+    // increase prj speed as well
+    const increaseStatBy = stat.prjSpeed * (value / 100);
+    stat.prjSpeed = Math.floor(stat.prjSpeed + increaseStatBy);
+
+    if (stat.prjReloadCooldown <= 5) {
+      stat.prjReloadCooldown = 5;
+      stat.prjReloadSpeed = 5;
+      stat.prjSpeed = 45;
+    }
   }
 }

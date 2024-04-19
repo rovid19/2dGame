@@ -16,6 +16,8 @@ export class Enemy {
   isEnemyAttackOnCooldown: boolean = false;
   enemyExp: number = 0;
   enemyHp: number = 100;
+  enemySpawnCD: number = 0;
+  enemyMaxSpawnCD: number = 0;
   enemyMaxHp: number = 100;
   enemySpeed: number = 0;
   enemyHpBarContainer: HTMLElement = document.createElement("div");
@@ -118,18 +120,22 @@ export class Enemy {
         this.enemyHitboxX = 30 * scale;
         this.enemyHpBarWidth = 27 * scale;
         this.whichEnemy = "basic";
-        this.enemyExp = 100;
+        this.enemyExp = 400;
         this.enemyAttackCooldown = 100;
         this.enemyDamage = 10;
+        this.enemySpawnCD = 480;
+        this.enemyMaxSpawnCD = 480;
         break;
       case "basic2":
         this.enemyHitboxY = 51 * scale;
         this.enemyHitboxX = 59 * scale;
         this.enemyHpBarWidth = 56 * scale;
         this.whichEnemy = "basic2";
-        this.enemyExp = 200;
+        this.enemyExp = 400;
         this.enemyAttackCooldown = 70;
         this.enemyDamage = 20;
+        this.enemySpawnCD = 1800;
+        this.enemyMaxSpawnCD = 1800;
         break;
       case "special":
         break;

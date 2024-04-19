@@ -74,7 +74,7 @@ export function generateArrayWithUniqueNumbers(
   const unqiueNumberArray = [] as number[];
 
   while (unqiueNumberArray.length < amountOfNumbers) {
-    const randomNumber = Math.floor(Math.random() * upTo) + 1;
+    const randomNumber = Math.floor(Math.random() * (upTo + 1));
     if (!unqiueNumberArray.includes(randomNumber)) {
       unqiueNumberArray.push(randomNumber);
     }

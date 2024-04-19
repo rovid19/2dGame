@@ -107,12 +107,15 @@ export class PowerUp {
 
   generatePowerUps() {
     if (this.lastPowerUp === "spellIncrease") {
-      this.randomNumberArray = [2];
+      this.randomNumberArray = generateArrayWithUniqueNumbers(
+        3,
+        this.generalIncrease.length - 1
+      );
       this.assignItemRarityToPowerUps("general");
-      // this.lastPowerUp = "generalIncrease";
+      this.lastPowerUp = "generalIncrease";
     } else {
       this.randomNumberArray = generateArrayWithUniqueNumbers(
-        2,
+        3,
         this.spellIncrease.length - 1
       );
       this.assignItemRarityToPowerUps("general");
@@ -215,7 +218,6 @@ export class PowerUp {
     const randomNumber = Math.floor(Math.random() * rarityArray.length - 1) + 1;
 
     const itemRarity = rarityArray[randomNumber];
-    console.log(itemRarity);
     return itemRarity;
   }
 
@@ -231,7 +233,6 @@ export class PowerUp {
     this.randomNumberArray.forEach((number) => {
       const itemRarity = this.randomlyDecideRarityOfPowerUp();
 
-      console.log("item", upgradeArray[number], "number", number);
       upgradeArray[number].rarity = itemRarity;
 
       this.availablePowerUps.push(upgradeArray[number]);

@@ -94,6 +94,8 @@ export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
 export const enemyArray: EnemyObject[] = [];
 export const enemySpawner = new EnemySpawner();
+enemySpawner.decreaseEnemySpawnCooldown();
+
 //
 //
 //
@@ -102,7 +104,7 @@ export const projectiles = new Projectile(
   levelImages.images.projectile1,
   32,
   32,
-  1.2
+  2
 );
 projectiles.updateProjectileBaseCoordinates();
 

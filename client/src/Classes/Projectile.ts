@@ -12,11 +12,13 @@ export class Projectile {
   prjSprite: SpriteMethods;
   prjDirectionsLeft: Vector = { x: 0, y: 0 };
   prjDirectionsRight: Vector = { x: 0, y: 0 };
-  prjSpeed: number = 15;
-  prjDamage: number = 16;
+  prjDirectionsLeft2: Vector = { x: 0, y: 0 };
+  prjDirectionsRight2: Vector = { x: 0, y: 0 };
+  prjSpeed: number = 20;
+  prjDamage: number = 15;
   prjAmount: number = 1;
-  prjReloadCooldown: number = 30;
-  prjReloadSpeed: number = 30;
+  prjReloadCooldown: number = 25;
+  prjReloadSpeed: number = 25;
   isReloading: boolean = false;
   isFiring: boolean = false;
   projectileDistanceTraveled: number = 0;
@@ -25,8 +27,8 @@ export class Projectile {
   targetHit: boolean = false;
   shipPosition: Vector = new Vector2();
   distanceToEndOfScreen: number = 0;
-  prjHitboxX: number = 45;
-  prjHitboxY: number = 45;
+  prjHitboxX: number = 75;
+  prjHitboxY: number = 75;
   prjArrHitboxXleft: number[] = [];
   prjArrHitboxXright: number[] = [];
   prjArrHitboxYleft: number[] = [];
@@ -131,8 +133,16 @@ export class Projectile {
     this.prjDirectionsLeft.x = this.shipPosition.x + 7;
     this.prjDirectionsLeft.y = this.shipPosition.y + 10;
 
-    this.prjDirectionsRight.x = this.shipPosition.x + 55;
+    this.prjDirectionsRight.x = this.shipPosition.x + 50;
     this.prjDirectionsRight.y = this.shipPosition.y + 10;
+
+    if (this.prjSprite.scale > 1.5) {
+      this.prjDirectionsRight.x = this.shipPosition.x + 45;
+    }
+
+    if (this.prjSprite.scale > 1.8) {
+      this.prjDirectionsRight.x = this.shipPosition.x + 42;
+    }
 
     this.setProjectileHitboxArray();
     if (!this.isReady) {
@@ -158,6 +168,7 @@ export class Projectile {
 
       if (this.prjReloadCooldown === 0) {
         this.isReloading = false;
+
         this.prjReloadCooldown = this.prjReloadSpeed;
       }
     }
@@ -167,7 +178,6 @@ export class Projectile {
     if (!this.isReloading) {
       if (this.targetHit) this.targetHit = false;
       this.distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
-      this.calculateSpeedOfProjectilesBasedOnSpaceshipPosition();
       this.firingAnimation();
     } else {
       console.log("reloading");
@@ -234,6 +244,12 @@ export class Projectile {
     const increaseHitbox = this.prjHitboxX * valueInPercentage;
     this.prjHitboxX = this.prjHitboxX + increaseHitbox;
     this.prjHitboxY = this.prjHitboxY + increaseHitbox;
+
+    if (this.prjHitboxX > 75) {
+      this.prjHitboxX = 75;
+      this.prjHitboxY = 75;
+      this.prjSprite.scale = 2;
+    }
 
     console.log(this.prjHitboxX, this.prjHitboxY, this.prjSprite.scale);
   }

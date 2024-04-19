@@ -24,6 +24,7 @@ export class EnemySpawner {
   enemyBasic2SpawnCD: number = 1800; // 1800
   enemyBasic2SpawnMaxCD: number = 1800; // 1800
   isEnemyBasic2Ready: boolean = false;
+  levelDifficulty: number = 10;
 
   constructor() {
     this.setEnemy();
@@ -139,4 +140,10 @@ export class EnemySpawner {
     this.enemyBasic2Array = [];
     this.enemyArray = [this.enemyBasicArray, this.enemyBasic2Array];
   }
+
+  increaseLevelDifficulty() {
+    this.levelDifficulty = (this.levelDifficulty + 10) / 100;
+  }
+
+  decreaseEnemySpawnCooldown() {}
 }
