@@ -31,6 +31,7 @@ export class Hud {
   playerSpell2: HTMLElement = document.createElement("div");
   playerSpell2Image: HTMLImageElement = document.createElement("img");
   playerSpell2Keybind: HTMLElement = document.createElement("h3");
+  playerSpell2Cooldown: HTMLElement = document.createElement("div");
   playerSpell3: HTMLElement = document.createElement("div");
   playerSpell3Image: HTMLImageElement = document.createElement("img");
   playerSpell3Keybind: HTMLElement = document.createElement("h3");
@@ -114,9 +115,11 @@ export class Hud {
     this.playerSpell2Image.src = "../public/sprites/spells/spellWalls.png";
     this.playerSpell2.appendChild(this.playerSpell2Image);
     this.playerSpell2.appendChild(this.playerSpell2Keybind);
+    this.playerSpell2.appendChild(this.playerSpell2Cooldown);
     this.playerSpell2Image.className = "player-spell-img";
     this.playerSpell2Keybind.className = "sixtyfour-myapp";
     this.playerSpell2Keybind.id = "player-spell-keybind";
+    this.playerSpell2Cooldown.className = "cooldown1";
     this.playerSpell2Keybind.textContent =
       player.playerSpells.spell2.value.slice(3);
 

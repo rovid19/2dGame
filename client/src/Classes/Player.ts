@@ -4,6 +4,7 @@ import {
   canvasContext,
   enemySpawner,
   player,
+  playerMovementInput,
   powerUp,
   projectiles,
   shield,
@@ -23,8 +24,9 @@ import { Vector2 } from "./Vector";
 
 export class Player {
   playerSprite: SpriteMethods;
-  playerHp: number = 20;
+  playerHp: number = 100;
   playerMaxHP: number = 100;
+  playerShield: number = 0;
   playerLevel: number = 1;
   playerHpBarPercentage: number = 100;
   playerHpBar: HTMLElement = document.createElement("div");
@@ -38,6 +40,8 @@ export class Player {
   playerExp: number = 0;
   playerExpNeeded: number = 100;
   isPlayerAlive: boolean = true;
+  isPlayerOutside: boolean = false;
+  onWhichSide: string = "";
 
   constructor(
     spaceshipImage: HTMLImageElement,
@@ -52,6 +56,130 @@ export class Player {
     );
     this.playerHitboxY = 34 * this.playerSprite.scale;
     this.playerHitboxX = 38 * this.playerSprite.scale;
+  }
+
+  stopSpaceshipFromGoingOutsideOfScreen() {
+    // prva 4 ifa proveravaju gornji lijevi gornji, donji lijevi, gornji desni i donji desni kut jer za ta 4 kuta trebam 2 conditiona ispunjavat
+    if (shipPosition.x < 0 && shipPosition.y < 0) {
+      if (
+        playerMovementInput.direction === "LEFT" ||
+        playerMovementInput.direction === "UP"
+      ) {
+        playerMovementInput.direction = "";
+      }
+      player.playerSprite.drawImage(canvasContext, 0, 0);
+    } else if (shipPosition.y >= height - 34 * 2 && shipPosition.x < 0) {
+      if (
+        playerMovementInput.direction === "LEFT" ||
+        playerMovementInput.direction === "DOWN"
+      ) {
+        playerMovementInput.direction = "";
+      }
+      shipPosition.x = 0;
+      shipPosition.y = height - 34 * 2;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+      player.playerSprite.drawImage(canvasContext, 0, height - 34 * 2);
+    } else if (shipPosition.y < 0 && shipPosition.x >= width - 38 * 2) {
+      if (
+        playerMovementInput.direction === "RIGHT" ||
+        playerMovementInput.direction === "UP"
+      ) {
+        playerMovementInput.direction = "";
+      }
+      player.playerSprite.drawImage(canvasContext, width - 38 * 2, 0);
+    } else if (
+      shipPosition.y >= height - 34 * 2 &&
+      shipPosition.x >= width - 38 * 2
+    ) {
+      if (
+        playerMovementInput.direction === "RIGHT" ||
+        playerMovementInput.direction === "DOWN"
+      ) {
+        playerMovementInput.direction = "";
+      }
+      shipPosition.x = width - 38 * 2;
+      shipPosition.y = height - 34 * 2;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+      player.playerSprite.drawImage(
+        canvasContext,
+        width - 38 * 2,
+        height - 34 * 2
+      );
+    }
+    // lijeva strana
+    else if (shipPosition.x < 0) {
+      if (playerMovementInput.direction === "LEFT")
+        playerMovementInput.direction = "";
+
+      shipPosition.x = 0;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+      if (player.isPlayerOutside && player.onWhichSide === "left") {
+        player.playerSprite.drawImage(
+          canvasContext,
+          width - 38 * 2,
+          shipPosition.y
+        );
+        shipPosition.x = width - 38 * 2;
+        //projectiles.updateProjectileBaseCoordinates();
+        projectiles.stopRendering = false;
+        playerMovementInput.direction = "LEFT";
+      } else {
+        player.playerSprite.drawImage(canvasContext, 0, shipPosition.y);
+      }
+    }
+    // desna strana
+    else if (shipPosition.x >= width - 38 * 2) {
+      if (playerMovementInput.direction === "RIGHT")
+        playerMovementInput.direction = "";
+
+      shipPosition.x = width - 38 * 2;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+      if (player.isPlayerOutside && player.onWhichSide === "right") {
+        player.playerSprite.drawImage(canvasContext, 0, shipPosition.y);
+        shipPosition.x = 0;
+        //projectiles.updateProjectileBaseCoordinates();
+        projectiles.stopRendering = false;
+        playerMovementInput.direction = "RIGHT";
+      } else {
+        player.playerSprite.drawImage(
+          canvasContext,
+          width - 38 * 2,
+          shipPosition.y
+        );
+      }
+    }
+    // gornja strana
+    else if (shipPosition.y < 0) {
+      if (playerMovementInput.direction === "UP")
+        playerMovementInput.direction = "";
+
+      shipPosition.y = 0;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+      player.playerSprite.drawImage(canvasContext, shipPosition.x, 0);
+    }
+    // donja strana
+    else if (shipPosition.y >= height - 34 * 2) {
+      if (playerMovementInput.direction === "DOWN")
+        playerMovementInput.direction = "";
+
+      shipPosition.y = height - 34 * 2;
+      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
+      player.playerSprite.drawImage(
+        canvasContext,
+        shipPosition.x,
+        height - 34 * 2
+      );
+    } else {
+      player.playerSprite.drawImage(
+        canvasContext,
+        shipPosition.x,
+        shipPosition.y
+      );
+    }
+  }
+
+  renderPlayerSpaceship() {
+    this.stopSpaceshipFromGoingOutsideOfScreen();
   }
 
   checkIfHitByAnEnemy = () => {
@@ -88,36 +216,6 @@ export class Player {
 
   setHpBar(htmlElement: HTMLElement) {
     this.playerHpBar = htmlElement;
-  }
-
-  activateSpell() {
-    if (
-      this.playerSpellActivated ||
-      this.playerSpells.playerShieldDuration > 0
-    ) {
-      if (this.playerSpells.spell === "Shield") {
-        this.playerSpells.playerShieldDuration--;
-
-        //render shield in the middle of spaceship sprite
-        const shieldMinusShipHeight = 122 - 68;
-        const centerShield = shieldMinusShipHeight / 2;
-        const shieldMinusShipWidth = 122 - 76;
-        const centerShieldX = shieldMinusShipWidth / 2;
-
-        shield.drawImage(
-          canvasContext,
-          shipPosition.x - centerShieldX,
-          shipPosition.y - centerShield
-        );
-
-        if (this.playerSpells.playerShieldDuration === 0) {
-          this.playerSpells.spellsOnCooldown.push("Shield");
-          HUD.playerSpell1Cooldown.style.height = "100%";
-          this.playerSpells.playerShieldCooldown = 600;
-          this.playerSpells.activateSpellCooldown();
-        }
-      }
-    }
   }
 
   gainExpIfEnemyIsKilled(expAmountGained: number) {

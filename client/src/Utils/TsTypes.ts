@@ -119,12 +119,18 @@ export type InputSpellType = {
   spellsOnCooldown: string[];
   playerShieldAmount: number;
   playerShieldCooldown: number;
+  playerShieldMaxCooldown: number;
   playerShieldDuration: number;
-  intervalRunning: boolean;
   activateSpell(spellValue: string): void;
   setActiveSpell(spellValue: string): void;
   activateSpellCooldown(): void;
-  cooldownTimerCounter(frames: number): void;
+  cooldownTimerCounter(
+    value: number,
+    maxValue: number,
+    spellHTML: HTMLElement
+  ): void;
+  renderSpells(): void;
+  renderWalls(): void;
   removeEventListener(): void;
   resetSpells(): void;
   decreaseStatByPercentage(stat: number, value: number): void;

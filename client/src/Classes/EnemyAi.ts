@@ -83,9 +83,14 @@ export class Enemy {
   enemyAttack() {
     if (player.isPlayerAlive) {
       if (!this.isEnemyAttackOnCooldown) {
-        player.playerHp = player.playerHp - this.enemyDamage;
-        this.isEnemyAttackOnCooldown = true;
-        HUD.renderPlayerTakenDamageInHpBar(this.enemyDamage);
+        if (player.playerShield > 0) {
+          player.playerShield = player.playerShield - this.enemyDamage;
+          this.isEnemyAttackOnCooldown = true;
+        } else {
+          player.playerHp = player.playerHp - this.enemyDamage;
+          this.isEnemyAttackOnCooldown = true;
+          HUD.renderPlayerTakenDamageInHpBar(this.enemyDamage);
+        }
       }
     }
   }

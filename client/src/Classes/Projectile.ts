@@ -1,6 +1,7 @@
 import {
   canvasContext,
   enemySpawner,
+  player,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
@@ -33,6 +34,7 @@ export class Projectile {
   prjArrHitboxXright: number[] = [];
   prjArrHitboxYleft: number[] = [];
   prjArrHitboxYright: number[] = [];
+  stopRendering: boolean = false;
 
   constructor(
     shipPosition: Vector,
@@ -84,21 +86,25 @@ export class Projectile {
   }
 
   renderProjectile = () => {
-    if (!this.isRendered) this.isRendered = true;
-    if (this.isFiring) {
-      this.firingAnimation();
-    }
+    if (!this.stopRendering) {
+      if (!this.isRendered) this.isRendered = true;
+      if (this.isFiring) {
+        this.firingAnimation();
+      }
 
-    this.prjSprite.drawImage(
-      canvasContext,
-      this.prjDirectionsLeft.x,
-      this.prjDirectionsLeft.y
-    );
-    this.prjSprite.drawImage(
-      canvasContext,
-      this.prjDirectionsRight.x,
-      this.prjDirectionsRight.y
-    );
+      this.prjSprite.drawImage(
+        canvasContext,
+        this.prjDirectionsLeft.x,
+        this.prjDirectionsLeft.y
+      );
+      this.prjSprite.drawImage(
+        canvasContext,
+        this.prjDirectionsRight.x,
+        this.prjDirectionsRight.y
+      );
+    } else {
+      console.log("jao");
+    }
   };
 
   firingAnimation = () => {

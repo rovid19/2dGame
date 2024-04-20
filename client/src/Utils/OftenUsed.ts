@@ -1,6 +1,3 @@
-import { Player } from "../Classes/Player";
-import { InputSpellType, Projectile } from "./TsTypes";
-
 export function returnArrayOfHitboxNumbers(
   currentPosition: number,
   hitbox: number,

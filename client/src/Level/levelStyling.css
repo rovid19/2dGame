@@ -240,8 +240,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 0%;
+  height: 100%;
   width: 100%;
+  z-index: -1;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -253,6 +254,7 @@
   left: 1%;
   height: 60px;
   width: 100px;
+  z-index: 10;
 }
 
 .player-exp-bar {
@@ -592,7 +594,7 @@
 #power-up-card {
   width: 30%;
   height: 80%;
-
+  padding: 8px;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.3s all ease;
@@ -607,6 +609,7 @@
   font-size: 32px;
   color: white;
   text-align: center;
+  padding-top: 8px;
 }
 
 /* powerup card styling */
@@ -644,4 +647,26 @@
   bottom: 0;
   color: white;
   font-size: 40px;
+}
+
+/* walls spell */
+
+.left-wall {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
+}
+
+.right-wall {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
 }

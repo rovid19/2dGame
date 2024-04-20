@@ -1,0 +1,99 @@
+Date : 2024-04-20 23:35:42
+Directory : /Users/rock/Documents/Projekti/2dGame/client/src
+Total : 42 files,  3120 codes, 176 comments, 424 blanks, all 3720 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| TypeScript |         35 |      2,363 |        136 |        308 |      2,807 |
+| CSS        |          5 |        750 |         13 |        113 |        876 |
+| JavaScript |          2 |          7 |         27 |          3 |         37 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                   |         42 |      3,120 |        176 |        424 |      3,720 |
+| . (Files)                                                                                           |          1 |         11 |          0 |          2 |         13 |
+| ..                                                                                                  |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../..                                                                                               |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../..                                                                                            |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../..                                                                                         |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../..                                                                                      |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../..                                                                                   |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../..                                                                                |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:                                                                             |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users                                                                       |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users/Ljubo                                                                 |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users/Ljubo/Documents                                                       |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub                                                |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub/2dGame                                         |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub/2dGame/client                                  |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub/2dGame/client/src                              |          9 |       -474 |        -17 |       -101 |       -592 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub/2dGame/client/src (Files)                      |          2 |        -18 |          0 |         -4 |        -22 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/LevelSelection               |          3 |        -81 |          0 |        -19 |       -100 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/MainMenu                     |          3 |       -336 |        -17 |        -69 |       -422 |
+| ../../../../../../../c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/Stores                       |          1 |        -39 |          0 |         -9 |        -48 |
+| Classes                                                                                             |         15 |      1,845 |         95 |        229 |      2,169 |
+| Classes (Files)                                                                                     |         13 |      1,838 |         68 |        226 |      2,132 |
+| Classes/tests                                                                                       |          2 |          7 |         27 |          3 |         37 |
+| Level                                                                                               |          5 |        804 |         63 |        123 |        990 |
+| Level (Files)                                                                                       |          2 |        586 |         10 |         84 |        680 |
+| Level/LevelLogic                                                                                    |          3 |        218 |         53 |         39 |        310 |
+| MainMenu                                                                                            |          6 |        644 |         35 |        126 |        805 |
+| MainMenu (Files)                                                                                    |          3 |        477 |         34 |         86 |        597 |
+| MainMenu/LevelSelection                                                                             |          3 |        167 |          1 |         40 |        208 |
+| Stores                                                                                              |          2 |        114 |          0 |         21 |        135 |
+| Utils                                                                                               |          4 |        176 |          0 |         24 |        200 |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                            | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/AnimationLoop.ts                           | TypeScript |         25 |          1 |          8 |         34 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/EnemyAi.ts                                 | TypeScript |        164 |          6 |         20 |        190 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/EnemySpawner.ts                            | TypeScript |        134 |          0 |         16 |        150 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/Hud.ts                                     | TypeScript |        184 |         12 |         23 |        219 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/InGameMenu.ts                              | TypeScript |        243 |          0 |         19 |        262 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/LevelImages.ts                             | TypeScript |         20 |          7 |          8 |         35 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/Player.ts                                  | TypeScript |        283 |          6 |         24 |        313 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/PlayerInput.ts                             | TypeScript |         79 |          9 |         12 |        100 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/PlayerSpells.ts                            | TypeScript |        229 |         14 |         33 |        276 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/PowerUp.ts                                 | TypeScript |        215 |          2 |         25 |        242 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/Projectile.ts                              | TypeScript |        224 |          2 |         31 |        257 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/Sprite.ts                                  | TypeScript |         30 |          9 |          6 |         45 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/Vector.ts                                  | TypeScript |          8 |          0 |          1 |          9 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/tests/powerUp.test.js                      | JavaScript |          7 |          3 |          2 |         12 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Classes/tests/projectile.test.js                   | JavaScript |          0 |         24 |          1 |         25 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/canvasLogic.ts                    | TypeScript |         41 |         33 |         11 |         85 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/mainLevelLogic.ts                 | TypeScript |        107 |         20 |         23 |        150 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/spaceshipLogic.ts                 | TypeScript |         70 |          0 |          5 |         75 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/levelGenerator.ts                            | TypeScript |          5 |          0 |          2 |          7 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/levelStyling.css                             | CSS        |        581 |         10 |         82 |        673 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionGenerator.ts | TypeScript |         24 |          0 |          9 |         33 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionLogic.ts     | TypeScript |         31 |          0 |          8 |         39 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionStyling.css  | CSS        |        112 |          1 |         23 |        136 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuGenerator.ts                      | TypeScript |         25 |          0 |          5 |         30 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuLogic.ts                          | TypeScript |        177 |         21 |         43 |        241 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuStyling.css                       | CSS        |        275 |         13 |         38 |        326 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Stores/LevelStore.ts                               | TypeScript |         73 |          0 |         12 |         85 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Stores/MenuStore.ts                                | TypeScript |         41 |          0 |          9 |         50 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Utils/Icons.ts                                     | TypeScript |          4 |          0 |          1 |          5 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Utils/IconsExports.ts                              | TypeScript |          7 |          0 |          2 |          9 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Utils/OftenUsed.ts                                 | TypeScript |         15 |          0 |          2 |         17 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Utils/TsTypes.ts                                   | TypeScript |        150 |          0 |         19 |        169 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/index.ts                                           | TypeScript |         11 |          0 |          2 |         13 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/IconsExports.ts                                   | TypeScript |         -7 |          0 |         -2 |         -9 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/LevelSelection/LevelSelectionGenerator.ts         | TypeScript |        -19 |          0 |         -6 |        -25 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/LevelSelection/LevelSelectionLogic.ts             | TypeScript |        -18 |          0 |         -6 |        -24 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/LevelSelection/LevelSelectionStyling.css          | CSS        |        -44 |          0 |         -7 |        -51 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/MainMenu/MainMenuGenerator.ts                     | TypeScript |        -22 |          0 |        -10 |        -32 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/MainMenu/MainMenuLogic.ts                         | TypeScript |       -140 |         -6 |        -36 |       -182 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/MainMenu/MainMenuStyling.css                      | CSS        |       -174 |        -11 |        -23 |       -208 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/Stores/MenuStore.ts                               | TypeScript |        -39 |          0 |         -9 |        -48 |
+| c:/Users/Ljubo/Documents/GitHub/2dGame/client/src/index.ts                                          | TypeScript |        -11 |          0 |         -2 |        -13 |
+| Total                                                                                               |            |      3,120 |        176 |        424 |      3,720 |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
