@@ -1,7 +1,7 @@
 import { height, width } from "../Level/LevelLogic/canvasLogic";
 import {
   HUD,
-  canvasContext,
+  canvasContext2,
   enemySpawner,
   player,
   playerMovementInput,
@@ -67,7 +67,7 @@ export class Player {
       ) {
         playerMovementInput.direction = "";
       }
-      player.playerSprite.drawImage(canvasContext, 0, 0);
+      player.playerSprite.drawImage(canvasContext2, 0, 0);
     } else if (shipPosition.y >= height - 34 * 2 && shipPosition.x < 0) {
       if (
         playerMovementInput.direction === "LEFT" ||
@@ -78,7 +78,7 @@ export class Player {
       shipPosition.x = 0;
       shipPosition.y = height - 34 * 2;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      player.playerSprite.drawImage(canvasContext, 0, height - 34 * 2);
+      player.playerSprite.drawImage(canvasContext2, 0, height - 34 * 2);
     } else if (shipPosition.y < 0 && shipPosition.x >= width - 38 * 2) {
       if (
         playerMovementInput.direction === "RIGHT" ||
@@ -86,7 +86,7 @@ export class Player {
       ) {
         playerMovementInput.direction = "";
       }
-      player.playerSprite.drawImage(canvasContext, width - 38 * 2, 0);
+      player.playerSprite.drawImage(canvasContext2, width - 38 * 2, 0);
     } else if (
       shipPosition.y >= height - 34 * 2 &&
       shipPosition.x >= width - 38 * 2
@@ -101,30 +101,30 @@ export class Player {
       shipPosition.y = height - 34 * 2;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
       player.playerSprite.drawImage(
-        canvasContext,
+        canvasContext2,
         width - 38 * 2,
         height - 34 * 2
       );
     }
     // lijeva strana
-    else if (shipPosition.x < 0) {
+    else if (shipPosition.x <= 0) {
       if (playerMovementInput.direction === "LEFT")
         playerMovementInput.direction = "";
 
       shipPosition.x = 0;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
       if (player.isPlayerOutside && player.onWhichSide === "left") {
+        console.log("dada");
         player.playerSprite.drawImage(
-          canvasContext,
+          canvasContext2,
           width - 38 * 2,
           shipPosition.y
         );
         shipPosition.x = width - 38 * 2;
-        //projectiles.updateProjectileBaseCoordinates();
         projectiles.stopRendering = false;
         playerMovementInput.direction = "LEFT";
       } else {
-        player.playerSprite.drawImage(canvasContext, 0, shipPosition.y);
+        player.playerSprite.drawImage(canvasContext2, 0, shipPosition.y);
       }
     }
     // desna strana
@@ -135,14 +135,13 @@ export class Player {
       shipPosition.x = width - 38 * 2;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
       if (player.isPlayerOutside && player.onWhichSide === "right") {
-        player.playerSprite.drawImage(canvasContext, 0, shipPosition.y);
+        player.playerSprite.drawImage(canvasContext2, 0, shipPosition.y);
         shipPosition.x = 0;
-        //projectiles.updateProjectileBaseCoordinates();
         projectiles.stopRendering = false;
         playerMovementInput.direction = "RIGHT";
       } else {
         player.playerSprite.drawImage(
-          canvasContext,
+          canvasContext2,
           width - 38 * 2,
           shipPosition.y
         );
@@ -155,7 +154,7 @@ export class Player {
 
       shipPosition.y = 0;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      player.playerSprite.drawImage(canvasContext, shipPosition.x, 0);
+      player.playerSprite.drawImage(canvasContext2, shipPosition.x, 0);
     }
     // donja strana
     else if (shipPosition.y >= height - 34 * 2) {
@@ -165,13 +164,13 @@ export class Player {
       shipPosition.y = height - 34 * 2;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
       player.playerSprite.drawImage(
-        canvasContext,
+        canvasContext2,
         shipPosition.x,
         height - 34 * 2
       );
     } else {
       player.playerSprite.drawImage(
-        canvasContext,
+        canvasContext2,
         shipPosition.x,
         shipPosition.y
       );

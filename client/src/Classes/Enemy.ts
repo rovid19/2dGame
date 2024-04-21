@@ -99,7 +99,7 @@ export class Enemy {
     // container
     document.body.insertBefore(
       this.enemyHpBarContainer,
-      document.querySelector(".level1Canvas")
+      document.querySelector(".background-canvas")
     );
     this.enemyHpBarContainer.className = "enemy-hp-bar-container";
     this.enemyHpBarContainer.style.top = `${this.enemySprite.position.y}px`;
@@ -121,8 +121,8 @@ export class Enemy {
   createDetailsAboutEnemy = (enemy: string, scale: number) => {
     switch (enemy) {
       case "basic":
-        this.enemyHitboxY = 35 * scale;
-        this.enemyHitboxX = 30 * scale;
+        this.enemyHitboxY = 24 * scale;
+        this.enemyHitboxX = 27 * scale;
         this.enemyHpBarWidth = 27 * scale;
         this.whichEnemy = "basic";
         this.enemyExp = 400;

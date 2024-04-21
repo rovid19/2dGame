@@ -1,5 +1,6 @@
 import {
   canvasContext,
+  canvasContext2,
   enemySpawner,
   player,
   shipPosition,
@@ -28,8 +29,8 @@ export class Projectile {
   targetHit: boolean = false;
   shipPosition: Vector = new Vector2();
   distanceToEndOfScreen: number = 0;
-  prjHitboxX: number = 75;
-  prjHitboxY: number = 75;
+  prjHitboxX: number = 40;
+  prjHitboxY: number = 40;
   prjArrHitboxXleft: number[] = [];
   prjArrHitboxXright: number[] = [];
   prjArrHitboxYleft: number[] = [];
@@ -93,17 +94,15 @@ export class Projectile {
       }
 
       this.prjSprite.drawImage(
-        canvasContext,
+        canvasContext2,
         this.prjDirectionsLeft.x,
         this.prjDirectionsLeft.y
       );
       this.prjSprite.drawImage(
-        canvasContext,
+        canvasContext2,
         this.prjDirectionsRight.x,
         this.prjDirectionsRight.y
       );
-    } else {
-      console.log("jao");
     }
   };
 

@@ -35,6 +35,7 @@ export class Hud {
   playerSpell3: HTMLElement = document.createElement("div");
   playerSpell3Image: HTMLImageElement = document.createElement("img");
   playerSpell3Keybind: HTMLElement = document.createElement("h3");
+  playerSpell3Cooldown: HTMLElement = document.createElement("div");
 
   // PLAYER DIED POPUP
   playerIsDeadContainer: HTMLElement = document.createElement("div");
@@ -128,9 +129,11 @@ export class Hud {
     this.playerSpell3Image.src = "../public/sprites/spells/spellExplosion.png";
     this.playerSpell3.appendChild(this.playerSpell3Image);
     this.playerSpell3.appendChild(this.playerSpell3Keybind);
+    this.playerSpell3.appendChild(this.playerSpell3Cooldown);
     this.playerSpell3Image.className = "player-spell-img";
     this.playerSpell3Keybind.className = "sixtyfour-myapp";
     this.playerSpell3Keybind.id = "player-spell-keybind";
+    this.playerSpell3Cooldown.className = "cooldown1";
     this.playerSpell3Keybind.textContent =
       player.playerSpells.spell3.value.slice(3);
 

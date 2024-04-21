@@ -42,8 +42,8 @@ export class Input {
     document.addEventListener("keyup", (e) => {
       if (e.code === "KeyP") {
         this.fireProjectile = false;
-      } /*
-      if (e.code === "ArrowDown" || e.code === "KeyS") {
+      }
+      /*if (e.code === "ArrowDown" || e.code === "KeyS") {
         this.direction = "";
       }
       if (e.code === "ArrowLeft" || e.code === "KeyA") {
@@ -51,7 +51,7 @@ export class Input {
       }
       if (e.code === "ArrowRight" || e.code === "KeyD") {
         this.direction = "";
-      } */
+      }*/
     });
   }
 

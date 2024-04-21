@@ -2,7 +2,7 @@ import { Vector2 } from "three";
 import { Coordinates, SpriteMethods, Vector } from "../Utils/TsTypes";
 import { height, width } from "../Level/LevelLogic/canvasLogic";
 
-export class Sprite  {
+export class Sprite {
   spriteImage: any = {};
   frameSize: Vector = new Vector2();
   scale: number = 0;

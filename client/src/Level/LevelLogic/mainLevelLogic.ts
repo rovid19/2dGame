@@ -1,6 +1,6 @@
 import { Vector2 } from "../../Classes/Vector.ts";
 import { Sprite } from "../../Classes/Sprite.ts";
-import { levelGenerator } from "../levelGenerator.ts";
+import { backgroundGenerator, levelGenerator } from "../levelGenerator.ts";
 import { LevelImages } from "../../Classes/LevelImages.ts";
 import { animationLoop } from "../../Classes/AnimationLoop.ts";
 import { Input } from "../../Classes/PlayerInput.ts";
@@ -20,6 +20,7 @@ import { Menu } from "../../Classes/InGameMenu.ts";
 import { PowerUp } from "../../Classes/PowerUp.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
+export let canvasContext2: CanvasRenderingContext2D;
 
 export const levelImages = new LevelImages({
   // PLAYER SHIPS
@@ -88,7 +89,7 @@ export const projectiles = new Projectile(
   levelImages.images.projectile1,
   32,
   32,
-  2
+  1.2
 );
 projectiles.updateProjectileBaseCoordinates();
 
@@ -114,18 +115,26 @@ const renderLevelLoop = new animationLoop(
 renderLevelLoop.start();
 
 export const generateLevel = (): void => {
+  document.body.appendChild(backgroundGenerator());
   document.body.appendChild(levelGenerator());
 };
 
 export function renderLevel() {
-  const canvas = document.querySelector(".level1Canvas") as HTMLCanvasElement;
+  const canvas = document.querySelector(
+    ".background-canvas"
+  ) as HTMLCanvasElement;
+  const canvas2 = document.querySelector(".level-canvas") as HTMLCanvasElement;
 
-  if (!canvas) {
+  if (!canvas && !canvas2) {
     waitForCanvasToLoad();
   } else {
     canvas.height = height;
     canvas.width = width;
+    canvas2.height = height;
+    canvas2.width = width;
+
     canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
+    canvasContext2 = canvas2.getContext("2d") as CanvasRenderingContext2D;
 
     drawImageToFillCanvasSize(
       width,
@@ -137,6 +146,7 @@ export function renderLevel() {
 
     playerMethods();
     projectiles.renderProjectile();
+
     player.renderPlayerSpaceship();
   }
 }

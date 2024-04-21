@@ -1,10 +1,11 @@
 import {
   canvasContext,
+  canvasContext2,
   levelImages,
   player,
 } from "../Level/LevelLogic/mainLevelLogic";
 import { EnemyInstance, EnemyType } from "../Utils/TsTypes";
-import { Enemy } from "./EnemyAi";
+import { Enemy } from "./Enemy";
 
 export class EnemySpawner {
   enemyArray: EnemyInstance[][] = [];
@@ -113,7 +114,7 @@ export class EnemySpawner {
       this.enemyBasicArray.forEach((enemy) => {
         if (enemy.isEnemyAlive) {
           enemy.enemySprite.drawImage(
-            canvasContext,
+            canvasContext2,
             enemy.enemySprite.position.x,
             enemy.enemySprite.position.y
           );
@@ -124,7 +125,7 @@ export class EnemySpawner {
 
       this.enemyBasic2Array.forEach((enemy) => {
         enemy.enemySprite.drawImage(
-          canvasContext,
+          canvasContext2,
           enemy.enemySprite.position.x,
           enemy.enemySprite.position.y
         );

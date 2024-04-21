@@ -5,9 +5,11 @@ export const width = window.innerWidth;
 
 export const waitForCanvasToLoad = () => {
   let canvas: HTMLElement | null = null;
+  let canvas2: HTMLElement | null = null;
   const checkForCanvas = setInterval(() => {
-    canvas = document.querySelector(".level1Canvas") as HTMLCanvasElement;
-    if (canvas) {
+    canvas = document.querySelector(".background-canvas") as HTMLCanvasElement;
+    canvas2 = document.querySelector(".level-canvas") as HTMLCanvasElement;
+    if (canvas && canvas2) {
       clearInterval(checkForCanvas);
       levelStore.set("isCanvasReady", true);
     }

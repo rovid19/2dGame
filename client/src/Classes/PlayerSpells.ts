@@ -2,11 +2,13 @@ import { height, width } from "../Level/LevelLogic/canvasLogic";
 import {
   HUD,
   canvasContext,
+  enemySpawner,
   player,
   projectiles,
   shield,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
+import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
 import { InputSpellType, SpellObject, isOutside } from "../Utils/TsTypes";
 
 function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
@@ -40,7 +42,7 @@ export class PlayerSpells {
   };
   spell3: SpellObject = {
     name: "Spell 3",
-    value: "KeyĐ",
+    value: "BracketRight",
   };
   rotateSpaceship: SpellObject = {
     name: "Rotate spaceship",
@@ -63,6 +65,24 @@ export class PlayerSpells {
   playerWallsMaxCooldown: number = 600;
   wallsActivated: boolean = false;
 
+  // explosion
+  playerExplosionDamage: number = 100;
+  playerExplosionRadius: number = 300;
+  playerExplosionHitboxX: number[] = [];
+  playerExplosionHitboxY: number[] = [];
+  playerExplosionCooldown: number = 600;
+  playerExplosionMaxCooldown: number = 600;
+  explosionActivated: boolean = false;
+  explosionDealtDmg: boolean = false;
+  explosionShowRadius: boolean = false;
+  explosionShowRadiusDuration: number = 90;
+  explosionRadiusContainerTopRight: HTMLElement = document.createElement("div");
+  explosionRadiusContainerTopLeft: HTMLElement = document.createElement("div");
+  explosionRadiusContainerBottomRight: HTMLElement =
+    document.createElement("div");
+  explosionRadiusContainerBottomLeft: HTMLElement =
+    document.createElement("div");
+
   keydownFunction: (e: KeyboardEvent) => void;
 
   constructor() {
@@ -84,7 +104,6 @@ export class PlayerSpells {
     });
   }
 
-  // tu ide metoda koja ce triggerati playerspellactivated i onda accordignly aktivirati spell
   activateSpell = (spellValue: string) => {
     if (spellValue === "Shield") {
       if (!this.spellsOnCooldown.includes("Shield")) {
@@ -103,6 +122,16 @@ export class PlayerSpells {
         this.wallsActivated = true;
       }
     }
+    if (spellValue === "Explosion") {
+      if (!this.spellsOnCooldown.includes("Explosion")) {
+        this.spellsOnCooldown.push("Explosion");
+        this.setActiveSpell(spellValue);
+        this.spell = spellValue;
+        this.explosionDealtDmg = false;
+        this.explosionShowRadius = true;
+        this.explosionActivated = true;
+      }
+    }
   };
 
   setActiveSpell = (spellValue: string) => {
@@ -111,77 +140,13 @@ export class PlayerSpells {
       this.playerShieldDuration = 240;
     } else if (spellValue === "Walls") {
       this.playerWallsDuration = 600;
-    } else {
     }
-  };
-
-  activateSpellCooldown = () => {
-    if (player.isPlayerAlive) {
-      this.spellsOnCooldown.forEach((spell, i) => {
-        if (spell === "Shield") {
-          this.playerShieldCooldown--;
-
-          this.cooldownTimerCounter(
-            this.playerShieldCooldown,
-            this.playerShieldMaxCooldown,
-            HUD.playerSpell1Cooldown
-          );
-
-          if (this.playerShieldCooldown === 0) {
-            this.spellsOnCooldown.splice(i, 1);
-            this.shieldActivated = false;
-            this.playerShieldDuration = 0;
-            this.playerShieldCooldown = this.playerShieldMaxCooldown;
-          }
-        } else if (spell === "Walls") {
-          this.removeWalls();
-          this.playerWallsCooldown--;
-
-          this.cooldownTimerCounter(
-            this.playerWallsCooldown,
-            this.playerWallsMaxCooldown,
-            HUD.playerSpell2Cooldown
-          );
-
-          if (this.playerWallsCooldown === 0) {
-            this.spellsOnCooldown.splice(i, 1);
-            this.wallsActivated = false;
-            this.playerWallsDuration = 0;
-            this.playerWallsCooldown = this.playerWallsMaxCooldown;
-          }
-        } else {
-        }
-      });
-    }
-  };
-
-  removeWalls() {
-    if (document.querySelector(".left-wall")) {
-      document.querySelector(".left-wall")?.remove();
-      document.querySelector(".right-wall")?.remove();
-
-      player.isPlayerOutside = false;
-      player.onWhichSide = "";
-    }
-  }
-
-  cooldownTimerCounter = (
-    value: number,
-    maxValue: number,
-    spellHTML: HTMLElement
-  ) => {
-    const decreaseWidthBy =
-      100 - Math.floor(((maxValue - value) * 100) / maxValue);
-
-    spellHTML.style.zIndex = "1";
-    spellHTML.style.width = `${decreaseWidthBy}%`;
   };
 
   renderSpells() {
     if (this.shieldActivated) {
       this.renderShield();
       if (this.playerShieldDuration === 0 || player.playerShield <= 0) {
-        console.log(this.playerShieldDuration);
         this.activateSpellCooldown();
       }
     }
@@ -195,7 +160,87 @@ export class PlayerSpells {
         this.activateSpellCooldown();
       }
     }
+
+    if (this.explosionActivated) {
+      if (this.explosionShowRadius) {
+        this.chargeExplosion();
+      } else {
+        this.dealDamageToEnemiesNearBy();
+        this.activateSpellCooldown();
+      }
+    }
   }
+
+  activateSpellCooldown = () => {
+    if (player.isPlayerAlive) {
+      this.spellsOnCooldown.forEach((spell, i) => {
+        if (spell === "Shield") {
+          if (this.playerShieldDuration === 0 || player.playerShield <= 0) {
+            this.playerShieldCooldown--;
+
+            this.cooldownTimerCounter(
+              this.playerShieldCooldown,
+              this.playerShieldMaxCooldown,
+              HUD.playerSpell1Cooldown
+            );
+
+            if (this.playerShieldCooldown === 0) {
+              this.spellsOnCooldown.splice(i, 1);
+              this.shieldActivated = false;
+              this.playerShieldDuration = 0;
+              this.playerShieldCooldown = this.playerShieldMaxCooldown;
+            }
+          }
+        } else if (spell === "Walls") {
+          if (this.playerWallsDuration === 0) {
+            this.removeWalls();
+            this.playerWallsCooldown--;
+
+            this.cooldownTimerCounter(
+              this.playerWallsCooldown,
+              this.playerWallsMaxCooldown,
+              HUD.playerSpell2Cooldown
+            );
+
+            if (this.playerWallsCooldown === 0) {
+              this.spellsOnCooldown.splice(i, 1);
+              this.wallsActivated = false;
+              this.playerWallsDuration = 0;
+              this.playerWallsCooldown = this.playerWallsMaxCooldown;
+            }
+          }
+        } else {
+          this.playerExplosionCooldown--;
+
+          this.cooldownTimerCounter(
+            this.playerExplosionCooldown,
+            this.playerExplosionMaxCooldown,
+            HUD.playerSpell3Cooldown
+          );
+
+          if (this.playerExplosionCooldown === 0) {
+            this.spellsOnCooldown.splice(i, 1);
+            this.explosionActivated = false;
+            this.playerExplosionCooldown = this.playerExplosionMaxCooldown;
+          }
+        }
+      });
+    }
+  };
+
+  cooldownTimerCounter = (
+    value: number,
+    maxValue: number,
+    spellHTML: HTMLElement
+  ) => {
+    const decreaseWidthBy =
+      100 - Math.floor(((maxValue - value) * 100) / maxValue);
+
+    spellHTML.style.zIndex = "1";
+    spellHTML.style.width = `${decreaseWidthBy}%`;
+  };
+
+  // Shield logic
 
   renderShield() {
     if (player.playerShield > 0 && this.playerShieldDuration > 0) {
@@ -215,6 +260,8 @@ export class PlayerSpells {
     }
   }
 
+  // Walls logic
+
   renderWalls() {
     if (!document.querySelector(".left-wall")) {
       const leftWall = document.createElement("div") as HTMLElement;
@@ -224,6 +271,16 @@ export class PlayerSpells {
 
       document.body.appendChild(leftWall);
       document.body.appendChild(rightWall);
+    }
+  }
+
+  removeWalls() {
+    if (document.querySelector(".left-wall")) {
+      document.querySelector(".left-wall")?.remove();
+      document.querySelector(".right-wall")?.remove();
+
+      player.isPlayerOutside = false;
+      player.onWhichSide = "";
     }
   }
 
@@ -244,30 +301,120 @@ export class PlayerSpells {
       isOutside.onWhichSide = "right";
       isOutside.position = "x";
       return isOutside;
-    } /*else if (shipPosition.y + 34 * 2 < 0) {
-      isOutside.isOutside = true;
-      isOutside.onWhichSide = "up";
-      isOutside.position = "y";
-      return isOutside;
-    } else if (shipPosition.y > height) {
-      isOutside.isOutside = true;
-      isOutside.onWhichSide = "down";
-      isOutside.position = "y";
-      return isOutside;
-    }*/
+    }
 
     return isOutside;
   };
 
   renderSpaceshipAccordingly() {
-    const isOutside = this.ifSpaceshipIsOutsideOfTheScreenReturnAnObject();
+    if (this.playerWallsDuration > 0) {
+      const isOutside = this.ifSpaceshipIsOutsideOfTheScreenReturnAnObject();
 
-    if (isOutside.isOutside) {
-      projectiles.stopRendering = true;
-      player.isPlayerOutside = true;
-      player.onWhichSide = isOutside.onWhichSide;
+      if (isOutside.isOutside) {
+        projectiles.stopRendering = true;
+        player.isPlayerOutside = true;
+        player.onWhichSide = isOutside.onWhichSide;
+      }
     }
   }
+
+  // Explosion logic
+
+  dealDamageToEnemiesNearBy() {
+    if (!this.explosionDealtDmg) {
+      returnArrayOfHitboxNumbers(
+        Math.floor(shipPosition.x),
+        this.playerExplosionRadius,
+        this.playerExplosionHitboxX,
+        Math.floor(shipPosition.x + 1)
+      );
+      returnArrayOfHitboxNumbers(
+        Math.floor(shipPosition.y),
+        this.playerExplosionRadius,
+        this.playerExplosionHitboxY,
+        Math.floor(shipPosition.y)
+      );
+
+      enemySpawner.enemyArray.forEach((array) => {
+        array.forEach((enemy) => {
+          if (
+            this.playerExplosionHitboxY.includes(
+              Math.floor(enemy.enemySprite.position.y)
+            )
+          ) {
+            console.log(Math.floor(enemy.enemySprite.position.x));
+            console.log(this.playerExplosionHitboxX);
+            if (
+              this.playerExplosionHitboxX.includes(
+                Math.floor(enemy.enemySprite.position.x)
+              )
+            ) {
+              console.log("kabom");
+            }
+          }
+        });
+      });
+
+      this.explosionDealtDmg = true;
+    }
+  }
+
+  chargeExplosion() {
+    if (this.explosionShowRadiusDuration === 0) {
+      document.querySelector(".radius-container-top-right")?.remove();
+      document.querySelector(".radius-container-top-left")?.remove();
+      document.querySelector(".radius-container-bottom-right")?.remove();
+      document.querySelector(".radius-container-bottom-left")?.remove();
+      this.explosionShowRadius = false;
+    } else {
+      console.log("pucam");
+      if (!document.querySelector(".radius-container-top-right")) {
+        document.body.appendChild(this.explosionRadiusContainerTopRight);
+        document.body.appendChild(this.explosionRadiusContainerTopLeft);
+        document.body.appendChild(this.explosionRadiusContainerBottomLeft);
+        document.body.appendChild(this.explosionRadiusContainerBottomRight);
+
+        this.explosionRadiusContainerTopRight.className =
+          "radius-container-top-right";
+        this.explosionRadiusContainerTopLeft.className =
+          "radius-container-top-left";
+        this.explosionRadiusContainerBottomLeft.className =
+          "radius-container-bottom-left";
+        this.explosionRadiusContainerBottomRight.className =
+          "radius-container-bottom-right";
+
+        this.explosionRadiusContainerTopRight.style.width = `${this.playerExplosionRadius}px`;
+        this.explosionRadiusContainerTopRight.style.height = `${this.playerExplosionRadius}px`;
+        this.explosionRadiusContainerTopLeft.style.width = `${this.playerExplosionRadius}px`;
+        this.explosionRadiusContainerTopLeft.style.height = `${this.playerExplosionRadius}px`;
+        this.explosionRadiusContainerBottomLeft.style.width = `${this.playerExplosionRadius}px`;
+        this.explosionRadiusContainerBottomLeft.style.height = `${this.playerExplosionRadius}px`;
+        this.explosionRadiusContainerBottomRight.style.width = `${this.playerExplosionRadius}px`;
+        this.explosionRadiusContainerBottomRight.style.height = `${this.playerExplosionRadius}px`;
+      }
+
+      this.explosionRadiusContainerTopRight.style.top = `${
+        shipPosition.y - this.playerExplosionRadius + 50
+      }px`;
+      this.explosionRadiusContainerTopRight.style.left = `${shipPosition.x}px`;
+      this.explosionRadiusContainerTopLeft.style.top = `${
+        shipPosition.y - this.playerExplosionRadius + 50
+      }px`;
+      this.explosionRadiusContainerTopLeft.style.left = `${
+        shipPosition.x - this.playerExplosionRadius + 38 * 2
+      }px`;
+      this.explosionRadiusContainerBottomLeft.style.top = `${shipPosition.y}px`;
+      this.explosionRadiusContainerBottomLeft.style.left = `${
+        shipPosition.x - this.playerExplosionRadius + 38 * 2
+      }px`;
+      this.explosionRadiusContainerBottomRight.style.top = `${shipPosition.y}px`;
+      this.explosionRadiusContainerBottomRight.style.left = `${shipPosition.x}px`;
+
+      this.explosionShowRadiusDuration--;
+    }
+  }
+
+  ////////
 
   decreaseStatByPercentage(stat: number, value: number) {}
 
