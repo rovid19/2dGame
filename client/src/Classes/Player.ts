@@ -7,7 +7,6 @@ import {
   playerMovementInput,
   powerUp,
   projectiles,
-  shield,
   shipPosition,
 } from "../Level/LevelLogic/mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
@@ -24,8 +23,8 @@ import { Vector2 } from "./Vector";
 
 export class Player {
   playerSprite: SpriteMethods;
-  playerHp: number = 100;
-  playerMaxHP: number = 100;
+  playerHp: number = 100000;
+  playerMaxHP: number = 100000;
   playerShield: number = 0;
   playerLevel: number = 1;
   playerHpBarPercentage: number = 100;
@@ -42,6 +41,9 @@ export class Player {
   isPlayerAlive: boolean = true;
   isPlayerOutside: boolean = false;
   onWhichSide: string = "";
+  isAoeDamage: boolean = false;
+  aoeGainedExp: number = 0;
+  levelUpArray: number[] = [];
 
   constructor(
     spaceshipImage: HTMLImageElement,
@@ -219,17 +221,54 @@ export class Player {
 
   gainExpIfEnemyIsKilled(expAmountGained: number) {
     this.playerExp += expAmountGained;
+
     HUD.renderGainedExp();
     if (this.playerExp >= this.playerExpNeeded) {
-      this.playerLevelUp();
+      this.playerLevelUp(false);
     }
   }
 
-  playerLevelUp() {
+  gainExpForMultipleEnemies() {
+    if (this.aoeGainedExp > 0) {
+      if (this.playerExpNeeded < this.aoeGainedExp) {
+        console.log("start", this.aoeGainedExp);
+        this.aoeGainedExp -= this.playerExpNeeded;
+        this.playerExp += this.playerExpNeeded;
+        this.playerExpNeeded = this.playerExpNeeded * 2;
+        this.levelUpArray.push(0);
+      } else {
+        this.levelUpArray.forEach((level) => {
+          this.playerLevelUp(true);
+        });
+        this.playerExp += this.aoeGainedExp;
+        this.aoeGainedExp -= this.aoeGainedExp;
+        if (this.playerExp > this.playerExpNeeded) {
+          console.log("dadaad");
+          this.playerLevelUp(false);
+        }
+        HUD.renderGainedExp();
+        this.levelUpArray = [];
+        console.log("end", this.aoeGainedExp);
+      }
+      /*let expLeft = this.playerExpNeeded - this.aoeGainedExp;
+
+      if (expLeft < 0) expLeft = Math.abs(expLeft);
+
+      if (expLeft > 0) {
+        this.playerExp += expLeft;
+        this.aoeGainedExp -= expLeft;
+       
+      }*/
+    }
+  }
+
+  playerLevelUp(aoe: boolean) {
+    console.log("levelupMethod");
     this.playerExp = 0;
     this.playerLevel++;
-    this.playerExpNeeded = this.playerExpNeeded * 2;
+    if (!aoe) this.playerExpNeeded = this.playerExpNeeded * 2;
     powerUp.isPowerUpActive = true;
+    powerUp.powerUpQueueArray.push(0);
     powerUp.openPowerUp();
     HUD.resetExpBarAfterLevelUp();
   }

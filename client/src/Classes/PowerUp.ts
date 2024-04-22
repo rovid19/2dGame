@@ -11,6 +11,8 @@ export class PowerUp {
   availablePowerUps: PowerUpType[] = [];
   availablePowerUpsHtmlElements: HTMLElement[] = [];
   randomNumberArray: number[] = [];
+  powerUpQueue: boolean = false;
+  powerUpQueueArray: number[] = [];
 
   // power ups
   generalIncrease: PowerUpType[] = [
@@ -83,25 +85,30 @@ export class PowerUp {
   constructor() {}
 
   openPowerUp() {
-    if (this.isPowerUpActive) {
-      playerMovementInput.removeEventListener();
-      player.playerSpells.removeEventListener();
+    if (!this.powerUpQueue) {
+      if (this.isPowerUpActive) {
+        this.powerUpQueue = true;
 
-      document.body.appendChild(this.powerUpContainer);
-      this.powerUpContainer.appendChild(this.powerUpMainDiv);
-      this.powerUpMainDiv.appendChild(this.powerUpHeading);
-      this.powerUpMainDiv.appendChild(this.powerUpCardContainer);
+        console.log("open", this.powerUpQueueArray);
+        playerMovementInput.removeEventListener();
+        player.playerSpells.removeEventListener();
 
-      this.powerUpContainer.className = "power-up-container";
-      this.powerUpMainDiv.className = "power-up-main-div";
-      this.powerUpHeading.textContent = "Choose an upgrade";
-      this.powerUpHeading.id = "power-up-heading";
-      this.powerUpHeading.className = "sixtyfour-myapp";
-      this.powerUpCardContainer.id = "power-up-card-container";
-      this.powerUpCardContainer.className = "sixtyfour-myapp";
+        document.body.appendChild(this.powerUpContainer);
+        this.powerUpContainer.appendChild(this.powerUpMainDiv);
+        this.powerUpMainDiv.appendChild(this.powerUpHeading);
+        this.powerUpMainDiv.appendChild(this.powerUpCardContainer);
 
-      this.generatePowerUps();
-      player.isPlayerAlive = false;
+        this.powerUpContainer.className = "power-up-container";
+        this.powerUpMainDiv.className = "power-up-main-div";
+        this.powerUpHeading.textContent = "Choose an upgrade";
+        this.powerUpHeading.id = "power-up-heading";
+        this.powerUpHeading.className = "sixtyfour-myapp";
+        this.powerUpCardContainer.id = "power-up-card-container";
+        this.powerUpCardContainer.className = "sixtyfour-myapp";
+
+        this.generatePowerUps();
+        player.isPlayerAlive = false;
+      }
     }
   }
 
@@ -180,10 +187,16 @@ export class PowerUp {
       this.powerUpContainer.remove();
       this.availablePowerUpsHtmlElements = [];
       this.availablePowerUps = [];
+
       this.isPowerUpActive = false;
+
       player.isPlayerAlive = true;
       playerMovementInput.resetInput();
       player.playerSpells.resetSpells();
+      console.log("event prije popa", this.powerUpQueueArray);
+      this.powerUpQueueArray.pop();
+      console.log("event", this.powerUpQueueArray);
+      this.powerUpQueue = false;
     });
   }
 
@@ -237,5 +250,14 @@ export class PowerUp {
 
       this.availablePowerUps.push(upgradeArray[number]);
     });
+  }
+
+  runPowerUpIfQueueExists() {
+    if (this.powerUpQueueArray.length > 0) {
+      if (!this.powerUpQueue) {
+        this.isPowerUpActive = true;
+        this.openPowerUp();
+      }
+    }
   }
 }

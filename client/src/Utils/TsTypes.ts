@@ -91,7 +91,7 @@ export type EnemyInstance = {
   setEnemyAttackOnCooldown(): void;
   removeEnemy(item: EnemyInstance[], i: number): void;
   renderHealthBar(): void;
-  takeDamage(item: EnemyInstance[], i: number): void;
+  takeDamage(item: EnemyInstance[], i: number, dmg: number): void;
   followPlayer(): void;
 };
 
@@ -121,6 +121,7 @@ export type InputSpellType = {
   playerShieldCooldown: number;
   playerShieldMaxCooldown: number;
   playerShieldDuration: number;
+
   activateSpell(spellValue: string): void;
   setActiveSpell(spellValue: string): void;
   activateSpellCooldown(): void;
@@ -133,6 +134,7 @@ export type InputSpellType = {
   renderWalls(): void;
   removeEventListener(): void;
   resetSpells(): void;
+
   decreaseStatByPercentage(stat: number, value: number): void;
 };
 

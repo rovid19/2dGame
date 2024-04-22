@@ -206,7 +206,7 @@ export class Projectile {
             )
           ) {
             this.targetHit = true;
-            enemy.takeDamage(item, i);
+            enemy.takeDamage(item, i, this.prjDamage);
             this.targetHitOrProjectileOutsideOFScreen();
           }
         }

@@ -157,20 +157,24 @@ export class Enemy {
     }
   };
 
-  takeDamage = (item: EnemyInstance[], i: number) => {
-    this.enemyHp -= projectiles.prjDamage;
-
+  takeDamage = (item: EnemyInstance[], i: number, dmg: number) => {
+    this.enemyHp -= dmg;
     // calculate missing hp in percentages
-    const damageTaken = (projectiles.prjDamage / this.enemyMaxHp) * 100;
+    const damageTaken = (dmg / this.enemyMaxHp) * 100;
 
     this.enemyHpBarFiller.style.width = `${
       this.enemyHpBarPercentage - damageTaken
     }%`;
     this.enemyHpBarPercentage = this.enemyHpBarPercentage - damageTaken;
 
-    if (this.enemyHp <= 0) {
+    if (player.isAoeDamage) {
       this.removeEnemy(item, i);
-      player.gainExpIfEnemyIsKilled(this.enemyExp);
+      player.aoeGainedExp += this.enemyExp;
+    } else {
+      if (this.enemyHp <= 0) {
+        this.removeEnemy(item, i);
+        player.gainExpIfEnemyIsKilled(this.enemyExp, "single");
+      }
     }
   };
 

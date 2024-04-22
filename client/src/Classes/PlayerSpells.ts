@@ -222,6 +222,7 @@ export class PlayerSpells {
             this.spellsOnCooldown.splice(i, 1);
             this.explosionActivated = false;
             this.playerExplosionCooldown = this.playerExplosionMaxCooldown;
+            this.explosionShowRadiusDuration = 90;
           }
         }
       });
@@ -322,6 +323,8 @@ export class PlayerSpells {
 
   dealDamageToEnemiesNearBy() {
     if (!this.explosionDealtDmg) {
+      player.isAoeDamage = true;
+
       returnArrayOfHitboxNumbers(
         Math.floor(shipPosition.x),
         this.playerExplosionRadius,
@@ -336,26 +339,25 @@ export class PlayerSpells {
       );
 
       enemySpawner.enemyArray.forEach((array) => {
-        array.forEach((enemy) => {
+        for (let i = array.length - 1; i >= 0; i--) {
           if (
             this.playerExplosionHitboxY.includes(
-              Math.floor(enemy.enemySprite.position.y)
+              Math.floor(array[i].enemySprite.position.y)
             )
           ) {
-            console.log(Math.floor(enemy.enemySprite.position.x));
-            console.log(this.playerExplosionHitboxX);
             if (
               this.playerExplosionHitboxX.includes(
-                Math.floor(enemy.enemySprite.position.x)
+                Math.floor(array[i].enemySprite.position.x)
               )
             ) {
-              console.log("kabom");
+              array[i].takeDamage(array, i, this.playerExplosionDamage);
             }
           }
-        });
+        }
       });
 
       this.explosionDealtDmg = true;
+      player.isAoeDamage = false;
     }
   }
 
@@ -367,7 +369,7 @@ export class PlayerSpells {
       document.querySelector(".radius-container-bottom-left")?.remove();
       this.explosionShowRadius = false;
     } else {
-      console.log("pucam");
+      console.log("pucam pravo");
       if (!document.querySelector(".radius-container-top-right")) {
         document.body.appendChild(this.explosionRadiusContainerTopRight);
         document.body.appendChild(this.explosionRadiusContainerTopLeft);

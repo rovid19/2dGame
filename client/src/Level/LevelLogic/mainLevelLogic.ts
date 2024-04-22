@@ -156,5 +156,7 @@ function playerMethods() {
   player.playerSpells.renderSpells();
   player.checkIfHitByAnEnemy();
   player.checkIfPlayerIsDead();
+  player.gainExpForMultipleEnemies();
+  powerUp.runPowerUpIfQueueExists();
   menu.openMenu();
 }

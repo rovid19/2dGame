@@ -19,11 +19,11 @@ export class EnemySpawner {
     title: "basic2",
   };
   enemyBasic2Array: EnemyInstance[] = [];
-  enemyBasicSpawnCD: number = 480; // 480
-  enemyBasicSpawnMaxCD: number = 480; // 480
+  enemyBasicSpawnCD: number = 100; // 480
+  enemyBasicSpawnMaxCD: number = 100; // 480
   isEnemyBasicReady: boolean = true;
-  enemyBasic2SpawnCD: number = 1800; // 1800
-  enemyBasic2SpawnMaxCD: number = 1800; // 1800
+  enemyBasic2SpawnCD: number = 200; // 1800
+  enemyBasic2SpawnMaxCD: number = 200; // 1800
   isEnemyBasic2Ready: boolean = false;
   levelDifficulty: number = 10;
 
@@ -72,7 +72,9 @@ export class EnemySpawner {
         2.5,
         whichEnemy
       );
+
       this.enemyBasicArray.push(enemy);
+
       this.isEnemyBasicReady = false;
       enemy.renderHealthBar();
     }
