@@ -3,8 +3,8 @@ import {
   canvasContext2,
   levelImages,
   player,
-} from "../Level/LevelLogic/mainLevelLogic";
-import { EnemyInstance, EnemyType } from "../Utils/TsTypes";
+} from "../mainLevelLogic";
+import { EnemyInstance, EnemyType } from "../../../Utils/TsTypes";
 import { Enemy } from "./Enemy";
 
 export class EnemySpawner {
@@ -19,11 +19,11 @@ export class EnemySpawner {
     title: "basic2",
   };
   enemyBasic2Array: EnemyInstance[] = [];
-  enemyBasicSpawnCD: number = 100; // 480
-  enemyBasicSpawnMaxCD: number = 100; // 480
+  enemyBasicSpawnCD: number = 20; // 480
+  enemyBasicSpawnMaxCD: number = 20; // 480
   isEnemyBasicReady: boolean = true;
-  enemyBasic2SpawnCD: number = 200; // 1800
-  enemyBasic2SpawnMaxCD: number = 200; // 1800
+  enemyBasic2SpawnCD: number = 1800; // 1800
+  enemyBasic2SpawnMaxCD: number = 1800; // 1800
   isEnemyBasic2Ready: boolean = false;
   levelDifficulty: number = 10;
 

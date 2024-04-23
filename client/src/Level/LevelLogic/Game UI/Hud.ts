@@ -1,9 +1,4 @@
-import {
-  enemySpawner,
-  player,
-  playerMovementInput,
-  projectiles,
-} from "../Level/LevelLogic/mainLevelLogic";
+import { enemySpawner, player, projectiles } from "../mainLevelLogic";
 
 export class Hud {
   // HP BAR AND ENERGY BARD
@@ -193,7 +188,7 @@ export class Hud {
     this.playerIsDeadButton2.textContent = "Exit";
 
     this.playerDiedScreenButtonActions();
-    playerMovementInput.removeEventListener();
+    player.playerInput.removeEventListener();
     player.playerSpells.removeEventListener();
   }
 
@@ -203,7 +198,7 @@ export class Hud {
       player.resetPlayer();
       enemySpawner.resetEnemies();
       projectiles.resetProjectile();
-      playerMovementInput.resetInput();
+      player.playerInput.resetInput();
       player.playerSpells.resetSpells();
       this.playerIsDeadContainer.remove();
     });

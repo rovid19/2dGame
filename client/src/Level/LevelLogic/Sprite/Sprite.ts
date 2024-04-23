@@ -1,6 +1,6 @@
 import { Vector2 } from "three";
-import { Coordinates, SpriteMethods, Vector } from "../Utils/TsTypes";
-import { height, width } from "../Level/LevelLogic/canvasLogic";
+import { Coordinates, Vector } from "../../../Utils/TsTypes";
+import { width } from "../Other/canvasLogic";
 
 export class Sprite {
   spriteImage: any = {};

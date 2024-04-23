@@ -1,9 +1,5 @@
-import {
-  HUD,
-  player,
-  playerMovementInput,
-} from "../Level/LevelLogic/mainLevelLogic";
-import { backIcon } from "../Utils/Icons";
+import { HUD, player } from "../mainLevelLogic";
+import { backIcon } from "../../../Utils/Icons";
 
 export class Menu {
   menuContainer: HTMLElement = document.createElement("div");
@@ -36,14 +32,14 @@ export class Menu {
   openMenu() {
     if (this.nav === "menu") {
       if (!document.querySelector(".menu-container")) {
-        playerMovementInput.removeEventListener();
+        player.playerInput.removeEventListener();
         player.playerSpells.removeEventListener();
         player.isPlayerAlive = false;
         this.createMenuPopup();
         this.createMenuEventListeners();
       }
     } else if (this.nav === "closeMenu") {
-      playerMovementInput.resetInput();
+      player.playerInput.resetInput();
       player.playerSpells.resetSpells();
       player.isPlayerAlive = true;
       this.resetSettingContainerValues();

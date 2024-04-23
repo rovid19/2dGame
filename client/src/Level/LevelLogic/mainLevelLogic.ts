@@ -1,23 +1,22 @@
-import { Vector2 } from "../../Classes/Vector.ts";
-import { Sprite } from "../../Classes/Sprite.ts";
+import { Vector2 } from "./Sprite/Vector.ts";
+import { Sprite } from "./Sprite/Sprite.ts";
 import { backgroundGenerator, levelGenerator } from "../levelGenerator.ts";
-import { LevelImages } from "../../Classes/LevelImages.ts";
-import { animationLoop } from "../../Classes/AnimationLoop.ts";
-import { Input } from "../../Classes/PlayerInput.ts";
+import { LevelImages } from "./Sprite/LevelImages.ts";
+import { animationLoop } from "./Other/AnimationLoop.ts";
 import {
   drawImageToFillCanvasSize,
   height,
   waitForCanvasToLoad,
   width,
-} from "./canvasLogic.ts";
-import { Projectile } from "../../Classes/Projectile.ts";
+} from "./Other/canvasLogic.ts";
+import { Projectile } from "./Player/Projectile.ts";
 
 import { EnemyObject } from "../../Utils/TsTypes.ts";
-import { Hud } from "../../Classes/Hud.ts";
-import { Player } from "../../Classes/Player.ts";
-import { EnemySpawner } from "../../Classes/EnemySpawner.ts";
-import { Menu } from "../../Classes/InGameMenu.ts";
-import { PowerUp } from "../../Classes/PowerUp.ts";
+import { Hud } from "./Game UI/Hud.ts";
+import { Player } from "./Player/Player.ts";
+import { EnemySpawner } from "./Enemy/EnemySpawner.ts";
+import { Menu } from "./Game UI/InGameMenu.ts";
+import { PowerUp } from "./Game UI/PowerUp.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 export let canvasContext2: CanvasRenderingContext2D;
@@ -73,10 +72,11 @@ export const shield = new Sprite(
   2
 );
 
+// Player
 export const player = new Player(levelImages.images.playerShip1, 34, 38, 2);
-
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 
+// Enemies
 export const enemyArray: EnemyObject[] = [];
 export const enemySpawner = new EnemySpawner();
 enemySpawner.decreaseEnemySpawnCooldown();
@@ -93,23 +93,18 @@ export const projectiles = new Projectile(
 );
 projectiles.updateProjectileBaseCoordinates();
 
+// HUD SETUP
 export const menu = new Menu();
 export const powerUp = new PowerUp();
 export const HUD = new Hud();
-
 player.setHpBar(HUD.hpBarFiller);
-//
-//
-//
-// Player movement + spells
-export const playerMovementInput = new Input();
 
 //
 //
 //
 // Main render loop
 const renderLevelLoop = new animationLoop(
-  playerMovementInput.playerInput,
+  player.playerInput.playerInput,
   renderLevel
 );
 renderLevelLoop.start();
@@ -143,10 +138,8 @@ export function renderLevel() {
       backgroundSprite.spriteImage.image
     );
     enemySpawner.renderEnemies();
-
     playerMethods();
     projectiles.renderProjectile();
-
     player.renderPlayerSpaceship();
   }
 }
@@ -157,6 +150,6 @@ function playerMethods() {
   player.checkIfHitByAnEnemy();
   player.checkIfPlayerIsDead();
   player.gainExpForMultipleEnemies();
-  powerUp.runPowerUpIfQueueExists();
+  powerUp.openPowerUpIfQueueExists();
   menu.openMenu();
 }

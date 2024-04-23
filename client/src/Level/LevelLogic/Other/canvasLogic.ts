@@ -1,4 +1,4 @@
-import { levelStore } from "../../Stores/LevelStore";
+import { levelStore } from "../../../Stores/LevelStore";
 
 export const height = window.innerHeight;
 export const width = window.innerWidth;
@@ -69,18 +69,3 @@ export function generateId(idLength: number): string {
   return newIdArray.join("");
 }
 */
-export function generateArrayWithUniqueNumbers(
-  amountOfNumbers: number,
-  upTo: number
-): number[] {
-  const unqiueNumberArray = [] as number[];
-
-  while (unqiueNumberArray.length < amountOfNumbers) {
-    const randomNumber = Math.floor(Math.random() * (upTo + 1));
-    if (!unqiueNumberArray.includes(randomNumber)) {
-      unqiueNumberArray.push(randomNumber);
-    }
-  }
-
-  return unqiueNumberArray;
-}

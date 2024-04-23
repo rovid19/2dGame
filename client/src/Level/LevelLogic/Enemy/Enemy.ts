@@ -1,13 +1,7 @@
-import {
-  HUD,
-  enemySpawner,
-  player,
-  projectiles,
-  shipPosition,
-} from "../Level/LevelLogic/mainLevelLogic";
-import { EnemyInstance, SpriteMethods } from "../Utils/TsTypes";
-import { Sprite } from "./Sprite";
-import { Vector2 } from "./Vector";
+import { HUD, player, shipPosition } from "../mainLevelLogic";
+import { EnemyInstance, SpriteMethods } from "../../../Utils/TsTypes";
+import { Sprite } from "../Sprite/Sprite";
+import { Vector2 } from "../Sprite/Vector";
 
 export class Enemy {
   enemySprite: SpriteMethods;
@@ -173,7 +167,7 @@ export class Enemy {
     } else {
       if (this.enemyHp <= 0) {
         this.removeEnemy(item, i);
-        player.gainExpIfEnemyIsKilled(this.enemyExp, "single");
+        player.gainExpIfEnemyIsKilled(this.enemyExp);
       }
     }
   };

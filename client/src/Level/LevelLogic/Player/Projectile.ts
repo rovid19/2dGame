@@ -1,14 +1,8 @@
-import {
-  canvasContext,
-  canvasContext2,
-  enemySpawner,
-  player,
-  shipPosition,
-} from "../Level/LevelLogic/mainLevelLogic";
-import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
-import { SpriteMethods, Vector } from "../Utils/TsTypes";
-import { Sprite } from "./Sprite";
-import { Vector2 } from "./Vector";
+import { canvasContext2, enemySpawner, shipPosition } from "../mainLevelLogic";
+import { returnArrayOfHitboxNumbers } from "../../../Utils/OftenUsed";
+import { SpriteMethods, Vector } from "../../../Utils/TsTypes";
+import { Sprite } from "../Sprite/Sprite";
+import { Vector2 } from "../Sprite/Vector";
 
 export class Projectile {
   prjSprite: SpriteMethods;
@@ -255,7 +249,5 @@ export class Projectile {
       this.prjHitboxY = 75;
       this.prjSprite.scale = 2;
     }
-
-    console.log(this.prjHitboxX, this.prjHitboxY, this.prjSprite.scale);
   }
 }

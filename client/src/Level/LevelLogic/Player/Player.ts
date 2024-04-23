@@ -1,25 +1,24 @@
-import { height, width } from "../Level/LevelLogic/canvasLogic";
+import { height, width } from "../Other/canvasLogic";
 import {
   HUD,
-  canvasContext2,
   enemySpawner,
   player,
-  playerMovementInput,
   powerUp,
   projectiles,
   shipPosition,
-} from "../Level/LevelLogic/mainLevelLogic";
-import { returnArrayOfHitboxNumbers } from "../Utils/OftenUsed";
+} from "../mainLevelLogic";
+import { returnArrayOfHitboxNumbers } from "../../../Utils/OftenUsed";
 import {
   PlayerMovementMethods,
   SpriteMethods,
   InputSpellType,
   Projectile,
-} from "../Utils/TsTypes";
+  InputType,
+} from "../../../Utils/TsTypes";
 import { Input } from "./PlayerInput";
 import { PlayerSpells } from "./PlayerSpells";
-import { Sprite } from "./Sprite";
-import { Vector2 } from "./Vector";
+import { Sprite } from "../Sprite/Sprite";
+import { Vector2 } from "../Sprite/Vector";
 
 export class Player {
   playerSprite: SpriteMethods;
@@ -33,6 +32,7 @@ export class Player {
   playerSpeed: number = 5;
   playerMovement: PlayerMovementMethods = new Input();
   playerSpells: InputSpellType = new PlayerSpells();
+  playerInput: InputType = new Input();
   playerSpellActivated: boolean = false;
   playerHitboxY: number;
   playerHitboxX: number;
@@ -60,127 +60,8 @@ export class Player {
     this.playerHitboxX = 38 * this.playerSprite.scale;
   }
 
-  stopSpaceshipFromGoingOutsideOfScreen() {
-    // prva 4 ifa proveravaju gornji lijevi gornji, donji lijevi, gornji desni i donji desni kut jer za ta 4 kuta trebam 2 conditiona ispunjavat
-    if (shipPosition.x < 0 && shipPosition.y < 0) {
-      if (
-        playerMovementInput.direction === "LEFT" ||
-        playerMovementInput.direction === "UP"
-      ) {
-        playerMovementInput.direction = "";
-      }
-      player.playerSprite.drawImage(canvasContext2, 0, 0);
-    } else if (shipPosition.y >= height - 34 * 2 && shipPosition.x < 0) {
-      if (
-        playerMovementInput.direction === "LEFT" ||
-        playerMovementInput.direction === "DOWN"
-      ) {
-        playerMovementInput.direction = "";
-      }
-      shipPosition.x = 0;
-      shipPosition.y = height - 34 * 2;
-      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      player.playerSprite.drawImage(canvasContext2, 0, height - 34 * 2);
-    } else if (shipPosition.y < 0 && shipPosition.x >= width - 38 * 2) {
-      if (
-        playerMovementInput.direction === "RIGHT" ||
-        playerMovementInput.direction === "UP"
-      ) {
-        playerMovementInput.direction = "";
-      }
-      player.playerSprite.drawImage(canvasContext2, width - 38 * 2, 0);
-    } else if (
-      shipPosition.y >= height - 34 * 2 &&
-      shipPosition.x >= width - 38 * 2
-    ) {
-      if (
-        playerMovementInput.direction === "RIGHT" ||
-        playerMovementInput.direction === "DOWN"
-      ) {
-        playerMovementInput.direction = "";
-      }
-      shipPosition.x = width - 38 * 2;
-      shipPosition.y = height - 34 * 2;
-      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      player.playerSprite.drawImage(
-        canvasContext2,
-        width - 38 * 2,
-        height - 34 * 2
-      );
-    }
-    // lijeva strana
-    else if (shipPosition.x <= 0) {
-      if (playerMovementInput.direction === "LEFT")
-        playerMovementInput.direction = "";
-
-      shipPosition.x = 0;
-      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      if (player.isPlayerOutside && player.onWhichSide === "left") {
-        console.log("dada");
-        player.playerSprite.drawImage(
-          canvasContext2,
-          width - 38 * 2,
-          shipPosition.y
-        );
-        shipPosition.x = width - 38 * 2;
-        projectiles.stopRendering = false;
-        playerMovementInput.direction = "LEFT";
-      } else {
-        player.playerSprite.drawImage(canvasContext2, 0, shipPosition.y);
-      }
-    }
-    // desna strana
-    else if (shipPosition.x >= width - 38 * 2) {
-      if (playerMovementInput.direction === "RIGHT")
-        playerMovementInput.direction = "";
-
-      shipPosition.x = width - 38 * 2;
-      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      if (player.isPlayerOutside && player.onWhichSide === "right") {
-        player.playerSprite.drawImage(canvasContext2, 0, shipPosition.y);
-        shipPosition.x = 0;
-        projectiles.stopRendering = false;
-        playerMovementInput.direction = "RIGHT";
-      } else {
-        player.playerSprite.drawImage(
-          canvasContext2,
-          width - 38 * 2,
-          shipPosition.y
-        );
-      }
-    }
-    // gornja strana
-    else if (shipPosition.y < 0) {
-      if (playerMovementInput.direction === "UP")
-        playerMovementInput.direction = "";
-
-      shipPosition.y = 0;
-      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      player.playerSprite.drawImage(canvasContext2, shipPosition.x, 0);
-    }
-    // donja strana
-    else if (shipPosition.y >= height - 34 * 2) {
-      if (playerMovementInput.direction === "DOWN")
-        playerMovementInput.direction = "";
-
-      shipPosition.y = height - 34 * 2;
-      if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
-      player.playerSprite.drawImage(
-        canvasContext2,
-        shipPosition.x,
-        height - 34 * 2
-      );
-    } else {
-      player.playerSprite.drawImage(
-        canvasContext2,
-        shipPosition.x,
-        shipPosition.y
-      );
-    }
-  }
-
   renderPlayerSpaceship() {
-    this.stopSpaceshipFromGoingOutsideOfScreen();
+    player.playerInput.stopSpaceshipFromGoingOutsideOfScreen();
   }
 
   checkIfHitByAnEnemy = () => {
@@ -231,39 +112,31 @@ export class Player {
   gainExpForMultipleEnemies() {
     if (this.aoeGainedExp > 0) {
       if (this.playerExpNeeded < this.aoeGainedExp) {
-        console.log("start", this.aoeGainedExp);
-        this.aoeGainedExp -= this.playerExpNeeded;
-        this.playerExp += this.playerExpNeeded;
-        this.playerExpNeeded = this.playerExpNeeded * 2;
-        this.levelUpArray.push(0);
+        this.levelUpMultipleLevels();
       } else {
-        this.levelUpArray.forEach((level) => {
+        this.levelUpArray.forEach(() => {
           this.playerLevelUp(true);
         });
         this.playerExp += this.aoeGainedExp;
         this.aoeGainedExp -= this.aoeGainedExp;
+        // if player cant level multiple levels but still is able to level up
         if (this.playerExp > this.playerExpNeeded) {
-          console.log("dadaad");
           this.playerLevelUp(false);
         }
         HUD.renderGainedExp();
         this.levelUpArray = [];
-        console.log("end", this.aoeGainedExp);
       }
-      /*let expLeft = this.playerExpNeeded - this.aoeGainedExp;
-
-      if (expLeft < 0) expLeft = Math.abs(expLeft);
-
-      if (expLeft > 0) {
-        this.playerExp += expLeft;
-        this.aoeGainedExp -= expLeft;
-       
-      }*/
     }
   }
 
+  levelUpMultipleLevels() {
+    this.aoeGainedExp -= this.playerExpNeeded;
+    this.playerExp += this.playerExpNeeded;
+    this.playerExpNeeded = this.playerExpNeeded * 2;
+    this.levelUpArray.push(0);
+  }
+
   playerLevelUp(aoe: boolean) {
-    console.log("levelupMethod");
     this.playerExp = 0;
     this.playerLevel++;
     if (!aoe) this.playerExpNeeded = this.playerExpNeeded * 2;
@@ -303,20 +176,17 @@ export class Player {
       case "Damage increase":
         this.increaseStatByPercentage(projectiles, value);
         break;
-
       case "Movement speed increase":
         this.increaseStatByPercentage(player, value);
         break;
       case "Reload speed increase":
-        console.log(projectiles.prjReloadCooldown, projectiles.prjSpeed);
         this.decreaseStatByPercentage(projectiles, value);
-        console.log(projectiles.prjReloadCooldown, projectiles.prjSpeed);
         break;
       case "Projectile size increase":
         projectiles.increaseProjectileSizeAndHitbox(value);
         break;
       case "Cooldown reduction":
-        player.playerSpells.decreaseStatByPercentage(2, value);
+        player.playerSpells.decreaseStatByPercentage(value);
         break;
     }
   }

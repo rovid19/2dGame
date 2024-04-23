@@ -102,6 +102,7 @@ export type InputType = {
   playerMovement(): void;
   removeEventListener(): void;
   resetInput(): void;
+  stopSpaceshipFromGoingOutsideOfScreen(): void;
 };
 
 export type SpellObject = {
@@ -121,9 +122,7 @@ export type InputSpellType = {
   playerShieldCooldown: number;
   playerShieldMaxCooldown: number;
   playerShieldDuration: number;
-
   activateSpell(spellValue: string): void;
-  setActiveSpell(spellValue: string): void;
   activateSpellCooldown(): void;
   cooldownTimerCounter(
     value: number,
@@ -134,8 +133,8 @@ export type InputSpellType = {
   renderWalls(): void;
   removeEventListener(): void;
   resetSpells(): void;
-
-  decreaseStatByPercentage(stat: number, value: number): void;
+  decreaseStatByPercentage(value: number): void;
+  increaseSpellStats(name: string, value: number): void;
 };
 
 export type PowerUpType = {

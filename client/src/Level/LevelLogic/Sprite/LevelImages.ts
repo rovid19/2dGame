@@ -1,4 +1,4 @@
-import { levelAssetsPath, toLoadType } from "../Utils/TsTypes";
+import { levelAssetsPath, toLoadType } from "../../../Utils/TsTypes";
 
 export class LevelImages {
   toLoad: toLoadType;

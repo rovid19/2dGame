@@ -1,9 +1,7 @@
-import { generateArrayWithUniqueNumbers } from "../Level/LevelLogic/canvasLogic";
-import {
-  player,
-  playerMovementInput,
-} from "../Level/LevelLogic/mainLevelLogic";
-import { PowerUpType } from "../Utils/TsTypes";
+import { player } from "../mainLevelLogic";
+import { generateArrayWithUniqueNumbers } from "../../../Utils/OftenUsed";
+
+import { PowerUpType } from "../../../Utils/TsTypes";
 
 export class PowerUp {
   isPowerUpActive: boolean = false;
@@ -67,6 +65,12 @@ export class PowerUp {
       rarity: "",
     },
     {
+      name: "Explosion radius increase",
+      value: 0,
+      description: "increases radius of explosion spell",
+      rarity: "",
+    },
+    {
       name: "Walls duration increase",
       value: 0,
       description:
@@ -89,8 +93,7 @@ export class PowerUp {
       if (this.isPowerUpActive) {
         this.powerUpQueue = true;
 
-        console.log("open", this.powerUpQueueArray);
-        playerMovementInput.removeEventListener();
+        player.playerInput.removeEventListener();
         player.playerSpells.removeEventListener();
 
         document.body.appendChild(this.powerUpContainer);
@@ -125,7 +128,7 @@ export class PowerUp {
         3,
         this.spellIncrease.length - 1
       );
-      this.assignItemRarityToPowerUps("general");
+      this.assignItemRarityToPowerUps("spell");
       this.lastPowerUp = "spellIncrease";
     }
 
@@ -177,26 +180,30 @@ export class PowerUp {
 
   eventListenerForPowerUpCards(card: HTMLElement, i: number) {
     card.addEventListener("click", () => {
-      player.increasePlayerStatsAfterPowerUp(
-        this.availablePowerUps[i].name as string,
-        this.availablePowerUps[i].value as number
-      );
+      if (this.lastPowerUp === "generalIncreas") {
+        player.increasePlayerStatsAfterPowerUp(
+          this.availablePowerUps[i].name as string,
+          this.availablePowerUps[i].value as number
+        );
+      } else {
+        player.playerSpells.increaseSpellStats(
+          this.availablePowerUps[i].name as string,
+          this.availablePowerUps[i].value as number
+        );
+      }
       document.querySelectorAll("#power-up-card").forEach((powerUp) => {
         powerUp.remove();
       });
       this.powerUpContainer.remove();
       this.availablePowerUpsHtmlElements = [];
       this.availablePowerUps = [];
-
       this.isPowerUpActive = false;
+      this.powerUpQueueArray.pop();
+      this.powerUpQueue = false;
 
       player.isPlayerAlive = true;
-      playerMovementInput.resetInput();
+      player.playerInput.resetInput();
       player.playerSpells.resetSpells();
-      console.log("event prije popa", this.powerUpQueueArray);
-      this.powerUpQueueArray.pop();
-      console.log("event", this.powerUpQueueArray);
-      this.powerUpQueue = false;
     });
   }
 
@@ -252,7 +259,7 @@ export class PowerUp {
     });
   }
 
-  runPowerUpIfQueueExists() {
+  openPowerUpIfQueueExists() {
     if (this.powerUpQueueArray.length > 0) {
       if (!this.powerUpQueue) {
         this.isPowerUpActive = true;
