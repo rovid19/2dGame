@@ -19,8 +19,8 @@ export class EnemySpawner {
     title: "basic2",
   };
   enemyBasic2Array: EnemyInstance[] = [];
-  enemyBasicSpawnCD: number = 20; // 480
-  enemyBasicSpawnMaxCD: number = 20; // 480
+  enemyBasicSpawnCD: number = 200; // 480
+  enemyBasicSpawnMaxCD: number = 200; // 480
   isEnemyBasicReady: boolean = true;
   enemyBasic2SpawnCD: number = 1800; // 1800
   enemyBasic2SpawnMaxCD: number = 1800; // 1800

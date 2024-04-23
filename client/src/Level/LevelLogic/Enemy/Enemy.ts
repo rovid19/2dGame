@@ -21,6 +21,7 @@ export class Enemy {
   enemyHpBarPercentage: number = 100;
   enemyHitboxX: number = 0;
   enemyHitboxY: number = 0;
+  enemyScore: number = 0;
   whichEnemy: string = "";
   isEnemyAlive: boolean = true;
 
@@ -124,6 +125,7 @@ export class Enemy {
         this.enemyDamage = 10;
         this.enemySpawnCD = 480;
         this.enemyMaxSpawnCD = 480;
+        this.enemyScore = 50;
         break;
       case "basic2":
         this.enemyHitboxY = 51 * scale;
@@ -135,6 +137,7 @@ export class Enemy {
         this.enemyDamage = 20;
         this.enemySpawnCD = 1800;
         this.enemyMaxSpawnCD = 1800;
+        this.enemyScore = 100;
         break;
       case "special":
         break;
@@ -163,11 +166,13 @@ export class Enemy {
 
     if (player.isAoeDamage) {
       this.removeEnemy(item, i);
+      this.giveScorePointsToPlayer();
       player.aoeGainedExp += this.enemyExp;
     } else {
       if (this.enemyHp <= 0) {
         this.removeEnemy(item, i);
         player.gainExpIfEnemyIsKilled(this.enemyExp);
+        this.giveScorePointsToPlayer();
       }
     }
   };
@@ -183,5 +188,10 @@ export class Enemy {
   // gives me a special kind of headache
   removeEnemyFromEnemyArray(item: EnemyInstance[], i: number) {
     item.splice(i, 1);
+  }
+
+  giveScorePointsToPlayer() {
+    //HUD.renderScoreChanges();
+    HUD.scoreChangeAnimation(this.enemyScore);
   }
 }

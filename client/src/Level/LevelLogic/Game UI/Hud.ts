@@ -42,18 +42,40 @@ export class Hud {
   playerIsDeadButton1: HTMLElement = document.createElement("button");
   playerIsDeadButton2: HTMLElement = document.createElement("div");
 
-  // MENU
-  menuContainer: HTMLElement = document.createElement("div");
-  menuMainDiv: HTMLElement = document.createElement("div");
-  menuButton1: HTMLElement = document.createElement("button");
-  menuButton2: HTMLElement = document.createElement("button2");
-  menuNote: HTMLElement = document.createElement("h4");
-  settingsMainDiv: HTMLElement = document.createElement("div");
-  settingsBackButton: HTMLElement = document.createElement("button");
-  inputBeingChanged: HTMLElement = document.createElement("div");
+  // SCORE BAR
+  playerScoreContainer: HTMLElement = document.createElement("div");
+  playerScoreHeading: HTMLElement = document.createElement("h2");
 
   constructor() {
     this.setHud();
+    this.setScore();
+  }
+
+  setScore() {
+    document.body.appendChild(this.playerScoreContainer);
+    this.playerScoreContainer.appendChild(this.playerScoreHeading);
+    this.playerScoreContainer.className = "player-score-container";
+    this.playerScoreHeading.id = "player-score-heading";
+    this.playerScoreHeading.className = "sixtyfour-myapp";
+
+    this.playerScoreHeading.textContent = "0";
+  }
+
+  renderScoreChanges() {
+    this.playerScoreHeading.textContent = `${player.playerScore}`;
+  }
+
+  scoreChangeAnimation(value: number) {
+    for (let i = 0; i < value; i++) {
+      let delayTime = 0 + (i + 20) * 2;
+      setTimeout(() => {
+        this.playerScoreHeading.textContent = `${player.playerScore + i}`;
+
+        if (i === value - 1) {
+          player.setPlayerScore(value);
+        }
+      }, delayTime);
+    }
   }
 
   setHud() {
@@ -170,7 +192,7 @@ export class Hud {
     this.playerIsDeadHeadingContainer.appendChild(this.playerIsDeadSubheading);
     this.playerIsDeadSubheading.className = "sixtyfour-myapp";
     this.playerIsDeadSubheading.id = "player-is-dead-subheading";
-    this.playerIsDeadSubheading.textContent = "Your score: ";
+    this.playerIsDeadSubheading.textContent = `Your score: ${player.playerScore}`;
     this.playerIsDeadHeading.id = "player-is-dead-heading";
     this.playerIsDeadHeading.className = "sixtyfour-myapp";
     this.playerIsDeadHeading.textContent = "You have died";
@@ -212,5 +234,6 @@ export class Hud {
     this.energyBarFiller.style.width = "100%";
     this.playerExpBarFiller.style.width = "0%";
     this.playerExpBarHeading.textContent = "Lvl 1";
+    this.playerScoreHeading.textContent = "0";
   }
 }

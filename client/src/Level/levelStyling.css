@@ -224,6 +224,7 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
+  z-index: 3;
 }
 
 /* SPELLS */
@@ -707,7 +708,7 @@
   height: 100%;
   width: 100%;
   background-color: white;
-  animation: 1.5s ease-in TopRightFiller;
+  animation: 1.6s ease-in TopRightFiller;
   box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -775,7 +776,7 @@
   height: 100%;
   width: 100%;
   background-color: white;
-  animation: 1.5s ease-in TopLeftFiller;
+  animation: 1.6s ease-in TopLeftFiller;
   box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -843,7 +844,7 @@
   height: 100%;
   width: 100%;
   background-color: white;
-  animation: 1.5s ease-in BottomLeftFiller;
+  animation: 1.6s ease-in BottomLeftFiller;
   box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -911,7 +912,7 @@
   height: 100%;
   width: 100%;
   background-color: white;
-  animation: 1.5s ease-in BottomRightFiller;
+  animation: 1.6s ease-in BottomRightFiller;
   box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -960,4 +961,20 @@
     left: 0px;
     top: 0px;
   }
+}
+
+/* SCORE */
+
+.player-score-container {
+  height: 30px;
+  width: 100px;
+  position: absolute;
+  right: 1%;
+  bottom: 2%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: white;
+  border-radius: 6px;
+  padding: 8px;
 }

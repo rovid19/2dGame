@@ -22,8 +22,8 @@ import { Vector2 } from "../Sprite/Vector";
 
 export class Player {
   playerSprite: SpriteMethods;
-  playerHp: number = 100000;
-  playerMaxHP: number = 100000;
+  playerHp: number = 100;
+  playerMaxHP: number = 100;
   playerShield: number = 0;
   playerLevel: number = 1;
   playerHpBarPercentage: number = 100;
@@ -38,6 +38,7 @@ export class Player {
   playerHitboxX: number;
   playerExp: number = 0;
   playerExpNeeded: number = 100;
+  playerScore: number = 1;
   isPlayerAlive: boolean = true;
   isPlayerOutside: boolean = false;
   onWhichSide: string = "";
@@ -217,5 +218,8 @@ export class Player {
       stat.prjReloadSpeed = 5;
       stat.prjSpeed = 45;
     }
+  }
+  setPlayerScore(value: number) {
+    player.playerScore += value;
   }
 }
