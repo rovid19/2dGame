@@ -1,11 +1,14 @@
 import {
+  asteroid,
   canvasContext,
   canvasContext2,
   levelImages,
   player,
 } from "../mainLevelLogic";
-import { EnemyInstance, EnemyType } from "../../../Utils/TsTypes";
+import { AsteroidType, EnemyInstance, EnemyType } from "../../../Utils/TsTypes";
 import { Enemy } from "./Enemy";
+import { Asteroid } from "./Asteroid";
+import { Vector2 } from "../Sprite/Vector";
 
 export class EnemySpawner {
   enemyArray: EnemyInstance[][] = [];
@@ -13,18 +16,28 @@ export class EnemySpawner {
     image: new Image(),
     title: "basic",
   };
-  enemyBasicArray: EnemyInstance[] = [];
+
   enemyBasic2: EnemyType = {
     image: new Image(),
     title: "basic2",
   };
+
+  enemyBasicArray: EnemyInstance[] = [];
   enemyBasic2Array: EnemyInstance[] = [];
+  asteroidArray: AsteroidType[] = [];
+
   enemyBasicSpawnCD: number = 200; // 480
   enemyBasicSpawnMaxCD: number = 200; // 480
   isEnemyBasicReady: boolean = true;
+
   enemyBasic2SpawnCD: number = 1800; // 1800
   enemyBasic2SpawnMaxCD: number = 1800; // 1800
   isEnemyBasic2Ready: boolean = false;
+
+  asteroidSpawnCD: number = 200;
+  asteroidSpawnMaxCD: number = 200;
+  isAsteroidReady: boolean = true;
+
   levelDifficulty: number = 10;
 
   constructor() {
@@ -33,7 +46,7 @@ export class EnemySpawner {
   }
 
   setEnemy() {
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
       if (i === 0) {
         this.enemyBasic.image = levelImages.images.enemy1;
       }
@@ -58,6 +71,14 @@ export class EnemySpawner {
         this.isEnemyBasic2Ready = true;
       }
     }
+
+    if (whichEnemy === "asteroid") {
+      this.asteroidSpawnCD--;
+      if (this.asteroidSpawnCD === 0) {
+        this.asteroidSpawnCD = this.asteroidSpawnMaxCD;
+        this.isAsteroidReady = true;
+      }
+    }
   }
 
   createInstanceOfEnemy(whichEnemy: string) {
@@ -77,8 +98,7 @@ export class EnemySpawner {
 
       this.isEnemyBasicReady = false;
       enemy.renderHealthBar();
-    }
-    if (whichEnemy === "basic2") {
+    } else if (whichEnemy === "basic2") {
       const randomSpeed = 1.5 + Math.random() * (3 - 1.5);
 
       const enemy = new Enemy(
@@ -91,6 +111,17 @@ export class EnemySpawner {
       );
       this.enemyBasic2Array.push(enemy);
       this.isEnemyBasic2Ready = false;
+    } else if (whichEnemy === "asteroid") {
+      const asteroidImage = asteroid.selectRandomAsteroidImage();
+
+      const asteroidSpawn = new Asteroid(
+        asteroidImage,
+        new Vector2(asteroidImage.image.height, asteroidImage.image.width),
+        2
+      );
+
+      this.asteroidArray.push(asteroidSpawn);
+      this.isAsteroidReady = false;
     }
   }
 
@@ -105,6 +136,12 @@ export class EnemySpawner {
         this.createInstanceOfEnemy("basic2");
       } else {
         this.enemySpawnCooldown("basic2");
+      }
+
+      if (this.isAsteroidReady) {
+        this.createInstanceOfEnemy("asteroid");
+      } else {
+        this.enemySpawnCooldown("asteroid");
       }
     }
   }
@@ -134,6 +171,21 @@ export class EnemySpawner {
 
         if (player.isPlayerAlive) enemy.followPlayer();
         enemy.setEnemyAttackOnCooldown();
+      });
+
+      this.asteroidArray.forEach((asteroid, i) => {
+        asteroid.asteroidSprite.drawImage(
+          canvasContext2,
+          asteroid.asteroidSprite.position.x,
+          asteroid.asteroidSprite.position.y
+        );
+
+        asteroid.renderAsteroidFromTopToBottom();
+        if (asteroid.asteroidOffScreen || asteroid.asteroidHitTarget) {
+          console.log("offscreen", i);
+          console.log(this.asteroidArray);
+          this.asteroidArray.splice(i, 1);
+        }
       });
     }
   }

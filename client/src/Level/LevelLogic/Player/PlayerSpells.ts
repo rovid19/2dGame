@@ -66,12 +66,12 @@ export class PlayerSpells {
   wallsActivated: boolean = false;
 
   // explosion
-  playerExplosionDamage: number = 100;
-  playerExplosionRadius: number = 300;
+  playerExplosionDamage: number = 20;
+  playerExplosionRadius: number = 200;
   playerExplosionHitboxX: number[] = [];
   playerExplosionHitboxY: number[] = [];
-  playerExplosionCooldown: number = 100;
-  playerExplosionMaxCooldown: number = 100;
+  playerExplosionCooldown: number = 600;
+  playerExplosionMaxCooldown: number = 600;
   explosionActivated: boolean = false;
   explosionDealtDmg: boolean = false;
   explosionShowRadius: boolean = false;
@@ -107,7 +107,7 @@ export class PlayerSpells {
   activateSpell = (spellValue: string) => {
     if (spellValue === "Shield") {
       if (!this.spellsOnCooldown.includes("Shield")) {
-        player.playerShield = 10;
+        player.playerShield = this.playerShieldAmount;
         this.spellsOnCooldown.push("Shield");
 
         this.spell = spellValue;

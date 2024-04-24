@@ -17,6 +17,7 @@ import { Player } from "./Player/Player.ts";
 import { EnemySpawner } from "./Enemy/EnemySpawner.ts";
 import { Menu } from "./Game UI/InGameMenu.ts";
 import { PowerUp } from "./Game UI/PowerUp.ts";
+import { Asteroid } from "./Enemy/Asteroid.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 export let canvasContext2: CanvasRenderingContext2D;
@@ -79,6 +80,11 @@ export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 // Enemies
 export const enemyArray: EnemyObject[] = [];
 export const enemySpawner = new EnemySpawner();
+export const asteroid = new Asteroid(
+  levelImages.images.meteor1,
+  new Vector2(100, 200),
+  2
+);
 enemySpawner.decreaseEnemySpawnCooldown();
 
 //
@@ -137,10 +143,12 @@ export function renderLevel() {
       canvasContext,
       backgroundSprite.spriteImage.image
     );
-    enemySpawner.renderEnemies();
-    playerMethods();
+
     projectiles.renderProjectile();
     player.renderPlayerSpaceship();
+    enemySpawner.renderEnemies();
+
+    playerMethods();
   }
 }
 

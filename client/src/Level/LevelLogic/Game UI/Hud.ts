@@ -192,7 +192,9 @@ export class Hud {
     this.playerIsDeadHeadingContainer.appendChild(this.playerIsDeadSubheading);
     this.playerIsDeadSubheading.className = "sixtyfour-myapp";
     this.playerIsDeadSubheading.id = "player-is-dead-subheading";
-    this.playerIsDeadSubheading.textContent = `Your score: ${player.playerScore}`;
+    this.playerIsDeadSubheading.textContent = `Your score: ${
+      player.playerScore - 1
+    }`;
     this.playerIsDeadHeading.id = "player-is-dead-heading";
     this.playerIsDeadHeading.className = "sixtyfour-myapp";
     this.playerIsDeadHeading.textContent = "You have died";

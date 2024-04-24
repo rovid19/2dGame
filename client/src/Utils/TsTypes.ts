@@ -167,3 +167,12 @@ export type Projectile = {
   prjArrHitboxYleft: number[];
   prjArrHitboxYright: number[];
 };
+
+export type AsteroidType = {
+  asteroidSprite: SpriteMethods;
+  asteroidDamage: number;
+  asteroidSpeed: number;
+  asteroidOffScreen: boolean;
+  asteroidHitTarget: boolean;
+  renderAsteroidFromTopToBottom(): void;
+};

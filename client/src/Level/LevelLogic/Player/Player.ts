@@ -172,6 +172,23 @@ export class Player {
     shipPosition.y = height - 100;
   }
 
+  takeDamage(takenDamage: number) {
+    if (this.playerShield > 0) {
+      console.log(this.playerShield);
+      const moreThanShieldAmount = this.playerShield - takenDamage;
+      if (moreThanShieldAmount < 0) {
+        this.playerShield = 0;
+        this.playerHp -= Math.abs(moreThanShieldAmount);
+      } else {
+        this.playerShield -= takenDamage;
+      }
+      console.log(player.playerShield);
+    } else {
+      this.playerHp -= takenDamage;
+    }
+    HUD.renderPlayerTakenDamageInHpBar(takenDamage);
+  }
+
   increasePlayerStatsAfterPowerUp(powerUp: string, value: number) {
     switch (powerUp) {
       case "Damage increase":

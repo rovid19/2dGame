@@ -78,14 +78,8 @@ export class Enemy {
   enemyAttack() {
     if (player.isPlayerAlive) {
       if (!this.isEnemyAttackOnCooldown) {
-        if (player.playerShield > 0) {
-          player.playerShield = player.playerShield - this.enemyDamage;
-          this.isEnemyAttackOnCooldown = true;
-        } else {
-          player.playerHp = player.playerHp - this.enemyDamage;
-          this.isEnemyAttackOnCooldown = true;
-          HUD.renderPlayerTakenDamageInHpBar(this.enemyDamage);
-        }
+        player.takeDamage(this.enemyDamage);
+        this.isEnemyAttackOnCooldown = true;
       }
     }
   }
@@ -155,7 +149,9 @@ export class Enemy {
   };
 
   takeDamage = (item: EnemyInstance[], i: number, dmg: number) => {
+    console.log(dmg, this.enemyHp);
     this.enemyHp -= dmg;
+    console.log(dmg, this.enemyHp);
     // calculate missing hp in percentages
     const damageTaken = (dmg / this.enemyMaxHp) * 100;
 
@@ -164,7 +160,7 @@ export class Enemy {
     }%`;
     this.enemyHpBarPercentage = this.enemyHpBarPercentage - damageTaken;
 
-    if (player.isAoeDamage) {
+    if (player.isAoeDamage && this.enemyHp <= 0) {
       this.removeEnemy(item, i);
       this.giveScorePointsToPlayer();
       player.aoeGainedExp += this.enemyExp;
