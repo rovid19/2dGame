@@ -14,7 +14,6 @@ import { InputSpellType, SpellObject, isOutside } from "../../../Utils/TsTypes";
 function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
   if (e.code === this.spell1.value) {
     if (this.spellsOnCooldown.includes("Shield")) {
-      console.log("shield on cd");
     } else {
       this.activateSpell("Shield");
     }
@@ -428,35 +427,25 @@ export class PlayerSpells {
   increaseSpellStats(name: string, value: number) {
     switch (name) {
       case "Shield duration increase":
-        console.log("duration", this.playerShieldDuration);
         const increaseDurationBy = this.playerShieldDuration * (value / 100);
         this.playerShieldDuration += increaseDurationBy;
-        console.log("duration", this.playerShieldDuration);
         break;
       case "Shield amount increase":
-        console.log(this.playerShieldAmount);
         const increaseAmountBy = this.playerShieldAmount * (value / 100);
         this.playerShieldAmount += increaseAmountBy;
-        console.log(this.playerShieldAmount);
         break;
       case "Explosion damage increase":
-        console.log(this.playerExplosionDamage);
         const increaseDamageBy = this.playerExplosionDamage * (value / 100);
         this.playerExplosionDamage += increaseDamageBy;
-        console.log(this.playerExplosionDamage);
         break;
       case "Explosion radius increase":
-        console.log(this.playerExplosionRadius);
         const increaseRadiusBy = this.playerExplosionRadius * (value / 100);
         this.playerExplosionRadius += increaseRadiusBy;
-        console.log(this.playerExplosionRadius);
         break;
       case "Walls duration increase":
-        console.log(this.playerWallsDuration);
         const increaseWallsDurationBy =
           this.playerWallsDuration * (value / 100);
         this.playerWallsDuration += increaseWallsDurationBy;
-        console.log(this.playerWallsDuration);
         break;
     }
   }

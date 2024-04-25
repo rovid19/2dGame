@@ -145,9 +145,11 @@ export class Player {
     powerUp.powerUpQueueArray.push(0);
     powerUp.openPowerUp();
     HUD.resetExpBarAfterLevelUp();
+    enemySpawner.decreaseEnemySpawnCooldown();
   }
 
   checkIfPlayerIsDead() {
+    console.log(this.playerHp);
     if (this.playerHp <= 0) {
       if (this.isPlayerAlive) HUD.createPlayerDiedPopup();
       this.isPlayerAlive = false;
@@ -173,20 +175,20 @@ export class Player {
   }
 
   takeDamage(takenDamage: number) {
+    console.log(takenDamage);
     if (this.playerShield > 0) {
-      console.log(this.playerShield);
       const moreThanShieldAmount = this.playerShield - takenDamage;
       if (moreThanShieldAmount < 0) {
         this.playerShield = 0;
         this.playerHp -= Math.abs(moreThanShieldAmount);
+        HUD.renderPlayerTakenDamageInHpBar(takenDamage);
       } else {
         this.playerShield -= takenDamage;
       }
-      console.log(player.playerShield);
     } else {
       this.playerHp -= takenDamage;
+      HUD.renderPlayerTakenDamageInHpBar(takenDamage);
     }
-    HUD.renderPlayerTakenDamageInHpBar(takenDamage);
   }
 
   increasePlayerStatsAfterPowerUp(powerUp: string, value: number) {

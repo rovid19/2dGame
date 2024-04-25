@@ -147,6 +147,12 @@ export function renderLevel() {
     projectiles.renderProjectile();
     player.renderPlayerSpaceship();
     enemySpawner.renderEnemies();
+    /*asteroid.asteroidSprite.drawImage(canvasContext2, 200, 300);
+    console.log("vidljivi", asteroid);
+    enemySpawner.asteroidArray.forEach((asteroid) => {
+      console.log(asteroid);
+      asteroid.asteroidSprite.drawImage(canvasContext2, 200, 500);
+    });*/
 
     playerMethods();
   }

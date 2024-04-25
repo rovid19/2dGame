@@ -178,8 +178,6 @@ export class Projectile {
       if (this.targetHit) this.targetHit = false;
       this.distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
       this.firingAnimation();
-    } else {
-      console.log("reloading");
     }
   }
 

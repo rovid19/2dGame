@@ -1,5 +1,5 @@
 import { returnArrayOfHitboxNumbers } from "../../../Utils/OftenUsed";
-import { SpriteMethods, Vector } from "../../../Utils/TsTypes";
+import { ImageType, SpriteMethods, Vector } from "../../../Utils/TsTypes";
 import { height } from "../Other/canvasLogic";
 import { Sprite } from "../Sprite/Sprite";
 import { levelImages, player, shipPosition } from "../mainLevelLogic";
@@ -39,6 +39,8 @@ export class Asteroid {
   }
 
   setAsteroidHitboxArray() {
+    this.asteroidHitboxArrayX = [];
+    this.asteroidHitboxArrayY = [];
     returnArrayOfHitboxNumbers(
       Math.floor(this.asteroidSprite.position.x),
       this.asteroidSprite.frameSize.x,
@@ -65,7 +67,7 @@ export class Asteroid {
     }
   }
 
-  selectRandomAsteroidImage(): HTMLImageElement {
+  selectRandomAsteroidImage(): ImageType {
     const randomNumber = Math.floor(Math.random() * 4);
 
     const image = levelImages.images;
@@ -77,5 +79,13 @@ export class Asteroid {
     ];
 
     return meteorArray[randomNumber];
+  }
+
+  increaseAsteroidStats() {
+    const increaseDamageBy = Math.floor(this.asteroidDamage * 0.1) - 1;
+    const increaseSpeedBy = Math.floor(this.asteroidSpeed * 0.1) + 1;
+
+    this.asteroidDamage += increaseDamageBy;
+    this.asteroidSpeed += increaseSpeedBy;
   }
 }

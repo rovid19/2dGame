@@ -114,11 +114,9 @@ export class Enemy {
         this.enemyHitboxX = 27 * scale;
         this.enemyHpBarWidth = 27 * scale;
         this.whichEnemy = "basic";
-        this.enemyExp = 400;
+        this.enemyExp = 250;
         this.enemyAttackCooldown = 100;
         this.enemyDamage = 10;
-        this.enemySpawnCD = 480;
-        this.enemyMaxSpawnCD = 480;
         this.enemyScore = 50;
         break;
       case "basic2":
@@ -126,32 +124,36 @@ export class Enemy {
         this.enemyHitboxX = 59 * scale;
         this.enemyHpBarWidth = 56 * scale;
         this.whichEnemy = "basic2";
-        this.enemyExp = 400;
+        this.enemyExp = 250;
         this.enemyAttackCooldown = 70;
         this.enemyDamage = 20;
-        this.enemySpawnCD = 1800;
-        this.enemyMaxSpawnCD = 1800;
         this.enemyScore = 100;
         break;
-      case "special":
+      case "basic3":
+        this.enemyHitboxY = this.enemySprite.frameSize.y * scale;
+        this.enemyHitboxX = this.enemySprite.frameSize.x * scale;
+        this.enemyHpBarWidth = this.enemyHitboxX;
+        this.whichEnemy = "basic3";
+        this.enemyExp = 450;
+        this.enemyAttackCooldown = 40;
+        this.enemyDamage = 30;
+        this.enemyScore = 500;
         break;
-      case "special2":
-        break;
-      case "asteroid":
-        break;
-      case "asteroid2":
-        break;
-      case "asteroid3":
-        break;
-      case "asteroid4":
+      case "boss":
+        this.enemyHitboxY = this.enemySprite.frameSize.y * scale;
+        this.enemyHitboxX = this.enemySprite.frameSize.x * scale;
+        this.enemyHpBarWidth = this.enemyHitboxX;
+        this.whichEnemy = "boss";
+        this.enemyExp = 2000;
+        this.enemyAttackCooldown = 20;
+        this.enemyDamage = 70;
+        this.enemyScore = 5000;
         break;
     }
   };
 
   takeDamage = (item: EnemyInstance[], i: number, dmg: number) => {
-    console.log(dmg, this.enemyHp);
     this.enemyHp -= dmg;
-    console.log(dmg, this.enemyHp);
     // calculate missing hp in percentages
     const damageTaken = (dmg / this.enemyMaxHp) * 100;
 
@@ -187,7 +189,19 @@ export class Enemy {
   }
 
   giveScorePointsToPlayer() {
-    //HUD.renderScoreChanges();
     HUD.scoreChangeAnimation(this.enemyScore);
+  }
+
+  increaseEnemyStats() {
+    const increaseDamageBy = this.enemyDamage * 0.1;
+    const increaseExpBy = this.enemyExp * 0.1;
+    const increaseScoreBy = this.enemyScore * 0.1;
+    const increasesHpBy = this.enemyHp * 0.1;
+
+    this.enemyDamage += Math.floor(increaseDamageBy);
+    this.enemyExp += Math.floor(increaseExpBy);
+    this.enemyScore += Math.floor(increaseScoreBy);
+    this.enemyHp += Math.floor(increasesHpBy);
+    this.enemyMaxHp += Math.floor(increasesHpBy);
   }
 }
