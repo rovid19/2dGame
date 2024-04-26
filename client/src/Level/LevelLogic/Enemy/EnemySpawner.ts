@@ -19,16 +19,16 @@ export class EnemySpawner {
   enemyBasic3Array: EnemyInstance[] = [];
   asteroidArray: AsteroidType[] = [];
 
-  enemyBasicSpawnCD: number = 400; // 480
-  enemyBasicSpawnMaxCD: number = 400; // 480
+  enemyBasicSpawnCD: number = 350; // 480
+  enemyBasicSpawnMaxCD: number = 350; // 480
   isEnemyBasicReady: boolean = true;
 
-  enemyBasic2SpawnCD: number = 1400; // 1800
-  enemyBasic2SpawnMaxCD: number = 1400; // 1800
+  enemyBasic2SpawnCD: number = 1700; // 1800
+  enemyBasic2SpawnMaxCD: number = 1700; // 1800
   isEnemyBasic2Ready: boolean = false;
 
-  enemyBasic3SpawnCD: number = 2200; // 1800
-  enemyBasic3SpawnMaxCD: number = 2200; // 1800
+  enemyBasic3SpawnCD: number = 2100; // 1800
+  enemyBasic3SpawnMaxCD: number = 2100; // 1800
   isEnemyBasic3Ready: boolean = false;
 
   bossArray: EnemyInstance[] = [];
@@ -276,5 +276,7 @@ export class EnemySpawner {
 
     this.enemyBasic3SpawnCD -= decreaseBasic3By;
     this.enemyBasic2SpawnMaxCD -= decreaseBasic3By;
+
+    console.log("basic2", this.enemyBasic2SpawnMaxCD);
   }
 }

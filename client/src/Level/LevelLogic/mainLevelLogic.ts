@@ -85,7 +85,6 @@ export const asteroid = new Asteroid(
   new Vector2(100, 200),
   2
 );
-enemySpawner.decreaseEnemySpawnCooldown();
 
 //
 //

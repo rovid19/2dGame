@@ -10,11 +10,11 @@ export class Projectile {
   prjDirectionsRight: Vector = { x: 0, y: 0 };
   prjDirectionsLeft2: Vector = { x: 0, y: 0 };
   prjDirectionsRight2: Vector = { x: 0, y: 0 };
-  prjSpeed: number = 20;
-  prjDamage: number = 15;
+  prjSpeed: number = 22;
+  prjDamage: number = 18;
   prjAmount: number = 1;
-  prjReloadCooldown: number = 25;
-  prjReloadSpeed: number = 25;
+  prjReloadCooldown: number = 20;
+  prjReloadSpeed: number = 20;
   isReloading: boolean = false;
   isFiring: boolean = false;
   projectileDistanceTraveled: number = 0;

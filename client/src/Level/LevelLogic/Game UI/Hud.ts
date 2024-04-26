@@ -180,6 +180,10 @@ export class Hud {
     player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;
   }
 
+  renderPlayerGainedHp() {
+    player.playerHpBar.style.width = "100%";
+  }
+
   createPlayerDiedPopup() {
     document.body.appendChild(this.playerIsDeadContainer);
     this.playerIsDeadContainer.className = "player-is-dead-container";

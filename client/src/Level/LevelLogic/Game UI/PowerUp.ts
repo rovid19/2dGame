@@ -30,7 +30,7 @@ export class PowerUp {
       name: "Reload speed increase",
       description: "Increases reload speed for faster projectile firing.",
       value: 0,
-      rarity: "",
+      rarity: "gold",
     },
     {
       name: "Projectile size increase",
@@ -180,7 +180,7 @@ export class PowerUp {
 
   eventListenerForPowerUpCards(card: HTMLElement, i: number) {
     card.addEventListener("click", () => {
-      if (this.lastPowerUp === "generalIncreas") {
+      if (this.lastPowerUp === "generalIncrease") {
         player.increasePlayerStatsAfterPowerUp(
           this.availablePowerUps[i].name as string,
           this.availablePowerUps[i].value as number
@@ -234,6 +234,14 @@ export class PowerUp {
       "blue",
       "gold",
     ];
+
+    // increase the chance of higher rarity powerups with player levelups
+    if (player.playerLevel > 5) {
+      rarityArray.shift();
+      if (player.playerLevel > 10) {
+        rarityArray.shift();
+      }
+    }
 
     const randomNumber = Math.floor(Math.random() * rarityArray.length - 1) + 1;
 

@@ -139,17 +139,20 @@ export class Player {
 
   playerLevelUp(aoe: boolean) {
     this.playerExp = 0;
+    this.playerMaxHP += 25;
+    this.playerHp = this.playerMaxHP;
     this.playerLevel++;
     if (!aoe) this.playerExpNeeded = this.playerExpNeeded * 2;
     powerUp.isPowerUpActive = true;
     powerUp.powerUpQueueArray.push(0);
     powerUp.openPowerUp();
     HUD.resetExpBarAfterLevelUp();
+    HUD.renderPlayerGainedHp();
     enemySpawner.decreaseEnemySpawnCooldown();
+    this.increasePlayerStatsAfterPowerUp("Damage increase", 5);
   }
 
   checkIfPlayerIsDead() {
-    console.log(this.playerHp);
     if (this.playerHp <= 0) {
       if (this.isPlayerAlive) HUD.createPlayerDiedPopup();
       this.isPlayerAlive = false;
@@ -175,7 +178,6 @@ export class Player {
   }
 
   takeDamage(takenDamage: number) {
-    console.log(takenDamage);
     if (this.playerShield > 0) {
       const moreThanShieldAmount = this.playerShield - takenDamage;
       if (moreThanShieldAmount < 0) {
@@ -194,13 +196,19 @@ export class Player {
   increasePlayerStatsAfterPowerUp(powerUp: string, value: number) {
     switch (powerUp) {
       case "Damage increase":
+        console.log(projectiles.prjDamage);
         this.increaseStatByPercentage(projectiles, value);
+        console.log(projectiles.prjDamage);
         break;
       case "Movement speed increase":
+        console.log(player.playerSpeed);
         this.increaseStatByPercentage(player, value);
+        console.log(player.playerSpeed);
         break;
       case "Reload speed increase":
+        console.log(projectiles.prjSpeed, "cd", projectiles.prjDamage);
         this.decreaseStatByPercentage(projectiles, value);
+        console.log(projectiles.prjSpeed, "cd", projectiles.prjDamage);
         break;
       case "Projectile size increase":
         projectiles.increaseProjectileSizeAndHitbox(value);
