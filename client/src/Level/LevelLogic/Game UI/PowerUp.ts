@@ -137,6 +137,7 @@ export class PowerUp {
 
   createPowerUpCards() {
     for (let i = 0; i < 3; i++) {
+      let delay = 200 + i * 2 * 10;
       setTimeout(() => {
         const card = document.createElement("article");
         const cardHeadingContainer = document.createElement("div");
@@ -174,7 +175,7 @@ export class PowerUp {
           this.availablePowerUpsHtmlElements[i]
         );
         cardValue.textContent = `${this.availablePowerUps[i].value}%`;
-      }, 200);
+      }, delay);
     }
   }
 
@@ -191,19 +192,26 @@ export class PowerUp {
           this.availablePowerUps[i].value as number
         );
       }
-      document.querySelectorAll("#power-up-card").forEach((powerUp) => {
-        powerUp.remove();
-      });
-      this.powerUpContainer.remove();
-      this.availablePowerUpsHtmlElements = [];
-      this.availablePowerUps = [];
-      this.isPowerUpActive = false;
-      this.powerUpQueueArray.pop();
-      this.powerUpQueue = false;
 
-      player.isPlayerAlive = true;
-      player.playerInput.resetInput();
-      player.playerSpells.resetSpells();
+      this.powerUpMainDiv.id = "power-up-main-div-ani-out";
+
+      setTimeout(() => {
+        document.querySelectorAll("#power-up-card").forEach((powerUp) => {
+          powerUp.remove();
+        });
+        this.powerUpContainer.remove();
+        this.availablePowerUpsHtmlElements = [];
+        this.availablePowerUps = [];
+        this.isPowerUpActive = false;
+        this.powerUpQueueArray.pop();
+        this.powerUpQueue = false;
+
+        player.isPlayerAlive = true;
+        player.playerInput.resetInput();
+        player.playerSpells.resetSpells();
+
+        this.powerUpMainDiv.removeAttribute("id");
+      }, 400);
     });
   }
 
