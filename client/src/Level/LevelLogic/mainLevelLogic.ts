@@ -18,6 +18,7 @@ import { EnemySpawner } from "./Enemy/EnemySpawner.ts";
 import { Menu } from "./Game UI/InGameMenu.ts";
 import { PowerUp } from "./Game UI/PowerUp.ts";
 import { Asteroid } from "./Enemy/Asteroid.ts";
+import { Sounds } from "./Other/Sounds.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 export let canvasContext2: CanvasRenderingContext2D;
@@ -58,6 +59,9 @@ export const levelImages = new LevelImages({
   meteor4: "../public/sprites/enemies/meteor4.png",
 });
 
+// AUDIO
+export const inGameSounds = new Sounds();
+
 //
 //
 // LOADING SPRITES
@@ -76,6 +80,10 @@ export const shield = new Sprite(
 // Player
 export const player = new Player(levelImages.images.playerShip1, 34, 38, 2);
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
+export const defaultRenderPosition = {
+  x: 0 + Math.random() * (width - 0),
+  y: -100,
+};
 
 // Enemies
 export const enemyArray: EnemyObject[] = [];
@@ -83,7 +91,8 @@ export const enemySpawner = new EnemySpawner();
 export const asteroid = new Asteroid(
   levelImages.images.meteor1,
   new Vector2(100, 200),
-  2
+  2,
+  defaultRenderPosition
 );
 
 //

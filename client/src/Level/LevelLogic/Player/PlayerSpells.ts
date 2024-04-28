@@ -65,8 +65,8 @@ export class PlayerSpells {
   wallsActivated: boolean = false;
 
   // explosion
-  playerExplosionDamage: number = 20;
-  playerExplosionRadius: number = 200;
+  playerExplosionDamage: number = 50;
+  playerExplosionRadius: number = 250;
   playerExplosionHitboxX: number[] = [];
   playerExplosionHitboxY: number[] = [];
   playerExplosionCooldown: number = 600;

@@ -1,4 +1,9 @@
-import { enemySpawner, player, projectiles } from "../mainLevelLogic";
+import {
+  enemySpawner,
+  inGameSounds,
+  player,
+  projectiles,
+} from "../mainLevelLogic";
 
 export class Hud {
   // HP BAR AND ENERGY BARD
@@ -185,6 +190,7 @@ export class Hud {
   }
 
   createPlayerDiedPopup() {
+    inGameSounds.playGameOver();
     document.body.appendChild(this.playerIsDeadContainer);
     this.playerIsDeadContainer.className = "player-is-dead-container";
     this.playerIsDeadContainer.appendChild(this.playerIsDeadMainDiv);

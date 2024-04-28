@@ -1,4 +1,9 @@
-import { canvasContext2, enemySpawner, shipPosition } from "../mainLevelLogic";
+import {
+  canvasContext2,
+  enemySpawner,
+  inGameSounds,
+  shipPosition,
+} from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../Utils/OftenUsed";
 import { SpriteMethods, Vector } from "../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";
@@ -10,10 +15,10 @@ export class Projectile {
   prjDirectionsRight: Vector = { x: 0, y: 0 };
   prjDirectionsLeft2: Vector = { x: 0, y: 0 };
   prjDirectionsRight2: Vector = { x: 0, y: 0 };
-  prjSpeed: number = 22;
+  prjSpeed: number = 22; //22
   prjDamage: number = 18;
   prjAmount: number = 1;
-  prjReloadCooldown: number = 20;
+  prjReloadCooldown: number = 20; // 20
   prjReloadSpeed: number = 20;
   isReloading: boolean = false;
   isFiring: boolean = false;
@@ -106,6 +111,7 @@ export class Projectile {
       this.updateProjectileBaseCoordinates();
     } else {
       // fire projectile
+
       if (!this.isFiring) this.isFiring = true;
 
       this.prjDirectionsLeft.y -= this.prjSpeed;

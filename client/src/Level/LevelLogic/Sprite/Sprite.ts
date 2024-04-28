@@ -6,12 +6,21 @@ export class Sprite {
   spriteImage: any = {};
   frameSize: Vector = new Vector2();
   scale: number = 0;
-  position: Coordinates = { x: 0 + Math.random() * (width - 0), y: -100 };
+  position: Coordinates;
 
-  constructor(image: HTMLImageElement, frameSize: Vector, scale: number) {
+  constructor(
+    image: HTMLImageElement,
+    frameSize: Vector,
+    scale: number,
+    position?: Vector
+  ) {
     this.spriteImage = image;
     this.frameSize = frameSize;
     this.scale = scale;
+    this.position =
+      typeof position !== "undefined"
+        ? position
+        : new Vector2(Math.random() * (width - 0), -100);
   }
 
   drawImage(ctx: CanvasRenderingContext2D, x: number, y: number) {

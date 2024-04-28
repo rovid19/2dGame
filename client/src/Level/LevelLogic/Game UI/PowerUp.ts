@@ -1,4 +1,4 @@
-import { player } from "../mainLevelLogic";
+import { inGameSounds, player } from "../mainLevelLogic";
 import { generateArrayWithUniqueNumbers } from "../../../Utils/OftenUsed";
 
 import { PowerUpType } from "../../../Utils/TsTypes";
@@ -91,6 +91,7 @@ export class PowerUp {
   openPowerUp() {
     if (!this.powerUpQueue) {
       if (this.isPowerUpActive) {
+        inGameSounds.playPowerUpOpen();
         this.powerUpQueue = true;
 
         player.playerInput.removeEventListener();
@@ -181,6 +182,7 @@ export class PowerUp {
 
   eventListenerForPowerUpCards(card: HTMLElement, i: number) {
     card.addEventListener("click", () => {
+      inGameSounds.playPowerUpSelected();
       if (this.lastPowerUp === "generalIncrease") {
         player.increasePlayerStatsAfterPowerUp(
           this.availablePowerUps[i].name as string,

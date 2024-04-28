@@ -1,7 +1,8 @@
 import { HUD, player, shipPosition } from "../mainLevelLogic";
-import { EnemyInstance, SpriteMethods } from "../../../Utils/TsTypes";
+import { EnemyInstance, SpriteMethods, Vector } from "../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";
 import { Vector2 } from "../Sprite/Vector";
+import { height, width } from "../Other/canvasLogic";
 
 export class Enemy {
   enemySprite: SpriteMethods;
@@ -31,12 +32,14 @@ export class Enemy {
     frameHeight: number,
     frameWidth: number,
     scale: number,
-    enemy: string
+    enemy: string,
+    position?: Vector
   ) {
     this.enemySprite = new Sprite(
       enemyImage,
       new Vector2(frameHeight, frameWidth),
-      scale
+      scale,
+      position
     );
     this.enemySpeed = speed;
     this.createDetailsAboutEnemy(enemy, scale);
@@ -194,7 +197,7 @@ export class Enemy {
 
   increaseEnemyStats() {
     const increaseDamageBy = this.enemyDamage * 0.1;
-    const increaseExpBy = this.enemyExp * 0.1;
+    const increaseExpBy = this.enemyExp * 0.2;
     const increaseScoreBy = this.enemyScore * 0.1;
     const increasesHpBy = this.enemyHp * 0.1;
 

@@ -206,9 +206,9 @@ export class Player {
         console.log(player.playerSpeed);
         break;
       case "Reload speed increase":
-        console.log(projectiles.prjSpeed, "cd", projectiles.prjDamage);
+        console.log(projectiles.prjSpeed, "cd", projectiles.prjReloadCooldown);
         this.decreaseStatByPercentage(projectiles, value);
-        console.log(projectiles.prjSpeed, "cd", projectiles.prjDamage);
+        console.log(projectiles.prjSpeed, "cd", projectiles.prjReloadCooldown);
         break;
       case "Projectile size increase":
         projectiles.increaseProjectileSizeAndHitbox(value);

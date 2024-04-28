@@ -1,6 +1,7 @@
 import { height, width } from "../Other/canvasLogic";
 import {
   canvasContext2,
+  inGameSounds,
   player,
   projectiles,
   shipPosition,
@@ -62,6 +63,7 @@ export class Input {
       projectiles.projectileDistanceTraveled === 0
     ) {
       if (shipPosition.y > 100) {
+        inGameSounds.playLaser();
         projectiles.targetHit = false;
         projectiles.fireProjectile();
       }
@@ -145,7 +147,6 @@ export class Input {
       shipPosition.x = 0;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
       if (player.isPlayerOutside && player.onWhichSide === "left") {
-        console.log("dada");
         player.playerSprite.drawImage(
           canvasContext2,
           width - 38 * 2,

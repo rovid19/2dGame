@@ -2,14 +2,16 @@ import {
   asteroid,
   canvasContext,
   canvasContext2,
+  defaultRenderPosition,
   levelImages,
   player,
 } from "../mainLevelLogic";
-import { AsteroidType, EnemyInstance } from "../../../Utils/TsTypes";
+import { AsteroidType, EnemyInstance, Vector } from "../../../Utils/TsTypes";
 import { Enemy } from "./Enemy";
 import { Asteroid } from "./Asteroid";
 import { Vector2 } from "../Sprite/Vector";
 import { Boss } from "./EnemyBoss";
+import { height, width } from "../Other/canvasLogic";
 
 export class EnemySpawner {
   enemyArray: EnemyInstance[][] = [];
@@ -33,6 +35,8 @@ export class EnemySpawner {
 
   bossArray: EnemyInstance[] = [];
   isEnemyBossReady: boolean = true;
+
+  isSpawnEnemiesFromAllSides: boolean = true;
 
   asteroidSpawnCD: number = 200;
   asteroidSpawnMaxCD: number = 200;
@@ -81,7 +85,9 @@ export class EnemySpawner {
 
   createInstanceOfEnemy(whichEnemy: string) {
     if (whichEnemy === "basic") {
+      const enemyPosition = this.spawnEnemiesFromAllSides();
       const randomSpeed = 0.5 + Math.random() * (2 - 0.5);
+      console.log(enemyPosition);
 
       const enemy = new Enemy(
         randomSpeed,
@@ -89,7 +95,8 @@ export class EnemySpawner {
         24,
         27,
         2.5,
-        whichEnemy
+        whichEnemy,
+        enemyPosition
       );
 
       for (let i = 0; i < player.playerLevel; i++) {
@@ -99,6 +106,7 @@ export class EnemySpawner {
       this.enemyBasicArray.push(enemy);
       this.isEnemyBasicReady = false;
     } else if (whichEnemy === "basic2") {
+      const enemyPosition = this.spawnEnemiesFromAllSides();
       const randomSpeed = 1.5 + Math.random() * (3 - 1.5);
 
       const enemy = new Enemy(
@@ -107,7 +115,8 @@ export class EnemySpawner {
         51,
         56,
         2,
-        whichEnemy
+        whichEnemy,
+        enemyPosition
       );
 
       for (let i = 0; i < player.playerLevel; i++) {
@@ -117,6 +126,7 @@ export class EnemySpawner {
       this.enemyBasic2Array.push(enemy);
       this.isEnemyBasic2Ready = false;
     } else if (whichEnemy === "basic3") {
+      const enemyPosition = this.spawnEnemiesFromAllSides();
       const randomSpeed = 2 + Math.random() * (3.5 - 2);
       const enemyImage = levelImages.images.enemy3;
       const enemy = new Enemy(
@@ -125,7 +135,8 @@ export class EnemySpawner {
         enemyImage.image.height,
         enemyImage.image.width,
         2,
-        whichEnemy
+        whichEnemy,
+        enemyPosition
       );
 
       for (let i = 0; i < player.playerLevel; i++) {
@@ -135,6 +146,8 @@ export class EnemySpawner {
       this.enemyBasic3Array.push(enemy);
       this.isEnemyBasic3Ready = false;
     } else if (whichEnemy === "boss") {
+      const enemyPosition = this.spawnEnemiesFromAllSides();
+
       const bossImage = levelImages.images.enemy4;
 
       const boss = new Boss(
@@ -143,7 +156,8 @@ export class EnemySpawner {
         bossImage.image.height,
         bossImage.image.width,
         3,
-        whichEnemy
+        whichEnemy,
+        enemyPosition
       );
 
       this.bossArray.push(boss);
@@ -154,7 +168,8 @@ export class EnemySpawner {
       const asteroidSpawn = new Asteroid(
         asteroidImage.image,
         new Vector2(asteroidImage.image.height, asteroidImage.image.width),
-        2
+        2,
+        defaultRenderPosition
       );
 
       for (let i = 0; i < player.playerLevel; i++) {
@@ -278,5 +293,36 @@ export class EnemySpawner {
     this.enemyBasic2SpawnMaxCD -= decreaseBasic3By;
 
     console.log("basic2", this.enemyBasic2SpawnMaxCD);
+  }
+
+  spawnEnemiesFromAllSides(): Vector {
+    let vector = {
+      x: 0,
+      y: 0,
+    };
+    if (this.isSpawnEnemiesFromAllSides) {
+      const randomArray = ["top", "left", "right"];
+      const randomNumber = Math.floor(Math.random() * 3);
+
+      console.log(randomNumber);
+
+      if (randomArray[randomNumber] === "top") {
+        vector.x = 0 + Math.random() * (width - 0);
+        vector.y = -100;
+      } else if (randomArray[randomNumber] === "left") {
+        vector.x = -100;
+        vector.y = 0 + Math.random() * height;
+      } else {
+        vector.x = width + 100;
+        vector.y = 0 + Math.random() * height;
+      }
+
+      return vector;
+    } else {
+      vector.x = 0 + Math.random() * (width - 0);
+      vector.y = -100;
+
+      return vector;
+    }
   }
 }

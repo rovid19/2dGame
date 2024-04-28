@@ -176,3 +176,8 @@ export type AsteroidType = {
   asteroidHitTarget: boolean;
   renderAsteroidFromTopToBottom(): void;
 };
+
+export type ImageType = {
+  image: HTMLImageElement;
+  isLoaded: boolean;
+};
