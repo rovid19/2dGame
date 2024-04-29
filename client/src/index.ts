@@ -1,5 +1,7 @@
+import { MainMenu } from "./MainMenu/MainMenu.ts";
 import {
   generateMainMenu,
+  generateMainMenuNav,
   redirectAfterSelectingInMenu,
   renderThreeScene,
   threeSetup,
@@ -8,5 +10,7 @@ import { menuStore } from "./Stores/MenuStore";
 
 renderThreeScene();
 threeSetup();
-generateMainMenu();
+//generateMainMenu();
+//generateMainMenuNav();
+const mainMenu = new MainMenu();
 menuStore.subscribe("currentMenuNav", redirectAfterSelectingInMenu);

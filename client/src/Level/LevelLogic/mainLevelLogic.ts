@@ -108,10 +108,16 @@ export const projectiles = new Projectile(
 projectiles.updateProjectileBaseCoordinates();
 
 // HUD SETUP
-export const menu = new Menu();
-export const powerUp = new PowerUp();
-export const HUD = new Hud();
-player.setHpBar(HUD.hpBarFiller);
+export let menu: any;
+export let powerUp: any;
+export let HUD: any;
+
+export function setHud() {
+  menu = new Menu();
+  powerUp = new PowerUp();
+  HUD = new Hud();
+  player.setHpBar(HUD.hpBarFiller);
+}
 
 //
 //

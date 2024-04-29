@@ -300,7 +300,10 @@ body {
   height: 100%;
   width: 100%;
   background-color: transparent;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
 }
 
 #levelLoaderDiv::before {

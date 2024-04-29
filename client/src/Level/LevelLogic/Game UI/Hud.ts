@@ -248,4 +248,11 @@ export class Hud {
     this.playerExpBarHeading.textContent = "Lvl 1";
     this.playerScoreHeading.textContent = "0";
   }
+
+  removeHudElements() {
+    this.hpBarContainer.remove();
+    this.playerSpellBarContainer.remove();
+    this.playerExpBarContainer.remove();
+    this.playerScoreContainer.remove();
+  }
 }

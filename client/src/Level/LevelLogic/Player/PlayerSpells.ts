@@ -3,6 +3,7 @@ import {
   HUD,
   canvasContext,
   enemySpawner,
+  inGameSounds,
   player,
   projectiles,
   shield,
@@ -12,17 +13,19 @@ import { returnArrayOfHitboxNumbers } from "../../../Utils/OftenUsed";
 import { InputSpellType, SpellObject, isOutside } from "../../../Utils/TsTypes";
 
 function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
-  if (e.code === this.spell1.value) {
-    if (this.spellsOnCooldown.includes("Shield")) {
-    } else {
-      this.activateSpell("Shield");
+  if (player.isPlayerAlive) {
+    if (e.code === this.spell1.value) {
+      if (this.spellsOnCooldown.includes("Shield")) {
+      } else {
+        this.activateSpell("Shield");
+      }
     }
-  }
-  if (e.code === this.spell2.value) {
-    this.activateSpell("Walls");
-  }
-  if (e.code === this.spell3.value) {
-    this.activateSpell("Explosion");
+    if (e.code === this.spell2.value) {
+      this.activateSpell("Walls");
+    }
+    if (e.code === this.spell3.value) {
+      this.activateSpell("Explosion");
+    }
   }
 }
 
@@ -89,16 +92,18 @@ export class PlayerSpells {
     document.addEventListener("keydown", this.keydownFunction);
 
     document.addEventListener("keyup", (e) => {
-      if (e.code === this.spell1.value) {
-        player.playerSpellActivated = false;
-      }
-      if (e.code === this.spell2.value) {
-        this.spell = "";
-        player.playerSpellActivated = false;
-      }
-      if (e.code === this.spell3.value) {
-        this.spell = "";
-        player.playerSpellActivated = false;
+      if (player.isPlayerAlive) {
+        if (e.code === this.spell1.value) {
+          player.playerSpellActivated = false;
+        }
+        if (e.code === this.spell2.value) {
+          this.spell = "";
+          player.playerSpellActivated = false;
+        }
+        if (e.code === this.spell3.value) {
+          this.spell = "";
+          player.playerSpellActivated = false;
+        }
       }
     });
   }
@@ -108,15 +113,15 @@ export class PlayerSpells {
       if (!this.spellsOnCooldown.includes("Shield")) {
         player.playerShield = this.playerShieldAmount;
         this.spellsOnCooldown.push("Shield");
-
         this.spell = spellValue;
         this.shieldActivated = true;
+        inGameSounds.playShield();
       }
     }
     if (spellValue === "Walls") {
       if (!this.spellsOnCooldown.includes("Walls")) {
         this.spellsOnCooldown.push("Walls");
-
+        inGameSounds.playWind();
         this.spell = spellValue;
         this.wallsActivated = true;
       }
@@ -313,6 +318,7 @@ export class PlayerSpells {
 
   dealDamageToEnemiesNearBy() {
     if (!this.explosionDealtDmg) {
+      inGameSounds.playExplosion();
       player.isAoeDamage = true;
 
       returnArrayOfHitboxNumbers(

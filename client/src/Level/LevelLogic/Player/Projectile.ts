@@ -1,9 +1,4 @@
-import {
-  canvasContext2,
-  enemySpawner,
-  inGameSounds,
-  shipPosition,
-} from "../mainLevelLogic";
+import { canvasContext2, enemySpawner, shipPosition } from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../Utils/OftenUsed";
 import { SpriteMethods, Vector } from "../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";

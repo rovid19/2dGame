@@ -8,6 +8,15 @@ export class Sounds {
   powerUpSelected: HTMLAudioElement = new Audio(
     "../../../public/sounds/powerUpSelected.wav"
   );
+  explosionSound: HTMLAudioElement = new Audio(
+    "../../../public/sounds/explosionSpell.wav"
+  );
+  shieldSound: HTMLAudioElement = new Audio(
+    "../../../public/sounds/shieldActivated.wav"
+  );
+  windSound: HTMLAudioElement = new Audio(
+    "../../../public/sounds/windSound.wav"
+  );
   gameOver: HTMLAudioElement = new Audio("../../../public/sounds/gameOver.wav");
 
   constructor() {
@@ -19,6 +28,9 @@ export class Sounds {
     document.body.appendChild(this.powerUpOpen);
     document.body.appendChild(this.powerUpSelected);
     document.body.appendChild(this.gameOver);
+    document.body.appendChild(this.shieldSound);
+    document.body.appendChild(this.explosionSound);
+    document.body.appendChild(this.windSound);
 
     this.projectileSound.playbackRate = 10;
   }
@@ -37,5 +49,17 @@ export class Sounds {
 
   playGameOver() {
     this.gameOver.play();
+  }
+
+  playExplosion() {
+    this.explosionSound.play();
+  }
+
+  playShield() {
+    this.shieldSound.play();
+  }
+
+  playWind() {
+    this.windSound.play();
   }
 }

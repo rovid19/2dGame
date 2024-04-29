@@ -1,6 +1,6 @@
 import { muteAudio, playAudio } from "../Utils/IconsExports.ts";
 import { generateLevelSelectionScreen } from "./LevelSelection/LevelSelectionLogic.ts";
-import { generateLevel } from "../Level/LevelLogic/mainLevelLogic.ts";
+import { generateLevel, setHud } from "../Level/LevelLogic/mainLevelLogic.ts";
 import { menuStore } from "../Stores/MenuStore";
 import {
   mainMenuGenerator,
@@ -13,19 +13,19 @@ export const generateMainMenu = () => {
   const newEl = document.createElement("div");
   newEl.id = "main-container";
 
-  const newNavEl = document.createElement("div");
-  newNavEl.id = "mainMenuNav-container";
+  //const newNavEl = document.createElement("div");
+  //newNavEl.id = "mainMenuNav-container";
 
-  /*if (!menuAni)
+  if (!menuAni)
     document.body.appendChild(newEl).appendChild(mainMenuGenerator());
-  document.body.appendChild(newNavEl).appendChild(mainMenuNavGenerator());
-*/
+  //document.body.appendChild(newNavEl).appendChild(mainMenuNavGenerator());
+
   setTimeout(() => {
     mainMenuNavigation();
   }, 0);
 };
 
-/*const generateMainMenuNav = () => {
+export const generateMainMenuNav = () => {
   const newNavEl = document.createElement("div");
   newNavEl.id = "mainMenuNav-container";
 
@@ -34,20 +34,21 @@ export const generateMainMenu = () => {
   setTimeout(() => {
     mainMenuNavigation();
   }, 0);
-};*/
+};
 
 export const mainMenuNavigation = (): void => {
   const play = document.getElementById("play");
   const selectLevel = document.getElementById("select");
   const audioButton = document.querySelector(".audioBtn") as HTMLElement;
 
-  generateLevel();
+  //generateLevel();
 
   play?.addEventListener("click", (): void => {
     menuStore.set("currentMenuNav", "play");
     playAnimation();
     setTimeout(() => {
       generateLevel();
+      setHud();
     }, 800);
   });
 
@@ -58,6 +59,30 @@ export const mainMenuNavigation = (): void => {
   audioButton.addEventListener("click", (): void => {
     playOrMuteSoundtrack();
   });
+};
+
+const playAnimation = () => {
+  const mainNavContainer = document.getElementById(
+    "mainMenuNav-container"
+  ) as HTMLElement;
+  const newDiv = document.createElement("div");
+  newDiv.id = "playAnimation";
+
+  const levelLoaderDiv = document.createElement("div");
+  levelLoaderDiv.id = "levelLoaderDiv";
+
+  mainNavContainer.appendChild(newDiv);
+
+  setTimeout(() => {
+    document.getElementById("main-container")?.remove();
+    document.getElementById("mainMenuNav-container")?.remove();
+    //document.querySelector(".three-container")?.remove();
+    document.body.appendChild(levelLoaderDiv);
+  }, 800);
+
+  setTimeout(() => {
+    levelLoaderDiv.remove();
+  }, 1600);
 };
 
 export const redirectAfterSelectingInMenu = (): void => {
@@ -74,12 +99,14 @@ export const redirectAfterSelectingInMenu = (): void => {
       generateLevelSelectionScreen();
     }, 200);
   } else if (currentSelection === "mainMenu") {
-    menuStore.set("menuAnimation", true);
-    levelSelectMainDiv.id = "levelSelectionOut";
-    //generateMainMenuNav();
-    setTimeout(() => {
+    generateMainMenu();
+    generateMainMenuNav();
+    //menuStore.set("menuAnimation", true);
+    //levelSelectMainDiv.id = "levelSelectionOut";
+
+    /* setTimeout(() => {
       document.getElementById("level-container")?.remove();
-    }, 200);
+    }, 200);*/
   }
 };
 
@@ -103,30 +130,6 @@ export const playOrMuteSoundtrack = () => {
     menuStore.set("audioPlaying", true);
     audioBtn.innerHTML = playAudio;
   }
-};
-
-const playAnimation = () => {
-  const mainNavContainer = document.getElementById(
-    "mainMenuNav-container"
-  ) as HTMLElement;
-  const newDiv = document.createElement("div");
-  newDiv.id = "playAnimation";
-
-  const levelLoaderDiv = document.createElement("div");
-  levelLoaderDiv.id = "levelLoaderDiv";
-
-  mainNavContainer.appendChild(newDiv);
-
-  setTimeout(() => {
-    document.getElementById("main-container")?.remove();
-    document.getElementById("mainMenuNav-container")?.remove();
-    document.querySelector(".three-container")?.remove();
-    document.body.appendChild(levelLoaderDiv);
-  }, 800);
-
-  setTimeout(() => {
-    levelLoaderDiv.remove();
-  }, 1600);
 };
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸

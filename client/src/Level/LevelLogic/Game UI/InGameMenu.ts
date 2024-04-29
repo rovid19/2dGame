@@ -1,5 +1,6 @@
-import { HUD, player } from "../mainLevelLogic";
+import { HUD, enemySpawner, player, projectiles } from "../mainLevelLogic";
 import { backIcon } from "../../../Utils/Icons";
+import { menuStore } from "../../../Stores/MenuStore";
 
 export class Menu {
   menuContainer: HTMLElement = document.createElement("div");
@@ -80,6 +81,18 @@ export class Menu {
 
     this.menuButton2.addEventListener("click", () => {
       this.nav = "home";
+      HUD.removeHudElements();
+      HUD.resetHud();
+      player.resetPlayer();
+      player.isPlayerAlive = false;
+      enemySpawner.resetEnemies();
+      projectiles.resetProjectile();
+      player.playerInput.resetInput();
+      player.playerSpells.resetSpells();
+      document.querySelector(".background-canvas")?.remove();
+      document.querySelector(".level-canvas")?.remove();
+      this.menuContainer.remove();
+      menuStore.set("currentMenuNav", "mainMenu");
     });
   }
 
