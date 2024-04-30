@@ -12,5 +12,5 @@ renderThreeScene();
 threeSetup();
 //generateMainMenu();
 //generateMainMenuNav();
-const mainMenu = new MainMenu();
+
 menuStore.subscribe("currentMenuNav", redirectAfterSelectingInMenu);

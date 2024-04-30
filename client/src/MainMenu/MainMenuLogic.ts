@@ -7,6 +7,7 @@ import {
   mainMenuNavGenerator,
 } from "./MainMenuGenerator.ts";
 import * as THREE from "three";
+import { MainMenu } from "./MainMenu.ts";
 
 export const generateMainMenu = () => {
   const menuAni = menuStore.get("menuAnimation");
@@ -241,3 +242,5 @@ export const threeSetup = (): void => {
 
   Init();
 };
+
+export const mainMenu = new MainMenu();

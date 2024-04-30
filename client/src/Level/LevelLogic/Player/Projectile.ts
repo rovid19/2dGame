@@ -1,4 +1,9 @@
-import { canvasContext2, enemySpawner, shipPosition } from "../mainLevelLogic";
+import {
+  canvasContext2,
+  enemySpawner,
+  inGameSounds,
+  shipPosition,
+} from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../Utils/OftenUsed";
 import { SpriteMethods, Vector } from "../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";
@@ -176,6 +181,7 @@ export class Projectile {
 
   fireProjectile() {
     if (!this.isReloading) {
+      inGameSounds.playLaser();
       if (this.targetHit) this.targetHit = false;
       this.distanceToEndOfScreen = this.shipPosition.y + 34 * 2;
       this.firingAnimation();

@@ -93,14 +93,15 @@ export class MainMenu {
   }
 
   setAnimation() {
-    this.mainContainer.appendChild(this.playAnimationDiv);
     this.playAnimationDiv.id = "playAnimation";
+    this.mainMenuNavContainer.appendChild(this.playAnimationDiv);
+
     this.playAnimationLoaderDiv.id = "levelLoaderDiv";
-    this.mainMenuNavContainer.remove();
 
     setTimeout(() => {
       this.mainContainer.remove();
-      this.mainMenuNav.remove();
+      this.mainMenuNavContainer.remove();
+      document.body.appendChild(this.playAnimationLoaderDiv);
     }, 800);
 
     setTimeout(() => {
@@ -118,5 +119,10 @@ export class MainMenu {
       this.mainMenuNavButton.innerHTML = playAudio;
       this.isAudioPlaying = true;
     }
+  }
+
+  resetMainMenu() {
+    this.setMainMenu();
+    this.setMainMenuNav();
   }
 }

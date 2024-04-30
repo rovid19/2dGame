@@ -65,7 +65,6 @@ export class Input {
       projectiles.projectileDistanceTraveled === 0
     ) {
       if (shipPosition.y > 100) {
-        inGameSounds.playLaser();
         projectiles.targetHit = false;
         projectiles.fireProjectile();
       }

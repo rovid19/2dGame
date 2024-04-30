@@ -32,7 +32,7 @@ export class Sounds {
     document.body.appendChild(this.explosionSound);
     document.body.appendChild(this.windSound);
 
-    this.projectileSound.playbackRate = 10;
+    this.projectileSound.playbackRate = 6;
   }
 
   playLaser() {

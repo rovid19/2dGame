@@ -240,10 +240,10 @@ export class Player {
     const increaseStatBy = stat.prjSpeed * (value / 100);
     stat.prjSpeed = Math.floor(stat.prjSpeed + increaseStatBy);
 
-    if (stat.prjReloadCooldown <= 5) {
-      stat.prjReloadCooldown = 5;
-      stat.prjReloadSpeed = 5;
-      stat.prjSpeed = 45;
+    if (stat.prjReloadCooldown <= 2) {
+      stat.prjReloadCooldown = 2;
+      stat.prjReloadSpeed = 2;
+      stat.prjSpeed = 60;
     }
   }
   setPlayerScore(value: number) {

@@ -1,6 +1,6 @@
 import { HUD, enemySpawner, player, projectiles } from "../mainLevelLogic";
 import { backIcon } from "../../../Utils/Icons";
-import { menuStore } from "../../../Stores/MenuStore";
+import { mainMenu } from "../../../MainMenu/MainMenuLogic";
 
 export class Menu {
   menuContainer: HTMLElement = document.createElement("div");
@@ -92,7 +92,7 @@ export class Menu {
       document.querySelector(".background-canvas")?.remove();
       document.querySelector(".level-canvas")?.remove();
       this.menuContainer.remove();
-      menuStore.set("currentMenuNav", "mainMenu");
+      mainMenu.resetMainMenu();
     });
   }
 
