@@ -1,6 +1,7 @@
 import { generateLevel, setHud } from "../Level/LevelLogic/mainLevelLogic";
 import { menuStore } from "../Stores/MenuStore";
 import { muteAudio, playAudio } from "../Utils/IconsExports";
+import { SettingsType } from "../Utils/TsTypes";
 
 export class MainMenu {
   // main menu
@@ -18,6 +19,7 @@ export class MainMenu {
   mainMenuNavHeading: HTMLElement = document.createElement("h1");
   mainMenuNavLi1: HTMLElement = document.createElement("li");
   mainMenuNavLi2: HTMLElement = document.createElement("li");
+  mainMenuNavLi3: HTMLElement = document.createElement("li");
 
   // play animation
   playAnimationDiv: HTMLElement = document.createElement("div");
@@ -27,9 +29,14 @@ export class MainMenu {
   isAudioPlaying: boolean = false;
   currentNav: string[] = [];
 
-  constructor() {
+  //
+  settings: SettingsType;
+
+  constructor(settings: SettingsType) {
     this.setMainMenu();
     this.setMainMenuNav();
+    this.settings = settings;
+    menuStore.set("soundtrack", this.mainMenuAudio);
   }
 
   setMainMenu() {
@@ -49,6 +56,7 @@ export class MainMenu {
     this.mainMenuNav.appendChild(this.mainMenuNavHeading);
     this.mainMenuNav.appendChild(this.mainMenuNavLi1);
     this.mainMenuNav.appendChild(this.mainMenuNavLi2);
+    this.mainMenuNav.appendChild(this.mainMenuNavLi3);
 
     this.mainMenuNavContainer.id = "mainMenuNav-container";
     this.mainMenuNav.id = "mainMenuNav";
@@ -56,17 +64,17 @@ export class MainMenu {
     this.mainMenuNavHeading.className = "sixtyfour-myapp";
     this.mainMenuNavLi1.className = "sixtyfour-myapp";
     this.mainMenuNavLi2.className = "sixtyfour-myapp";
+    this.mainMenuNavLi3.className = "sixtyfour-myapp";
 
     this.mainMenuNavButton.innerHTML = !this.isAudioPlaying
       ? muteAudio
       : playAudio;
 
-    this.mainMenuNavHeading.id = "lol";
-    this.mainMenuNavHeading.innerText = "Space Survival";
-    this.mainMenuNavLi1.id = "play";
+    this.mainMenuNavHeading.id = "nav-heading";
+    this.mainMenuNavHeading.innerHTML = "Space </br> Apocalypse";
     this.mainMenuNavLi1.innerText = "Play";
-    this.mainMenuNavLi2.id = "select";
     this.mainMenuNavLi2.innerText = "Settings";
+    this.mainMenuNavLi3.innerText = "Leaderboards";
 
     this.setMainMenuNavEventListeners();
   }
@@ -85,6 +93,8 @@ export class MainMenu {
     this.mainMenuNavLi2.addEventListener("click", () => {
       menuStore.set("currentMenuNav", "settings");
       this.currentNav.push("settings");
+      this.mainMenuOutAnimation();
+      this.settings.createSettings(this.mainContainer);
     });
 
     this.mainMenuNavButton.addEventListener("click", () => {
@@ -125,4 +135,13 @@ export class MainMenu {
     this.setMainMenu();
     this.setMainMenuNav();
   }
+
+  mainMenuOutAnimation() {
+    this.mainMenuNav.className = "main-menu-nav-out";
+    setTimeout(() => {
+      this.mainMenuNavContainer.remove();
+    }, 200);
+  }
+
+  mainMenuInAnimation() {}
 }

@@ -1,6 +1,8 @@
 import { HUD, enemySpawner, player, projectiles } from "../mainLevelLogic";
-import { backIcon } from "../../../Utils/Icons";
+
 import { mainMenu } from "../../../MainMenu/MainMenuLogic";
+import { menuStore } from "../../../Stores/MenuStore";
+import { backIcon } from "../../../Utils/IconsExports";
 
 export class Menu {
   menuContainer: HTMLElement = document.createElement("div");
@@ -48,7 +50,7 @@ export class Menu {
       this.settingsMainDiv.remove();
     } else if (this.nav === "settings") {
       if (!document.querySelector(".settings-main-div")) {
-        this.createSettingsPopup();
+        this.createSettingsPopup("inGame");
         this.addOrRemoveAttributesFromSettingSubmenu("remove");
         this.createSettingsEventListeners();
       }
@@ -125,16 +127,28 @@ export class Menu {
 
   createSettingContainers() {
     if (!document.querySelector(".setting-container")) {
-      for (let i = 0; i < 5; i++) {
+      const mainSettingContainer = document.createElement("div");
+      if (menuStore.get("currentMenuNav") === "play")
+        mainSettingContainer.className = "main-setting-container";
+      else mainSettingContainer.className = "main-setting-container2";
+
+      this.settingsMainDiv.appendChild(mainSettingContainer);
+
+      for (let i = 0; i < 6; i++) {
         const settingContainer = document.createElement("div") as HTMLElement;
         const settingHeading = document.createElement("h3") as HTMLElement;
-        const settingInput = document.createElement("div") as HTMLElement;
+        let settingInput: HTMLElement;
+        if (i < 4) settingInput = document.createElement("div") as HTMLElement;
+        else settingInput = document.createElement("input") as HTMLInputElement;
 
-        this.settingsMainDiv.appendChild(settingContainer);
+        mainSettingContainer.appendChild(settingContainer);
         settingContainer.appendChild(settingHeading);
         settingContainer.appendChild(settingInput);
 
-        settingContainer.className = "setting-container";
+        if (menuStore.get("currentMenuNav") === "play")
+          settingContainer.className = "setting-container";
+        else settingContainer.className = "setting-container2";
+
         settingHeading.className = "sixtyfour-myapp";
         settingHeading.id = "setting-heading";
         settingInput.className = "sixtyfour-myapp";
@@ -197,29 +211,48 @@ export class Menu {
         settingInput.textContent =
           player.playerSpells.projectile.value.slice(3);
         break;
+
       case 4:
-        settingHeading.textContent = "Rotate spaceship";
+        settingHeading.textContent = "Soundtrack volume";
+        settingInput.setAttribute("type", "range");
+        break;
+      case 5:
+        settingHeading.textContent = "Sound effects";
+        settingInput.setAttribute("type", "range");
         break;
     }
   }
 
   createSettingContainerEventListener(
-    settingInput: HTMLElement,
+    settingInput: HTMLElement | HTMLInputElement,
     settingContainer: HTMLElement
   ) {
-    settingInput.addEventListener("click", () => {
-      if (!this.isChanging) {
-        this.isChanging = true;
-        settingInput.textContent = "press any key to save changes";
-        settingInput.style.fontSize = "8px";
-        this.inputBeingChanged = settingInput;
-        this.containerBeingChanged = settingContainer;
-      }
-    });
+    if (settingInput instanceof HTMLInputElement) {
+      settingInput.addEventListener("click", (e) => {
+        const soundtrack = menuStore.get("soundtrack") as HTMLAudioElement;
+
+        soundtrack.volume = e.target.value / 100;
+      });
+    } else {
+      settingInput.addEventListener("click", () => {
+        if (!this.isChanging) {
+          this.isChanging = true;
+          settingInput.textContent = "press any key to save changes";
+          settingInput.style.fontSize = "8px";
+          this.inputBeingChanged = settingInput;
+          this.containerBeingChanged = settingContainer;
+        }
+      });
+    }
   }
 
-  createSettingsPopup() {
-    this.menuContainer.appendChild(this.settingsMainDiv);
+  createSettingsPopup(value: string, htmlElement?: HTMLElement) {
+    if (value === "mainMenu") {
+      htmlElement?.appendChild(this.settingsMainDiv);
+    } else {
+      this.menuContainer.appendChild(this.settingsMainDiv);
+    }
+
     this.settingsMainDiv.className = "settings-main-div";
     this.settingsMainDiv.appendChild(this.settingsBackButton);
     this.settingsBackButton.className = "settings-back-button";

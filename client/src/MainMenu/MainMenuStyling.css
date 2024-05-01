@@ -60,7 +60,6 @@ body {
   justify-content: center;
   flex-direction: column;
   border-bottom-right-radius: 20px;
-  gap: 8px;
   z-index: 20;
   padding-left: 32px;
   padding-right: 32px;
@@ -109,16 +108,20 @@ body {
 
 #mainMenuNav > li {
   width: 100%;
-  height: 20%;
-  color: white;
+  height: 15%;
+  color: rgb(214, 214, 214);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 32px;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.1s ease all;
   position: relative;
+}
+
+#mainMenuNav > li:hover {
+  color: white;
 }
 
 .liText {
@@ -176,8 +179,11 @@ body {
   width: 100vw;
   position: absolute;
   top: 0;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
+  overflow: hidden;
 }
 
 .three-container {
@@ -202,18 +208,19 @@ body {
   color: white;
 }
 
-#lol {
+#nav-heading {
   color: white;
-  font-size: 32px;
+  font-size: 40px;
   text-align: center;
+  line-height: 40px;
 }
 
 /* MAIN NAV ANIMACIJA */
-.mainNavOut {
-  animation: MainNavOut 0.2s ease !important;
+.main-menu-nav-out {
+  animation: MainNavOut 0.21s ease !important;
 }
-.mainMenuIn {
-  animation: MainNavIn 0.2s ease !important;
+.main-menu-nav-in {
+  animation: MainNavIn 0.21s ease !important;
 }
 
 @keyframes MainNavOut {
@@ -325,4 +332,100 @@ body {
   background-color: black;
   width: 50%;
   animation: CurtainOpen 0.8s ease;
+}
+
+.main-menu-settings-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: 0.2s ease SettingsIn forwards;
+}
+
+.main-menu-settings {
+  position: relative;
+  height: 70%;
+  width: 50%;
+  background-color: black;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  z-index: 30;
+}
+
+.main-menu-settings-back-btn {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  right: 5px;
+  color: rgb(181, 181, 181);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.main-menu-settings-back-btn:hover {
+  color: white;
+}
+
+@keyframes SettingsIn {
+  0% {
+    left: 50%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: 0%;
+  }
+}
+
+@keyframes SettingsOut {
+  0% {
+    left: 0%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: 50%;
+  }
+}
+
+#settings-animation-out {
+  animation: 0.2s ease SettingsOut forwards;
+}
+
+.main-setting-container2 {
+  height: 80%;
+  width: 80%;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.setting-container2 {
+  width: 90%;
+  height: 100px;
+  border: 2px solid white;
+  display: flex;
+  color: white;
+  background-color: transparent;
+  animation: 1s ease SettingContainerOpacity;
 }

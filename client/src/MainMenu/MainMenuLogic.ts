@@ -8,6 +8,7 @@ import {
 } from "./MainMenuGenerator.ts";
 import * as THREE from "three";
 import { MainMenu } from "./MainMenu.ts";
+import { Settings } from "./Settings.ts";
 
 export const generateMainMenu = () => {
   const menuAni = menuStore.get("menuAnimation");
@@ -102,12 +103,12 @@ export const redirectAfterSelectingInMenu = (): void => {
   } else if (currentSelection === "mainMenu") {
     generateMainMenu();
     generateMainMenuNav();
-    //menuStore.set("menuAnimation", true);
-    //levelSelectMainDiv.id = "levelSelectionOut";
+    menuStore.set("menuAnimation", true);
+    levelSelectMainDiv.id = "levelSelectionOut";
 
-    /* setTimeout(() => {
+    setTimeout(() => {
       document.getElementById("level-container")?.remove();
-    }, 200);*/
+    }, 200);
   }
 };
 
@@ -243,4 +244,4 @@ export const threeSetup = (): void => {
   Init();
 };
 
-export const mainMenu = new MainMenu();
+export const mainMenu = new MainMenu(new Settings());

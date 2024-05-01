@@ -181,3 +181,24 @@ export type ImageType = {
   image: HTMLImageElement;
   isLoaded: boolean;
 };
+
+export type MenuClass = {
+  menuContainer: HTMLElement;
+  menuMainDiv: HTMLElement;
+  menuButton1: HTMLElement;
+  menuButton2: HTMLElement;
+  menuNote: HTMLElement;
+  settingsMainDiv: HTMLElement;
+  settingsBackButton: HTMLElement;
+  containerBeingChanged: HTMLElement;
+  inputBeingChanged: HTMLElement;
+  nav: string;
+  isChanging: boolean;
+  createSettingsPopup(value: string, htmlElement?: HTMLElement): void;
+};
+
+export type SettingsType = {
+  settingsMainDiv: HTMLElement;
+  settingsBackButton: HTMLElement;
+  createSettings(htmlElement: HTMLElement): void;
+};
