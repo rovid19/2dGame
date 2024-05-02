@@ -19,8 +19,11 @@ export class Sounds {
   );
   gameOver: HTMLAudioElement = new Audio("../../../public/sounds/gameOver.wav");
 
+  soundsVolume: number = 30;
+
   constructor() {
     this.setAudio();
+    this.changeSoundEffectsVolume(0.25);
   }
 
   setAudio() {
@@ -61,5 +64,17 @@ export class Sounds {
 
   playWind() {
     this.windSound.play();
+  }
+
+  changeSoundEffectsVolume(volume: number) {
+    this.projectileSound.volume = volume;
+    this.powerUpOpen.volume = volume;
+    this.powerUpSelected.volume = volume;
+    this.gameOver.volume = volume;
+    this.explosionSound.volume = volume;
+    this.shieldSound.volume = volume;
+    this.windSound.volume = volume;
+
+    this.soundsVolume = volume * 100;
   }
 }

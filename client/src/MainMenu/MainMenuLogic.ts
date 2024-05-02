@@ -9,6 +9,7 @@ import {
 import * as THREE from "three";
 import { MainMenu } from "./MainMenu.ts";
 import { Settings } from "./Settings.ts";
+import { Leaderboards } from "./Leaderboards.ts";
 
 export const generateMainMenu = () => {
   const menuAni = menuStore.get("menuAnimation");
@@ -244,4 +245,4 @@ export const threeSetup = (): void => {
   Init();
 };
 
-export const mainMenu = new MainMenu(new Settings());
+export const mainMenu = new MainMenu(new Settings(), new Leaderboards());

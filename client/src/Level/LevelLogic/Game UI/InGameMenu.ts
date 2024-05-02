@@ -1,4 +1,10 @@
-import { HUD, enemySpawner, player, projectiles } from "../mainLevelLogic";
+import {
+  HUD,
+  enemySpawner,
+  inGameSounds,
+  player,
+  projectiles,
+} from "../mainLevelLogic";
 
 import { mainMenu } from "../../../MainMenu/MainMenuLogic";
 import { menuStore } from "../../../Stores/MenuStore";
@@ -126,7 +132,10 @@ export class Menu {
   }
 
   createSettingContainers() {
-    if (!document.querySelector(".setting-container")) {
+    if (
+      !document.querySelector(".setting-container") &&
+      !document.querySelector(".setting-container2")
+    ) {
       const mainSettingContainer = document.createElement("div");
       if (menuStore.get("currentMenuNav") === "play")
         mainSettingContainer.className = "main-setting-container";
@@ -191,7 +200,7 @@ export class Menu {
   assignCorrectValueToSettingContainers(
     i: number,
     settingHeading: HTMLElement,
-    settingInput: HTMLElement
+    settingInput: HTMLElement | HTMLInputElement
   ) {
     switch (i) {
       case 0:
@@ -215,10 +224,17 @@ export class Menu {
       case 4:
         settingHeading.textContent = "Soundtrack volume";
         settingInput.setAttribute("type", "range");
+        if (settingInput instanceof HTMLInputElement) {
+          settingInput.value = String(mainMenu.audioVolume);
+        }
+
         break;
       case 5:
         settingHeading.textContent = "Sound effects";
         settingInput.setAttribute("type", "range");
+        if (settingInput instanceof HTMLInputElement) {
+          settingInput.value = String(inGameSounds.soundsVolume);
+        }
         break;
     }
   }
@@ -227,13 +243,31 @@ export class Menu {
     settingInput: HTMLElement | HTMLInputElement,
     settingContainer: HTMLElement
   ) {
+    // setting event listeners for input
     if (settingInput instanceof HTMLInputElement) {
       settingInput.addEventListener("click", (e) => {
-        const soundtrack = menuStore.get("soundtrack") as HTMLAudioElement;
+        const htmlTarget = e.target as HTMLElement;
+        const inputElement = htmlTarget.parentElement?.firstChild?.textContent;
+        let isSoundtrack = false;
 
-        soundtrack.volume = e.target.value / 100;
+        if (inputElement === "Soundtrack volume") isSoundtrack = true;
+
+        if (e.target instanceof HTMLInputElement && isSoundtrack) {
+          if (!mainMenu.isAudioPlaying) {
+            mainMenu.playOrMuteSoundtrack();
+          }
+          const volume = parseInt(e.target.value) / 100;
+          mainMenu.changeSoundtrackVolume(volume);
+        } else {
+          if (e.target instanceof HTMLInputElement) {
+            const volume = parseInt(e.target.value) / 100;
+            inGameSounds.changeSoundEffectsVolume(volume);
+          }
+        }
       });
-    } else {
+    }
+    // setting event listeners for divs
+    else {
       settingInput.addEventListener("click", () => {
         if (!this.isChanging) {
           this.isChanging = true;

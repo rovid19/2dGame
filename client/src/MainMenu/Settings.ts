@@ -6,13 +6,12 @@ export class Settings extends Menu {
   settingsContainer: HTMLElement = document.createElement("div");
   settingsMainDiv: HTMLElement = document.createElement("div");
   settingsBackButton: HTMLElement = document.createElement("button");
+  settingsEventListeners: (() => void)[] = [];
   constructor() {
     super();
   }
 
   createSettings() {
-    if (document.querySelector(".main-setting-container2"))
-      document.querySelector(".main-setting-container2")?.remove();
     document.body.appendChild(this.settingsContainer);
     this.settingsContainer.appendChild(this.settingsMainDiv);
     this.settingsMainDiv.appendChild(this.settingsBackButton);
@@ -27,18 +26,33 @@ export class Settings extends Menu {
   }
 
   backButtonEventListener() {
-    this.settingsBackButton.addEventListener("click", () => {
+    const playAnimation = () => {
       this.animationOut();
-    });
+      mainMenu.mainMenuAnimation("in");
+    };
+    this.settingsEventListeners.push(playAnimation);
+
+    this.settingsBackButton.addEventListener(
+      "click",
+      this.settingsEventListeners[0]
+    );
+  }
+
+  removeSettingsEventListeners() {
+    this.settingsBackButton.removeEventListener(
+      "click",
+      this.settingsEventListeners[0]
+    );
   }
 
   animationOut() {
     this.settingsContainer.id = "settings-animation-out";
     mainMenu.resetMainMenu();
     setTimeout(() => {
-      document.querySelector(".main-setting-container2")?.remove();
+      //document.querySelector(".main-setting-container2")?.remove();
       this.settingsContainer.remove();
       this.settingsContainer.removeAttribute("id");
+      this.removeSettingsEventListeners();
     }, 200);
   }
 }

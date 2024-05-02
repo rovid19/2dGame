@@ -202,3 +202,12 @@ export type SettingsType = {
   settingsBackButton: HTMLElement;
   createSettings(htmlElement: HTMLElement): void;
 };
+
+export type LeaderboardType = {
+  leaderboardsContainer: HTMLElement;
+  leaderboardsMainDiv: HTMLElement;
+  leaderboardsHeading: HTMLElement;
+  leaderboardsBackBtn: HTMLElement;
+  leaderboardsScoreContainer: HTMLElement;
+  createLeaderboards(): void;
+};

@@ -1,7 +1,8 @@
 import { generateLevel, setHud } from "../Level/LevelLogic/mainLevelLogic";
 import { menuStore } from "../Stores/MenuStore";
 import { muteAudio, playAudio } from "../Utils/IconsExports";
-import { SettingsType } from "../Utils/TsTypes";
+import { LeaderboardType, SettingsType } from "../Utils/TsTypes";
+import { Leaderboards } from "./Leaderboards";
 
 export class MainMenu {
   // main menu
@@ -20,6 +21,7 @@ export class MainMenu {
   mainMenuNavLi1: HTMLElement = document.createElement("li");
   mainMenuNavLi2: HTMLElement = document.createElement("li");
   mainMenuNavLi3: HTMLElement = document.createElement("li");
+  mainMenuNavEventListeners: (() => void)[] = [];
 
   // play animation
   playAnimationDiv: HTMLElement = document.createElement("div");
@@ -27,16 +29,19 @@ export class MainMenu {
 
   // states
   isAudioPlaying: boolean = false;
+  audioVolume: number = 30;
   currentNav: string[] = [];
 
   //
   settings: SettingsType;
+  leaderboards: LeaderboardType;
 
-  constructor(settings: SettingsType) {
+  constructor(settings: SettingsType, leaderboards: LeaderboardType) {
     this.setMainMenu();
     this.setMainMenuNav();
     this.settings = settings;
-    menuStore.set("soundtrack", this.mainMenuAudio);
+    this.leaderboards = leaderboards;
+    this.changeSoundtrackVolume(0.15);
   }
 
   setMainMenu() {
@@ -59,7 +64,7 @@ export class MainMenu {
     this.mainMenuNav.appendChild(this.mainMenuNavLi3);
 
     this.mainMenuNavContainer.id = "mainMenuNav-container";
-    this.mainMenuNav.id = "mainMenuNav";
+    this.mainMenuNav.className = "main-menu-nav";
     this.mainMenuNavButton.className = "audioBtn";
     this.mainMenuNavHeading.className = "sixtyfour-myapp";
     this.mainMenuNavLi1.className = "sixtyfour-myapp";
@@ -80,7 +85,7 @@ export class MainMenu {
   }
 
   setMainMenuNavEventListeners() {
-    this.mainMenuNavLi1.addEventListener("click", () => {
+    const startGame = () => {
       menuStore.set("currentMenuNav", "play");
       this.currentNav.push("play");
       this.setAnimation();
@@ -88,18 +93,49 @@ export class MainMenu {
         generateLevel();
         setHud();
       }, 800);
-    });
+    };
+    this.mainMenuNavEventListeners.push(startGame);
 
-    this.mainMenuNavLi2.addEventListener("click", () => {
+    const openSettings = () => {
       menuStore.set("currentMenuNav", "settings");
       this.currentNav.push("settings");
-      this.mainMenuOutAnimation();
+      this.mainMenuAnimation("out");
       this.settings.createSettings(this.mainContainer);
-    });
+    };
+    this.mainMenuNavEventListeners.push(openSettings);
 
-    this.mainMenuNavButton.addEventListener("click", () => {
-      this.playOrMuteSoundtrack();
-    });
+    const openLeaderboards = () => {
+      this.leaderboards.createLeaderboards();
+      this.mainMenuAnimation("out");
+    };
+    this.mainMenuNavEventListeners.push(openLeaderboards);
+
+    const playOrMute = () => this.playOrMuteSoundtrack();
+    this.mainMenuNavEventListeners.push(playOrMute);
+
+    this.mainMenuNavLi1.addEventListener("click", startGame);
+    this.mainMenuNavLi2.addEventListener("click", openSettings);
+    this.mainMenuNavLi3.addEventListener("click", openLeaderboards);
+    this.mainMenuNavButton.addEventListener("click", playOrMute);
+  }
+
+  removeMainMenuNavEventListeners() {
+    this.mainMenuNavLi1.removeEventListener(
+      "click",
+      this.mainMenuNavEventListeners[0]
+    );
+    this.mainMenuNavLi2.removeEventListener(
+      "click",
+      this.mainMenuNavEventListeners[1]
+    );
+    this.mainMenuNavLi3.removeEventListener(
+      "click",
+      this.mainMenuNavEventListeners[2]
+    );
+    this.mainMenuNavButton.removeEventListener(
+      "click",
+      this.mainMenuNavEventListeners[3]
+    );
   }
 
   setAnimation() {
@@ -134,14 +170,20 @@ export class MainMenu {
   resetMainMenu() {
     this.setMainMenu();
     this.setMainMenuNav();
+    this.removeMainMenuNavEventListeners();
   }
 
-  mainMenuOutAnimation() {
-    this.mainMenuNav.className = "main-menu-nav-out";
+  mainMenuAnimation(type: string) {
+    if (type === "out") this.mainMenuNav.id = "main-menu-nav-out";
+    else this.mainMenuNav.id = "main-menu-nav-in";
     setTimeout(() => {
-      this.mainMenuNavContainer.remove();
+      if (type === "out") this.mainMenuNavContainer.remove();
+      this.mainMenuNav.removeAttribute("id");
     }, 200);
   }
 
-  mainMenuInAnimation() {}
+  changeSoundtrackVolume(volume: number) {
+    this.mainMenuAudio.volume = volume;
+    this.audioVolume = volume * 100;
+  }
 }
