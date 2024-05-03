@@ -1,0 +1,75 @@
+Date : 2024-05-02 23:48:27
+Directory : /Users/rock/Documents/Projekti/2dGame/client/src
+Total : 35 files,  5030 codes, 173 comments, 743 blanks, all 5946 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| TypeScript |         32 |      3,602 |        147 |        557 |      4,306 |
+| CSS        |          3 |      1,428 |         26 |        186 |      1,640 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                   |         35 |      5,030 |        173 |        743 |      5,946 |
+| . (Files)                                                                                           |          1 |         12 |          2 |          3 |         17 |
+| Level                                                                                               |         20 |      3,623 |        140 |        488 |      4,251 |
+| Level (Files)                                                                                       |          2 |        925 |         12 |        112 |      1,049 |
+| Level/LevelLogic                                                                                    |         18 |      2,698 |        128 |        376 |      3,202 |
+| Level/LevelLogic (Files)                                                                            |          1 |        132 |         26 |         26 |        184 |
+| Level/LevelLogic/Enemy                                                                              |          4 |        550 |          9 |         88 |        647 |
+| Level/LevelLogic/Game UI                                                                            |          3 |        778 |         17 |         91 |        886 |
+| Level/LevelLogic/Other                                                                              |          3 |        122 |         34 |         31 |        187 |
+| Level/LevelLogic/Player                                                                             |          4 |      1,049 |         26 |        125 |      1,200 |
+| Level/LevelLogic/Sprite                                                                             |          3 |         67 |         16 |         15 |         98 |
+| MainMenu                                                                                            |          9 |      1,043 |         31 |        198 |      1,272 |
+| MainMenu (Files)                                                                                    |          6 |        876 |         30 |        158 |      1,064 |
+| MainMenu/LevelSelection                                                                             |          3 |        167 |          1 |         40 |        208 |
+| Stores                                                                                              |          2 |        119 |          0 |         21 |        140 |
+| Utils                                                                                               |          3 |        233 |          0 |         33 |        266 |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                            | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/Asteroid.ts                 | TypeScript |         78 |          0 |         14 |         92 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/Enemy.ts                    | TypeScript |        183 |          6 |         22 |        211 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/EnemyBoss.ts                | TypeScript |         13 |          0 |          2 |         15 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/EnemySpawner.ts             | TypeScript |        276 |          3 |         50 |        329 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Game UI/Hud.ts                    | TypeScript |        217 |         12 |         30 |        259 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Game UI/InGameMenu.ts             | TypeScript |        308 |          2 |         28 |        338 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Game UI/PowerUp.ts                | TypeScript |        253 |          3 |         33 |        289 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Other/AnimationLoop.ts            | TypeScript |         25 |          1 |          8 |         34 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Other/Sounds.ts                   | TypeScript |         67 |          0 |         14 |         81 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Other/canvasLogic.ts              | TypeScript |         30 |         33 |          9 |         72 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/Player.ts                  | TypeScript |        229 |          2 |         22 |        253 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/PlayerInput.ts             | TypeScript |        191 |         14 |         17 |        222 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/PlayerSpells.ts            | TypeScript |        403 |          8 |         55 |        466 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/Projectile.ts              | TypeScript |        226 |          2 |         31 |        259 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Sprite/LevelImages.ts             | TypeScript |         20 |          7 |          8 |         35 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Sprite/Sprite.ts                  | TypeScript |         39 |          9 |          6 |         54 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Sprite/Vector.ts                  | TypeScript |          8 |          0 |          1 |          9 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/mainLevelLogic.ts                 | TypeScript |        132 |         26 |         26 |        184 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/levelGenerator.ts                            | TypeScript |         10 |          0 |          5 |         15 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Level/levelStyling.css                             | CSS        |        915 |         12 |        107 |      1,034 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/Leaderboards.ts                           | TypeScript |         54 |          0 |         12 |         66 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionGenerator.ts | TypeScript |         24 |          0 |          9 |         33 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionLogic.ts     | TypeScript |         31 |          0 |          8 |         39 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionStyling.css  | CSS        |        112 |          1 |         23 |        136 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenu.ts                               | TypeScript |        157 |          5 |         28 |        190 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuGenerator.ts                      | TypeScript |         25 |          0 |          5 |         30 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuLogic.ts                          | TypeScript |        190 |         11 |         48 |        249 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuStyling.css                       | CSS        |        401 |         13 |         56 |        470 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/Settings.ts                               | TypeScript |         49 |          1 |          9 |         59 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Stores/LevelStore.ts                               | TypeScript |         73 |          0 |         12 |         85 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Stores/MenuStore.ts                                | TypeScript |         46 |          0 |          9 |         55 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Utils/IconsExports.ts                              | TypeScript |         15 |          0 |          4 |         19 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Utils/OftenUsed.ts                                 | TypeScript |         28 |          0 |          5 |         33 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/Utils/TsTypes.ts                                   | TypeScript |        190 |          0 |         24 |        214 |
+| /Users/rock/Documents/Projekti/2dGame/client/src/index.ts                                           | TypeScript |         12 |          2 |          3 |         17 |
+| Total                                                                                               |            |      5,030 |        173 |        743 |      5,946 |
++-----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
