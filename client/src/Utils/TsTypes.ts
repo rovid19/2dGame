@@ -210,4 +210,5 @@ export type LeaderboardType = {
   leaderboardsBackBtn: HTMLElement;
   leaderboardsScoreContainer: HTMLElement;
   createLeaderboards(): void;
+  createLeaderboardScores(): void;
 };

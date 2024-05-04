@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import { createServer } from "http";
+import gameRoute from "./routes/game.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +23,8 @@ app.use(
     ],
   })
 );
+
+app.use("/api/score", gameRoute);
 
 const server = createServer(app);
 server.listen(port);

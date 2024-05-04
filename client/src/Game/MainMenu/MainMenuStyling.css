@@ -1,0 +1,556 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.sixtyfour-myapp {
+  font-family: "Sixtyfour", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "BLED" 0, "SCAN" 0;
+}
+
+.mainMenuDiv1 {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../../public/images/mainMenu3.jpeg);
+  background-size: cover;
+  background-position: center;
+  animation: Zoom 30s linear infinite alternate;
+  overflow: hidden;
+}
+
+@keyframes Zoom {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+#mainMenuNav-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.main-menu-nav {
+  position: relative;
+  height: 50%;
+  width: 35%;
+
+  background-color: rgba(14, 14, 14, 0.52);
+  /*box-shadow: -40px 50px 20px rgba(0, 0, 0, 0.3);*/
+  box-shadow: 0px 50px 30px -5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom-right-radius: 20px;
+  z-index: 20;
+  padding-left: 32px;
+  padding-right: 32px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) skewY(-5deg);
+}
+
+.main-menu-nav::after {
+  content: "";
+  height: 100%;
+  width: 50px;
+  position: absolute;
+  top: 0;
+  left: -50px;
+  background-color: rgba(14, 14, 14, 0.65);
+  transform-origin: right;
+  transform: skewY(45deg);
+  box-shadow: 0px 50px 30px -5px rgba(0, 0, 0, 0.3);
+}
+
+.main-menu-nav::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(14, 14, 14, 0.55);
+  transform-origin: bottom;
+  transform: skewX(45deg);
+  border-top-right-radius: 20px;
+}
+
+/*.mainMenuNav::before {
+  content: "";
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: 20px;
+  background-color: rgba(50, 50, 50, 0.5);
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.45);
+}*/
+
+.main-menu-nav > li {
+  width: 100%;
+  height: 15%;
+  color: rgb(214, 214, 214);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.1s ease all;
+  position: relative;
+}
+
+.main-menu-nav > li:hover {
+  color: white;
+}
+
+.liText {
+  z-index: 3;
+}
+
+.main-menu-nav > li::before {
+  opacity: 0;
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0; /* Adjust based on where you want the fill effect */
+  height: 5px; /* Thickness of the fill effect */
+  background-color: #ffffff; /* Blue color for the line */
+  box-shadow: 0 0 15px 5px #ffffff; /* Enhanced glowing effect */
+  transition: all 0.35s ease; /* Adjust timing as needed */
+  border-radius: 20px;
+  z-index: 20;
+}
+
+.main-menu-nav > li:hover::before {
+  opacity: 100;
+  left: 0;
+  right: 0;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.main-menu-nav > li:hover {
+  animation: shake 0.08s; /* Adjust duration as needed */
+  animation-timing-function: ease-in-out;
+}
+
+#main-container {
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.three-container {
+  position: absolute;
+  top: 0;
+  z-index: 11;
+  background-color: transparent;
+}
+
+.audioBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: transparent;
+  border: none;
+  color: rgb(214, 214, 214);
+  cursor: pointer;
+  z-index: 30;
+}
+
+.audioBtn:hover {
+  color: white;
+}
+
+#nav-heading {
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+/* MAIN NAV ANIMACIJA */
+#main-menu-nav-out {
+  animation: MainNavOut 0.21s ease !important;
+}
+#main-menu-nav-in {
+  animation: MainNavIn 0.21s ease !important;
+}
+
+@keyframes MainNavOut {
+  0% {
+    left: 50%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: -10%;
+  }
+}
+
+@keyframes MainNavIn {
+  0% {
+    left: -10%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: 50%;
+  }
+}
+
+#playAnimation {
+  height: 100%;
+  width: 100%;
+  z-index: 50;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#playAnimation::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: black;
+  z-index: 50;
+  animation: CurtainClose 0.8s ease;
+}
+
+#playAnimation::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 50;
+  animation: CurtainClose 0.8s ease;
+}
+@keyframes CurtainClose {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 50%;
+  }
+}
+
+@keyframes CurtainOpen {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}
+
+#levelLoaderDiv {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+
+#levelLoaderDiv::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: black;
+  width: 50%;
+  animation: CurtainOpen 0.8s ease;
+}
+#levelLoaderDiv::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: black;
+  width: 50%;
+  animation: CurtainOpen 0.8s ease;
+}
+
+.main-menu-settings-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: 0.2s ease SettingsIn forwards;
+}
+
+.main-menu-settings {
+  position: relative;
+  height: 70%;
+  width: 50%;
+  background-color: black;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  z-index: 30;
+}
+
+.main-menu-settings-back-btn {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  right: 2px;
+  color: rgb(181, 181, 181);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.main-menu-settings-back-btn:hover {
+  color: white;
+}
+
+@keyframes SettingsIn {
+  0% {
+    left: 50%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: 0%;
+  }
+}
+
+@keyframes SettingsOut {
+  0% {
+    left: 0%;
+  }
+
+  50% {
+    left: 25%;
+  }
+
+  100% {
+    left: 50%;
+  }
+}
+
+#settings-animation-out {
+  animation: 0.2s ease SettingsOut forwards;
+}
+
+.main-setting-container2 {
+  height: 80%;
+  width: 80%;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  overflow: scroll;
+}
+
+.setting-container2 {
+  width: 90%;
+  min-height: 70px;
+  border: 2px solid white;
+  display: flex;
+  color: white;
+  background-color: transparent;
+  animation: 1s ease SettingContainerOpacity;
+}
+
+.leaderboards-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: 0.2s ease SettingsIn forwards;
+}
+
+.leaderboards-main-div {
+  position: relative;
+  height: 70%;
+  width: 50%;
+  background-color: black;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  z-index: 30;
+}
+
+#leaderboards-heading {
+  text-align: center;
+  font-size: 32px;
+  color: white;
+}
+
+.leaderboards-score-container {
+  height: 80%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: scroll;
+}
+
+/* username popup */
+
+.username-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.username-div {
+  height: 40%;
+  width: 50%;
+  background-color: black;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.username-div > h2 {
+  color: white;
+  font-size: 32px;
+}
+
+#username-input {
+  width: 50%;
+  border: none;
+  background-color: rgba(37, 37, 37, 0.4);
+  height: 50px;
+  color: white;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 24px;
+}
+
+#username-button {
+  height: 50px;
+  width: 20%;
+  color: White;
+  background-color: black;
+  border: 2px solid white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#username-button:hover {
+  color: black;
+  background-color: white;
+}
+
+.leaderboard-single-score-container {
+  position: relative;
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+}
+
+#leaderboard-single-score {
+  color: white;
+  font-size: 16px;
+}
+
+#score-number {
+  height: 100%;
+  width: 50px;
+  color: white;
+  position: absolute;
+  left: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

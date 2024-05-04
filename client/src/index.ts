@@ -1,11 +1,11 @@
-import { MainMenu } from "./MainMenu/MainMenu.ts";
+import { MainMenu } from "./Game/MainMenu/MainMenu.ts";
 import {
   generateMainMenu,
   generateMainMenuNav,
   redirectAfterSelectingInMenu,
   renderThreeScene,
   threeSetup,
-} from "./MainMenu/MainMenuLogic.ts";
+} from "./Game/MainMenu/MainMenuLogic.ts";
 import { menuStore } from "./Stores/MenuStore";
 
 renderThreeScene();
