@@ -10,16 +10,16 @@ import { InputType } from "../../../../Utils/TsTypes";
 
 function keydownFunction(this: InputType, e: KeyboardEvent) {
   if (player.isPlayerAlive) {
-    if (e.code === "ArrowUp" || e.code === "KeyW") {
+    if (e.code === this.moveUp) {
       if (this.direction !== "settings") this.direction = UP;
     }
-    if (e.code === "ArrowDown" || e.code === "KeyS") {
+    if (e.code === this.moveDown) {
       if (this.direction !== "settings") this.direction = DOWN;
     }
-    if (e.code === "ArrowLeft" || e.code === "KeyA") {
+    if (e.code === this.moveLeft) {
       if (this.direction !== "settings") this.direction = LEFT;
     }
-    if (e.code === "ArrowRight" || e.code === "KeyD") {
+    if (e.code === this.moveRight) {
       if (this.direction !== "settings") this.direction = RIGHT;
     }
 
@@ -35,6 +35,10 @@ export const LEFT = "LEFT";
 export const RIGHT = "RIGHT";
 
 export class Input {
+  moveUp: string = "KeyW";
+  moveLeft: string = "KeyA";
+  moveRight: string = "KeyD";
+  moveDown: string = "KeyS";
   direction: string = "";
   fireProjectile: boolean = false;
   keydownFunction: (e: KeyboardEvent) => void;

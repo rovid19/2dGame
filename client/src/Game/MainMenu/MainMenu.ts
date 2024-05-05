@@ -8,6 +8,7 @@ export class MainMenu {
   // main menu
   mainContainer: HTMLElement = document.createElement("div");
   mainMenuDiv: HTMLElement = document.createElement("div");
+  mainMenuOverlayDiv: HTMLElement = document.createElement("div");
   mainMenuInnerDiv: HTMLElement = document.createElement("div");
   mainMenuAudio: HTMLAudioElement = new Audio(
     "../../public/sounds/soundtrack2.mp3"
@@ -38,6 +39,7 @@ export class MainMenu {
   isAudioPlaying: boolean = false;
   audioVolume: number = 30;
   currentNav: string[] = [];
+  backgroundScaleStoppedAt: number = 0;
 
   //
   settings: SettingsType;
@@ -66,14 +68,16 @@ export class MainMenu {
   setMainMenuNav() {
     document.body.appendChild(this.mainMenuNavContainer);
     this.mainMenuNavContainer.appendChild(this.mainMenuNav);
-    this.mainMenuNav.appendChild(this.mainMenuNavButton);
-    this.mainMenuNav.appendChild(this.mainMenuNavHeading);
-    this.mainMenuNav.appendChild(this.mainMenuNavLi1);
-    this.mainMenuNav.appendChild(this.mainMenuNavLi2);
-    this.mainMenuNav.appendChild(this.mainMenuNavLi3);
+    this.mainMenuNav.appendChild(this.mainMenuOverlayDiv);
+    this.mainMenuOverlayDiv.appendChild(this.mainMenuNavButton);
+    this.mainMenuOverlayDiv.appendChild(this.mainMenuNavHeading);
+    this.mainMenuOverlayDiv.appendChild(this.mainMenuNavLi1);
+    this.mainMenuOverlayDiv.appendChild(this.mainMenuNavLi2);
+    this.mainMenuOverlayDiv.appendChild(this.mainMenuNavLi3);
 
     this.mainMenuNavContainer.id = "mainMenuNav-container";
     this.mainMenuNav.className = "main-menu-nav";
+    this.mainMenuOverlayDiv.className = "nav-overlay";
     this.mainMenuNavButton.className = "audioBtn";
     this.mainMenuNavHeading.className = "sixtyfour-myapp";
     this.mainMenuNavLi1.className = "sixtyfour-myapp";
@@ -120,9 +124,6 @@ export class MainMenu {
 
     const openLeaderboards = () => {
       this.leaderboards.createLeaderboards();
-      document
-        .querySelectorAll(".leaderboard-single-score-container")
-        .forEach((item) => item.remove());
       this.mainMenuAnimation("out");
     };
     this.mainMenuNavEventListeners.push(openLeaderboards);
@@ -185,7 +186,7 @@ export class MainMenu {
   }
 
   resetMainMenu() {
-    this.setMainMenu();
+    //this.setMainMenu();
     this.setMainMenuNav();
     this.removeMainMenuNavEventListeners();
   }

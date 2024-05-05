@@ -143,11 +143,11 @@ export class Menu {
 
       this.settingsMainDiv.appendChild(mainSettingContainer);
 
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 10; i++) {
         const settingContainer = document.createElement("div") as HTMLElement;
         const settingHeading = document.createElement("h3") as HTMLElement;
         let settingInput: HTMLElement;
-        if (i < 4) settingInput = document.createElement("div") as HTMLElement;
+        if (i < 8) settingInput = document.createElement("div") as HTMLElement;
         else settingInput = document.createElement("input") as HTMLInputElement;
 
         mainSettingContainer.appendChild(settingContainer);
@@ -204,24 +204,42 @@ export class Menu {
   ) {
     switch (i) {
       case 0:
+        settingHeading.textContent = "Up";
+        settingInput.textContent = player.playerInput.moveUp.slice(3);
+        break;
+      case 1:
+        settingHeading.textContent = "Left";
+        settingInput.textContent = player.playerInput.moveLeft.slice(3);
+        break;
+      case 2:
+        settingHeading.textContent = "Down";
+        settingInput.textContent = player.playerInput.moveDown.slice(3);
+        break;
+
+      case 3:
+        settingHeading.textContent = "Right";
+        settingInput.textContent = player.playerInput.moveRight.slice(3);
+        break;
+
+      case 4:
         settingHeading.textContent = "Spell 1";
         settingInput.textContent = player.playerSpells.spell1.value.slice(3);
         break;
-      case 1:
+      case 5:
         settingHeading.textContent = "Spell 2";
         settingInput.textContent = player.playerSpells.spell1.value.slice(3);
         break;
-      case 2:
+      case 6:
         settingHeading.textContent = "Spell 3";
         settingInput.textContent = player.playerSpells.spell1.value.slice(3);
         break;
-      case 3:
+      case 7:
         settingHeading.textContent = "Fire projectile";
         settingInput.textContent =
           player.playerSpells.projectile.value.slice(3);
         break;
 
-      case 4:
+      case 8:
         settingHeading.textContent = "Soundtrack volume";
         settingInput.setAttribute("type", "range");
         if (settingInput instanceof HTMLInputElement) {
@@ -229,7 +247,7 @@ export class Menu {
         }
 
         break;
-      case 5:
+      case 9:
         settingHeading.textContent = "Sound effects";
         settingInput.setAttribute("type", "range");
         if (settingInput instanceof HTMLInputElement) {
@@ -295,40 +313,54 @@ export class Menu {
   }
 
   changeSpellKeybind(e: KeyboardEvent) {
-    if (this.containerBeingChanged.firstChild?.textContent === "Spell 1") {
+    if (this.containerBeingChanged.firstChild?.textContent === "Up") {
+      player.playerInput.moveUp = e.code;
+      this.inputBeingChanged.style.fontSize = "16px";
+      this.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChanging = false;
+    } else if (this.containerBeingChanged.firstChild?.textContent === "Down") {
+      player.playerInput.moveDown = e.code;
+      this.inputBeingChanged.style.fontSize = "16px";
+      this.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChanging = false;
+    } else if (this.containerBeingChanged.firstChild?.textContent === "Left") {
+      player.playerInput.moveLeft = e.code;
+      this.inputBeingChanged.style.fontSize = "16px";
+      this.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChanging = false;
+    } else if (this.containerBeingChanged.firstChild?.textContent === "Right") {
+      player.playerInput.moveRight = e.code;
+      this.inputBeingChanged.style.fontSize = "16px";
+      this.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChanging = false;
+    } else if (
+      this.containerBeingChanged.firstChild?.textContent === "Spell 1"
+    ) {
       player.playerSpells.spell1.value = e.code;
       this.inputBeingChanged.style.fontSize = "16px";
       this.inputBeingChanged.textContent = e.code.slice(3);
       HUD.playerSpell1Keybind.textContent = e.code.slice(3);
       this.isChanging = false;
-    }
-    if (this.containerBeingChanged.firstChild?.textContent === "Spell 2") {
+    } else if (
+      this.containerBeingChanged.firstChild?.textContent === "Spell 2"
+    ) {
       player.playerSpells.spell2.value = e.code;
       this.inputBeingChanged.style.fontSize = "16px";
       this.inputBeingChanged.textContent = e.code.slice(3);
       HUD.playerSpell2Keybind.textContent = e.code.slice(3);
       this.isChanging = false;
-    }
-    if (this.containerBeingChanged.firstChild?.textContent === "Spell 3") {
+    } else if (
+      this.containerBeingChanged.firstChild?.textContent === "Spell 3"
+    ) {
       player.playerSpells.spell3.value = e.code;
       this.inputBeingChanged.style.fontSize = "16px";
-      HUD.playerSpell3Keybind.textContent = e.code.slice(3);
       this.inputBeingChanged.textContent = e.code.slice(3);
+      HUD.playerSpell3Keybind.textContent = e.code.slice(3);
       this.isChanging = false;
-    }
-
-    if (
+    } else if (
       this.containerBeingChanged.firstChild?.textContent === "Fire projectile"
     ) {
       player.playerSpells.projectile.value = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      this.isChanging = false;
-    }
-    if (
-      this.containerBeingChanged.firstChild?.textContent === "Rotate spaceship"
-    ) {
-      player.playerSpells.rotateSpaceship.value = e.code;
       this.inputBeingChanged.style.fontSize = "16px";
       this.inputBeingChanged.textContent = e.code.slice(3);
       this.isChanging = false;

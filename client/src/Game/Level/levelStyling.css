@@ -535,6 +535,11 @@
   cursor: pointer;
 }
 
+#setting-input:hover {
+  color: black;
+  background-color: white;
+}
+
 @keyframes ContainerOpening {
   0% {
     width: 0%;

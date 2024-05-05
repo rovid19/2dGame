@@ -96,6 +96,10 @@ export type EnemyInstance = {
 };
 
 export type InputType = {
+  moveUp: string;
+  moveLeft: string;
+  moveRight: string;
+  moveDown: string;
   direction: string;
   fireProjectile: boolean;
   playerInput(): void;
