@@ -19,6 +19,7 @@ import { Menu } from "./Game UI/InGameMenu.ts";
 import { PowerUp } from "./Game UI/PowerUp.ts";
 import { Asteroid } from "./Enemy/Asteroid.ts";
 import { Sounds } from "./Other/Sounds.ts";
+import { keydown } from "../../MainMenu/MainMenuLogic.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 export let canvasContext2: CanvasRenderingContext2D;
@@ -179,5 +180,8 @@ function playerMethods() {
   player.checkIfPlayerIsDead();
   player.gainExpForMultipleEnemies();
   powerUp.openPowerUpIfQueueExists();
-  menu.openMenu();
+  //menu.openMenu();
+  projectiles.autoFire();
 }
+
+console.log(menu);

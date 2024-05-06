@@ -47,7 +47,7 @@ export class Settings extends Menu {
 
   animationOut() {
     this.settingsContainer.id = "settings-animation-out";
-    mainMenu.resetMainMenu();
+    mainMenu.resetMainMenuNav();
     setTimeout(() => {
       //document.querySelector(".main-setting-container2")?.remove();
       this.settingsContainer.remove();

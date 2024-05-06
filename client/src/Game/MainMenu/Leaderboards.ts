@@ -104,7 +104,7 @@ export class Leaderboards {
 
   animationOut() {
     this.leaderboardsContainer.id = "settings-animation-out";
-    mainMenu.resetMainMenu();
+    mainMenu.resetMainMenuNav();
     setTimeout(() => {
       this.leaderboardsContainer.remove();
       this.leaderboardsContainer.removeAttribute("id");

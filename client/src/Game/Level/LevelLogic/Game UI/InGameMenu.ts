@@ -20,24 +20,35 @@ export class Menu {
   settingsBackButton: HTMLElement = document.createElement("button");
   containerBeingChanged: HTMLElement = document.createElement("div");
   inputBeingChanged: HTMLElement = document.createElement("div");
+  menuEventListeners: (() => void)[] = [];
+  settingsEventListeners: (() => void)[] = [];
 
   nav: string = "";
   isChanging: boolean = false;
   constructor() {
-    document.addEventListener("keydown", (e: KeyboardEvent) => {
+    /* document.addEventListener("keydown", (e: KeyboardEvent) => {
       if (!this.isChanging) {
         if (e.code === "Escape") {
-          if (this.nav === "menu") {
-            this.nav = "closeMenu";
-          } else {
-            this.nav = "menu";
-          }
+          console.log("escape");
+          this.openOrCloseMenu(e);
         }
       } else {
         this.changeSpellKeybind(e);
       }
-    });
+    });*/
   }
+
+  openOrCloseMenu(e: KeyboardEvent) {
+    if (this.nav === "menu") {
+      this.nav = "closeMenu";
+      this.openMenu();
+      this.removeMenuEventListeners();
+    } else {
+      this.nav = "menu";
+      this.openMenu();
+    }
+  }
+
   openMenu() {
     if (this.nav === "menu") {
       if (!document.querySelector(".menu-container")) {
@@ -83,25 +94,36 @@ export class Menu {
   }
 
   createMenuEventListeners() {
-    this.menuButton1.addEventListener("click", () => {
+    const openSettings = () => {
       this.nav = "settings";
-    });
+      this.openMenu();
+    };
 
-    this.menuButton2.addEventListener("click", () => {
+    this.menuEventListeners.push(openSettings);
+
+    const exitToMainMenu = () => {
+      menuStore.set("currentMenuNav", "menu");
+      mainMenu.setAnimationOut(this.menuContainer);
       this.nav = "home";
-      HUD.removeHudElements();
-      HUD.resetHud();
       player.resetPlayer();
       player.isPlayerAlive = false;
       enemySpawner.resetEnemies();
       projectiles.resetProjectile();
       player.playerInput.resetInput();
       player.playerSpells.resetSpells();
-      document.querySelector(".background-canvas")?.remove();
-      document.querySelector(".level-canvas")?.remove();
-      this.menuContainer.remove();
-      mainMenu.resetMainMenu();
-    });
+      this.settingsMainDiv.remove();
+      this.removeSettingsEventListeners();
+      this.menuMainDiv.remove();
+    };
+    this.menuEventListeners.push(exitToMainMenu);
+
+    this.menuButton1.addEventListener("click", openSettings);
+    this.menuButton2.addEventListener("click", exitToMainMenu);
+  }
+
+  removeMenuEventListeners() {
+    this.menuButton1.removeEventListener("click", this.menuEventListeners[0]);
+    this.menuButton2.removeEventListener("click", this.menuEventListeners[1]);
   }
 
   addOrRemoveAttributesFromSettingSubmenu(value: string) {
@@ -121,14 +143,25 @@ export class Menu {
   }
 
   createSettingsEventListeners() {
-    this.settingsBackButton.addEventListener("click", () => {
+    const closeSettings = () => {
       this.addOrRemoveAttributesFromSettingSubmenu("add");
       setTimeout(() => {
         this.nav = "menu";
         this.resetSettingContainerValues();
         this.settingsMainDiv.remove();
+        this.removeSettingsEventListeners();
       }, 1000);
-    });
+    };
+    this.settingsEventListeners.push(closeSettings);
+
+    this.settingsBackButton.addEventListener("click", closeSettings);
+  }
+
+  removeSettingsEventListeners() {
+    this.settingsBackButton.removeEventListener(
+      "click",
+      this.settingsEventListeners[0]
+    );
   }
 
   createSettingContainers() {
@@ -227,11 +260,11 @@ export class Menu {
         break;
       case 5:
         settingHeading.textContent = "Spell 2";
-        settingInput.textContent = player.playerSpells.spell1.value.slice(3);
+        settingInput.textContent = player.playerSpells.spell2.value.slice(3);
         break;
       case 6:
         settingHeading.textContent = "Spell 3";
-        settingInput.textContent = player.playerSpells.spell1.value.slice(3);
+        settingInput.textContent = player.playerSpells.spell3.value.slice(3);
         break;
       case 7:
         settingHeading.textContent = "Fire projectile";

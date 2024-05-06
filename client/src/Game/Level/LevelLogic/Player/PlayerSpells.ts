@@ -17,6 +17,7 @@ import {
 } from "../../../../Utils/TsTypes";
 
 function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
+  console.log(e.code);
   if (player.isPlayerAlive) {
     if (e.code === this.spell1.value) {
       if (this.spellsOnCooldown.includes("Shield")) {
@@ -40,18 +41,14 @@ export class PlayerSpells {
   };
   spell1: SpellObject = {
     name: "Spell 1",
-    value: "KeyO",
+    value: "KeyQ",
   };
   spell2: SpellObject = {
     name: "Spell 2",
-    value: "BracketLeft",
+    value: "KeyE",
   };
   spell3: SpellObject = {
     name: "Spell 3",
-    value: "BracketRight",
-  };
-  rotateSpaceship: SpellObject = {
-    name: "Rotate spaceship",
     value: "KeyR",
   };
 

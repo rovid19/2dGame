@@ -12,6 +12,7 @@ import { Settings } from "./Settings.ts";
 import { Leaderboards } from "./Leaderboards.ts";
 import { Service } from "../../Services/MainService.ts";
 import axios from "axios";
+import { Keydown } from "../Level/LevelLogic/Other/Keydown.ts";
 
 export const generateMainMenu = () => {
   const menuAni = menuStore.get("menuAnimation");
@@ -249,4 +250,5 @@ export const threeSetup = (): void => {
 
 axios.defaults.baseURL = "http://localhost:3000";
 export const mainMenu = new MainMenu(new Settings(), new Leaderboards());
+export const keydown = new Keydown();
 export const service = new Service();

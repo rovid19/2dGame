@@ -2,12 +2,14 @@ import {
   canvasContext2,
   enemySpawner,
   inGameSounds,
+  player,
   shipPosition,
 } from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
 import { SpriteMethods, Vector } from "../../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";
 import { Vector2 } from "../Sprite/Vector";
+import { keydown } from "../../../MainMenu/MainMenuLogic";
 
 export class Projectile {
   prjSprite: SpriteMethods;
@@ -132,6 +134,7 @@ export class Projectile {
     this.projectileDistanceTraveled = 0;
     this.isFiring = false;
     this.updateProjectileBaseCoordinates();
+    player.playerInput.fireProjectile = false;
   }
 
   updateProjectileBaseCoordinates() {
@@ -253,6 +256,14 @@ export class Projectile {
       this.prjHitboxX = 75;
       this.prjHitboxY = 75;
       this.prjSprite.scale = 2;
+    }
+  }
+
+  autoFire() {
+    if (player.isPlayerAlive) {
+      if (keydown.autoFire) {
+        this.fireProjectile();
+      }
     }
   }
 }

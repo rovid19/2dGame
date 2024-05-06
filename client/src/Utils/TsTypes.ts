@@ -107,6 +107,7 @@ export type InputType = {
   removeEventListener(): void;
   resetInput(): void;
   stopSpaceshipFromGoingOutsideOfScreen(): void;
+  keydownFunction(e: KeyboardEvent): void;
 };
 
 export type SpellObject = {
@@ -119,7 +120,6 @@ export type InputSpellType = {
   spell1: SpellObject;
   spell2: SpellObject;
   spell3: SpellObject;
-  rotateSpaceship: SpellObject;
   spell: string;
   spellsOnCooldown: string[];
   playerShieldAmount: number;
@@ -139,6 +139,7 @@ export type InputSpellType = {
   resetSpells(): void;
   decreaseStatByPercentage(value: number): void;
   increaseSpellStats(name: string, value: number): void;
+  keydownFunction(e: KeyboardEvent): void;
 };
 
 export type PowerUpType = {

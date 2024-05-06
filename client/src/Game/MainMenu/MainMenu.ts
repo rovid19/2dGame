@@ -1,4 +1,12 @@
-import { generateLevel, setHud } from "../Level/LevelLogic/mainLevelLogic";
+import {
+  HUD,
+  enemySpawner,
+  generateLevel,
+  menu,
+  player,
+  projectiles,
+  setHud,
+} from "../Level/LevelLogic/mainLevelLogic";
 import { menuStore } from "../../Stores/MenuStore";
 import { muteAudio, playAudio } from "../../Utils/IconsExports";
 import { LeaderboardType, SettingsType } from "../../Utils/TsTypes";
@@ -100,8 +108,8 @@ export class MainMenu {
   setMainMenuNavEventListeners() {
     const startGame = () => {
       if (service.playerReady) {
-        console.log("pokrene se");
         menuStore.set("currentMenuNav", "play");
+        player.isPlayerAlive = true;
         this.currentNav.push("play");
         this.setAnimation();
         setTimeout(() => {
@@ -165,7 +173,30 @@ export class MainMenu {
     setTimeout(() => {
       this.mainContainer.remove();
       this.mainMenuNavContainer.remove();
+      this.playAnimationDiv.remove();
       document.body.appendChild(this.playAnimationLoaderDiv);
+    }, 800);
+
+    setTimeout(() => {
+      this.playAnimationLoaderDiv.remove();
+    }, 1600);
+  }
+
+  setAnimationOut(loaderHolder: HTMLElement) {
+    this.playAnimationDiv.id = "playAnimation";
+    loaderHolder.appendChild(this.playAnimationDiv);
+    this.playAnimationLoaderDiv.id = "levelLoaderDiv";
+
+    setTimeout(() => {
+      this.playAnimationDiv.remove();
+      document.body.appendChild(this.playAnimationLoaderDiv);
+      document.querySelector(".background-canvas")?.remove();
+      document.querySelector(".level-canvas")?.remove();
+      HUD.removeHudElements();
+      HUD.resetHud();
+      this.setMainMenu();
+      this.resetMainMenuNav();
+      loaderHolder.remove();
     }, 800);
 
     setTimeout(() => {
@@ -185,7 +216,7 @@ export class MainMenu {
     }
   }
 
-  resetMainMenu() {
+  resetMainMenuNav() {
     //this.setMainMenu();
     this.setMainMenuNav();
     this.removeMainMenuNavEventListeners();
@@ -243,6 +274,7 @@ export class MainMenu {
     this.usernameInput.addEventListener("change", saveUsername);
     this.usernameButton.addEventListener("click", eventFunction);
   }
+
   removeUsernameEventListener() {
     this.usernameInput.removeEventListener(
       "click",
@@ -252,5 +284,18 @@ export class MainMenu {
       "click",
       this.usernamePopupEventL[1]
     );
+  }
+
+  resetAllGameStats() {
+    HUD.removeHudElements();
+    HUD.resetHud();
+    player.resetPlayer();
+    player.isPlayerAlive = false;
+    enemySpawner.resetEnemies();
+    projectiles.resetProjectile();
+    player.playerInput.resetInput();
+    player.playerSpells.resetSpells();
+
+    menu.mainContainer.remove();
   }
 }
