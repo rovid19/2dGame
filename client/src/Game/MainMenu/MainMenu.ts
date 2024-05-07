@@ -48,6 +48,7 @@ export class MainMenu {
   audioVolume: number = 30;
   currentNav: string[] = [];
   backgroundScaleStoppedAt: number = 0;
+  isChangingKeybind: boolean = false;
 
   //
   settings: SettingsType;
@@ -74,6 +75,7 @@ export class MainMenu {
   }
 
   setMainMenuNav() {
+    player.isPlayerAlive = false;
     document.body.appendChild(this.mainMenuNavContainer);
     this.mainMenuNavContainer.appendChild(this.mainMenuNav);
     this.mainMenuNav.appendChild(this.mainMenuOverlayDiv);
@@ -126,7 +128,7 @@ export class MainMenu {
       menuStore.set("currentMenuNav", "settings");
       this.currentNav.push("settings");
       this.mainMenuAnimation("out");
-      this.settings.createSettings(this.mainContainer);
+      this.settings.createSettings();
     };
     this.mainMenuNavEventListeners.push(openSettings);
 
@@ -297,5 +299,60 @@ export class MainMenu {
     player.playerSpells.resetSpells();
 
     menu.mainContainer.remove();
+  }
+
+  changeSpellKeybind(e: KeyboardEvent) {
+    if (menu.containerBeingChanged.firstChild?.textContent === "Up") {
+      player.playerInput.moveUp = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChangingKeybind = false;
+    } else if (menu.containerBeingChanged.firstChild?.textContent === "Down") {
+      player.playerInput.moveDown = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChangingKeybind = false;
+    } else if (menu.containerBeingChanged.firstChild?.textContent === "Left") {
+      player.playerInput.moveLeft = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChangingKeybind = false;
+    } else if (menu.containerBeingChanged.firstChild?.textContent === "Right") {
+      player.playerInput.moveRight = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      this.isChangingKeybind = false;
+    } else if (
+      menu.containerBeingChanged.firstChild?.textContent === "Spell 1"
+    ) {
+      player.playerSpells.spell1.value = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      HUD.playerSpell1Keybind.textContent = e.code.slice(3);
+      menu.isChangingKeybind = false;
+    } else if (
+      menu.containerBeingChanged.firstChild?.textContent === "Spell 2"
+    ) {
+      player.playerSpells.spell2.value = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      HUD.playerSpell2Keybind.textContent = e.code.slice(3);
+      menu.isChangingKeybind = false;
+    } else if (
+      menu.containerBeingChanged.firstChild?.textContent === "Spell 3"
+    ) {
+      player.playerSpells.spell3.value = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      HUD.playerSpell3Keybind.textContent = e.code.slice(3);
+      menu.isChangingKeybind = false;
+    } else if (
+      menu.containerBeingChanged.firstChild?.textContent === "Fire projectile"
+    ) {
+      player.playerSpells.projectile.value = e.code;
+      menu.inputBeingChanged.style.fontSize = "16px";
+      menu.inputBeingChanged.textContent = e.code.slice(3);
+      menu.isChangingKeybind = false;
+    }
   }
 }

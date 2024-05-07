@@ -1,5 +1,5 @@
 import { muteAudio, playAudio } from "../../Utils/IconsExports.ts";
-import { generateLevelSelectionScreen } from "./LevelSelection/LevelSelectionLogic.ts";
+
 import { generateLevel, setHud } from "../Level/LevelLogic/mainLevelLogic.ts";
 import { menuStore } from "../../Stores/MenuStore.ts";
 import {
@@ -8,11 +8,12 @@ import {
 } from "./MainMenuGenerator.ts";
 import * as THREE from "three";
 import { MainMenu } from "./MainMenu.ts";
-import { Settings } from "./Settings.ts";
-import { Leaderboards } from "./Leaderboards.ts";
+import { Settings } from "./MenuScreens/Settings.ts";
+import { Leaderboards } from "./MenuScreens/Leaderboards.ts";
 import { Service } from "../../Services/MainService.ts";
 import axios from "axios";
 import { Keydown } from "../Level/LevelLogic/Other/Keydown.ts";
+import { Leaderboards2 } from "./MenuScreens/Leaderboards2.ts";
 
 export const generateMainMenu = () => {
   const menuAni = menuStore.get("menuAnimation");
@@ -102,7 +103,6 @@ export const redirectAfterSelectingInMenu = (): void => {
     mainNavNav.className = "mainNavOut";
     setTimeout(() => {
       document.getElementById("mainMenuNav-container")?.remove();
-      generateLevelSelectionScreen();
     }, 200);
   } else if (currentSelection === "mainMenu") {
     generateMainMenu();
@@ -249,6 +249,6 @@ export const threeSetup = (): void => {
 };
 
 axios.defaults.baseURL = "http://localhost:3000";
-export const mainMenu = new MainMenu(new Settings(), new Leaderboards());
+export const mainMenu = new MainMenu(new Settings(), new Leaderboards2());
 export const keydown = new Keydown();
 export const service = new Service();

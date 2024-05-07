@@ -20,7 +20,7 @@ export class Service {
 
       this.topScores = response.data as TopScore[];
       console.log(this.topScores);
-      console.log("ao ");
+
       mainMenu.leaderboards.createLeaderboardScores();
     } catch (error) {
       console.error("Failed to fetch top scores:", error);

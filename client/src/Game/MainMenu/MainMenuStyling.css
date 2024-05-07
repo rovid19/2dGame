@@ -438,7 +438,7 @@ body {
   }
 }
 
-#settings-animation-out {
+#menu-screen-animation-out {
   animation: 0.2s ease-in-out SettingsOut forwards;
 }
 
@@ -464,7 +464,7 @@ body {
   animation: 1s ease SettingContainerOpacity;
 }
 
-.leaderboards-container {
+.menu-screen-container {
   position: absolute;
   top: 0;
   left: 50%;
@@ -477,7 +477,7 @@ body {
   animation: 0.2s ease SettingsIn forwards;
 }
 
-.leaderboards-main-div {
+.menu-screen-main-div {
   position: relative;
   height: 50%;
   width: 35%;
@@ -495,7 +495,7 @@ body {
   padding-right: 32px;
 }
 
-.leaderboards-main-div:after {
+.menu-screen-main-div:after {
   content: "";
   height: 100%;
   width: 50px;
@@ -506,7 +506,7 @@ body {
   transform: skewY(-45deg);
   box-shadow: 0px 50px 30px -5px rgba(0, 0, 0, 0.3);
 }
-.leaderboards-main-div:before {
+.menu-screen-main-div:before {
   content: "";
   position: absolute;
   top: -50px;

@@ -1,6 +1,6 @@
-import { Menu } from "../Level/LevelLogic/Game UI/InGameMenu";
-import { backIcon2 } from "../../Utils/IconsExports";
-import { mainMenu } from "./MainMenuLogic";
+import { Menu } from "../../Level/LevelLogic/Game UI/InGameMenu";
+import { backIcon2 } from "../../../Utils/IconsExports";
+import { mainMenu } from "../MainMenuLogic";
 
 export class Settings extends Menu {
   settingsContainer: HTMLElement = document.createElement("div");

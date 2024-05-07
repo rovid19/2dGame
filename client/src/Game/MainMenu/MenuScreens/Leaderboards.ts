@@ -1,5 +1,5 @@
-import { backIcon2 } from "../../Utils/IconsExports";
-import { mainMenu, service } from "./MainMenuLogic";
+import { backIcon2 } from "../../../Utils/IconsExports";
+import { mainMenu, service } from "../MainMenuLogic";
 
 export class Leaderboards {
   leaderboardsContainer: HTMLElement = document.createElement("div");

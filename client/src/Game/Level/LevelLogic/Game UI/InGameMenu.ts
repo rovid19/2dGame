@@ -320,8 +320,8 @@ export class Menu {
     // setting event listeners for divs
     else {
       settingInput.addEventListener("click", () => {
-        if (!this.isChanging) {
-          this.isChanging = true;
+        if (!mainMenu.isChangingKeybind) {
+          mainMenu.isChangingKeybind = true;
           settingInput.textContent = "press any key to save changes";
           settingInput.style.fontSize = "8px";
           this.inputBeingChanged = settingInput;
@@ -343,60 +343,5 @@ export class Menu {
     this.settingsBackButton.className = "settings-back-button";
     this.settingsBackButton.innerHTML = backIcon;
     this.createSettingContainers();
-  }
-
-  changeSpellKeybind(e: KeyboardEvent) {
-    if (this.containerBeingChanged.firstChild?.textContent === "Up") {
-      player.playerInput.moveUp = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      this.isChanging = false;
-    } else if (this.containerBeingChanged.firstChild?.textContent === "Down") {
-      player.playerInput.moveDown = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      this.isChanging = false;
-    } else if (this.containerBeingChanged.firstChild?.textContent === "Left") {
-      player.playerInput.moveLeft = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      this.isChanging = false;
-    } else if (this.containerBeingChanged.firstChild?.textContent === "Right") {
-      player.playerInput.moveRight = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      this.isChanging = false;
-    } else if (
-      this.containerBeingChanged.firstChild?.textContent === "Spell 1"
-    ) {
-      player.playerSpells.spell1.value = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      HUD.playerSpell1Keybind.textContent = e.code.slice(3);
-      this.isChanging = false;
-    } else if (
-      this.containerBeingChanged.firstChild?.textContent === "Spell 2"
-    ) {
-      player.playerSpells.spell2.value = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      HUD.playerSpell2Keybind.textContent = e.code.slice(3);
-      this.isChanging = false;
-    } else if (
-      this.containerBeingChanged.firstChild?.textContent === "Spell 3"
-    ) {
-      player.playerSpells.spell3.value = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      HUD.playerSpell3Keybind.textContent = e.code.slice(3);
-      this.isChanging = false;
-    } else if (
-      this.containerBeingChanged.firstChild?.textContent === "Fire projectile"
-    ) {
-      player.playerSpells.projectile.value = e.code;
-      this.inputBeingChanged.style.fontSize = "16px";
-      this.inputBeingChanged.textContent = e.code.slice(3);
-      this.isChanging = false;
-    }
   }
 }

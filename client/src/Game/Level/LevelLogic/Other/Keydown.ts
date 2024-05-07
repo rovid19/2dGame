@@ -1,4 +1,5 @@
 import { menuStore } from "../../../../Stores/MenuStore";
+import { mainMenu } from "../../../MainMenu/MainMenuLogic";
 import { menu, player } from "../mainLevelLogic";
 
 export class Keydown {
@@ -25,9 +26,8 @@ export class Keydown {
   }
 
   detectWhoNeedsKeydown(e: KeyboardEvent) {
-    if (menu.isChanging) {
-      console.log(e.code);
-      menu.changeSpellKeybind(e);
+    if (mainMenu.isChangingKeybind) {
+      mainMenu.changeSpellKeybind(e);
     } else {
       if (
         e.code === player.playerInput.moveUp ||

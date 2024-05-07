@@ -203,17 +203,20 @@ export type MenuClass = {
 };
 
 export type SettingsType = {
-  settingsMainDiv: HTMLElement;
-  settingsBackButton: HTMLElement;
-  createSettings(htmlElement: HTMLElement): void;
+  settingsContainer: HTMLElement;
+  inputBeingChanged: HTMLElement;
+  containerBeingChanged: HTMLElement;
+  createSettings(): void;
 };
 
 export type LeaderboardType = {
-  leaderboardsContainer: HTMLElement;
-  leaderboardsMainDiv: HTMLElement;
-  leaderboardsHeading: HTMLElement;
-  leaderboardsBackBtn: HTMLElement;
-  leaderboardsScoreContainer: HTMLElement;
+  heading: HTMLElement;
+  scoreContainer: HTMLElement;
+  leaderboardsContainer?: HTMLElement;
+  leaderboardsMainDiv?: HTMLElement;
+  leaderboardsHeading?: HTMLElement;
+  leaderboardsBackBtn?: HTMLElement;
+  leaderboardsScoreContainer?: HTMLElement;
   createLeaderboards(): void;
   createLeaderboardScores(): void;
 };
