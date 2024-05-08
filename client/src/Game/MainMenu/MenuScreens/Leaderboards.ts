@@ -1,34 +1,25 @@
-import { backIcon2 } from "../../../Utils/IconsExports";
-import { mainMenu, service } from "../MainMenuLogic";
+import { service } from "../MainMenuLogic";
+import { MenuScreen } from "./MenuScreen";
 
-export class Leaderboards {
-  leaderboardsContainer: HTMLElement = document.createElement("div");
-  leaderboardsMainDiv: HTMLElement = document.createElement("div");
-  leaderboardsHeading: HTMLElement = document.createElement("h1");
-  leaderboardsBackBtn: HTMLElement = document.createElement("button");
-  leaderboardsScoreContainer: HTMLElement = document.createElement("div");
-  leaderboardsEventListeners: (() => void)[] = [];
+export class Leaderboards extends MenuScreen {
+  heading: HTMLElement = document.createElement("h1");
+  scoreContainer: HTMLElement = document.createElement("div");
 
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   createLeaderboards() {
-    document.body.appendChild(this.leaderboardsContainer);
-    this.leaderboardsContainer.appendChild(this.leaderboardsMainDiv);
-    this.leaderboardsMainDiv.appendChild(this.leaderboardsBackBtn);
-    this.leaderboardsMainDiv.appendChild(this.leaderboardsScoreContainer);
-    this.leaderboardsScoreContainer.appendChild(this.leaderboardsHeading);
+    this.createMenuScreen();
 
-    this.leaderboardsContainer.className = "leaderboards-container";
-    this.leaderboardsMainDiv.className = "leaderboards-main-div";
-    this.leaderboardsHeading.id = "leaderboards-heading";
-    this.leaderboardsHeading.className = "sixtyfour-myapp";
-    this.leaderboardsHeading.textContent = "Leaderboards";
-    this.leaderboardsBackBtn.className = "main-menu-settings-back-btn";
-    this.leaderboardsScoreContainer.className = "leaderboards-score-container";
+    this.mainDiv.appendChild(this.heading);
+    this.mainDiv.appendChild(this.scoreContainer);
 
-    this.leaderboardsBackBtn.innerHTML = backIcon2;
+    this.heading.className = "sixtyfour-myapp";
+    this.heading.textContent = "Leaderboards";
+    this.heading.id = "leaderboards-heading";
+    this.scoreContainer.className = "leaderboards-score-container";
 
-    this.backButtonEventListener();
     service.fetchTopScores();
   }
 
@@ -43,11 +34,10 @@ export class Leaderboards {
       const leaderboardScoreUsername = document.createElement("div");
       const leaderboardScorePoints = document.createElement("div");
 
-      this.leaderboardsScoreContainer.appendChild(leaderboardScoreContainer);
+      this.scoreContainer.appendChild(leaderboardScoreContainer);
       leaderboardScoreContainer.appendChild(leaderboardScore);
       leaderboardScore.appendChild(leaderboardScoreUsername);
       leaderboardScore.appendChild(leaderboardScorePoints);
-      console.log(leaderboardScoreUsername);
 
       leaderboardScoreContainer.className =
         "leaderboard-single-score-container";
@@ -66,7 +56,6 @@ export class Leaderboards {
       } pts `;
 
       if (i === 0) {
-        console.log(service.topScores[i]);
         leaderboardScoreContainer.style.border = "2px solid #FFD700";
         leaderboardScoreContainer.style.backgroundColor =
           "rgba(255, 215, 0, 0.5)";
@@ -80,35 +69,5 @@ export class Leaderboards {
           "rgba(192, 192, 192, 0.5)";
       }
     }
-  }
-
-  removeEventListeners() {
-    this.leaderboardsBackBtn.removeEventListener(
-      "click",
-      this.leaderboardsEventListeners[0]
-    );
-  }
-
-  backButtonEventListener() {
-    const playAnimation = () => {
-      this.animationOut();
-      mainMenu.mainMenuAnimation("in");
-    };
-    this.leaderboardsEventListeners.push(playAnimation);
-
-    this.leaderboardsBackBtn.addEventListener(
-      "click",
-      this.leaderboardsEventListeners[0]
-    );
-  }
-
-  animationOut() {
-    this.leaderboardsContainer.id = "settings-animation-out";
-    mainMenu.resetMainMenuNav();
-    setTimeout(() => {
-      this.leaderboardsContainer.remove();
-      this.leaderboardsContainer.removeAttribute("id");
-      this.removeEventListeners();
-    }, 200);
   }
 }

@@ -10,29 +10,7 @@ import {
   shipPosition,
 } from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
-import {
-  InputSpellType,
-  SpellObject,
-  isOutside,
-} from "../../../../Utils/TsTypes";
-
-function keydownFunction(this: InputSpellType, e: KeyboardEvent) {
-  console.log(e.code);
-  if (player.isPlayerAlive) {
-    if (e.code === this.spell1.value) {
-      if (this.spellsOnCooldown.includes("Shield")) {
-      } else {
-        this.activateSpell("Shield");
-      }
-    }
-    if (e.code === this.spell2.value) {
-      this.activateSpell("Walls");
-    }
-    if (e.code === this.spell3.value) {
-      this.activateSpell("Explosion");
-    }
-  }
-}
+import { SpellObject, isOutside } from "../../../../Utils/TsTypes";
 
 export class PlayerSpells {
   projectile: SpellObject = {
@@ -86,12 +64,7 @@ export class PlayerSpells {
   explosionRadiusContainerBottomLeft: HTMLElement =
     document.createElement("div");
 
-  keydownFunction: (e: KeyboardEvent) => void;
-
   constructor() {
-    this.keydownFunction = keydownFunction.bind(this);
-    document.addEventListener("keydown", this.keydownFunction);
-
     document.addEventListener("keyup", (e) => {
       if (player.isPlayerAlive) {
         if (e.code === this.spell1.value) {
@@ -107,6 +80,23 @@ export class PlayerSpells {
         }
       }
     });
+  }
+
+  keydownFunction(e: KeyboardEvent) {
+    if (player.isPlayerAlive) {
+      if (e.code === this.spell1.value) {
+        if (this.spellsOnCooldown.includes("Shield")) {
+        } else {
+          this.activateSpell("Shield");
+        }
+      }
+      if (e.code === this.spell2.value) {
+        this.activateSpell("Walls");
+      }
+      if (e.code === this.spell3.value) {
+        this.activateSpell("Explosion");
+      }
+    }
   }
 
   activateSpell = (spellValue: string) => {

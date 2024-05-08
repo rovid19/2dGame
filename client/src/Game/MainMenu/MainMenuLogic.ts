@@ -1,142 +1,10 @@
-import { muteAudio, playAudio } from "../../Utils/IconsExports.ts";
-
-import { generateLevel, setHud } from "../Level/LevelLogic/mainLevelLogic.ts";
-import { menuStore } from "../../Stores/MenuStore.ts";
-import {
-  mainMenuGenerator,
-  mainMenuNavGenerator,
-} from "./MainMenuGenerator.ts";
 import * as THREE from "three";
 import { MainMenu } from "./MainMenu.ts";
-import { Settings } from "./MenuScreens/Settings.ts";
-import { Leaderboards } from "./MenuScreens/Leaderboards.ts";
 import { Service } from "../../Services/MainService.ts";
 import axios from "axios";
 import { Keydown } from "../Level/LevelLogic/Other/Keydown.ts";
-import { Leaderboards2 } from "./MenuScreens/Leaderboards2.ts";
-
-export const generateMainMenu = () => {
-  const menuAni = menuStore.get("menuAnimation");
-  const newEl = document.createElement("div");
-  newEl.id = "main-container";
-
-  //const newNavEl = document.createElement("div");
-  //newNavEl.id = "mainMenuNav-container";
-
-  if (!menuAni)
-    document.body.appendChild(newEl).appendChild(mainMenuGenerator());
-  //document.body.appendChild(newNavEl).appendChild(mainMenuNavGenerator());
-
-  setTimeout(() => {
-    mainMenuNavigation();
-  }, 0);
-};
-
-export const generateMainMenuNav = () => {
-  const newNavEl = document.createElement("div");
-  newNavEl.id = "mainMenuNav-container";
-
-  document.body.appendChild(newNavEl).appendChild(mainMenuNavGenerator());
-
-  setTimeout(() => {
-    mainMenuNavigation();
-  }, 0);
-};
-
-export const mainMenuNavigation = (): void => {
-  const play = document.getElementById("play");
-  const selectLevel = document.getElementById("select");
-  const audioButton = document.querySelector(".audioBtn") as HTMLElement;
-
-  //generateLevel();
-
-  play?.addEventListener("click", (): void => {
-    menuStore.set("currentMenuNav", "play");
-    playAnimation();
-    setTimeout(() => {
-      generateLevel();
-      setHud();
-    }, 800);
-  });
-
-  selectLevel?.addEventListener("click", (): void => {
-    menuStore.set("currentMenuNav", "selectLevel");
-  });
-
-  audioButton.addEventListener("click", (): void => {
-    playOrMuteSoundtrack();
-  });
-};
-
-const playAnimation = () => {
-  const mainNavContainer = document.getElementById(
-    "mainMenuNav-container"
-  ) as HTMLElement;
-  const newDiv = document.createElement("div");
-  newDiv.id = "playAnimation";
-
-  const levelLoaderDiv = document.createElement("div");
-  levelLoaderDiv.id = "levelLoaderDiv";
-
-  mainNavContainer.appendChild(newDiv);
-
-  setTimeout(() => {
-    document.getElementById("main-container")?.remove();
-    document.getElementById("mainMenuNav-container")?.remove();
-    //document.querySelector(".three-container")?.remove();
-    document.body.appendChild(levelLoaderDiv);
-  }, 800);
-
-  setTimeout(() => {
-    levelLoaderDiv.remove();
-  }, 1600);
-};
-
-export const redirectAfterSelectingInMenu = (): void => {
-  const currentSelection = menuStore.get("currentMenuNav") as string;
-  const mainNavNav = document.getElementById("mainMenuNav") as HTMLElement;
-  const levelSelectMainDiv = document.querySelector(
-    ".levelSelect"
-  ) as HTMLElement;
-
-  if (currentSelection === "selectLevel") {
-    mainNavNav.className = "mainNavOut";
-    setTimeout(() => {
-      document.getElementById("mainMenuNav-container")?.remove();
-    }, 200);
-  } else if (currentSelection === "mainMenu") {
-    generateMainMenu();
-    generateMainMenuNav();
-    menuStore.set("menuAnimation", true);
-    levelSelectMainDiv.id = "levelSelectionOut";
-
-    setTimeout(() => {
-      document.getElementById("level-container")?.remove();
-    }, 200);
-  }
-};
-
-export const playOrMuteSoundtrack = () => {
-  const userNav = menuStore.get("currentMenuNav");
-
-  const audioPlaying = menuStore.get("audioPlaying") as boolean;
-  audioPlaying;
-  const audioElement = document.querySelector(".audio") as HTMLAudioElement;
-  const audioBtn =
-    userNav === "mainMenu"
-      ? (document.querySelector(".audioBtn") as HTMLElement)
-      : (document.querySelector(".audioBtnLevel") as HTMLElement);
-
-  if (audioPlaying) {
-    audioElement.pause();
-    menuStore.set("audioPlaying", false);
-    audioBtn.innerHTML = muteAudio;
-  } else {
-    audioElement.play();
-    menuStore.set("audioPlaying", true);
-    audioBtn.innerHTML = playAudio;
-  }
-};
+import { Leaderboards } from "./MenuScreens/Leaderboards.ts";
+import { Settings } from "./MenuScreens/Settings.ts";
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸
 
@@ -249,6 +117,6 @@ export const threeSetup = (): void => {
 };
 
 axios.defaults.baseURL = "http://localhost:3000";
-export const mainMenu = new MainMenu(new Settings(), new Leaderboards2());
+export const mainMenu = new MainMenu(new Settings(), new Leaderboards());
 export const keydown = new Keydown();
 export const service = new Service();

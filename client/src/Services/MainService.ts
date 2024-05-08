@@ -19,7 +19,6 @@ export class Service {
       const response = await axios.get("/api/score/fetch-top-10-scores");
 
       this.topScores = response.data as TopScore[];
-      console.log(this.topScores);
 
       mainMenu.leaderboards.createLeaderboardScores();
     } catch (error) {

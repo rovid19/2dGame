@@ -163,7 +163,7 @@ export function renderLevel() {
     player.renderPlayerSpaceship();
     enemySpawner.renderEnemies();
     /*asteroid.asteroidSprite.drawImage(canvasContext2, 200, 300);
-    console.log("vidljivi", asteroid);
+    ("vidljivi", asteroid);
     enemySpawner.asteroidArray.forEach((asteroid) => {
       console.log(asteroid);
       asteroid.asteroidSprite.drawImage(canvasContext2, 200, 500);
@@ -184,4 +184,4 @@ function playerMethods() {
   projectiles.autoFire();
 }
 
-console.log(menu);
+

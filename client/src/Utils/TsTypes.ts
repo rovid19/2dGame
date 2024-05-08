@@ -203,10 +203,14 @@ export type MenuClass = {
 };
 
 export type SettingsType = {
+  isChangingKeybind: boolean;
   settingsContainer: HTMLElement;
   inputBeingChanged: HTMLElement;
   containerBeingChanged: HTMLElement;
+  isInGameSettings: boolean;
   createSettings(): void;
+  resetSettingContainerValues(): void;
+  removeSettings(): void;
 };
 
 export type LeaderboardType = {

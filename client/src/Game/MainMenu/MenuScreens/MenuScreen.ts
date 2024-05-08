@@ -1,5 +1,6 @@
 import { menuStore } from "../../../Stores/MenuStore";
-import { backIcon2 } from "../../../Utils/IconsExports";
+import { backIcon, backIcon2 } from "../../../Utils/IconsExports";
+import { menu } from "../../Level/LevelLogic/mainLevelLogic";
 import { mainMenu } from "../MainMenuLogic";
 
 export class MenuScreen {
@@ -16,19 +17,20 @@ export class MenuScreen {
     if (this.isInGameSettings) {
       (inGameMenuContainer as HTMLElement).appendChild(this.mainDiv);
       this.mainDiv.className = "settings-main-div";
-      this.backButton.className = "settings-back-btn";
+      this.backButton.className = "settings-back-button";
+      this.backButton.innerHTML = backIcon;
+      this.backButtonInGameEventListener();
     } else {
       document.body.appendChild(this.container);
       this.container.appendChild(this.mainDiv);
       this.container.className = "menu-screen-container";
       this.mainDiv.className = "menu-screen-main-div";
       this.backButton.className = "main-menu-settings-back-btn";
+      this.backButton.innerHTML = backIcon2;
+      this.backButtonEventListener();
     }
 
     this.mainDiv.appendChild(this.backButton);
-    this.backButton.innerHTML = backIcon2;
-
-    this.backButtonEventListener();
   }
 
   backButtonEventListener() {
@@ -39,6 +41,10 @@ export class MenuScreen {
     this.eventListeners.push(playAnimation);
 
     this.backButton.addEventListener("click", this.eventListeners[0]);
+  }
+
+  backButtonInGameEventListener() {
+    menu.createSettingsEventListeners(this.backButton, this.mainDiv);
   }
 
   removeEventListeners() {

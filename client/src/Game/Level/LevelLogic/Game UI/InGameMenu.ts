@@ -1,14 +1,7 @@
-import {
-  HUD,
-  enemySpawner,
-  inGameSounds,
-  player,
-  projectiles,
-} from "../mainLevelLogic";
+import { enemySpawner, player, projectiles } from "../mainLevelLogic";
 
 import { mainMenu } from "../../../MainMenu/MainMenuLogic";
 import { menuStore } from "../../../../Stores/MenuStore";
-import { backIcon } from "../../../../Utils/IconsExports";
 
 export class Menu {
   menuContainer: HTMLElement = document.createElement("div");
@@ -16,27 +9,13 @@ export class Menu {
   menuButton1: HTMLElement = document.createElement("button");
   menuButton2: HTMLElement = document.createElement("button2");
   menuNote: HTMLElement = document.createElement("h4");
-  settingsMainDiv: HTMLElement = document.createElement("div");
-  settingsBackButton: HTMLElement = document.createElement("button");
-  containerBeingChanged: HTMLElement = document.createElement("div");
-  inputBeingChanged: HTMLElement = document.createElement("div");
+  settingsBackButton: HTMLElement = document.createElement("div");
   menuEventListeners: (() => void)[] = [];
   settingsEventListeners: (() => void)[] = [];
 
   nav: string = "";
   isChanging: boolean = false;
-  constructor() {
-    /* document.addEventListener("keydown", (e: KeyboardEvent) => {
-      if (!this.isChanging) {
-        if (e.code === "Escape") {
-          console.log("escape");
-          this.openOrCloseMenu(e);
-        }
-      } else {
-        this.changeSpellKeybind(e);
-      }
-    });*/
-  }
+  constructor() {}
 
   openOrCloseMenu(e: KeyboardEvent) {
     if (this.nav === "menu") {
@@ -62,14 +41,12 @@ export class Menu {
       player.playerInput.resetInput();
       player.playerSpells.resetSpells();
       player.isPlayerAlive = true;
-      this.resetSettingContainerValues();
+      mainMenu.settings.resetSettingContainerValues();
       this.menuContainer.remove();
-      this.settingsMainDiv.remove();
+      mainMenu.settings.removeSettings();
     } else if (this.nav === "settings") {
       if (!document.querySelector(".settings-main-div")) {
-        this.createSettingsPopup("inGame");
-        this.addOrRemoveAttributesFromSettingSubmenu("remove");
-        this.createSettingsEventListeners();
+        mainMenu.settings.createSettings();
       }
     }
   }
@@ -111,7 +88,7 @@ export class Menu {
       projectiles.resetProjectile();
       player.playerInput.resetInput();
       player.playerSpells.resetSpells();
-      this.settingsMainDiv.remove();
+      mainMenu.settings.removeSettings();
       this.removeSettingsEventListeners();
       this.menuMainDiv.remove();
     };
@@ -126,35 +103,39 @@ export class Menu {
     this.menuButton2.removeEventListener("click", this.menuEventListeners[1]);
   }
 
-  addOrRemoveAttributesFromSettingSubmenu(value: string) {
-    if (value === "add") {
-      this.settingsMainDiv.setAttribute("ani", "close");
-      document.querySelectorAll(".setting-container").forEach((con) => {
-        con.setAttribute("ani", "closeRest");
-      });
-      this.settingsBackButton.setAttribute("ani", "closeRest");
-    } else {
-      this.settingsMainDiv.removeAttribute("ani");
-      document.querySelectorAll(".setting-container").forEach((con) => {
-        con.removeAttribute("ani");
-      });
-      this.settingsBackButton.removeAttribute("ani");
-    }
+  // settings popup
+
+  addClosingAnimation(backButton: HTMLElement, mainDiv: HTMLElement) {
+    mainDiv.setAttribute("ani", "close");
+    document.querySelectorAll(".setting-container").forEach((con) => {
+      con.setAttribute("ani", "closeRest");
+    });
+    backButton.setAttribute("ani", "closeRest");
   }
 
-  createSettingsEventListeners() {
+  removeClosingAnimation(backButton: HTMLElement, mainDiv: HTMLElement) {
+    mainDiv.removeAttribute("ani");
+    document.querySelectorAll(".setting-container").forEach((con) => {
+      con.removeAttribute("ani");
+    });
+    backButton.removeAttribute("ani");
+  }
+
+  createSettingsEventListeners(backButton: HTMLElement, mainDiv: HTMLElement) {
     const closeSettings = () => {
-      this.addOrRemoveAttributesFromSettingSubmenu("add");
+      this.addClosingAnimation(backButton, mainDiv);
       setTimeout(() => {
         this.nav = "menu";
-        this.resetSettingContainerValues();
-        this.settingsMainDiv.remove();
+        mainMenu.settings.resetSettingContainerValues();
+        this.removeClosingAnimation(backButton, mainDiv);
+        mainDiv.remove();
         this.removeSettingsEventListeners();
       }, 1000);
     };
     this.settingsEventListeners.push(closeSettings);
+    this.settingsBackButton = backButton;
 
-    this.settingsBackButton.addEventListener("click", closeSettings);
+    backButton.addEventListener("click", closeSettings);
   }
 
   removeSettingsEventListeners() {
@@ -162,186 +143,5 @@ export class Menu {
       "click",
       this.settingsEventListeners[0]
     );
-  }
-
-  createSettingContainers() {
-    if (
-      !document.querySelector(".setting-container") &&
-      !document.querySelector(".setting-container2")
-    ) {
-      const mainSettingContainer = document.createElement("div");
-      if (menuStore.get("currentMenuNav") === "play")
-        mainSettingContainer.className = "main-setting-container";
-      else mainSettingContainer.className = "main-setting-container2";
-
-      this.settingsMainDiv.appendChild(mainSettingContainer);
-
-      for (let i = 0; i < 10; i++) {
-        const settingContainer = document.createElement("div") as HTMLElement;
-        const settingHeading = document.createElement("h3") as HTMLElement;
-        let settingInput: HTMLElement;
-        if (i < 8) settingInput = document.createElement("div") as HTMLElement;
-        else settingInput = document.createElement("input") as HTMLInputElement;
-
-        mainSettingContainer.appendChild(settingContainer);
-        settingContainer.appendChild(settingHeading);
-        settingContainer.appendChild(settingInput);
-
-        if (menuStore.get("currentMenuNav") === "play")
-          settingContainer.className = "setting-container";
-        else settingContainer.className = "setting-container2";
-
-        settingHeading.className = "sixtyfour-myapp";
-        settingHeading.id = "setting-heading";
-        settingInput.className = "sixtyfour-myapp";
-        settingInput.id = "setting-input";
-
-        this.assignCorrectValueToSettingContainers(
-          i,
-          settingHeading,
-          settingInput
-        );
-        this.createSettingContainerEventListener(
-          settingInput,
-          settingContainer
-        );
-      }
-    }
-  }
-
-  resetSettingContainerValues() {
-    document.querySelectorAll("#setting-input").forEach((setting, i) => {
-      const element = setting as HTMLElement;
-      element.style.fontSize = "16px";
-
-      switch (i) {
-        case 0:
-          setting.textContent = player.playerSpells.spell1.value.slice(3);
-          break;
-        case 1:
-          setting.textContent = player.playerSpells.spell2.value.slice(3);
-          break;
-        case 2:
-          setting.textContent = player.playerSpells.spell3.value.slice(3);
-          break;
-        case 3:
-          setting.textContent = player.playerSpells.projectile.value.slice(3);
-      }
-    });
-  }
-
-  assignCorrectValueToSettingContainers(
-    i: number,
-    settingHeading: HTMLElement,
-    settingInput: HTMLElement | HTMLInputElement
-  ) {
-    switch (i) {
-      case 0:
-        settingHeading.textContent = "Up";
-        settingInput.textContent = player.playerInput.moveUp.slice(3);
-        break;
-      case 1:
-        settingHeading.textContent = "Left";
-        settingInput.textContent = player.playerInput.moveLeft.slice(3);
-        break;
-      case 2:
-        settingHeading.textContent = "Down";
-        settingInput.textContent = player.playerInput.moveDown.slice(3);
-        break;
-
-      case 3:
-        settingHeading.textContent = "Right";
-        settingInput.textContent = player.playerInput.moveRight.slice(3);
-        break;
-
-      case 4:
-        settingHeading.textContent = "Spell 1";
-        settingInput.textContent = player.playerSpells.spell1.value.slice(3);
-        break;
-      case 5:
-        settingHeading.textContent = "Spell 2";
-        settingInput.textContent = player.playerSpells.spell2.value.slice(3);
-        break;
-      case 6:
-        settingHeading.textContent = "Spell 3";
-        settingInput.textContent = player.playerSpells.spell3.value.slice(3);
-        break;
-      case 7:
-        settingHeading.textContent = "Fire projectile";
-        settingInput.textContent =
-          player.playerSpells.projectile.value.slice(3);
-        break;
-
-      case 8:
-        settingHeading.textContent = "Soundtrack volume";
-        settingInput.setAttribute("type", "range");
-        if (settingInput instanceof HTMLInputElement) {
-          settingInput.value = String(mainMenu.audioVolume);
-        }
-
-        break;
-      case 9:
-        settingHeading.textContent = "Sound effects";
-        settingInput.setAttribute("type", "range");
-        if (settingInput instanceof HTMLInputElement) {
-          settingInput.value = String(inGameSounds.soundsVolume);
-        }
-        break;
-    }
-  }
-
-  createSettingContainerEventListener(
-    settingInput: HTMLElement | HTMLInputElement,
-    settingContainer: HTMLElement
-  ) {
-    // setting event listeners for input
-    if (settingInput instanceof HTMLInputElement) {
-      settingInput.addEventListener("click", (e) => {
-        const htmlTarget = e.target as HTMLElement;
-        const inputElement = htmlTarget.parentElement?.firstChild?.textContent;
-        let isSoundtrack = false;
-
-        if (inputElement === "Soundtrack volume") isSoundtrack = true;
-
-        if (e.target instanceof HTMLInputElement && isSoundtrack) {
-          if (!mainMenu.isAudioPlaying) {
-            mainMenu.playOrMuteSoundtrack();
-          }
-          const volume = parseInt(e.target.value) / 100;
-          mainMenu.changeSoundtrackVolume(volume);
-        } else {
-          if (e.target instanceof HTMLInputElement) {
-            const volume = parseInt(e.target.value) / 100;
-            inGameSounds.changeSoundEffectsVolume(volume);
-          }
-        }
-      });
-    }
-    // setting event listeners for divs
-    else {
-      settingInput.addEventListener("click", () => {
-        if (!mainMenu.isChangingKeybind) {
-          mainMenu.isChangingKeybind = true;
-          settingInput.textContent = "press any key to save changes";
-          settingInput.style.fontSize = "8px";
-          this.inputBeingChanged = settingInput;
-          this.containerBeingChanged = settingContainer;
-        }
-      });
-    }
-  }
-
-  createSettingsPopup(value: string, htmlElement?: HTMLElement) {
-    if (value === "mainMenu") {
-      htmlElement?.appendChild(this.settingsMainDiv);
-    } else {
-      this.menuContainer.appendChild(this.settingsMainDiv);
-    }
-
-    this.settingsMainDiv.className = "settings-main-div";
-    this.settingsMainDiv.appendChild(this.settingsBackButton);
-    this.settingsBackButton.className = "settings-back-button";
-    this.settingsBackButton.innerHTML = backIcon;
-    this.createSettingContainers();
   }
 }

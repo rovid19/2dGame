@@ -26,7 +26,7 @@ export class Keydown {
   }
 
   detectWhoNeedsKeydown(e: KeyboardEvent) {
-    if (mainMenu.isChangingKeybind) {
+    if (mainMenu.settings.isChangingKeybind) {
       mainMenu.changeSpellKeybind(e);
     } else {
       if (

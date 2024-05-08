@@ -87,7 +87,6 @@ export class EnemySpawner {
     if (whichEnemy === "basic") {
       const enemyPosition = this.spawnEnemiesFromAllSides();
       const randomSpeed = 0.5 + Math.random() * (2 - 0.5);
-      console.log(enemyPosition);
 
       const enemy = new Enemy(
         randomSpeed,
@@ -291,8 +290,6 @@ export class EnemySpawner {
 
     this.enemyBasic3SpawnCD -= decreaseBasic3By;
     this.enemyBasic2SpawnMaxCD -= decreaseBasic3By;
-
-    console.log("basic2", this.enemyBasic2SpawnMaxCD);
   }
 
   spawnEnemiesFromAllSides(): Vector {
@@ -303,8 +300,6 @@ export class EnemySpawner {
     if (this.isSpawnEnemiesFromAllSides) {
       const randomArray = ["top", "left", "right"];
       const randomNumber = Math.floor(Math.random() * 3);
-
-      console.log(randomNumber);
 
       if (randomArray[randomNumber] === "top") {
         vector.x = 0 + Math.random() * (width - 0);

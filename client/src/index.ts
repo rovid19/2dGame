@@ -1,16 +1,4 @@
-import { MainMenu } from "./Game/MainMenu/MainMenu.ts";
-import {
-  generateMainMenu,
-  generateMainMenuNav,
-  redirectAfterSelectingInMenu,
-  renderThreeScene,
-  threeSetup,
-} from "./Game/MainMenu/MainMenuLogic.ts";
-import { menuStore } from "./Stores/MenuStore";
+import { renderThreeScene, threeSetup } from "./Game/MainMenu/MainMenuLogic.ts";
 
 renderThreeScene();
 threeSetup();
-//generateMainMenu();
-//generateMainMenuNav();
-
-menuStore.subscribe("currentMenuNav", redirectAfterSelectingInMenu);
