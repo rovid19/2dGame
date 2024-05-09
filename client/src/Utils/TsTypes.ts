@@ -123,6 +123,7 @@ export type InputSpellType = {
   spell: string;
   spellsOnCooldown: string[];
   playerShieldAmount: number;
+  playerShieldMaxAmount: number;
   playerShieldCooldown: number;
   playerShieldMaxCooldown: number;
   playerShieldDuration: number;

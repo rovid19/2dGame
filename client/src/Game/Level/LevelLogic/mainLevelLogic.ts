@@ -131,8 +131,10 @@ const renderLevelLoop = new animationLoop(
 renderLevelLoop.start();
 
 export const generateLevel = (): void => {
-  document.body.appendChild(backgroundGenerator());
-  document.body.appendChild(levelGenerator());
+  if (!document.querySelector(".level-canvas")) {
+    document.body.appendChild(backgroundGenerator());
+    document.body.appendChild(levelGenerator());
+  }
 };
 
 export function renderLevel() {
@@ -183,5 +185,3 @@ function playerMethods() {
   //menu.openMenu();
   projectiles.autoFire();
 }
-
-

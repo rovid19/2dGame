@@ -46,7 +46,6 @@ export class MainMenu {
   // states
   isAudioPlaying: boolean = false;
   audioVolume: number = 30;
-  currentNav: string[] = [];
 
   //
   settings: SettingsType;
@@ -73,6 +72,7 @@ export class MainMenu {
   }
 
   setMainMenuNav() {
+    console.log("dada");
     player.isPlayerAlive = false;
     document.body.appendChild(this.mainMenuNavContainer);
     this.mainMenuNavContainer.appendChild(this.mainMenuNav);
@@ -106,11 +106,11 @@ export class MainMenu {
   }
 
   setMainMenuNavEventListeners() {
+    console.log("mainMenu added");
     const startGame = () => {
       if (service.playerReady) {
         menuStore.set("currentMenuNav", "play");
         player.isPlayerAlive = true;
-        this.currentNav.push("play");
         this.setAnimation();
         setTimeout(() => {
           generateLevel();
@@ -124,7 +124,6 @@ export class MainMenu {
 
     const openSettings = () => {
       menuStore.set("currentMenuNav", "settings");
-      this.currentNav.push("settings");
       this.mainMenuAnimation("out");
       this.settings.createSettings();
     };
@@ -146,10 +145,12 @@ export class MainMenu {
   }
 
   removeMainMenuNavEventListeners() {
+    console.log("mainMenu removed");
     this.mainMenuNavLi1.removeEventListener(
       "click",
       this.mainMenuNavEventListeners[0]
     );
+
     this.mainMenuNavLi2.removeEventListener(
       "click",
       this.mainMenuNavEventListeners[1]
@@ -165,6 +166,7 @@ export class MainMenu {
   }
 
   setAnimation() {
+    this.removeMainMenuNavEventListeners();
     this.playAnimationDiv.id = "playAnimation";
     this.mainMenuNavContainer.appendChild(this.playAnimationDiv);
 
@@ -195,7 +197,7 @@ export class MainMenu {
       HUD.removeHudElements();
       HUD.resetHud();
       this.setMainMenu();
-      this.resetMainMenuNav();
+      this.setMainMenuNav();
       loaderHolder.remove();
     }, 800);
 
@@ -216,15 +218,12 @@ export class MainMenu {
     }
   }
 
-  resetMainMenuNav() {
-    //this.setMainMenu();
-    this.setMainMenuNav();
-    this.removeMainMenuNavEventListeners();
-  }
-
   mainMenuAnimation(type: string) {
     if (type === "out") this.mainMenuNav.id = "main-menu-nav-out";
-    else this.mainMenuNav.id = "main-menu-nav-in";
+    else {
+      this.setMainMenuNav();
+      this.mainMenuNav.id = "main-menu-nav-in";
+    }
     setTimeout(() => {
       if (type === "out") this.mainMenuNavContainer.remove();
       this.mainMenuNav.removeAttribute("id");
@@ -260,7 +259,7 @@ export class MainMenu {
   setUsernameEventListener() {
     const saveUsername = (e: any) => {
       const target = e.target as HTMLInputElement;
-      service.playerUsername = e.target.value;
+      service.playerUsername = target.value;
     };
     this.usernamePopupEventL.push(saveUsername);
     const eventFunction = () => {

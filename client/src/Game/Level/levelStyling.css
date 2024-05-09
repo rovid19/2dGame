@@ -82,7 +82,7 @@
   position: absolute;
   top: 1%;
   left: 1%;
-  width: 15%;
+  width: 20%;
   height: 60px;
   z-index: 3;
 }
@@ -190,7 +190,7 @@
 .player-energy-filler {
   position: absolute;
   height: 100%;
-  width: 100%;
+  width: 0%;
   z-index: 5;
   background: linear-gradient(
     to bottom,

@@ -35,9 +35,11 @@ export class PlayerSpells {
 
   // shield
   playerShieldAmount: number = 100;
+  playerShieldMaxAmount: number = 100;
   playerShieldCooldown: number = 600;
   playerShieldMaxCooldown: number = 600;
   playerShieldDuration: number = 240;
+  playerShieldMaxDuration: number = 240;
   shieldActivated: boolean = false;
 
   // walls
@@ -83,6 +85,7 @@ export class PlayerSpells {
   }
 
   keydownFunction(e: KeyboardEvent) {
+    console.log(this.spell1.value);
     if (player.isPlayerAlive) {
       if (e.code === this.spell1.value) {
         if (this.spellsOnCooldown.includes("Shield")) {
@@ -103,10 +106,12 @@ export class PlayerSpells {
     if (spellValue === "Shield") {
       if (!this.spellsOnCooldown.includes("Shield")) {
         player.playerShield = this.playerShieldAmount;
+        this.playerShieldDuration = this.playerShieldMaxDuration;
         this.spellsOnCooldown.push("Shield");
         this.spell = spellValue;
         this.shieldActivated = true;
         inGameSounds.playShield();
+        HUD.activateShieldBar();
       }
     }
     if (spellValue === "Walls") {
@@ -244,6 +249,12 @@ export class PlayerSpells {
       );
 
       this.playerShieldDuration--;
+
+      if (this.playerShieldDuration === 0) {
+        console.log("shield isteko");
+        player.playerShield = 0;
+        HUD.resetShieldBar();
+      }
     }
   }
 
@@ -426,10 +437,12 @@ export class PlayerSpells {
       case "Shield duration increase":
         const increaseDurationBy = this.playerShieldDuration * (value / 100);
         this.playerShieldDuration += increaseDurationBy;
+        this.playerShieldMaxDuration = this.playerShieldDuration;
         break;
       case "Shield amount increase":
         const increaseAmountBy = this.playerShieldAmount * (value / 100);
         this.playerShieldAmount += increaseAmountBy;
+        this.playerShieldMaxAmount = this.playerShieldAmount;
         break;
       case "Explosion damage increase":
         const increaseDamageBy = this.playerExplosionDamage * (value / 100);

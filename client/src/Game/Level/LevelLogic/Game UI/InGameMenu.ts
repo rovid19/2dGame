@@ -1,5 +1,4 @@
 import { enemySpawner, player, projectiles } from "../mainLevelLogic";
-
 import { mainMenu } from "../../../MainMenu/MainMenuLogic";
 import { menuStore } from "../../../../Stores/MenuStore";
 
@@ -17,7 +16,7 @@ export class Menu {
   isChanging: boolean = false;
   constructor() {}
 
-  openOrCloseMenu(e: KeyboardEvent) {
+  openOrCloseMenu() {
     if (this.nav === "menu") {
       this.nav = "closeMenu";
       this.openMenu();
@@ -71,6 +70,7 @@ export class Menu {
   }
 
   createMenuEventListeners() {
+    console.log("inGame added");
     const openSettings = () => {
       this.nav = "settings";
       this.openMenu();
@@ -81,7 +81,6 @@ export class Menu {
     const exitToMainMenu = () => {
       menuStore.set("currentMenuNav", "menu");
       mainMenu.setAnimationOut(this.menuContainer);
-      this.nav = "home";
       player.resetPlayer();
       player.isPlayerAlive = false;
       enemySpawner.resetEnemies();
@@ -91,6 +90,7 @@ export class Menu {
       mainMenu.settings.removeSettings();
       this.removeSettingsEventListeners();
       this.menuMainDiv.remove();
+      this.removeMenuEventListeners();
     };
     this.menuEventListeners.push(exitToMainMenu);
 
@@ -99,6 +99,7 @@ export class Menu {
   }
 
   removeMenuEventListeners() {
+    console.log("inGame removed");
     this.menuButton1.removeEventListener("click", this.menuEventListeners[0]);
     this.menuButton2.removeEventListener("click", this.menuEventListeners[1]);
   }

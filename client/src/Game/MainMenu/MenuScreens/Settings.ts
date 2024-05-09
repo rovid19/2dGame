@@ -77,16 +77,29 @@ export class Settings extends MenuScreen {
 
       switch (i) {
         case 0:
-          setting.textContent = player.playerSpells.spell1.value.slice(3);
+          setting.textContent = player.playerInput.moveUp.slice(3);
           break;
         case 1:
-          setting.textContent = player.playerSpells.spell2.value.slice(3);
+          setting.textContent = player.playerInput.moveLeft.slice(3);
           break;
         case 2:
-          setting.textContent = player.playerSpells.spell3.value.slice(3);
+          setting.textContent = player.playerInput.moveRight.slice(3);
           break;
         case 3:
+          setting.textContent = player.playerInput.moveDown.slice(3);
+          break;
+        case 4:
+          setting.textContent = player.playerSpells.spell1.value.slice(3);
+          break;
+        case 5:
+          setting.textContent = player.playerSpells.spell2.value.slice(3);
+          break;
+        case 6:
+          setting.textContent = player.playerSpells.spell3.value.slice(3);
+          break;
+        case 7:
           setting.textContent = player.playerSpells.projectile.value.slice(3);
+          break;
       }
     });
   }

@@ -186,9 +186,11 @@ export class Player {
         HUD.renderPlayerTakenDamageInHpBar(takenDamage);
       } else {
         this.playerShield -= takenDamage;
+        HUD.renderShieldAmount(takenDamage);
       }
     } else {
       this.playerHp -= takenDamage;
+      console.log(this.playerHp);
       HUD.renderPlayerTakenDamageInHpBar(takenDamage);
     }
   }

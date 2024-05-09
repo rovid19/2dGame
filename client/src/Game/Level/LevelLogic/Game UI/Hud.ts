@@ -12,9 +12,9 @@ export class Hud {
   hpBar: HTMLElement = document.createElement("div");
   hpBarFillerContainer: HTMLElement = document.createElement("div");
   hpBarFiller: HTMLElement = document.createElement("div");
-  energyBar: HTMLElement = document.createElement("div");
-  energyBarFillerContainer: HTMLElement = document.createElement("div");
-  energyBarFiller: HTMLElement = document.createElement("div");
+  shieldBar: HTMLElement = document.createElement("div");
+  shieldBarFillerContainer: HTMLElement = document.createElement("div");
+  shieldBarFiller: HTMLElement = document.createElement("div");
 
   // EXP BAR
   playerExpBarContainer: HTMLElement = document.createElement("div");
@@ -96,12 +96,12 @@ export class Hud {
     this.hpBarFiller.className = "player-hp-bar-filler";
 
     // energy bar
-    this.hpBarContainer.appendChild(this.energyBar);
-    this.energyBar.appendChild(this.energyBarFillerContainer);
-    this.energyBarFillerContainer.appendChild(this.energyBarFiller);
-    this.energyBar.className = "player-energy-bar";
-    this.energyBarFillerContainer.className = "player-energy-filler-container";
-    this.energyBarFiller.className = "player-energy-filler";
+    this.hpBarContainer.appendChild(this.shieldBar);
+    this.shieldBar.appendChild(this.shieldBarFillerContainer);
+    this.shieldBarFillerContainer.appendChild(this.shieldBarFiller);
+    this.shieldBar.className = "player-energy-bar";
+    this.shieldBarFillerContainer.className = "player-energy-filler-container";
+    this.shieldBarFiller.className = "player-energy-filler";
 
     // spell bar
     document.body.appendChild(this.playerSpellBarContainer);
@@ -179,11 +179,14 @@ export class Hud {
   }
 
   renderPlayerTakenDamageInHpBar(enemyDamage: number) {
-    const damageTaken = (enemyDamage / player.playerMaxHP) * 100;
+    const hpBarPercentage =
+      ((player.playerHp - enemyDamage) / player.playerMaxHP) * 100;
+    /* const damageTaken = (enemyDamage / player.playerMaxHP) * 100;
     player.playerHpBar.style.width = `${
       player.playerHpBarPercentage - damageTaken
     }%`;
-    player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;
+    player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;*/
+    player.playerHpBar.style.width = `${hpBarPercentage}%`;
   }
 
   renderPlayerGainedHp() {
@@ -250,7 +253,7 @@ export class Hud {
     document.querySelectorAll(".enemy-hp-bar-container").forEach((hpBar) => {
       hpBar.remove();
     });
-    this.energyBarFiller.style.width = "100%";
+    this.shieldBarFiller.style.width = "100%";
     this.playerExpBarFiller.style.width = "0%";
     this.playerExpBarHeading.textContent = "Lvl 1";
     this.playerScoreHeading.textContent = "0";
@@ -261,5 +264,22 @@ export class Hud {
     this.playerSpellBarContainer.remove();
     this.playerExpBarContainer.remove();
     this.playerScoreContainer.remove();
+  }
+
+  renderShieldAmount(shieldAmount: number) {
+    console.log(shieldAmount);
+    const maxShield = player.playerSpells.playerShieldMaxAmount;
+    const percentageOfShield =
+      ((player.playerShield - shieldAmount) / maxShield) * 100;
+
+    this.shieldBarFiller.style.width = `${percentageOfShield}%`;
+  }
+
+  resetShieldBar() {
+    this.shieldBarFiller.style.width = "0%";
+  }
+
+  activateShieldBar() {
+    this.shieldBarFiller.style.width = "100%";
   }
 }

@@ -53,7 +53,6 @@ export class MenuScreen {
 
   animationOut() {
     this.container.id = "menu-screen-animation-out";
-    mainMenu.resetMainMenuNav();
     setTimeout(() => {
       this.container.remove();
       this.container.removeAttribute("id");
