@@ -136,7 +136,8 @@ export class Input {
           width - 38 * 2,
           shipPosition.y
         );
-        shipPosition.x = width - 38 * 2;
+
+        shipPosition.x = width - 37 * 2;
         projectiles.stopRendering = false;
         player.playerInput.direction = "LEFT";
       } else {
@@ -152,7 +153,7 @@ export class Input {
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();
       if (player.isPlayerOutside && player.onWhichSide === "right") {
         player.playerSprite.drawImage(canvasContext2, 0, shipPosition.y);
-        shipPosition.x = 0;
+        shipPosition.x = 1;
         projectiles.stopRendering = false;
         player.playerInput.direction = "RIGHT";
       } else {

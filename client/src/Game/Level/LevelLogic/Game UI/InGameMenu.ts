@@ -70,7 +70,6 @@ export class Menu {
   }
 
   createMenuEventListeners() {
-    console.log("inGame added");
     const openSettings = () => {
       this.nav = "settings";
       this.openMenu();
@@ -99,7 +98,6 @@ export class Menu {
   }
 
   removeMenuEventListeners() {
-    console.log("inGame removed");
     this.menuButton1.removeEventListener("click", this.menuEventListeners[0]);
     this.menuButton2.removeEventListener("click", this.menuEventListeners[1]);
   }

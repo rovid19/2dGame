@@ -72,7 +72,6 @@ export class MainMenu {
   }
 
   setMainMenuNav() {
-    console.log("dada");
     player.isPlayerAlive = false;
     document.body.appendChild(this.mainMenuNavContainer);
     this.mainMenuNavContainer.appendChild(this.mainMenuNav);
@@ -106,7 +105,6 @@ export class MainMenu {
   }
 
   setMainMenuNavEventListeners() {
-    console.log("mainMenu added");
     const startGame = () => {
       if (service.playerReady) {
         menuStore.set("currentMenuNav", "play");
@@ -145,7 +143,6 @@ export class MainMenu {
   }
 
   removeMainMenuNavEventListeners() {
-    console.log("mainMenu removed");
     this.mainMenuNavLi1.removeEventListener(
       "click",
       this.mainMenuNavEventListeners[0]

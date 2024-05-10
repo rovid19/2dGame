@@ -113,7 +113,6 @@ export class Settings extends MenuScreen {
       case 0:
         settingHeading.textContent = "Up";
         settingInput.textContent = player.playerInput.moveUp.slice(3);
-        console.log(player.playerInput.moveUp.slice(3));
         break;
       case 1:
         settingHeading.textContent = "Left";

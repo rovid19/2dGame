@@ -186,6 +186,7 @@ export class Hud {
       player.playerHpBarPercentage - damageTaken
     }%`;
     player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;*/
+
     player.playerHpBar.style.width = `${hpBarPercentage}%`;
   }
 
@@ -267,7 +268,6 @@ export class Hud {
   }
 
   renderShieldAmount(shieldAmount: number) {
-    console.log(shieldAmount);
     const maxShield = player.playerSpells.playerShieldMaxAmount;
     const percentageOfShield =
       ((player.playerShield - shieldAmount) / maxShield) * 100;

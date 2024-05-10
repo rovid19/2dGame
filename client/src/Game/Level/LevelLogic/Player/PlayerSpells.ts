@@ -43,9 +43,10 @@ export class PlayerSpells {
   shieldActivated: boolean = false;
 
   // walls
-  playerWallsDuration: number = 600;
-  playerWallsCooldown: number = 600;
-  playerWallsMaxCooldown: number = 600;
+  playerWallsDuration: number = 60;
+  playerWallsMaxDuration: number = 60;
+  playerWallsCooldown: number = 60;
+  playerWallsMaxCooldown: number = 60;
   wallsActivated: boolean = false;
 
   // explosion
@@ -85,7 +86,6 @@ export class PlayerSpells {
   }
 
   keydownFunction(e: KeyboardEvent) {
-    console.log(this.spell1.value);
     if (player.isPlayerAlive) {
       if (e.code === this.spell1.value) {
         if (this.spellsOnCooldown.includes("Shield")) {
@@ -117,6 +117,7 @@ export class PlayerSpells {
     if (spellValue === "Walls") {
       if (!this.spellsOnCooldown.includes("Walls")) {
         this.spellsOnCooldown.push("Walls");
+        this.playerWallsDuration = this.playerWallsMaxDuration;
         inGameSounds.playWind();
         this.spell = spellValue;
         this.wallsActivated = true;
@@ -251,7 +252,6 @@ export class PlayerSpells {
       this.playerShieldDuration--;
 
       if (this.playerShieldDuration === 0) {
-        console.log("shield isteko");
         player.playerShield = 0;
         HUD.resetShieldBar();
       }
@@ -261,6 +261,7 @@ export class PlayerSpells {
   // Walls logic
 
   renderWalls() {
+    console.log("render");
     if (!document.querySelector(".left-wall")) {
       const leftWall = document.createElement("div") as HTMLElement;
       leftWall.className = "left-wall";
@@ -309,9 +310,9 @@ export class PlayerSpells {
       const isOutside = this.ifSpaceshipIsOutsideOfTheScreenReturnAnObject();
 
       if (isOutside.isOutside) {
-        projectiles.stopRendering = true;
         player.isPlayerOutside = true;
         player.onWhichSide = isOutside.onWhichSide;
+        projectiles.stopRendering = true;
       }
     }
   }
@@ -416,11 +417,15 @@ export class PlayerSpells {
   // Spell powerup logic
 
   decreaseStatByPercentage(value: number) {
-    const decreaseShieldCooldownBy =
-      this.playerShieldMaxCooldown * (value / 100);
-    const decreaseWallsCooldownBy = this.playerWallsMaxCooldown * (value / 100);
-    const decreaseExplosionCooldownBy =
-      this.playerExplosionMaxCooldown * (value / 100);
+    const decreaseShieldCooldownBy = Math.floor(
+      this.playerShieldMaxCooldown * (value / 100)
+    );
+    const decreaseWallsCooldownBy = Math.floor(
+      this.playerWallsMaxCooldown * (value / 100)
+    );
+    const decreaseExplosionCooldownBy = Math.floor(
+      this.playerExplosionMaxCooldown * (value / 100)
+    );
 
     this.playerShieldCooldown -= decreaseShieldCooldownBy;
     this.playerShieldMaxCooldown -= decreaseShieldCooldownBy;
@@ -456,6 +461,7 @@ export class PlayerSpells {
         const increaseWallsDurationBy =
           this.playerWallsDuration * (value / 100);
         this.playerWallsDuration += increaseWallsDurationBy;
+        this.playerWallsMaxDuration = this.playerWallsDuration;
         break;
     }
   }

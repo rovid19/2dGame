@@ -190,7 +190,6 @@ export class Player {
       }
     } else {
       this.playerHp -= takenDamage;
-      console.log(this.playerHp);
       HUD.renderPlayerTakenDamageInHpBar(takenDamage);
     }
   }
