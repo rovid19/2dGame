@@ -1,5 +1,5 @@
 import { Vector2 } from "three";
-import { Coordinates, Vector } from "../../../../Utils/TsTypes";
+import { Coordinates, ImageType, Vector } from "../../../../Utils/TsTypes";
 import { width } from "../Other/canvasLogic";
 
 export class Sprite {
@@ -9,7 +9,7 @@ export class Sprite {
   position: Coordinates;
 
   constructor(
-    image: HTMLImageElement,
+    image: ImageType,
     frameSize: Vector,
     scale: number,
     position?: Vector

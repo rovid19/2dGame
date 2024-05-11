@@ -14,6 +14,7 @@ import {
   InputSpellType,
   Projectile,
   InputType,
+  ImageType,
 } from "../../../../Utils/TsTypes";
 import { Input } from "./PlayerInput";
 import { PlayerSpells } from "./PlayerSpells";
@@ -47,7 +48,7 @@ export class Player {
   levelUpArray: number[] = [];
 
   constructor(
-    spaceshipImage: HTMLImageElement,
+    spaceshipImage: ImageType,
     frameHeight: number,
     frameWidth: number,
     scale: number
@@ -149,6 +150,7 @@ export class Player {
     HUD.resetExpBarAfterLevelUp();
     HUD.renderPlayerGainedHp();
     enemySpawner.decreaseEnemySpawnCooldown();
+    enemySpawner.decreaseAsteroidSpawnCooldown();
     this.increasePlayerStatsAfterPowerUp("Damage increase", 5);
   }
 
@@ -191,6 +193,7 @@ export class Player {
     } else {
       this.playerHp -= takenDamage;
       HUD.renderPlayerTakenDamageInHpBar(takenDamage);
+      this.checkIfPlayerIsDead();
     }
   }
 

@@ -194,10 +194,10 @@
   z-index: 5;
   background: linear-gradient(
     to bottom,
-    #d47d31 0%,
-    #f5c34c 40%,
-    #f5c34c 60%,
-    #d47d31 100%
+    #3bbfe3 0%,
+    #269dbe 40%,
+    #269dbe 60%,
+    #3bbfe3 100%
   );
   image-rendering: pixelated;
   border-radius: 6px;

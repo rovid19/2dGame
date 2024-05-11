@@ -6,7 +6,7 @@ import {
   shipPosition,
 } from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
-import { SpriteMethods, Vector } from "../../../../Utils/TsTypes";
+import { ImageType, SpriteMethods, Vector } from "../../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";
 import { Vector2 } from "../Sprite/Vector";
 import { keydown } from "../../../MainMenu/MainMenuLogic";
@@ -40,7 +40,7 @@ export class Projectile {
 
   constructor(
     shipPosition: Vector,
-    projectileImage: HTMLImageElement,
+    projectileImage: ImageType,
     frameHeight: number,
     frameWidth: number,
     scale: number

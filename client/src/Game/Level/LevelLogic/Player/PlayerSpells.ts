@@ -43,10 +43,10 @@ export class PlayerSpells {
   shieldActivated: boolean = false;
 
   // walls
-  playerWallsDuration: number = 60;
-  playerWallsMaxDuration: number = 60;
-  playerWallsCooldown: number = 60;
-  playerWallsMaxCooldown: number = 60;
+  playerWallsDuration: number = 350;
+  playerWallsMaxDuration: number = 350;
+  playerWallsCooldown: number = 600;
+  playerWallsMaxCooldown: number = 600;
   wallsActivated: boolean = false;
 
   // explosion
@@ -261,7 +261,6 @@ export class PlayerSpells {
   // Walls logic
 
   renderWalls() {
-    console.log("render");
     if (!document.querySelector(".left-wall")) {
       const leftWall = document.createElement("div") as HTMLElement;
       leftWall.className = "left-wall";

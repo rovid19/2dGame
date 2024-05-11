@@ -19,7 +19,6 @@ import { Menu } from "./Game UI/InGameMenu.ts";
 import { PowerUp } from "./Game UI/PowerUp.ts";
 import { Asteroid } from "./Enemy/Asteroid.ts";
 import { Sounds } from "./Other/Sounds.ts";
-import { keydown } from "../../MainMenu/MainMenuLogic.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 export let canvasContext2: CanvasRenderingContext2D;
@@ -90,7 +89,7 @@ export const defaultRenderPosition = {
 export const enemyArray: EnemyObject[] = [];
 export const enemySpawner = new EnemySpawner();
 export const asteroid = new Asteroid(
-  levelImages.images.meteor1,
+  levelImages.images.meteor4,
   new Vector2(100, 200),
   2,
   defaultRenderPosition
@@ -164,13 +163,6 @@ export function renderLevel() {
     projectiles.renderProjectile();
     player.renderPlayerSpaceship();
     enemySpawner.renderEnemies();
-    /*asteroid.asteroidSprite.drawImage(canvasContext2, 200, 300);
-    ("vidljivi", asteroid);
-    enemySpawner.asteroidArray.forEach((asteroid) => {
-      console.log(asteroid);
-      asteroid.asteroidSprite.drawImage(canvasContext2, 200, 500);
-    });*/
-
     playerMethods();
   }
 }
@@ -179,7 +171,7 @@ function playerMethods() {
   projectiles.reloadProjectile();
   player.playerSpells.renderSpells();
   player.checkIfHitByAnEnemy();
-  player.checkIfPlayerIsDead();
+  //player.checkIfPlayerIsDead();
   player.gainExpForMultipleEnemies();
   powerUp.openPowerUpIfQueueExists();
   //menu.openMenu();

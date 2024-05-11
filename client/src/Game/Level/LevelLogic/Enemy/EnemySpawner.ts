@@ -165,10 +165,10 @@ export class EnemySpawner {
       const asteroidImage = asteroid.selectRandomAsteroidImage();
 
       const asteroidSpawn = new Asteroid(
-        asteroidImage.image,
+        asteroidImage,
         new Vector2(asteroidImage.image.height, asteroidImage.image.width),
         2,
-        defaultRenderPosition
+        new Vector2(-100, 0 + Math.random() * (width - 0))
       );
 
       for (let i = 0; i < player.playerLevel; i++) {
@@ -278,9 +278,9 @@ export class EnemySpawner {
   }
 
   decreaseEnemySpawnCooldown() {
-    const decreaseBasicBy = Math.floor(this.enemyBasicSpawnCD * 0.1);
-    const decreaseBasic2By = Math.floor(this.enemyBasic2SpawnCD * 0.1);
-    const decreaseBasic3By = Math.floor(this.enemyBasic3SpawnCD * 0.1);
+    const decreaseBasicBy = Math.floor(this.enemyBasicSpawnMaxCD * 0.1);
+    const decreaseBasic2By = Math.floor(this.enemyBasic2SpawnMaxCD * 0.1);
+    const decreaseBasic3By = Math.floor(this.enemyBasic3SpawnMaxCD * 0.1);
 
     this.enemyBasicSpawnCD -= decreaseBasicBy;
     this.enemyBasicSpawnMaxCD -= decreaseBasicBy;
@@ -290,6 +290,15 @@ export class EnemySpawner {
 
     this.enemyBasic3SpawnCD -= decreaseBasic3By;
     this.enemyBasic2SpawnMaxCD -= decreaseBasic3By;
+  }
+
+  decreaseAsteroidSpawnCooldown() {
+    const decreaseAsteroidSpawnCdBy = Math.floor(this.asteroidSpawnMaxCD * 0.1);
+    console.log(this.asteroidSpawnMaxCD);
+    this.asteroidSpawnCD -= decreaseAsteroidSpawnCdBy;
+    this.asteroidSpawnMaxCD -= decreaseAsteroidSpawnCdBy;
+
+    console.log(this.asteroidSpawnMaxCD);
   }
 
   spawnEnemiesFromAllSides(): Vector {
