@@ -242,6 +242,7 @@ export class Hud {
       player.playerInput.resetInput();
       player.playerSpells.resetSpells();
       player.playerSpells.resetSpellEventListeners();
+      this.resetSpellCooldowns();
       this.playerIsDeadContainer.remove();
     });
   }
@@ -278,5 +279,11 @@ export class Hud {
 
   activateShieldBar() {
     this.shieldBarFiller.style.width = "100%";
+  }
+
+  resetSpellCooldowns() {
+    this.playerSpell1Cooldown.style.width = "0%";
+    this.playerSpell2Cooldown.style.width = "0%";
+    this.playerSpell3Cooldown.style.width = "0%";
   }
 }

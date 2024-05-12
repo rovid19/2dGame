@@ -2,12 +2,7 @@ import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
 import { ImageType, SpriteMethods, Vector } from "../../../../Utils/TsTypes";
 import { height } from "../Other/canvasLogic";
 import { Sprite } from "../Sprite/Sprite";
-import {
-  defaultRenderPosition,
-  levelImages,
-  player,
-  shipPosition,
-} from "../mainLevelLogic";
+import { levelImages, player, shipPosition } from "../mainLevelLogic";
 
 export class Asteroid {
   asteroidSprite: SpriteMethods;

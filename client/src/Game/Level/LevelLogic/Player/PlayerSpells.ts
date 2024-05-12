@@ -253,7 +253,7 @@ export class PlayerSpells {
   // Shield logic
 
   renderShield() {
-    // console.log(player.playerShield, this.playerShieldDuration);
+    console.log(player.playerShield, this.playerShieldDuration);
 
     if (player.playerShield > 0 && this.playerShieldDuration > 0) {
       //render shield in the middle of spaceship sprite

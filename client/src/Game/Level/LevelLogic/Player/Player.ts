@@ -153,10 +153,9 @@ export class Player {
     enemySpawner.decreaseEnemySpawnCooldown();
     enemySpawner.decreaseAsteroidSpawnCooldown();
     this.increasePlayerStatsAfterPowerUp("Damage increase", 5);
-    this.increasePlayerStatsAfterPowerUp("Movement speed increase", 5);
+    this.increasePlayerStatsAfterPowerUp("Movement speed increase", 1);
     this.increasePlayerStatsAfterPowerUp("Projectile size increase", 5);
     this.increasePlayerStatsAfterPowerUp("Cooldown reduction", 2);
-    //console.log(this.playerSpells.playerExplosionDamage);
     this.playerSpells.increaseSpellStats("Explosion damage increase", 5);
   }
 

@@ -2,7 +2,6 @@ import {
   asteroid,
   canvasContext,
   canvasContext2,
-  defaultRenderPosition,
   levelImages,
   player,
 } from "../mainLevelLogic";
