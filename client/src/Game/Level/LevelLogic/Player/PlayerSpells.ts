@@ -94,17 +94,25 @@ export class PlayerSpells {
         }
       }
       if (e.code === this.spell2.value) {
-        this.activateSpell("Walls");
+        if (this.spellsOnCooldown.includes("Walls")) {
+        } else {
+          this.activateSpell("Walls");
+        }
       }
       if (e.code === this.spell3.value) {
-        this.activateSpell("Explosion");
+        if (this.spellsOnCooldown.includes("Explosion")) {
+        } else {
+          this.activateSpell("Explosion");
+        }
       }
     }
   }
 
   activateSpell = (spellValue: string) => {
     if (spellValue === "Shield") {
+      console.log("jaoo");
       if (!this.spellsOnCooldown.includes("Shield")) {
+        console.log("shield aktiviran");
         player.playerShield = this.playerShieldAmount;
         this.playerShieldDuration = this.playerShieldMaxDuration;
         this.spellsOnCooldown.push("Shield");
@@ -112,6 +120,9 @@ export class PlayerSpells {
         this.shieldActivated = true;
         inGameSounds.playShield();
         HUD.activateShieldBar();
+        console.log("push", this.shieldActivated);
+      } else {
+        console.log("SHIEL ACTIVE");
       }
     }
     if (spellValue === "Walls") {
@@ -121,6 +132,8 @@ export class PlayerSpells {
         inGameSounds.playWind();
         this.spell = spellValue;
         this.wallsActivated = true;
+      } else {
+        console.log("WALLZ ACTIVE");
       }
     }
     if (spellValue === "Explosion") {
@@ -136,29 +149,32 @@ export class PlayerSpells {
   };
 
   renderSpells() {
-    if (this.shieldActivated) {
-      this.renderShield();
-      if (this.playerShieldDuration === 0 || player.playerShield <= 0) {
-        this.activateSpellCooldown();
+    if (player.isPlayerAlive) {
+      console.log(this.shieldActivated);
+      if (this.shieldActivated) {
+        this.renderShield();
+        if (this.playerShieldDuration === 0 || player.playerShield <= 0) {
+          this.activateSpellCooldown();
+        }
       }
-    }
-    if (this.wallsActivated) {
-      this.renderWalls();
-      if (this.playerWallsDuration > 0) this.playerWallsDuration--;
+      if (this.wallsActivated) {
+        this.renderWalls();
+        if (this.playerWallsDuration > 0) this.playerWallsDuration--;
 
-      this.renderSpaceshipAccordingly();
-      if (this.playerWallsDuration === 0) {
-        this.playerWallsDuration = 0;
-        this.activateSpellCooldown();
+        this.renderSpaceshipAccordingly();
+        if (this.playerWallsDuration === 0) {
+          this.playerWallsDuration = 0;
+          this.activateSpellCooldown();
+        }
       }
-    }
 
-    if (this.explosionActivated) {
-      if (this.explosionShowRadius) {
-        this.chargeExplosion();
-      } else {
-        this.dealDamageToEnemiesNearBy();
-        this.activateSpellCooldown();
+      if (this.explosionActivated) {
+        if (this.explosionShowRadius) {
+          this.chargeExplosion();
+        } else {
+          this.dealDamageToEnemiesNearBy();
+          this.activateSpellCooldown();
+        }
       }
     }
   }
@@ -177,6 +193,7 @@ export class PlayerSpells {
             );
 
             if (this.playerShieldCooldown === 0) {
+              console.log("dadad");
               this.spellsOnCooldown.splice(i, 1);
               this.shieldActivated = false;
               this.playerShieldDuration = 0;
@@ -236,6 +253,8 @@ export class PlayerSpells {
   // Shield logic
 
   renderShield() {
+    // console.log(player.playerShield, this.playerShieldDuration);
+
     if (player.playerShield > 0 && this.playerShieldDuration > 0) {
       //render shield in the middle of spaceship sprite
       const shieldMinusShipHeight = 122 - 68;
@@ -359,13 +378,17 @@ export class PlayerSpells {
     }
   }
 
+  removeExplosionRadius() {
+    document.querySelector(".radius-container-top-right")?.remove();
+    document.querySelector(".radius-container-top-left")?.remove();
+    document.querySelector(".radius-container-bottom-right")?.remove();
+    document.querySelector(".radius-container-bottom-left")?.remove();
+    this.explosionShowRadius = false;
+  }
+
   chargeExplosion() {
     if (this.explosionShowRadiusDuration === 0) {
-      document.querySelector(".radius-container-top-right")?.remove();
-      document.querySelector(".radius-container-top-left")?.remove();
-      document.querySelector(".radius-container-bottom-right")?.remove();
-      document.querySelector(".radius-container-bottom-left")?.remove();
-      this.explosionShowRadius = false;
+      this.removeExplosionRadius();
     } else {
       if (!document.querySelector(".radius-container-top-right")) {
         document.body.appendChild(this.explosionRadiusContainerTopRight);
@@ -436,12 +459,39 @@ export class PlayerSpells {
     this.playerExplosionMaxCooldown -= decreaseExplosionCooldownBy;
   }
 
+  resetSpells() {
+    this.playerShieldMaxCooldown = 600;
+    this.playerShieldCooldown = this.playerShieldMaxCooldown;
+    this.playerShieldMaxDuration = 240;
+    this.playerShieldDuration = this.playerShieldMaxDuration;
+    this.playerShieldAmount = 100;
+    this.shieldActivated = false;
+
+    this.playerWallsMaxCooldown = 600;
+    this.playerWallsCooldown = this.playerWallsMaxCooldown;
+    this.playerWallsMaxDuration = 350;
+    this.playerWallsDuration = this.playerWallsMaxDuration;
+    this.wallsActivated = false;
+    this.removeWalls();
+
+    this.playerExplosionDamage = 50;
+    this.playerExplosionMaxCooldown = 600;
+    this.playerExplosionCooldown = this.playerExplosionMaxCooldown;
+    this.playerExplosionRadius = 250;
+    this.explosionActivated = false;
+
+    this.spellsOnCooldown = [];
+    this.spell = "";
+
+    this.removeExplosionRadius();
+  }
+
   increaseSpellStats(name: string, value: number) {
     switch (name) {
       case "Shield duration increase":
         const increaseDurationBy = this.playerShieldDuration * (value / 100);
-        this.playerShieldDuration += increaseDurationBy;
-        this.playerShieldMaxDuration = this.playerShieldDuration;
+        //this.playerShieldDuration += increaseDurationBy;
+        this.playerShieldMaxDuration += increaseDurationBy;
         break;
       case "Shield amount increase":
         const increaseAmountBy = this.playerShieldAmount * (value / 100);
@@ -449,8 +499,10 @@ export class PlayerSpells {
         this.playerShieldMaxAmount = this.playerShieldAmount;
         break;
       case "Explosion damage increase":
+        console.log(this.playerExplosionDamage);
         const increaseDamageBy = this.playerExplosionDamage * (value / 100);
         this.playerExplosionDamage += increaseDamageBy;
+        console.log(this.playerExplosionDamage);
         break;
       case "Explosion radius increase":
         const increaseRadiusBy = this.playerExplosionRadius * (value / 100);
@@ -459,8 +511,8 @@ export class PlayerSpells {
       case "Walls duration increase":
         const increaseWallsDurationBy =
           this.playerWallsDuration * (value / 100);
-        this.playerWallsDuration += increaseWallsDurationBy;
-        this.playerWallsMaxDuration = this.playerWallsDuration;
+        //this.playerWallsDuration += increaseWallsDurationBy;
+        this.playerWallsMaxDuration += increaseWallsDurationBy;
         break;
     }
   }
@@ -468,7 +520,7 @@ export class PlayerSpells {
   removeEventListener() {
     document.removeEventListener("keydown", this.keydownFunction);
   }
-  resetSpells() {
+  resetSpellEventListeners() {
     document.addEventListener("keydown", this.keydownFunction);
   }
 }

@@ -219,10 +219,10 @@ export class Projectile {
   resetProjectile() {
     this.prjDirectionsLeft = { x: 0, y: 0 };
     this.prjDirectionsRight = { x: 0, y: 0 };
-    this.prjSpeed = 15;
-    this.prjDamage = 50;
+    this.prjSpeed = 22;
+    this.prjDamage = 18;
     this.prjAmount = 1;
-    this.prjReloadCooldown = 10;
+    this.prjReloadCooldown = 20;
     this.prjReloadSpeed = 20;
     this.isReloading = false;
     this.isFiring = false;

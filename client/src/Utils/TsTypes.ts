@@ -138,6 +138,7 @@ export type InputSpellType = {
   renderWalls(): void;
   removeEventListener(): void;
   resetSpells(): void;
+  resetSpellEventListeners(): void;
   decreaseStatByPercentage(value: number): void;
   increaseSpellStats(name: string, value: number): void;
   keydownFunction(e: KeyboardEvent): void;

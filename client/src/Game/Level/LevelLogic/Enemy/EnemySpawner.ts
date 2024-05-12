@@ -268,6 +268,7 @@ export class EnemySpawner {
     this.enemyBasicArray = [];
     this.enemyBasic2Array = [];
     this.enemyBasic3Array = [];
+    this.asteroidArray = [];
     this.bossArray = [];
     this.enemyArray = [
       this.enemyBasicArray,
@@ -275,6 +276,18 @@ export class EnemySpawner {
       this.enemyBasic3Array,
       this.bossArray,
     ];
+
+    this.enemyBasicSpawnMaxCD = 350;
+    this.enemyBasicSpawnCD = this.enemyBasicSpawnMaxCD;
+
+    this.enemyBasic2SpawnMaxCD = 1700;
+    this.enemyBasic2SpawnCD = this.enemyBasic2SpawnMaxCD;
+
+    this.enemyBasic3SpawnMaxCD = 2100;
+    this.enemyBasic3SpawnCD = this.enemyBasic3SpawnMaxCD;
+
+    this.asteroidSpawnMaxCD = 200;
+    this.asteroidSpawnCD = this.asteroidSpawnMaxCD;
   }
 
   decreaseEnemySpawnCooldown() {
@@ -282,23 +295,19 @@ export class EnemySpawner {
     const decreaseBasic2By = Math.floor(this.enemyBasic2SpawnMaxCD * 0.1);
     const decreaseBasic3By = Math.floor(this.enemyBasic3SpawnMaxCD * 0.1);
 
-    this.enemyBasicSpawnCD -= decreaseBasicBy;
     this.enemyBasicSpawnMaxCD -= decreaseBasicBy;
 
-    this.enemyBasic2SpawnCD -= decreaseBasic2By;
     this.enemyBasic2SpawnMaxCD -= decreaseBasic2By;
 
-    this.enemyBasic3SpawnCD -= decreaseBasic3By;
-    this.enemyBasic2SpawnMaxCD -= decreaseBasic3By;
+    this.enemyBasic3SpawnMaxCD -= decreaseBasic3By;
   }
 
   decreaseAsteroidSpawnCooldown() {
-    const decreaseAsteroidSpawnCdBy = Math.floor(this.asteroidSpawnMaxCD * 0.1);
-    console.log(this.asteroidSpawnMaxCD);
-    this.asteroidSpawnCD -= decreaseAsteroidSpawnCdBy;
-    this.asteroidSpawnMaxCD -= decreaseAsteroidSpawnCdBy;
+    const decreaseAsteroidSpawnCdBy = Math.floor(
+      this.asteroidSpawnMaxCD * 0.15
+    );
 
-    console.log(this.asteroidSpawnMaxCD);
+    this.asteroidSpawnMaxCD -= decreaseAsteroidSpawnCdBy;
   }
 
   spawnEnemiesFromAllSides(): Vector {

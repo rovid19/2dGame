@@ -38,7 +38,7 @@ export class Menu {
       }
     } else if (this.nav === "closeMenu") {
       player.playerInput.resetInput();
-      player.playerSpells.resetSpells();
+      player.playerSpells.resetSpellEventListeners();
       player.isPlayerAlive = true;
       mainMenu.settings.resetSettingContainerValues();
       this.menuContainer.remove();
@@ -86,6 +86,7 @@ export class Menu {
       projectiles.resetProjectile();
       player.playerInput.resetInput();
       player.playerSpells.resetSpells();
+      player.playerSpells.resetSpellEventListeners();
       mainMenu.settings.removeSettings();
       this.removeSettingsEventListeners();
       this.menuMainDiv.remove();

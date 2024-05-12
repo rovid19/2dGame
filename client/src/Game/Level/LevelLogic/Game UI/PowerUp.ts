@@ -210,7 +210,7 @@ export class PowerUp {
 
         player.isPlayerAlive = true;
         player.playerInput.resetInput();
-        player.playerSpells.resetSpells();
+        player.playerSpells.resetSpellEventListeners();
 
         this.powerUpMainDiv.removeAttribute("id");
       }, 400);
@@ -248,8 +248,10 @@ export class PowerUp {
     // increase the chance of higher rarity powerups with player levelups
     if (player.playerLevel > 5) {
       rarityArray.shift();
+      console.log(rarityArray);
       if (player.playerLevel > 10) {
         rarityArray.shift();
+        console.log("lvl10", rarityArray);
       }
     }
 

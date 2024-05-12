@@ -179,13 +179,9 @@ export class Hud {
   }
 
   renderPlayerTakenDamageInHpBar(enemyDamage: number) {
-    const hpBarPercentage =
-      ((player.playerHp - enemyDamage) / player.playerMaxHP) * 100;
-    /* const damageTaken = (enemyDamage / player.playerMaxHP) * 100;
-    player.playerHpBar.style.width = `${
-      player.playerHpBarPercentage - damageTaken
-    }%`;
-    player.playerHpBarPercentage = player.playerHpBarPercentage - damageTaken;*/
+    const hpBarPercentage = Math.floor(
+      ((player.playerHp - enemyDamage) / player.playerMaxHP) * 100
+    );
 
     player.playerHpBar.style.width = `${hpBarPercentage}%`;
   }
@@ -245,6 +241,7 @@ export class Hud {
       projectiles.resetProjectile();
       player.playerInput.resetInput();
       player.playerSpells.resetSpells();
+      player.playerSpells.resetSpellEventListeners();
       this.playerIsDeadContainer.remove();
     });
   }
@@ -254,7 +251,7 @@ export class Hud {
     document.querySelectorAll(".enemy-hp-bar-container").forEach((hpBar) => {
       hpBar.remove();
     });
-    this.shieldBarFiller.style.width = "100%";
+    this.shieldBarFiller.style.width = "0%";
     this.playerExpBarFiller.style.width = "0%";
     this.playerExpBarHeading.textContent = "Lvl 1";
     this.playerScoreHeading.textContent = "0";

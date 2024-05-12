@@ -106,6 +106,7 @@ export class Player {
     this.playerExp += expAmountGained;
 
     HUD.renderGainedExp();
+    //console.log(this.playerSpells.playerExplosionDamage);
     if (this.playerExp >= this.playerExpNeeded) {
       this.playerLevelUp(false);
     }
@@ -140,7 +141,7 @@ export class Player {
 
   playerLevelUp(aoe: boolean) {
     this.playerExp = 0;
-    this.playerMaxHP += 25;
+    this.playerMaxHP += 35;
     this.playerHp = this.playerMaxHP;
     this.playerLevel++;
     if (!aoe) this.playerExpNeeded = this.playerExpNeeded * 2;
@@ -152,6 +153,11 @@ export class Player {
     enemySpawner.decreaseEnemySpawnCooldown();
     enemySpawner.decreaseAsteroidSpawnCooldown();
     this.increasePlayerStatsAfterPowerUp("Damage increase", 5);
+    this.increasePlayerStatsAfterPowerUp("Movement speed increase", 5);
+    this.increasePlayerStatsAfterPowerUp("Projectile size increase", 5);
+    this.increasePlayerStatsAfterPowerUp("Cooldown reduction", 2);
+    //console.log(this.playerSpells.playerExplosionDamage);
+    this.playerSpells.increaseSpellStats("Explosion damage increase", 5);
   }
 
   checkIfPlayerIsDead() {
@@ -187,12 +193,13 @@ export class Player {
         this.playerHp -= Math.abs(moreThanShieldAmount);
         HUD.renderPlayerTakenDamageInHpBar(takenDamage);
       } else {
-        this.playerShield -= takenDamage;
         HUD.renderShieldAmount(takenDamage);
+        this.playerShield -= takenDamage;
       }
     } else {
-      this.playerHp -= takenDamage;
       HUD.renderPlayerTakenDamageInHpBar(takenDamage);
+      this.playerHp -= takenDamage;
+
       this.checkIfPlayerIsDead();
     }
   }
@@ -200,19 +207,13 @@ export class Player {
   increasePlayerStatsAfterPowerUp(powerUp: string, value: number) {
     switch (powerUp) {
       case "Damage increase":
-        console.log(projectiles.prjDamage);
         this.increaseStatByPercentage(projectiles, value);
-        console.log(projectiles.prjDamage);
         break;
       case "Movement speed increase":
-        console.log(player.playerSpeed);
         this.increaseStatByPercentage(player, value);
-        console.log(player.playerSpeed);
         break;
       case "Reload speed increase":
-        console.log(projectiles.prjSpeed, "cd", projectiles.prjReloadCooldown);
         this.decreaseStatByPercentage(projectiles, value);
-        console.log(projectiles.prjSpeed, "cd", projectiles.prjReloadCooldown);
         break;
       case "Projectile size increase":
         projectiles.increaseProjectileSizeAndHitbox(value);
