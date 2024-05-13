@@ -25,38 +25,38 @@ export let canvasContext2: CanvasRenderingContext2D;
 
 export const levelImages = new LevelImages({
   // PLAYER SHIPS
-  playerShip1: "../public/sprites/spaceship/spaceship1.png",
-  playerShip2: "../public/sprites/spaceship/spaceship2.png",
-  playerShip3: "../public/sprites/spaceship/spaceship3.png",
+  playerShip1: "sprites/spaceship/spaceship1.png",
+  playerShip2: "sprites/spaceship/spaceship2.png",
+  playerShip3: "sprites/spaceship/spaceship3.png",
 
   // BACKGROUNDS
-  background1: "../public/sprites/background/primary.png",
-  background2: "../public/sprites/background/primary2.png",
-  background3: "../public/sprites/background/primary3.png",
-  background4: "../public/sprites/background/primary4.png",
-  background5: "../public/sprites/background/primary5.png",
+  background1: "sprites/background/primary.png",
+  background2: "sprites/background/primary2.png",
+  background3: "sprites/background/primary3.png",
+  background4: "sprites/background/primary4.png",
+  background5: "sprites/background/primary5.png",
 
   // SPELLS
-  spellShield: "../public/sprites/spells/spellShield.png",
-  spellWalls: "../public/sprites/spells/spellWalls.png",
-  spellExplosion: "../public/sprites/spells/spellExplosion.png",
+  spellShield: "sprites/spells/spellShield.png",
+  spellWalls: "sprites/spells/spellWalls.png",
+  spellExplosion: "sprites/spells/spellExplosion.png",
 
   // PROJECTILES
-  projectile1: "../public/sprites/projectiles/projectile1.png",
-  projectile2: "../public/sprites/projectiles/projectile2.png",
-  projectile3: "../public/sprites/projectiles/projectile3.png",
+  projectile1: "sprites/projectiles/projectile1.png",
+  projectile2: "sprites/projectiles/projectile2.png",
+  projectile3: "sprites/projectiles/projectile3.png",
 
   // ENEMIES
-  enemy1: "../public/sprites/enemies/enemy1.png",
-  enemy2: "../public/sprites/enemies/enemy2.png",
-  enemy3: "../public/sprites/enemies/enemy3.png",
-  enemy4: "../public/sprites/enemies/enemy4.png",
+  enemy1: "sprites/enemies/enemy1.png",
+  enemy2: "sprites/enemies/enemy2.png",
+  enemy3: "sprites/enemies/enemy3.png",
+  enemy4: "sprites/enemies/enemy4.png",
 
   // METEORS
-  meteor1: "../public/sprites/enemies/meteor1.png",
-  meteor2: "../public/sprites/enemies/meteor2.png",
-  meteor3: "../public/sprites/enemies/meteor3.png",
-  meteor4: "../public/sprites/enemies/meteor4.png",
+  meteor1: "sprites/enemies/meteor1.png",
+  meteor2: "sprites/enemies/meteor2.png",
+  meteor3: "sprites/enemies/meteor3.png",
+  meteor4: "sprites/enemies/meteor4.png",
 });
 
 // AUDIO
