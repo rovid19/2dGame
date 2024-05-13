@@ -9,7 +9,6 @@ import { AsteroidType, EnemyInstance, Vector } from "../../../../Utils/TsTypes";
 import { Enemy } from "./Enemy";
 import { Asteroid } from "./Asteroid";
 import { Vector2 } from "../Sprite/Vector";
-import { Boss } from "./EnemyBoss";
 import { height, width } from "../Other/canvasLogic";
 
 export class EnemySpawner {
@@ -143,23 +142,6 @@ export class EnemySpawner {
 
       this.enemyBasic3Array.push(enemy);
       this.isEnemyBasic3Ready = false;
-    } else if (whichEnemy === "boss") {
-      const enemyPosition = this.spawnEnemiesFromAllSides();
-
-      const bossImage = levelImages.images.enemy4;
-
-      const boss = new Boss(
-        4,
-        bossImage,
-        bossImage.image.height,
-        bossImage.image.width,
-        3,
-        whichEnemy,
-        enemyPosition
-      );
-
-      this.bossArray.push(boss);
-      this.isEnemyBossReady = false;
     } else {
       const asteroidImage = asteroid.selectRandomAsteroidImage();
 

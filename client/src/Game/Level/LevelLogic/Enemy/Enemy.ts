@@ -1,12 +1,12 @@
 import { HUD, player, shipPosition } from "../mainLevelLogic";
 import {
   EnemyInstance,
+  ImageType,
   SpriteMethods,
   Vector,
 } from "../../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";
 import { Vector2 } from "../Sprite/Vector";
-import { height, width } from "../Other/canvasLogic";
 
 export class Enemy {
   enemySprite: SpriteMethods;
@@ -32,7 +32,7 @@ export class Enemy {
 
   constructor(
     speed: number,
-    enemyImage: HTMLImageElement,
+    enemyImage: ImageType,
     frameHeight: number,
     frameWidth: number,
     scale: number,
