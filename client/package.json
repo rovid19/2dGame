@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "tsc --watch",
+    "start": "serve -s build -l 3000",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "jest --verbose"
@@ -25,6 +25,7 @@
     "@types/jest": "^29.5.12",
     "axios": "^1.6.8",
     "babel-jest": "^29.7.0",
+    "serve": "^14.2.3",
     "three": "^0.164.1"
   }
 }
