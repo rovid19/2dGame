@@ -116,7 +116,7 @@ export const threeSetup = (): void => {
   Init();
 };
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://api-spaceapocalypse.up.railway.app"; //http://localhost:3000
 export const mainMenu = new MainMenu(new Settings(), new Leaderboards());
 export const keydown = new Keydown();
 export const service = new Service();
