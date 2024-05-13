@@ -1,4 +1,5 @@
-import { service } from "../../../MainMenu/MainMenuLogic";
+import { menuStore } from "../../../../Stores/MenuStore";
+import { mainMenu, service } from "../../../MainMenu/MainMenuLogic";
 import {
   enemySpawner,
   inGameSounds,
@@ -47,6 +48,7 @@ export class Hud {
   playerIsDeadButtonContainer: HTMLElement = document.createElement("div");
   playerIsDeadButton1: HTMLElement = document.createElement("button");
   playerIsDeadButton2: HTMLElement = document.createElement("div");
+  playerDeadEventListeners: (() => void)[] = [];
 
   // SCORE BAR
   playerScoreContainer: HTMLElement = document.createElement("div");
@@ -234,7 +236,7 @@ export class Hud {
   }
 
   playerDiedScreenButtonActions() {
-    this.playerIsDeadButton1.addEventListener("click", () => {
+    const resetGame = () => {
       this.resetHud();
       player.resetPlayer();
       enemySpawner.resetEnemies();
@@ -244,7 +246,40 @@ export class Hud {
       player.playerSpells.resetSpellEventListeners();
       this.resetSpellCooldowns();
       this.playerIsDeadContainer.remove();
-    });
+    };
+    this.playerDeadEventListeners.push(resetGame);
+
+    const exitGame = () => {
+      menuStore.set("currentMenuNav", "menu");
+      mainMenu.setAnimationOut(this.playerIsDeadContainer);
+      player.resetPlayer();
+      player.isPlayerAlive = false;
+      enemySpawner.resetEnemies();
+      projectiles.resetProjectile();
+      player.playerInput.resetInput();
+      player.playerSpells.resetSpells();
+      player.playerSpells.resetSpellEventListeners();
+      mainMenu.settings.removeSettings();
+      this.removePlayerDeadEventListeners();
+    };
+
+    this.playerDeadEventListeners.push(exitGame);
+
+    this.playerIsDeadButton1.addEventListener("click", resetGame);
+    this.playerIsDeadButton2.addEventListener("click", exitGame);
+  }
+
+  removePlayerDeadEventListeners() {
+    this.playerIsDeadButton1.removeEventListener(
+      "click",
+      this.playerDeadEventListeners[0]
+    );
+    this.playerIsDeadButton2.removeEventListener(
+      "click",
+      this.playerDeadEventListeners[1]
+    );
+
+    this.playerDeadEventListeners = [];
   }
 
   resetHud() {

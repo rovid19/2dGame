@@ -18,9 +18,7 @@ export class MainMenu {
   mainMenuDiv: HTMLElement = document.createElement("div");
   mainMenuOverlayDiv: HTMLElement = document.createElement("div");
   mainMenuInnerDiv: HTMLElement = document.createElement("div");
-  mainMenuAudio: HTMLAudioElement = new Audio(
-    "../../public/sounds/soundtrack2.mp3"
-  );
+  mainMenuAudio: HTMLAudioElement = new Audio("sounds/soundtrack2.mp3");
 
   // main menu nav
   mainMenuNavContainer: HTMLElement = document.createElement("div");
@@ -105,41 +103,46 @@ export class MainMenu {
   }
 
   setMainMenuNavEventListeners() {
-    const startGame = () => {
-      if (service.playerReady) {
-        menuStore.set("currentMenuNav", "play");
-        player.isPlayerAlive = true;
-        this.setAnimation();
-        setTimeout(() => {
-          generateLevel();
-          setHud();
-        }, 800);
-      } else {
-        this.createUsernamePopup();
-      }
-    };
-    this.mainMenuNavEventListeners.push(startGame);
+    if (this.mainMenuNavEventListeners.length > 0) {
+      console.log("alreadyexists event");
+    } else {
+      const startGame = () => {
+        if (service.playerReady) {
+          menuStore.set("currentMenuNav", "play");
+          player.isPlayerAlive = true;
+          this.setAnimation();
+          setTimeout(() => {
+            console.log("pokrenuto");
+            generateLevel();
+            setHud();
+          }, 800);
+        } else {
+          this.createUsernamePopup();
+        }
+      };
+      this.mainMenuNavEventListeners.push(startGame);
 
-    const openSettings = () => {
-      menuStore.set("currentMenuNav", "settings");
-      this.mainMenuAnimation("out");
-      this.settings.createSettings();
-    };
-    this.mainMenuNavEventListeners.push(openSettings);
+      const openSettings = () => {
+        menuStore.set("currentMenuNav", "settings");
+        this.mainMenuAnimation("out");
+        this.settings.createSettings();
+      };
+      this.mainMenuNavEventListeners.push(openSettings);
 
-    const openLeaderboards = () => {
-      this.leaderboards.createLeaderboards();
-      this.mainMenuAnimation("out");
-    };
-    this.mainMenuNavEventListeners.push(openLeaderboards);
+      const openLeaderboards = () => {
+        this.leaderboards.createLeaderboards();
+        this.mainMenuAnimation("out");
+      };
+      this.mainMenuNavEventListeners.push(openLeaderboards);
 
-    const playOrMute = () => this.playOrMuteSoundtrack();
-    this.mainMenuNavEventListeners.push(playOrMute);
+      const playOrMute = () => this.playOrMuteSoundtrack();
+      this.mainMenuNavEventListeners.push(playOrMute);
 
-    this.mainMenuNavLi1.addEventListener("click", startGame);
-    this.mainMenuNavLi2.addEventListener("click", openSettings);
-    this.mainMenuNavLi3.addEventListener("click", openLeaderboards);
-    this.mainMenuNavButton.addEventListener("click", playOrMute);
+      this.mainMenuNavLi1.addEventListener("click", startGame);
+      this.mainMenuNavLi2.addEventListener("click", openSettings);
+      this.mainMenuNavLi3.addEventListener("click", openLeaderboards);
+      this.mainMenuNavButton.addEventListener("click", playOrMute);
+    }
   }
 
   removeMainMenuNavEventListeners() {
@@ -160,6 +163,8 @@ export class MainMenu {
       "click",
       this.mainMenuNavEventListeners[3]
     );
+
+    this.mainMenuNavEventListeners = [];
   }
 
   setAnimation() {
@@ -174,6 +179,7 @@ export class MainMenu {
       this.mainMenuNavContainer.remove();
       this.playAnimationDiv.remove();
       document.body.appendChild(this.playAnimationLoaderDiv);
+      // this.mainMenuNavEventListeners = [];
     }, 800);
 
     setTimeout(() => {
@@ -280,6 +286,8 @@ export class MainMenu {
       "click",
       this.usernamePopupEventL[1]
     );
+
+    this.usernamePopupEventL = [];
   }
 
   resetAllGameStats() {

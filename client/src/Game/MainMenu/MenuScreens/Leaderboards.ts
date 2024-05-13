@@ -28,7 +28,7 @@ export class Leaderboards extends MenuScreen {
       .querySelectorAll(".leaderboard-single-score-container")
       .forEach((item) => item.remove());
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 11; i++) {
       const leaderboardScoreContainer = document.createElement("div");
       const leaderboardScore = document.createElement("div");
       const leaderboardScoreUsername = document.createElement("div");
@@ -45,15 +45,15 @@ export class Leaderboards extends MenuScreen {
       leaderboardScore.id = "leaderboard-single-score";
       leaderboardScoreUsername.className = "leaderboardUsername";
 
-      leaderboardScoreUsername.textContent = "DA";
+      //leaderboardScoreUsername.textContent = "DA";
 
       let username = service.topScores[i].player;
+      let score = String(service.topScores[i].score);
 
       if (username.length > 9) username = `${username.slice(0, 9)}..`;
+      //if (score.length > 5) score = `${score.slice(0, 5)}..`;
 
-      leaderboardScore.textContent = `${i + 1}. ${username}: ${
-        service.topScores[i].score
-      } pts `;
+      leaderboardScore.textContent = `${i + 1}. ${username}: ${score} pts `;
 
       if (i === 0) {
         leaderboardScoreContainer.style.border = "2px solid #FFD700";

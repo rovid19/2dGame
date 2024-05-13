@@ -1,23 +1,11 @@
 export class Sounds {
-  projectileSound: HTMLAudioElement = new Audio(
-    "../../../public/sounds/laserSound.wav"
-  );
-  powerUpOpen: HTMLAudioElement = new Audio(
-    "../../../public/sounds/powerUpOpen.wav"
-  );
-  powerUpSelected: HTMLAudioElement = new Audio(
-    "../../../public/sounds/powerUpSelected.wav"
-  );
-  explosionSound: HTMLAudioElement = new Audio(
-    "../../../public/sounds/explosionSpell.wav"
-  );
-  shieldSound: HTMLAudioElement = new Audio(
-    "../../../public/sounds/shieldActivated.wav"
-  );
-  windSound: HTMLAudioElement = new Audio(
-    "../../../public/sounds/windSound.wav"
-  );
-  gameOver: HTMLAudioElement = new Audio("../../../public/sounds/gameOver.wav");
+  projectileSound: HTMLAudioElement = new Audio("sounds/laserSound.wav");
+  powerUpOpen: HTMLAudioElement = new Audio("sounds/powerUpOpen.wav");
+  powerUpSelected: HTMLAudioElement = new Audio("sounds/powerUpSelected.wav");
+  explosionSound: HTMLAudioElement = new Audio("sounds/explosionSpell.wav");
+  shieldSound: HTMLAudioElement = new Audio("sounds/shieldActivated.wav");
+  windSound: HTMLAudioElement = new Audio("sounds/windSound.wav");
+  gameOver: HTMLAudioElement = new Audio("public/sounds/gameOver.wav");
 
   soundsVolume: number = 30;
 

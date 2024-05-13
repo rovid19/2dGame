@@ -23,8 +23,8 @@ import { Vector2 } from "../Sprite/Vector";
 
 export class Player {
   playerSprite: SpriteMethods;
-  playerHp: number = 100;
-  playerMaxHP: number = 100;
+  playerHp: number = 1;
+  playerMaxHP: number = 1;
   playerShield: number = 0;
   playerLevel: number = 1;
   playerHpBarPercentage: number = 100;
@@ -189,8 +189,9 @@ export class Player {
       const moreThanShieldAmount = this.playerShield - takenDamage;
       if (moreThanShieldAmount < 0) {
         this.playerShield = 0;
-        this.playerHp -= Math.abs(moreThanShieldAmount);
         HUD.renderPlayerTakenDamageInHpBar(takenDamage);
+        HUD.renderShieldAmount(takenDamage);
+        this.playerHp -= Math.abs(moreThanShieldAmount);
       } else {
         HUD.renderShieldAmount(takenDamage);
         this.playerShield -= takenDamage;

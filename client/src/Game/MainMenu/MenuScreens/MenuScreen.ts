@@ -49,6 +49,7 @@ export class MenuScreen {
 
   removeEventListeners() {
     this.backButton.removeEventListener("click", this.eventListeners[0]);
+    this.eventListeners = [];
   }
 
   animationOut() {
