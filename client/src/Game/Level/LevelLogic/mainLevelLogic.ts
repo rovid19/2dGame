@@ -19,9 +19,12 @@ import { Menu } from "./Game UI/InGameMenu.ts";
 import { PowerUp } from "./Game UI/PowerUp.ts";
 import { Asteroid } from "./Enemy/Asteroid.ts";
 import { Sounds } from "./Other/Sounds.ts";
+import { calculateScale } from "../../MainMenu/MainMenuLogic.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 export let canvasContext2: CanvasRenderingContext2D;
+export const scale = calculateScale();
+console.log(scale);
 
 export const levelImages = new LevelImages({
   // PLAYER SHIPS
@@ -74,11 +77,16 @@ const backgroundSprite = new Sprite(
 export const shield = new Sprite(
   levelImages.images.spellShield,
   new Vector2(61, 61),
-  2
+  scale.scale
 );
 
 // Player
-export const player = new Player(levelImages.images.playerShip1, 34, 38, 2);
+export const player = new Player(
+  levelImages.images.playerShip1,
+  34,
+  38,
+  scale.scale
+);
 export const shipPosition = new Vector2(height - 100, width / 2 - 38);
 export const defaultRenderPosition = {
   x: 0 + Math.random() * (width - 0),
@@ -91,7 +99,7 @@ export const enemySpawner = new EnemySpawner();
 export const asteroid = new Asteroid(
   levelImages.images.meteor4,
   new Vector2(100, 200),
-  2,
+  scale.scale,
   defaultRenderPosition
 );
 
@@ -103,7 +111,7 @@ export const projectiles = new Projectile(
   levelImages.images.projectile1,
   32,
   32,
-  1.2
+  scale.projectileScale
 );
 projectiles.updateProjectileBaseCoordinates();
 

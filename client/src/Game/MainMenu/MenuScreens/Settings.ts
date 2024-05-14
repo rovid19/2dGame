@@ -1,4 +1,3 @@
-import { menuStore } from "../../../Stores/MenuStore";
 import {
   inGameSounds,
   menu,
@@ -30,7 +29,7 @@ export class Settings extends MenuScreen {
       !document.querySelector(".setting-container2")
     ) {
       const mainSettingContainer = document.createElement("div");
-
+      console.log(this.isInGameSettings);
       if (this.isInGameSettings)
         mainSettingContainer.className = "main-setting-container";
       else mainSettingContainer.className = "main-setting-container2";
@@ -48,9 +47,9 @@ export class Settings extends MenuScreen {
         settingContainer.appendChild(settingHeading);
         settingContainer.appendChild(settingInput);
 
-        if (menuStore.get("currentMenuNav") === "play")
+        /*if (menuStore.get("currentMenuNav") === "play")
           settingContainer.className = "setting-container";
-        else settingContainer.className = "setting-container2";
+        else*/ settingContainer.className = "setting-container2";
 
         settingHeading.className = "sixtyfour-myapp";
         settingHeading.id = "setting-heading";

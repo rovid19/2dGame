@@ -20,7 +20,7 @@ export const fetchTop10Scores = async (req, res) => {
 
   const topScores = allScores.sort((a, b) => b.score - a.score);
 
-  const top10scores = topScores.splice(0, 9);
+  const top10scores = topScores.splice(0, 10);
 
   res.json(top10scores);
 };

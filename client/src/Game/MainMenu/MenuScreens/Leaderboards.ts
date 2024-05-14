@@ -28,7 +28,7 @@ export class Leaderboards extends MenuScreen {
       .querySelectorAll(".leaderboard-single-score-container")
       .forEach((item) => item.remove());
 
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 10; i++) {
       const leaderboardScoreContainer = document.createElement("div");
       const leaderboardScore = document.createElement("div");
       const leaderboardScoreUsername = document.createElement("div");
@@ -56,15 +56,18 @@ export class Leaderboards extends MenuScreen {
       leaderboardScore.textContent = `${i + 1}. ${username}: ${score} pts `;
 
       if (i === 0) {
-        leaderboardScoreContainer.style.border = "2px solid #FFD700";
+        leaderboardScoreContainer.style.border =
+          "2px solid rgba(191, 191, 191, 0.2);";
         leaderboardScoreContainer.style.backgroundColor =
           "rgba(255, 215, 0, 0.5)";
       } else if (i === 1) {
-        leaderboardScoreContainer.style.border = "2px solid #c13bc1";
+        leaderboardScoreContainer.style.border =
+          "2px solid rgba(191, 191, 191, 0.2);)";
         leaderboardScoreContainer.style.backgroundColor =
           "rgba(193, 59, 193, 0.5)";
       } else if (i === 2) {
-        leaderboardScoreContainer.style.border = "2px solid #c0c0c0";
+        leaderboardScoreContainer.style.border =
+          "2px solid rgba(191, 191, 191, 0.2)";
         leaderboardScoreContainer.style.backgroundColor =
           "rgba(192, 192, 192, 0.5)";
       }

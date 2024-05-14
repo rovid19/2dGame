@@ -457,11 +457,13 @@ body {
 .setting-container2 {
   width: 90%;
   min-height: 70px;
-  border: 2px solid white;
+
   display: flex;
   color: white;
   background-color: transparent;
   animation: 1s ease SettingContainerOpacity;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(191, 191, 191, 0.2);
 }
 
 .menu-screen-container {
@@ -607,6 +609,8 @@ body {
   justify-content: center;
   align-items: center;
   border: 2px solid white;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(191, 191, 191, 0.2);
 }
 
 .leaderboardUsername {
@@ -632,3 +636,22 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/*
+
+responsive 
+
+
+
+@media screen and (min-width: 1080px) {
+  .setting-container2 {
+    min-height: 50px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .setting-container2 {
+    min-height: 70px;
+  }
+}
+*/

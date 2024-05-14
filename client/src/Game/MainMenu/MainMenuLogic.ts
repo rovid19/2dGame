@@ -5,6 +5,39 @@ import axios from "axios";
 import { Keydown } from "../Level/LevelLogic/Other/Keydown.ts";
 import { Leaderboards } from "./MenuScreens/Leaderboards.ts";
 import { Settings } from "./MenuScreens/Settings.ts";
+import { height, width } from "../Level/LevelLogic/Other/canvasLogic.ts";
+
+type ScaleObject = {
+  scale: number;
+  projectileScale: number;
+  enemyBasicScale: number;
+};
+
+export function calculateScale(): ScaleObject {
+  let scaleObject = {
+    scale: 0,
+    projectileScale: 0,
+    enemyBasicScale: 0,
+  };
+
+  if (height >= 1080 && width >= 1920) {
+    scaleObject.scale = 2.5;
+    scaleObject.projectileScale = 1.5;
+    scaleObject.enemyBasicScale = 3;
+
+    if (height >= 1440 && width >= 2560) {
+      scaleObject.scale = 3;
+      scaleObject.projectileScale = 1.8;
+      scaleObject.enemyBasicScale = 3.5;
+    }
+  } else {
+    scaleObject.scale = 2;
+    scaleObject.projectileScale = 1.2;
+    scaleObject.enemyBasicScale = 2.5;
+  }
+
+  return scaleObject;
+}
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸
 
@@ -116,7 +149,9 @@ export const threeSetup = (): void => {
   Init();
 };
 
+//axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.baseURL = "https://api-spaceapocalypse.up.railway.app"; //http://localhost:3000
+console.log(width, height);
 export const mainMenu = new MainMenu(new Settings(), new Leaderboards());
 export const keydown = new Keydown();
 export const service = new Service();

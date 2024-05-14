@@ -253,8 +253,6 @@ export class PlayerSpells {
   // Shield logic
 
   renderShield() {
-    console.log(player.playerShield, this.playerShieldDuration);
-
     if (player.playerShield > 0 && this.playerShieldDuration > 0) {
       //render shield in the middle of spaceship sprite
       const shieldMinusShipHeight = 122 - 68;
@@ -274,6 +272,8 @@ export class PlayerSpells {
         player.playerShield = 0;
         HUD.resetShieldBar();
       }
+    } else {
+      HUD.resetShieldBar();
     }
   }
 

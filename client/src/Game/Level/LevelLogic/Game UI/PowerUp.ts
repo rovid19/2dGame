@@ -11,6 +11,15 @@ export class PowerUp {
   randomNumberArray: number[] = [];
   powerUpQueue: boolean = false;
   powerUpQueueArray: number[] = [];
+  rarityArray: string[] = [
+    "silver",
+    "silver",
+    "silver",
+    "silver",
+    "blue",
+    "blue",
+    "gold",
+  ];
 
   // power ups
   generalIncrease: PowerUpType[] = [
@@ -235,30 +244,24 @@ export class PowerUp {
   }
 
   randomlyDecideRarityOfPowerUp(): string {
-    const rarityArray = [
-      "silver",
-      "silver",
-      "silver",
-      "silver",
-      "blue",
-      "blue",
-      "gold",
-    ];
+    const randomNumber =
+      Math.floor(Math.random() * this.rarityArray.length - 1) + 1;
 
-    // increase the chance of higher rarity powerups with player levelups
-    if (player.playerLevel > 5) {
-      rarityArray.shift();
-      console.log(rarityArray);
-      if (player.playerLevel > 10) {
-        rarityArray.shift();
-        console.log("lvl10", rarityArray);
+    const itemRarity = this.rarityArray[randomNumber];
+    return itemRarity;
+  }
+
+  increaseRarityOfPowerUps() {
+    if (player.playerLevel > 4) {
+      this.rarityArray.shift();
+      this.rarityArray.push("blue");
+      //console.log("lvl5", this.rarityArray);
+      if (player.playerLevel > 9) {
+        this.rarityArray.shift();
+        this.rarityArray.push("gold");
+        // console.log("lvl10", this.rarityArray);
       }
     }
-
-    const randomNumber = Math.floor(Math.random() * rarityArray.length - 1) + 1;
-
-    const itemRarity = rarityArray[randomNumber];
-    return itemRarity;
   }
 
   assignItemRarityToPowerUps(whichPowerUp: string) {

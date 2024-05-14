@@ -4,6 +4,7 @@ import {
   canvasContext2,
   levelImages,
   player,
+  scale,
 } from "../mainLevelLogic";
 import { AsteroidType, EnemyInstance, Vector } from "../../../../Utils/TsTypes";
 import { Enemy } from "./Enemy";
@@ -91,7 +92,7 @@ export class EnemySpawner {
         levelImages.images.enemy1,
         24,
         27,
-        2.5,
+        scale.enemyBasicScale,
         whichEnemy,
         enemyPosition
       );
@@ -111,7 +112,7 @@ export class EnemySpawner {
         levelImages.images.enemy2,
         51,
         56,
-        2,
+        scale.scale,
         whichEnemy,
         enemyPosition
       );
@@ -131,7 +132,7 @@ export class EnemySpawner {
         enemyImage,
         enemyImage.image.height,
         enemyImage.image.width,
-        2,
+        scale.scale,
         whichEnemy,
         enemyPosition
       );
@@ -148,7 +149,7 @@ export class EnemySpawner {
       const asteroidSpawn = new Asteroid(
         asteroidImage,
         new Vector2(asteroidImage.image.height, asteroidImage.image.width),
-        2,
+        scale.scale,
         new Vector2(-100, 0 + Math.random() * (width - 0))
       );
 

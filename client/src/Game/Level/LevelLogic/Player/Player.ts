@@ -23,10 +23,10 @@ import { Vector2 } from "../Sprite/Vector";
 
 export class Player {
   playerSprite: SpriteMethods;
-  playerHp: number = 1;
-  playerMaxHP: number = 1;
+  playerHp: number = 100;
+  playerMaxHP: number = 100;
   playerShield: number = 0;
-  playerLevel: number = 1;
+  playerLevel: number = 4;
   playerHpBarPercentage: number = 100;
   playerHpBar: HTMLElement = document.createElement("div");
   playerEnergy: number = 100;
@@ -152,6 +152,7 @@ export class Player {
     HUD.renderPlayerGainedHp();
     enemySpawner.decreaseEnemySpawnCooldown();
     enemySpawner.decreaseAsteroidSpawnCooldown();
+    powerUp.increaseRarityOfPowerUps();
     this.increasePlayerStatsAfterPowerUp("Damage increase", 5);
     this.increasePlayerStatsAfterPowerUp("Movement speed increase", 1);
     this.increasePlayerStatsAfterPowerUp("Projectile size increase", 5);
