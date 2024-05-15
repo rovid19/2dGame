@@ -2,7 +2,6 @@ import { height, width } from "../Other/canvasLogic";
 import {
   HUD,
   enemySpawner,
-  gameOptimization,
   player,
   powerUp,
   projectiles,
