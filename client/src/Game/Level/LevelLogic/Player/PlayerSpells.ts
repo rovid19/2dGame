@@ -3,6 +3,7 @@ import {
   HUD,
   canvasContext,
   enemySpawner,
+  gameOptimization,
   inGameSounds,
   player,
   projectiles,
@@ -255,9 +256,11 @@ export class PlayerSpells {
   renderShield() {
     if (player.playerShield > 0 && this.playerShieldDuration > 0) {
       //render shield in the middle of spaceship sprite
-      const shieldMinusShipHeight = 122 - 68;
+      const shieldMinusShipHeight =
+        61 * gameOptimization.scale - 34 * gameOptimization.scale;
       const centerShield = shieldMinusShipHeight / 2;
-      const shieldMinusShipWidth = 122 - 76;
+      const shieldMinusShipWidth =
+        61 * gameOptimization.scale - 38 * gameOptimization.scale;
       const centerShieldX = shieldMinusShipWidth / 2;
 
       shield.drawImage(

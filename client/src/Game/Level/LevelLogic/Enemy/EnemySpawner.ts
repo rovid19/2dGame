@@ -2,9 +2,9 @@ import {
   asteroid,
   canvasContext,
   canvasContext2,
+  gameOptimization,
   levelImages,
   player,
-  scale,
 } from "../mainLevelLogic";
 import { AsteroidType, EnemyInstance, Vector } from "../../../../Utils/TsTypes";
 import { Enemy } from "./Enemy";
@@ -85,14 +85,15 @@ export class EnemySpawner {
   createInstanceOfEnemy(whichEnemy: string) {
     if (whichEnemy === "basic") {
       const enemyPosition = this.spawnEnemiesFromAllSides();
-      const randomSpeed = 0.5 + Math.random() * (2 - 0.5);
+      const randomSpeed =
+        (0.5 + Math.random() * (2 - 0.5)) * gameOptimization.scaleY;
 
       const enemy = new Enemy(
         randomSpeed,
         levelImages.images.enemy1,
         24,
         27,
-        scale.enemyBasicScale,
+        gameOptimization.enemyBasicScale,
         whichEnemy,
         enemyPosition
       );
@@ -105,14 +106,15 @@ export class EnemySpawner {
       this.isEnemyBasicReady = false;
     } else if (whichEnemy === "basic2") {
       const enemyPosition = this.spawnEnemiesFromAllSides();
-      const randomSpeed = 1.5 + Math.random() * (3 - 1.5);
+      const randomSpeed =
+        (1.5 + Math.random() * (3 - 1.5)) * gameOptimization.scaleY;
 
       const enemy = new Enemy(
         randomSpeed,
         levelImages.images.enemy2,
         51,
         56,
-        scale.scale,
+        gameOptimization.scale,
         whichEnemy,
         enemyPosition
       );
@@ -125,14 +127,15 @@ export class EnemySpawner {
       this.isEnemyBasic2Ready = false;
     } else if (whichEnemy === "basic3") {
       const enemyPosition = this.spawnEnemiesFromAllSides();
-      const randomSpeed = 2 + Math.random() * (3.5 - 2);
+      const randomSpeed =
+        (2 + Math.random() * (3.5 - 2)) * gameOptimization.scaleY;
       const enemyImage = levelImages.images.enemy3;
       const enemy = new Enemy(
         randomSpeed,
         enemyImage,
         enemyImage.image.height,
         enemyImage.image.width,
-        scale.scale,
+        gameOptimization.scale,
         whichEnemy,
         enemyPosition
       );
@@ -149,7 +152,7 @@ export class EnemySpawner {
       const asteroidSpawn = new Asteroid(
         asteroidImage,
         new Vector2(asteroidImage.image.height, asteroidImage.image.width),
-        scale.scale,
+        gameOptimization.scale,
         new Vector2(-100, 0 + Math.random() * (width - 0))
       );
 

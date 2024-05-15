@@ -1,6 +1,7 @@
 import {
   HUD,
   enemySpawner,
+  gameOptimization,
   generateLevel,
   menu,
   player,
@@ -115,6 +116,7 @@ export class MainMenu {
             console.log("pokrenuto");
             generateLevel();
             setHud();
+            gameOptimization.adjustPlayerAccordingToScreenSize();
           }, 800);
         } else {
           this.createUsernamePopup();

@@ -2,6 +2,7 @@ import { height, width } from "../Other/canvasLogic";
 import {
   HUD,
   enemySpawner,
+  gameOptimization,
   player,
   powerUp,
   projectiles,
@@ -26,7 +27,7 @@ export class Player {
   playerHp: number = 100;
   playerMaxHP: number = 100;
   playerShield: number = 0;
-  playerLevel: number = 4;
+  playerLevel: number = 1;
   playerHpBarPercentage: number = 100;
   playerHpBar: HTMLElement = document.createElement("div");
   playerEnergy: number = 100;
@@ -155,7 +156,7 @@ export class Player {
     powerUp.increaseRarityOfPowerUps();
     this.increasePlayerStatsAfterPowerUp("Damage increase", 5);
     this.increasePlayerStatsAfterPowerUp("Movement speed increase", 1);
-    this.increasePlayerStatsAfterPowerUp("Projectile size increase", 5);
+    // this.increasePlayerStatsAfterPowerUp("Projectile size increase", 5);
     this.increasePlayerStatsAfterPowerUp("Cooldown reduction", 2);
     this.playerSpells.increaseSpellStats("Explosion damage increase", 5);
   }

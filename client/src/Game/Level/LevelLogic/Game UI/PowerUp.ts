@@ -41,12 +41,12 @@ export class PowerUp {
       value: 0,
       rarity: "gold",
     },
-    {
+    /*{
       name: "Projectile size increase",
       description: "Increases projectile hitbox so it's easier to hit enemies.",
       value: 0,
       rarity: "",
-    },
+    },*/
     {
       name: "Cooldown reduction",
       description: "Decreases cooldown for every spell by", // Ensure the description is complete.

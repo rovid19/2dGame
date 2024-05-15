@@ -2,7 +2,12 @@ import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
 import { ImageType, SpriteMethods, Vector } from "../../../../Utils/TsTypes";
 import { height } from "../Other/canvasLogic";
 import { Sprite } from "../Sprite/Sprite";
-import { levelImages, player, shipPosition } from "../mainLevelLogic";
+import {
+  gameOptimization,
+  levelImages,
+  player,
+  shipPosition,
+} from "../mainLevelLogic";
 
 export class Asteroid {
   asteroidSprite: SpriteMethods;
@@ -25,6 +30,11 @@ export class Asteroid {
       scale,
       position
     );
+    this.setSpeedForDifferentScreenSize();
+  }
+
+  setSpeedForDifferentScreenSize() {
+    this.asteroidSpeed = this.asteroidSpeed * gameOptimization.scale;
   }
 
   renderAsteroidFromTopToBottom() {

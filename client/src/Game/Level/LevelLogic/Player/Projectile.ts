@@ -1,6 +1,7 @@
 import {
   canvasContext2,
   enemySpawner,
+  gameOptimization,
   inGameSounds,
   player,
   shipPosition,
@@ -139,18 +140,21 @@ export class Projectile {
 
   updateProjectileBaseCoordinates() {
     this.prjDirectionsLeft.x = this.shipPosition.x + 7;
-    this.prjDirectionsLeft.y = this.shipPosition.y + 10;
+    this.prjDirectionsLeft.y =
+      this.shipPosition.y + 10 * gameOptimization.scaleY;
 
-    this.prjDirectionsRight.x = this.shipPosition.x + 50;
-    this.prjDirectionsRight.y = this.shipPosition.y + 10;
-
-    if (this.prjSprite.scale > 1.5) {
+    this.prjDirectionsRight.x =
+      this.shipPosition.x + 50 * gameOptimization.scaleY;
+    this.prjDirectionsRight.y =
+      this.shipPosition.y + 10 * gameOptimization.scaleY;
+    console.log(this.shipPosition.x, this.prjDirectionsRight.x);
+    /* if (this.prjSprite.scale > 1.5) {
       this.prjDirectionsRight.x = this.shipPosition.x + 45;
     }
 
     if (this.prjSprite.scale > 1.8) {
       this.prjDirectionsRight.x = this.shipPosition.x + 42;
-    }
+    }*/
 
     this.setProjectileHitboxArray();
     if (!this.isReady) {

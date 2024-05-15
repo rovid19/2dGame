@@ -127,6 +127,7 @@ export type InputSpellType = {
   playerShieldCooldown: number;
   playerShieldMaxCooldown: number;
   playerShieldDuration: number;
+  playerExplosionRadius: number;
   activateSpell(spellValue: string): void;
   activateSpellCooldown(): void;
   cooldownTimerCounter(

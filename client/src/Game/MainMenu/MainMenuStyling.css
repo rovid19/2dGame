@@ -655,3 +655,87 @@ responsive
   }
 }
 */
+
+@media screen and (min-height: 600px) {
+  .nav-overlay > li {
+    height: 12%;
+    font-size: 32px;
+  }
+
+  #nav-heading {
+    font-size: 40px;
+  }
+
+  .main-menu-nav {
+    height: 60%;
+  }
+}
+
+@media screen and (min-height: 830px) {
+  .nav-overlay > li {
+    height: 15%;
+    font-size: 32px;
+  }
+
+  #nav-heading {
+    font-size: 40px;
+  }
+
+  .main-menu-nav {
+    height: 50%;
+  }
+}
+
+@media screen and (min-height: 1000px) {
+  .nav-overlay > li {
+    height: 12%;
+    font-size: 32px;
+  }
+
+  #nav-heading {
+    font-size: 46px;
+  }
+
+  .setting-container2 {
+    min-height: 100px;
+  }
+
+  #setting-heading {
+    font-size: 40px;
+  }
+  #leaderboard-single-score {
+    font-size: 18px;
+  }
+  .leaderboard-single-score-container {
+    min-height: 100px;
+  }
+}
+
+@media screen and (min-height: 1300px) {
+  .nav-overlay > li {
+    height: 12%;
+    font-size: 42px;
+  }
+
+  #nav-heading {
+    font-size: 52px;
+  }
+
+  .main-menu-nav {
+    height: 45%;
+  }
+
+  .setting-container2 {
+    min-height: 120px;
+  }
+
+  #leaderboard-single-score {
+    font-size: 22px;
+  }
+  .leaderboard-single-score-container {
+    min-height: 120px;
+  }
+}
+/*
+
+*/
