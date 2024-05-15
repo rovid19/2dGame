@@ -25,7 +25,7 @@ export class PowerUp {
   generalIncrease: PowerUpType[] = [
     {
       name: "Damage increase",
-      description: "Increases damage output.",
+      description: "Increases damage playeroutput.",
       value: 0,
       rarity: "",
     },
@@ -58,32 +58,31 @@ export class PowerUp {
     {
       name: "Shield duration increase",
       value: 0,
-      description: "increases duration of player shield",
+      description: "Increases duration of player shield by",
       rarity: "",
     },
     {
       name: "Shield amount increase",
       value: 0,
-      description: "increases amount of damage player shield can take",
+      description: "Increases amount of damage your shield can take",
       rarity: "",
     },
     {
       name: "Explosion damage increase",
       value: 0,
-      description: "increases damage of explosion spell",
+      description: "Increases damage of explosion spell by",
       rarity: "",
     },
     {
       name: "Explosion radius increase",
       value: 0,
-      description: "increases radius of explosion spell",
+      description: "Increases radius of explosion spell by",
       rarity: "",
     },
     {
       name: "Walls duration increase",
       value: 0,
-      description:
-        "increases duration of a spell which allows player to go through left and rigth side of walls",
+      description: "Increases duration of Walls spell by",
       rarity: "",
     },
   ];
