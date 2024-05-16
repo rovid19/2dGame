@@ -5,7 +5,6 @@ import axios from "axios";
 import { Keydown } from "../Level/LevelLogic/Other/Keydown.ts";
 import { Leaderboards } from "./MenuScreens/Leaderboards.ts";
 import { Settings } from "./MenuScreens/Settings.ts";
-import { height, width } from "../Level/LevelLogic/Other/canvasLogic.ts";
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸
 
@@ -119,8 +118,6 @@ export const threeSetup = (): void => {
 
 //axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.baseURL = "https://api-spaceapocalypse.up.railway.app"; //http://localhost:3000
-console.log(width, height);
-
 export const mainMenu = new MainMenu(new Settings(), new Leaderboards());
 export const keydown = new Keydown();
 export const service = new Service();

@@ -29,7 +29,7 @@ export class Settings extends MenuScreen {
       !document.querySelector(".setting-container2")
     ) {
       const mainSettingContainer = document.createElement("div");
-      console.log(this.isInGameSettings);
+
       if (this.isInGameSettings)
         mainSettingContainer.className = "main-setting-container";
       else mainSettingContainer.className = "main-setting-container2";

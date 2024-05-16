@@ -1,4 +1,7 @@
 export class animationLoop {
+  lastFrameTime: number = 0;
+  accumulatedTime: number = 0;
+  timeStep: number = 1000 / 60; // 60 fps
   update: any;
   render: any;
 
@@ -10,12 +13,21 @@ export class animationLoop {
     this.isRunning = false;
   }
 
-  mainLoop = (): void => {
+  mainLoop = (timestamp: number): void => {
     if (!this.isRunning) return;
 
+    let deltaTime = timestamp - this.lastFrameTime;
+    this.lastFrameTime = timestamp;
+
+    this.accumulatedTime += deltaTime;
+
+    while (this.accumulatedTime > this.timeStep) {
+      this.render();
+      this.update();
+      this.accumulatedTime -= this.timeStep;
+    }
+
     // render
-    this.render();
-    this.update();
 
     requestAnimationFrame(this.mainLoop);
   };

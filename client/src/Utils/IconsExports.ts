@@ -12,7 +12,6 @@ export const backIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 export const backIcon2 = calculateBackButtonWidth();
 
 function calculateAudioButtonWidth(type: string): string {
-  console.log(height);
   let svgCode = "";
   if (height >= 600) {
     if (type === "play") {
@@ -68,7 +67,6 @@ function calculateAudioButtonWidth(type: string): string {
 }
 
 function calculateBackButtonWidth(): string {
-  console.log(height);
   let svgCode = "";
   if (height >= 600) {
     svgCode = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="60">

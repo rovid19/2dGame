@@ -113,7 +113,6 @@ export class MainMenu {
           player.isPlayerAlive = true;
           this.setAnimation();
           setTimeout(() => {
-            console.log("pokrenuto");
             generateLevel();
             setHud();
             gameOptimization.adjustPlayerAccordingToScreenSize();

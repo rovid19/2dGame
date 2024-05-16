@@ -13,34 +13,11 @@ export class GameOptimization {
 
   constructor() {
     this.calculateHeight();
-    // this.calculateWidth();
-    //this.adjustPlayerAccordingToScreenSize();
   }
-
-  /*calculateWidth() {
-    if (width === 1470) {
-      console.log("base");
-    } else {
-      const newWidth = window.screen.width;
-      let widthPercentage: number;
-      if (newWidth > this.baseWidth) {
-        widthPercentage = ((newWidth - this.baseWidth) / this.baseWidth) * 100;
-        this.scaleX = widthPercentage;
-        this.isIncrease = true;
-        console.log("increase", width);
-      } else {
-        widthPercentage = ((this.baseWidth - newWidth) / this.baseWidth) * 100;
-        this.differencePercentageWidth = widthPercentage;
-        this.isIncrease = false;
-        console.log("decrease", widthPercentage);
-      }
-    }
-  }*/
 
   calculateHeight() {
     if (height === 832) {
       this.scaleY = 1;
-      console.log("base");
     } else {
       const newHeight = window.screen.height;
 
@@ -60,6 +37,4 @@ export class GameOptimization {
         player.playerSpells.playerExplosionRadius * this.scaleY;
     }
   }
-
-  defineScaleForSprites() {}
 }

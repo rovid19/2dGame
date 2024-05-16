@@ -147,7 +147,7 @@ export class Projectile {
       this.shipPosition.x + 50 * gameOptimization.scaleY;
     this.prjDirectionsRight.y =
       this.shipPosition.y + 10 * gameOptimization.scaleY;
-    console.log(this.shipPosition.x, this.prjDirectionsRight.x);
+
     /* if (this.prjSprite.scale > 1.5) {
       this.prjDirectionsRight.x = this.shipPosition.x + 45;
     }

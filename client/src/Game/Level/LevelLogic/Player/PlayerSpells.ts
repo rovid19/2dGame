@@ -111,9 +111,7 @@ export class PlayerSpells {
 
   activateSpell = (spellValue: string) => {
     if (spellValue === "Shield") {
-      console.log("jaoo");
       if (!this.spellsOnCooldown.includes("Shield")) {
-        console.log("shield aktiviran");
         player.playerShield = this.playerShieldAmount;
         this.playerShieldDuration = this.playerShieldMaxDuration;
         this.spellsOnCooldown.push("Shield");
@@ -121,9 +119,6 @@ export class PlayerSpells {
         this.shieldActivated = true;
         inGameSounds.playShield();
         HUD.activateShieldBar();
-        console.log("push", this.shieldActivated);
-      } else {
-        console.log("SHIEL ACTIVE");
       }
     }
     if (spellValue === "Walls") {
@@ -133,14 +128,11 @@ export class PlayerSpells {
         inGameSounds.playWind();
         this.spell = spellValue;
         this.wallsActivated = true;
-      } else {
-        console.log("WALLZ ACTIVE");
       }
     }
     if (spellValue === "Explosion") {
       if (!this.spellsOnCooldown.includes("Explosion")) {
         this.spellsOnCooldown.push("Explosion");
-
         this.spell = spellValue;
         this.explosionDealtDmg = false;
         this.explosionShowRadius = true;
@@ -151,7 +143,6 @@ export class PlayerSpells {
 
   renderSpells() {
     if (player.isPlayerAlive) {
-      console.log(this.shieldActivated);
       if (this.shieldActivated) {
         this.renderShield();
         if (this.playerShieldDuration === 0 || player.playerShield <= 0) {
@@ -194,7 +185,6 @@ export class PlayerSpells {
             );
 
             if (this.playerShieldCooldown === 0) {
-              console.log("dadad");
               this.spellsOnCooldown.splice(i, 1);
               this.shieldActivated = false;
               this.playerShieldDuration = 0;
