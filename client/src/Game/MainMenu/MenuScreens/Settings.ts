@@ -97,6 +97,9 @@ export class Settings extends MenuScreen {
           setting.textContent = player.playerSpells.spell3.value.slice(3);
           break;
         case 7:
+          setting.textContent = player.playerSpells.spell4.value.slice(3);
+          break;
+        case 8:
           setting.textContent = player.playerSpells.projectile.value.slice(3);
           break;
       }
@@ -140,12 +143,16 @@ export class Settings extends MenuScreen {
         settingInput.textContent = player.playerSpells.spell3.value.slice(3);
         break;
       case 7:
+        settingHeading.textContent = "Spell 4";
+        settingInput.textContent = player.playerSpells.spell4.value.slice(3);
+        break;
+      case 8:
         settingHeading.textContent = "Fire projectile";
         settingInput.textContent =
           player.playerSpells.projectile.value.slice(3);
         break;
 
-      case 8:
+      case 9:
         settingHeading.textContent = "Soundtrack volume";
         settingInput.setAttribute("type", "range");
         if (settingInput instanceof HTMLInputElement) {
@@ -153,7 +160,7 @@ export class Settings extends MenuScreen {
         }
 
         break;
-      case 9:
+      case 10:
         settingHeading.textContent = "Sound effects";
         settingInput.setAttribute("type", "range");
         if (settingInput instanceof HTMLInputElement) {

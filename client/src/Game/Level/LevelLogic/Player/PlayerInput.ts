@@ -1,5 +1,7 @@
+import { keydown } from "../../../MainMenu/MainMenuLogic";
 import { height, width } from "../Other/canvasLogic";
 import {
+  HUD,
   canvasContext2,
   player,
   projectiles,
@@ -38,6 +40,10 @@ export class Input {
 
       if (e.code === player.playerSpells.projectile.value) {
         this.fireProjectile = true;
+        if (keydown.autoFire) {
+          keydown.autoFire = false;
+          HUD.playerSpell4.style.border = "1px solid black";
+        }
       }
     }
   }

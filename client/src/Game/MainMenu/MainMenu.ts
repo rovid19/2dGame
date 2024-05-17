@@ -365,6 +365,17 @@ export class MainMenu {
 
       this.settings.isChangingKeybind = false;
     } else if (
+      this.settings.containerBeingChanged.firstChild?.textContent === "Spell 4"
+    ) {
+      player.playerSpells.spell4.value = e.code;
+      this.settings.inputBeingChanged.style.fontSize = "16px";
+      this.settings.inputBeingChanged.textContent = e.code.slice(3);
+
+      if (this.settings.isInGameSettings)
+        HUD.playerSpell4Keybind.textContent = e.code.slice(3);
+
+      this.settings.isChangingKeybind = false;
+    } else if (
       this.settings.containerBeingChanged.firstChild?.textContent ===
       "Fire projectile"
     ) {

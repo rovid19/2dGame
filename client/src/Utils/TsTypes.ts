@@ -120,6 +120,7 @@ export type InputSpellType = {
   spell1: SpellObject;
   spell2: SpellObject;
   spell3: SpellObject;
+  spell4: SpellObject;
   spell: string;
   spellsOnCooldown: string[];
   playerShieldAmount: number;

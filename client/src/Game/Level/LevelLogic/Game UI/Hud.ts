@@ -1,5 +1,5 @@
 import { menuStore } from "../../../../Stores/MenuStore";
-import { mainMenu, service } from "../../../MainMenu/MainMenuLogic";
+import { keydown, mainMenu, service } from "../../../MainMenu/MainMenuLogic";
 import {
   enemySpawner,
   inGameSounds,
@@ -38,6 +38,9 @@ export class Hud {
   playerSpell3Image: HTMLImageElement = document.createElement("img");
   playerSpell3Keybind: HTMLElement = document.createElement("h3");
   playerSpell3Cooldown: HTMLElement = document.createElement("div");
+  playerSpell4: HTMLElement = document.createElement("div");
+  playerSpell4Keybind: HTMLElement = document.createElement("h3");
+  playerSpell4Image: HTMLImageElement = document.createElement("img");
 
   // PLAYER DIED POPUP
   playerIsDeadContainer: HTMLElement = document.createElement("div");
@@ -162,6 +165,18 @@ export class Hud {
     this.playerSpell3Keybind.textContent =
       player.playerSpells.spell3.value.slice(3);
 
+    //spell 4
+    this.playerSpellBar.appendChild(this.playerSpell4);
+    this.playerSpell4.appendChild(this.playerSpell4Image);
+    this.playerSpell4Image.src = "sprites/projectiles/projectile1.png";
+    this.playerSpell4Image.className = "player-spell-img";
+    this.playerSpell4.appendChild(this.playerSpell4Keybind);
+    this.playerSpell4.className = "sixtyfour-myapp";
+    this.playerSpell4Keybind.textContent =
+      player.playerSpells.spell4.value.slice(3);
+    this.playerSpell4.id = "player-spell";
+    this.playerSpell4Keybind.id = "player-spell-keybind";
+
     this.playerSpell1.className = "player-spell";
     this.playerSpell2.className = "player-spell";
     this.playerSpell3.className = "player-spell";
@@ -261,6 +276,7 @@ export class Hud {
       player.playerSpells.resetSpellEventListeners();
       mainMenu.settings.removeSettings();
       this.removePlayerDeadEventListeners();
+      keydown.autoFire = false;
     };
 
     this.playerDeadEventListeners.push(exitGame);

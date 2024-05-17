@@ -12,6 +12,7 @@ import {
 } from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
 import { SpellObject, isOutside } from "../../../../Utils/TsTypes";
+import { keydown } from "../../../MainMenu/MainMenuLogic";
 
 export class PlayerSpells {
   projectile: SpellObject = {
@@ -29,6 +30,10 @@ export class PlayerSpells {
   spell3: SpellObject = {
     name: "Spell 3",
     value: "KeyR",
+  };
+  spell4: SpellObject = {
+    name: "Spell 4",
+    value: "KeyO",
   };
 
   spell: string = "";
@@ -93,17 +98,23 @@ export class PlayerSpells {
         } else {
           this.activateSpell("Shield");
         }
-      }
-      if (e.code === this.spell2.value) {
+      } else if (e.code === this.spell2.value) {
         if (this.spellsOnCooldown.includes("Walls")) {
         } else {
           this.activateSpell("Walls");
         }
-      }
-      if (e.code === this.spell3.value) {
+      } else if (e.code === this.spell3.value) {
         if (this.spellsOnCooldown.includes("Explosion")) {
         } else {
           this.activateSpell("Explosion");
+        }
+      } else {
+        if (!keydown.autoFire) {
+          keydown.autoFire = true;
+          HUD.playerSpell4.style.border = "3px solid white";
+        } else {
+          keydown.autoFire = false;
+          HUD.playerSpell4.style.border = "1px solid black";
         }
       }
     }

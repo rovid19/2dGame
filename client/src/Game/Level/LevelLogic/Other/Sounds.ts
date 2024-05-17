@@ -5,7 +5,7 @@ export class Sounds {
   explosionSound: HTMLAudioElement = new Audio("sounds/explosionSpell.wav");
   shieldSound: HTMLAudioElement = new Audio("sounds/shieldActivated.wav");
   windSound: HTMLAudioElement = new Audio("sounds/windSound.wav");
-  gameOver: HTMLAudioElement = new Audio("public/sounds/gameOver.wav");
+  gameOver: HTMLAudioElement = new Audio("sounds/gameOver.wav");
 
   soundsVolume: number = 30;
 

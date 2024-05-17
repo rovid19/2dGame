@@ -1,5 +1,5 @@
 import { enemySpawner, player, projectiles } from "../mainLevelLogic";
-import { mainMenu } from "../../../MainMenu/MainMenuLogic";
+import { keydown, mainMenu } from "../../../MainMenu/MainMenuLogic";
 import { menuStore } from "../../../../Stores/MenuStore";
 
 export class Menu {
@@ -91,6 +91,7 @@ export class Menu {
       this.removeSettingsEventListeners();
       this.menuMainDiv.remove();
       this.removeMenuEventListeners();
+      keydown.autoFire = false;
     };
     this.menuEventListeners.push(exitToMainMenu);
 

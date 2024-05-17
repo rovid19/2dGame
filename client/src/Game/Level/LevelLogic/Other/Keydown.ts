@@ -40,7 +40,8 @@ export class Keydown {
       } else if (
         e.code === player.playerSpells.spell1.value ||
         e.code === player.playerSpells.spell2.value ||
-        e.code === player.playerSpells.spell3.value
+        e.code === player.playerSpells.spell3.value ||
+        e.code === player.playerSpells.spell4.value
       ) {
         player.playerSpells.keydownFunction(e);
       } else if (e.code === "Escape") {
@@ -53,18 +54,22 @@ export class Keydown {
   }
 
   detectAutoFire(e: KeyboardEvent) {
-    if (e.code === player.playerSpells.projectile.value) {
-      this.fireProjectileArray.push(0);
+    if (e.code === player.playerSpells.spell4.value) {
+      /*this.fireProjectileArray.push(0);
 
-      if (this.autoFire) this.autoFire = false;
+      if (this.autoFire) {
+        this.autoFire = false;
+        HUD.playerSpell4.remove();
+      }
 
       if (this.fireProjectileArray.length === 2) {
         this.autoFire = true;
+        HUD.appendAutoFire();
       }
 
       setTimeout(() => {
         this.fireProjectileArray = [];
-      }, 200);
+      }, 200);*/
     }
   }
 }
