@@ -481,7 +481,7 @@ export class PlayerSpells {
     this.playerExplosionDamage = 50;
     this.playerExplosionMaxCooldown = 600;
     this.playerExplosionCooldown = this.playerExplosionMaxCooldown;
-    this.playerExplosionRadius = 250;
+    this.playerExplosionRadius = 250 * gameOptimization.scaleY;
     this.explosionActivated = false;
 
     this.spellsOnCooldown = [];

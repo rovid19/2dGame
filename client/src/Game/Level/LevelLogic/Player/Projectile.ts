@@ -223,7 +223,7 @@ export class Projectile {
   resetProjectile() {
     this.prjDirectionsLeft = { x: 0, y: 0 };
     this.prjDirectionsRight = { x: 0, y: 0 };
-    this.prjSpeed = 22;
+    this.prjSpeed = 22 * gameOptimization.scaleY;
     this.prjDamage = 18;
     this.prjAmount = 1;
     this.prjReloadCooldown = 20;
@@ -242,7 +242,7 @@ export class Projectile {
     this.prjArrHitboxXright = [];
     this.prjArrHitboxYleft = [];
     this.prjArrHitboxYright = [];
-    this.prjSprite.scale = 1.2;
+    this.prjSprite.scale = 1.2 * gameOptimization.scaleY;
 
     this.updateProjectileBaseCoordinates();
   }
