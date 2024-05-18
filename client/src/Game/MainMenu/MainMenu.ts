@@ -11,7 +11,7 @@ import {
 import { menuStore } from "../../Stores/MenuStore";
 import { muteAudio, playAudio } from "../../Utils/IconsExports";
 import { LeaderboardType, SettingsType } from "../../Utils/TsTypes";
-import { service } from "./MainMenuLogic";
+import { service, tutorial } from "./MainMenuLogic";
 
 export class MainMenu {
   // main menu
@@ -110,12 +110,13 @@ export class MainMenu {
       const startGame = () => {
         if (service.playerReady) {
           menuStore.set("currentMenuNav", "play");
-          player.isPlayerAlive = true;
+          if (!tutorial.isReady) player.isPlayerAlive = true;
           this.setAnimation();
           setTimeout(() => {
             generateLevel();
             setHud();
             gameOptimization.adjustPlayerAccordingToScreenSize();
+            tutorial.createTutorial();
           }, 800);
         } else {
           this.createUsernamePopup();

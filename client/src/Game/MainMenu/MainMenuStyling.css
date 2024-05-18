@@ -585,7 +585,7 @@ body {
   width: 50%;
   border: none;
   background-color: rgba(37, 37, 37, 0.4);
-  height: 50px;
+  height: 15%;
   color: white;
   border-radius: 6px;
   text-align: center;
@@ -600,6 +600,7 @@ body {
   border: 2px solid white;
   border-radius: 6px;
   cursor: pointer;
+  margin-top: 3%;
 }
 
 #username-button:hover {

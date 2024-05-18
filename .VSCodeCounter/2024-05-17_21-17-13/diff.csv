@@ -1,0 +1,62 @@
+"filename", "language", "TypeScript", "CSS", "comment", "blank", "total"
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Enemy/Asteroid.ts", "TypeScript", 93, 0, 0, 15, 108
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Enemy/Enemy.ts", "TypeScript", 187, 0, 6, 22, 215
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Enemy/EnemySpawner.ts", "TypeScript", 273, 0, 3, 51, 327
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Game UI/Hud.ts", "TypeScript", 285, 0, 13, 43, 341
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Game UI/InGameMenu.ts", "TypeScript", 131, 0, 1, 17, 149
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Game UI/PowerUp.ts", "TypeScript", 251, 0, 10, 32, 293
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Other/AnimationLoop.ts", "TypeScript", 34, 0, 1, 11, 46
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Other/GameOptimization.ts", "TypeScript", 35, 0, 0, 6, 41
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Other/Keydown.ts", "TypeScript", 54, 0, 15, 7, 76
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Other/Sounds.ts", "TypeScript", 55, 0, 0, 14, 69
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Other/canvasLogic.ts", "TypeScript", 30, 0, 33, 9, 72
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Player/Player.ts", "TypeScript", 232, 0, 4, 23, 259
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Player/PlayerInput.ts", "TypeScript", 190, 0, 5, 17, 212
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Player/PlayerSpells.ts", "TypeScript", 462, 0, 10, 59, 531
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Player/Projectile.ts", "TypeScript", 234, 0, 9, 31, 274
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Sprite/LevelImages.ts", "TypeScript", 20, 0, 7, 8, 35
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Sprite/Sprite.ts", "TypeScript", 39, 0, 9, 6, 54
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Sprite/Vector.ts", "TypeScript", 8, 0, 0, 1, 9
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/mainLevelLogic.ts", "TypeScript", 140, 0, 22, 26, 188
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/levelGenerator.ts", "TypeScript", 10, 0, 0, 5, 15
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/levelStyling.css", "CSS", 0, 1012, 22, 125, 1159
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MainMenu.ts", "TypeScript", 329, 0, 7, 53, 389
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MainMenuLogic.ts", "TypeScript", 92, 0, 7, 25, 124
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MainMenuStyling.css", "CSS", 0, 625, 35, 88, 748
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MenuScreens/Leaderboards.ts", "TypeScript", 59, 0, 2, 16, 77
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MenuScreens/MenuScreen.ts", "TypeScript", 59, 0, 0, 12, 71
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MenuScreens/Settings.ts", "TypeScript", 190, 0, 4, 25, 219
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/Asteroid.ts", "TypeScript", -78, 0, 0, -14, -92
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/Enemy.ts", "TypeScript", -183, 0, -6, -22, -211
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/EnemyBoss.ts", "TypeScript", -13, 0, 0, -2, -15
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Enemy/EnemySpawner.ts", "TypeScript", -276, 0, -3, -50, -329
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Game UI/Hud.ts", "TypeScript", -217, 0, -12, -30, -259
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Game UI/InGameMenu.ts", "TypeScript", -308, 0, -2, -28, -338
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Game UI/PowerUp.ts", "TypeScript", -253, 0, -3, -33, -289
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Other/AnimationLoop.ts", "TypeScript", -25, 0, -1, -8, -34
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Other/Sounds.ts", "TypeScript", -67, 0, 0, -14, -81
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Other/canvasLogic.ts", "TypeScript", -30, 0, -33, -9, -72
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/Player.ts", "TypeScript", -229, 0, -2, -22, -253
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/PlayerInput.ts", "TypeScript", -191, 0, -14, -17, -222
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/PlayerSpells.ts", "TypeScript", -403, 0, -8, -55, -466
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Player/Projectile.ts", "TypeScript", -226, 0, -2, -31, -259
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Sprite/LevelImages.ts", "TypeScript", -20, 0, -7, -8, -35
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Sprite/Sprite.ts", "TypeScript", -39, 0, -9, -6, -54
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/Sprite/Vector.ts", "TypeScript", -8, 0, 0, -1, -9
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/LevelLogic/mainLevelLogic.ts", "TypeScript", -132, 0, -26, -26, -184
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/levelGenerator.ts", "TypeScript", -10, 0, 0, -5, -15
+"/Users/rock/Documents/Projekti/2dGame/client/src/Level/levelStyling.css", "CSS", 0, -915, -12, -107, -1034
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/Leaderboards.ts", "TypeScript", -54, 0, 0, -12, -66
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionGenerator.ts", "TypeScript", -24, 0, 0, -9, -33
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionLogic.ts", "TypeScript", -31, 0, 0, -8, -39
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/LevelSelection/LevelSelectionStyling.css", "CSS", 0, -112, -1, -23, -136
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenu.ts", "TypeScript", -157, 0, -5, -28, -190
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuGenerator.ts", "TypeScript", -25, 0, 0, -5, -30
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuLogic.ts", "TypeScript", -190, 0, -11, -48, -249
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/MainMenuStyling.css", "CSS", 0, -401, -13, -56, -470
+"/Users/rock/Documents/Projekti/2dGame/client/src/MainMenu/Settings.ts", "TypeScript", -49, 0, -1, -9, -59
+"/Users/rock/Documents/Projekti/2dGame/client/src/Services/MainService.ts", "TypeScript", 38, 0, 0, 10, 48
+"/Users/rock/Documents/Projekti/2dGame/client/src/Utils/IconsExports.ts", "TypeScript", 73, 0, 0, 6, 79
+"/Users/rock/Documents/Projekti/2dGame/client/src/Utils/TsTypes.ts", "TypeScript", 17, 0, 0, 0, 17
+"/Users/rock/Documents/Projekti/2dGame/client/src/index.ts", "TypeScript", -9, 0, -2, -1, -12
+"Total", "-", 373, 209, 52, 76, 710

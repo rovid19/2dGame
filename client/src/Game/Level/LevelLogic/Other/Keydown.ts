@@ -1,5 +1,5 @@
 import { menuStore } from "../../../../Stores/MenuStore";
-import { mainMenu } from "../../../MainMenu/MainMenuLogic";
+import { mainMenu, tutorial } from "../../../MainMenu/MainMenuLogic";
 import { menu, player } from "../mainLevelLogic";
 
 export class Keydown {
@@ -26,28 +26,32 @@ export class Keydown {
   }
 
   detectWhoNeedsKeydown(e: KeyboardEvent) {
-    if (mainMenu.settings.isChangingKeybind) {
-      mainMenu.changeSpellKeybind(e);
+    if (tutorial.isReady) {
+      tutorial.keydownMethod(e);
     } else {
-      if (
-        e.code === player.playerInput.moveUp ||
-        e.code === player.playerInput.moveDown ||
-        e.code === player.playerInput.moveLeft ||
-        e.code === player.playerInput.moveRight ||
-        e.code === player.playerSpells.projectile.value
-      ) {
-        player.playerInput.keydownFunction(e);
-      } else if (
-        e.code === player.playerSpells.spell1.value ||
-        e.code === player.playerSpells.spell2.value ||
-        e.code === player.playerSpells.spell3.value ||
-        e.code === player.playerSpells.spell4.value
-      ) {
-        player.playerSpells.keydownFunction(e);
-      } else if (e.code === "Escape") {
-        const nav = menuStore.get("currentMenuNav");
-        if (nav === "play") {
-          menu.openOrCloseMenu();
+      if (mainMenu.settings.isChangingKeybind) {
+        mainMenu.changeSpellKeybind(e);
+      } else {
+        if (
+          e.code === player.playerInput.moveUp ||
+          e.code === player.playerInput.moveDown ||
+          e.code === player.playerInput.moveLeft ||
+          e.code === player.playerInput.moveRight ||
+          e.code === player.playerSpells.projectile.value
+        ) {
+          player.playerInput.keydownFunction(e);
+        } else if (
+          e.code === player.playerSpells.spell1.value ||
+          e.code === player.playerSpells.spell2.value ||
+          e.code === player.playerSpells.spell3.value ||
+          e.code === player.playerSpells.spell4.value
+        ) {
+          player.playerSpells.keydownFunction(e);
+        } else if (e.code === "Escape") {
+          const nav = menuStore.get("currentMenuNav");
+          if (nav === "play") {
+            menu.openOrCloseMenu();
+          }
         }
       }
     }

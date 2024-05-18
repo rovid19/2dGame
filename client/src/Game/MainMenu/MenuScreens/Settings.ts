@@ -150,6 +150,7 @@ export class Settings extends MenuScreen {
         settingHeading.textContent = "Fire projectile";
         settingInput.textContent =
           player.playerSpells.projectile.value.slice(3);
+
         break;
 
       case 9:
