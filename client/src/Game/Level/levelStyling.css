@@ -1096,6 +1096,36 @@
   text-align: center;
 }
 
+.tutorial-movement {
+  width: 50%;
+  height: 30%;
+  background-color: black;
+  border-radius: 6px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.tutorial-movement > h2 {
+  text-align: center;
+}
+
+#close-div {
+  animation: 0.2s ease-in-out CloseDiv;
+}
+
+@keyframes CloseDiv {
+  0% {
+    margin-right: 0;
+  }
+
+  100% {
+    margin-right: 100%;
+  }
+}
+
 /*
 
 

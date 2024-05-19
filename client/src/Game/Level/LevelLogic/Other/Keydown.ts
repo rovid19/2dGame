@@ -28,32 +28,55 @@ export class Keydown {
   detectWhoNeedsKeydown(e: KeyboardEvent) {
     if (tutorial.isReady) {
       tutorial.keydownMethod(e);
+      if (tutorial.tutorialTracker.length === 2) {
+        this.playerMovement(e);
+        if (
+          e.code === "KeyW" ||
+          e.code === "KeyA" ||
+          e.code === "KeyS" ||
+          e.code === "KeyD"
+        ) {
+          setTimeout(() => {
+            tutorial.removeFiring(tutorial.htmlElement);
+          }, 1500);
+        }
+      }
     } else {
       if (mainMenu.settings.isChangingKeybind) {
         mainMenu.changeSpellKeybind(e);
       } else {
-        if (
-          e.code === player.playerInput.moveUp ||
-          e.code === player.playerInput.moveDown ||
-          e.code === player.playerInput.moveLeft ||
-          e.code === player.playerInput.moveRight ||
-          e.code === player.playerSpells.projectile.value
-        ) {
-          player.playerInput.keydownFunction(e);
-        } else if (
-          e.code === player.playerSpells.spell1.value ||
-          e.code === player.playerSpells.spell2.value ||
-          e.code === player.playerSpells.spell3.value ||
-          e.code === player.playerSpells.spell4.value
-        ) {
-          player.playerSpells.keydownFunction(e);
-        } else if (e.code === "Escape") {
+        this.playerMovement(e);
+        this.playerSpells(e);
+        if (e.code === "Escape") {
           const nav = menuStore.get("currentMenuNav");
           if (nav === "play") {
             menu.openOrCloseMenu();
           }
         }
       }
+    }
+  }
+
+  playerMovement(e: KeyboardEvent) {
+    if (
+      e.code === player.playerInput.moveUp ||
+      e.code === player.playerInput.moveDown ||
+      e.code === player.playerInput.moveLeft ||
+      e.code === player.playerInput.moveRight ||
+      e.code === player.playerSpells.projectile.value
+    ) {
+      player.playerInput.keydownFunction(e);
+    }
+  }
+
+  playerSpells(e: KeyboardEvent) {
+    if (
+      e.code === player.playerSpells.spell1.value ||
+      e.code === player.playerSpells.spell2.value ||
+      e.code === player.playerSpells.spell3.value ||
+      e.code === player.playerSpells.spell4.value
+    ) {
+      player.playerSpells.keydownFunction(e);
     }
   }
 

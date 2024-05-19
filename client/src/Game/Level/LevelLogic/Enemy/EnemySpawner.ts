@@ -11,6 +11,7 @@ import { Enemy } from "./Enemy";
 import { Asteroid } from "./Asteroid";
 import { Vector2 } from "../Sprite/Vector";
 import { height, width } from "../Other/canvasLogic";
+import { tutorial } from "../../../MainMenu/MainMenuLogic";
 
 export class EnemySpawner {
   enemyArray: EnemyInstance[][] = [];
@@ -20,7 +21,7 @@ export class EnemySpawner {
   enemyBasic3Array: EnemyInstance[] = [];
   asteroidArray: AsteroidType[] = [];
 
-  enemyBasicSpawnCD: number = 350; // 480
+  enemyBasicSpawnCD: number = 250; // 480
   enemyBasicSpawnMaxCD: number = 350; // 480
   isEnemyBasicReady: boolean = true;
 
@@ -53,7 +54,7 @@ export class EnemySpawner {
   }
 
   enemySpawnCooldown(whichEnemy: string) {
-    if (player.isPlayerAlive) {
+    if (player.isPlayerAlive && !tutorial.isReady) {
       if (whichEnemy === "basic") {
         this.enemyBasicSpawnCD--;
         if (this.enemyBasicSpawnCD === 0) {
@@ -306,9 +307,9 @@ export class EnemySpawner {
 
       if (randomArray[randomNumber] === "top") {
         vector.x = 0 + Math.random() * (width - 0);
-        vector.y = -100;
+        vector.y = -70;
       } else if (randomArray[randomNumber] === "left") {
-        vector.x = -100;
+        vector.x = -70;
         vector.y = 0 + Math.random() * height;
       } else {
         vector.x = width + 100;
@@ -318,7 +319,7 @@ export class EnemySpawner {
       return vector;
     } else {
       vector.x = 0 + Math.random() * (width - 0);
-      vector.y = -100;
+      vector.y = -70;
 
       return vector;
     }

@@ -12,7 +12,7 @@ import {
 } from "../mainLevelLogic";
 import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
 import { SpellObject, isOutside } from "../../../../Utils/TsTypes";
-import { keydown } from "../../../MainMenu/MainMenuLogic";
+import { keydown, tutorial } from "../../../MainMenu/MainMenuLogic";
 
 export class PlayerSpells {
   projectile: SpellObject = {
@@ -92,7 +92,7 @@ export class PlayerSpells {
   }
 
   keydownFunction(e: KeyboardEvent) {
-    if (player.isPlayerAlive) {
+    if (player.isPlayerAlive || tutorial.isReady) {
       if (e.code === this.spell1.value) {
         if (this.spellsOnCooldown.includes("Shield")) {
         } else {
@@ -271,7 +271,7 @@ export class PlayerSpells {
       );
 
       this.playerShieldDuration--;
-
+      console.log(this.playerShieldDuration);
       if (this.playerShieldDuration === 0) {
         player.playerShield = 0;
         HUD.resetShieldBar();
@@ -493,30 +493,46 @@ export class PlayerSpells {
   increaseSpellStats(name: string, value: number) {
     switch (name) {
       case "Shield duration increase":
-        const increaseDurationBy = this.playerShieldDuration * (value / 100);
+        console.log(this.playerShieldMaxDuration);
+        const increaseDurationBy = Math.floor(
+          this.playerShieldMaxDuration * (value / 100)
+        );
         //this.playerShieldDuration += increaseDurationBy;
         this.playerShieldMaxDuration += increaseDurationBy;
+        console.log(this.playerShieldMaxDuration);
         break;
       case "Shield amount increase":
-        const increaseAmountBy = this.playerShieldAmount * (value / 100);
+        console.log(this.playerShieldMaxAmount);
+        const increaseAmountBy = Math.floor(
+          this.playerShieldMaxAmount * (value / 100)
+        );
         this.playerShieldAmount += increaseAmountBy;
         this.playerShieldMaxAmount = this.playerShieldAmount;
+        console.log(this.playerShieldMaxAmount);
         break;
       case "Explosion damage increase":
         console.log(this.playerExplosionDamage);
-        const increaseDamageBy = this.playerExplosionDamage * (value / 100);
+        const increaseDamageBy = Math.floor(
+          this.playerExplosionDamage * (value / 100)
+        );
         this.playerExplosionDamage += increaseDamageBy;
         console.log(this.playerExplosionDamage);
         break;
       case "Explosion radius increase":
-        const increaseRadiusBy = this.playerExplosionRadius * (value / 100);
+        console.log(this.playerExplosionRadius);
+        const increaseRadiusBy = Math.floor(
+          this.playerExplosionRadius * (value / 100)
+        );
         this.playerExplosionRadius += increaseRadiusBy;
+        console.log(this.playerExplosionRadius);
         break;
       case "Walls duration increase":
+        console.log(this.playerWallsMaxDuration);
         const increaseWallsDurationBy =
-          this.playerWallsDuration * (value / 100);
+          this.playerWallsMaxDuration * (value / 100);
         //this.playerWallsDuration += increaseWallsDurationBy;
         this.playerWallsMaxDuration += increaseWallsDurationBy;
+        console.log(this.playerWallsMaxDuration);
         break;
     }
   }

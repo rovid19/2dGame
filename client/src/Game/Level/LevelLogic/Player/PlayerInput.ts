@@ -1,4 +1,4 @@
-import { keydown } from "../../../MainMenu/MainMenuLogic";
+import { keydown, tutorial } from "../../../MainMenu/MainMenuLogic";
 import { height, width } from "../Other/canvasLogic";
 import {
   HUD,
@@ -24,7 +24,7 @@ export class Input {
   constructor() {}
 
   keydownFunction(e: KeyboardEvent) {
-    if (player.isPlayerAlive) {
+    if (player.isPlayerAlive || tutorial.isReady) {
       if (e.code === this.moveUp) {
         if (this.direction !== "settings") this.direction = UP;
       }

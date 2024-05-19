@@ -99,7 +99,7 @@ export class Asteroid {
 
   increaseAsteroidStats() {
     const increaseDamageBy = Math.floor(this.asteroidDamage * 0.1) - 1;
-    const increaseSpeedBy = Math.floor(this.asteroidSpeed * 0.1) + 1;
+    const increaseSpeedBy = Math.floor(this.asteroidSpeed * 0.05) + 1;
 
     this.asteroidDamage += increaseDamageBy;
     this.asteroidSpeed += increaseSpeedBy;

@@ -5,6 +5,7 @@ export class Tutorial {
   isReady: boolean = false;
   tutorialContainer: HTMLElement = document.createElement("div");
   tutorialTracker: number[] = [];
+  htmlElement: HTMLElement = document.createElement("div");
 
   constructor() {
     this.isTutorialNeeded();
@@ -13,7 +14,9 @@ export class Tutorial {
   keydownMethod(e: KeyboardEvent) {
     if (this.tutorialTracker.length === 1) {
       this.removeIntroduction();
-      this.firing();
+      setTimeout(() => {
+        this.firing();
+      }, 0);
     }
   }
 
@@ -60,9 +63,31 @@ export class Tutorial {
     document.getElementById("sub-text")?.remove();
   }
 
-  firing() {}
+  firing() {
+    this.tutorialTracker.push(0);
+    this.tutorialContainer.style.background = "transparent";
+    this.tutorialContainer.style.justifyContent = "start";
 
-  removeFiring() {}
+    const movementDiv = document.createElement("div");
+    const movementText = document.createElement("h2");
+
+    this.tutorialContainer.appendChild(movementDiv);
+    movementDiv.appendChild(movementText);
+
+    movementDiv.className = "tutorial-movement";
+    movementText.className = "sixtyfour-myapp";
+    movementText.textContent = "You can move spaceship around using W,A,S,D";
+
+    this.htmlElement = movementDiv;
+  }
+
+  removeFiring(movementDiv: HTMLElement) {
+    movementDiv.id = "close-div";
+    setTimeout(() => {
+      movementDiv.removeAttribute("id");
+      movementDiv.remove();
+    }, 200);
+  }
 
   shieldActivation() {}
 
