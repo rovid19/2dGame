@@ -1,17 +1,19 @@
 import { service } from "../../../MainMenu/MainMenuLogic";
-import { player } from "../mainLevelLogic";
+import { HUD, player } from "../mainLevelLogic";
 
 export class Tutorial {
   isReady: boolean = false;
   tutorialContainer: HTMLElement = document.createElement("div");
   tutorialTracker: number[] = [];
   htmlElement: HTMLElement = document.createElement("div");
+  htmlElementText: HTMLElement = document.createElement("h2");
+  nextStep: boolean = false;
 
   constructor() {
     this.isTutorialNeeded();
   }
 
-  keydownMethod(e: KeyboardEvent) {
+  keydownMethod() {
     if (this.tutorialTracker.length === 1) {
       this.removeIntroduction();
       setTimeout(() => {
@@ -50,7 +52,7 @@ export class Tutorial {
     introductionText.className = "sixtyfour-myapp";
     introductionText.id = "introduction-text";
     introductionText.textContent =
-      "Since this is your first time starting this game, here's a quick tutorial on how the game works";
+      "Since this is your first time starting the game, here's a quick tutorial on how it works.";
     subText.className = "sixtyfour-myapp";
     subText.id = "sub-text";
     subText.textContent = "press any key to continue";
@@ -68,32 +70,60 @@ export class Tutorial {
     this.tutorialContainer.style.background = "transparent";
     this.tutorialContainer.style.justifyContent = "start";
 
-    const movementDiv = document.createElement("div");
+    const div = document.createElement("div");
     const movementText = document.createElement("h2");
 
-    this.tutorialContainer.appendChild(movementDiv);
-    movementDiv.appendChild(movementText);
+    this.tutorialContainer.appendChild(div);
+    div.appendChild(movementText);
 
-    movementDiv.className = "tutorial-movement";
+    div.className = "tutorial-div";
     movementText.className = "sixtyfour-myapp";
-    movementText.textContent = "You can move spaceship around using W,A,S,D";
+    movementText.textContent =
+      "You can move the spaceship using W, A, S, and D keys, and fire projectiles by pressing P.";
 
-    this.htmlElement = movementDiv;
+    this.htmlElement = div;
   }
 
-  removeFiring(movementDiv: HTMLElement) {
-    movementDiv.id = "close-div";
+  removeDiv(htmlElement: HTMLElement) {
+    htmlElement.id = "close-div";
     setTimeout(() => {
-      movementDiv.removeAttribute("id");
-      movementDiv.remove();
+      htmlElement.removeAttribute("id");
+      htmlElement.remove();
     }, 200);
   }
 
-  shieldActivation() {}
+  spellActivation(spell: string) {
+    this.tutorialTracker.push(0);
+    const div = document.createElement("div");
+    const text = document.createElement("h2");
 
-  walllsActivation() {}
+    this.tutorialContainer.appendChild(div);
+    div.appendChild(text);
 
-  explosionActivation() {}
+    div.className = "tutorial-div";
+    text.className = "sixtyfour-myapp";
 
-  autoFire() {}
+    if (spell === "shield") {
+      text.textContent =
+        "The Shield spell is highlighted on your screen. Press 'Q' to activate your shield.";
+      HUD.playerSpell1.style.border = "5px solid red";
+    } else if (spell === "walls") {
+      text.textContent =
+        "Your Walls spell is highlighted on the screen. Press 'E' to activate the shield.";
+      HUD.playerSpell2.style.border = "5px solid red";
+    } else if (spell === "explosion") {
+      text.textContent =
+        "Your Explosion spell is highlighted on the screen. Press 'R' to activate it.";
+      HUD.playerSpell3.style.border = "5px solid red";
+    }
+
+    if (spell === "autofire") {
+      text.textContent =
+        "Your Autofire toggle is highlighted on the screen. Press 'O' to turn on autofire.";
+      HUD.playerSpell4.style.border = "5px solid red";
+    }
+
+    this.htmlElementText = text;
+    this.htmlElement = div;
+  }
 }

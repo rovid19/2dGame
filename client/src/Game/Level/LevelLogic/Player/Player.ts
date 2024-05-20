@@ -2,6 +2,7 @@ import { height, width } from "../Other/canvasLogic";
 import {
   HUD,
   enemySpawner,
+  gameOptimization,
   player,
   powerUp,
   projectiles,
@@ -173,7 +174,7 @@ export class Player {
     this.playerLevel = 1;
     this.playerHpBarPercentage = 100;
     this.playerEnergy = 100;
-    this.playerSpeed = 5;
+    this.playerSpeed = 5 * gameOptimization.scaleY;
     this.playerSpellActivated = false;
     this.playerHitboxY = 34 * this.playerSprite.scale;
     this.playerHitboxX = 38 * this.playerSprite.scale;

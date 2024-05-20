@@ -109,6 +109,7 @@ export class PlayerSpells {
           this.activateSpell("Explosion");
         }
       } else {
+        console.log("yess");
         if (!keydown.autoFire) {
           keydown.autoFire = true;
           HUD.playerSpell4.style.border = "3px solid white";
@@ -153,7 +154,7 @@ export class PlayerSpells {
   };
 
   renderSpells() {
-    if (player.isPlayerAlive) {
+    if (player.isPlayerAlive || tutorial.isReady) {
       if (this.shieldActivated) {
         this.renderShield();
         if (this.playerShieldDuration === 0 || player.playerShield <= 0) {
@@ -183,7 +184,7 @@ export class PlayerSpells {
   }
 
   activateSpellCooldown = () => {
-    if (player.isPlayerAlive) {
+    if (player.isPlayerAlive || tutorial.isReady) {
       this.spellsOnCooldown.forEach((spell, i) => {
         if (spell === "Shield") {
           if (this.playerShieldDuration === 0 || player.playerShield <= 0) {

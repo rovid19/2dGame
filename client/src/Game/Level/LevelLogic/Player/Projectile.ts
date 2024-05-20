@@ -10,7 +10,7 @@ import { returnArrayOfHitboxNumbers } from "../../../../Utils/OftenUsed";
 import { ImageType, SpriteMethods, Vector } from "../../../../Utils/TsTypes";
 import { Sprite } from "../Sprite/Sprite";
 import { Vector2 } from "../Sprite/Vector";
-import { keydown } from "../../../MainMenu/MainMenuLogic";
+import { keydown, tutorial } from "../../../MainMenu/MainMenuLogic";
 
 export class Projectile {
   prjSprite: SpriteMethods;
@@ -264,7 +264,7 @@ export class Projectile {
   }
 
   autoFire() {
-    if (player.isPlayerAlive) {
+    if (player.isPlayerAlive || tutorial.isReady) {
       if (keydown.autoFire) {
         this.fireProjectile();
       }
