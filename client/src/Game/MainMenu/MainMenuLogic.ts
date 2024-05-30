@@ -6,6 +6,7 @@ import { Keydown } from "../Level/LevelLogic/Other/Keydown.ts";
 import { Leaderboards } from "./MenuScreens/Leaderboards.ts";
 import { Settings } from "./MenuScreens/Settings.ts";
 import { Tutorial } from "../Level/LevelLogic/Other/Tutorial.ts";
+import { menuStore } from "../../Stores/MenuStore.ts";
 
 // THREE JS PARTICLE SYSTEM FOR MAIN MENU ˘˘¸
 
@@ -116,6 +117,12 @@ export const threeSetup = (): void => {
 
   Init();
 };
+
+if (window.innerWidth <= 720) {
+  menuStore.set("mobile", true);
+} else {
+  menuStore.set("mobile", false);
+}
 
 //axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.baseURL = "https://api-spaceapocalypse.up.railway.app"; //http://localhost:3000

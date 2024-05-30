@@ -71,6 +71,8 @@ export class MainMenu {
   }
 
   setMainMenuNav() {
+    const isMobile = menuStore.get("mobile");
+
     player.isPlayerAlive = false;
     document.body.appendChild(this.mainMenuNavContainer);
     this.mainMenuNavContainer.appendChild(this.mainMenuNav);
@@ -101,6 +103,10 @@ export class MainMenu {
     this.mainMenuNavLi3.innerText = "Leaderboards";
 
     this.setMainMenuNavEventListeners();
+
+    if (isMobile) {
+      this.mainMenuNavLi2.remove();
+    }
   }
 
   setMainMenuNavEventListeners() {

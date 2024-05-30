@@ -182,7 +182,7 @@ export class Input {
     // donja strana
     else if (shipPosition.y >= height - 34 * 2) {
       if (player.playerInput.direction === "DOWN")
-        player.playerInput.direction = "";
+        player.playerInput.direction = "";  
 
       shipPosition.y = height - 34 * 2;
       if (!projectiles.isFiring) projectiles.updateProjectileBaseCoordinates();

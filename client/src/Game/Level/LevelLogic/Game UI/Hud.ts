@@ -41,6 +41,7 @@ export class Hud {
   playerSpell4: HTMLElement = document.createElement("div");
   playerSpell4Keybind: HTMLElement = document.createElement("h3");
   playerSpell4Image: HTMLImageElement = document.createElement("img");
+  playerSpellsEventListeners: (() => void)[] = [];
 
   // PLAYER DIED POPUP
   playerIsDeadContainer: HTMLElement = document.createElement("div");
@@ -180,6 +181,13 @@ export class Hud {
     this.playerSpell1.className = "player-spell";
     this.playerSpell2.className = "player-spell";
     this.playerSpell3.className = "player-spell";
+
+    const isMobile = menuStore.get("mobile");
+
+    if (isMobile) {
+      console.log("pokreuto");
+      this.mobileTouchSpellActivation();
+    }
   }
 
   renderGainedExp() {
@@ -336,5 +344,52 @@ export class Hud {
     this.playerSpell1Cooldown.style.width = "0%";
     this.playerSpell2Cooldown.style.width = "0%";
     this.playerSpell3Cooldown.style.width = "0%";
+  }
+
+  mobileTouchSpellActivation() {
+    const activateShield = () => {
+      player.playerSpells.activateShield("Shield");
+    };
+
+    const activateWalls = () => {
+      player.playerSpells.activateWalls("Walls");
+    };
+
+    const activateExplosion = () => {
+      player.playerSpells.activateExplosion("Explosion");
+    };
+
+    const activateAutofire = () => {
+      player.playerSpells.activateAutofire();
+    };
+
+    this.playerSpellsEventListeners.push(activateShield);
+    this.playerSpellsEventListeners.push(activateWalls);
+    this.playerSpellsEventListeners.push(activateExplosion);
+    this.playerSpellsEventListeners.push(activateAutofire);
+
+    this.playerSpell1.addEventListener("click", activateShield);
+    this.playerSpell2.addEventListener("click", activateWalls);
+    this.playerSpell3.addEventListener("click", activateExplosion);
+    this.playerSpell4.addEventListener("click", activateAutofire);
+  }
+
+  removeTouchControls() {
+    this.playerSpell1.removeEventListener(
+      "click",
+      this.playerSpellsEventListeners[0]
+    );
+    this.playerSpell2.removeEventListener(
+      "click",
+      this.playerSpellsEventListeners[1]
+    );
+    this.playerSpell3.removeEventListener(
+      "click",
+      this.playerSpellsEventListeners[2]
+    );
+    this.playerSpell4.removeEventListener(
+      "click",
+      this.playerSpellsEventListeners[3]
+    );
   }
 }

@@ -109,46 +109,111 @@ export class PlayerSpells {
           this.activateSpell("Explosion");
         }
       } else {
-        console.log("yess");
-        if (!keydown.autoFire) {
-          keydown.autoFire = true;
-          HUD.playerSpell4.style.border = "3px solid white";
-        } else {
-          keydown.autoFire = false;
-          HUD.playerSpell4.style.border = "1px solid black";
-        }
+        this.activateAutofire();
       }
+    }
+  }
+
+  mobileTouchSpellActivation() {
+    console.log("jao");
+    console.log(HUD);
+    const activateShield = () => {
+      console.log("jaoooo");
+      this.activateShield("Shield");
+    };
+
+    const activateWalls = () => {
+      this.activateWalls("Walls");
+    };
+
+    const activateExplosion = () => {
+      this.activateExplosion("Explosion");
+    };
+
+    const activateAutofire = () => {
+      this.activateAutofire();
+    };
+
+    HUD.playerSpellsEventListeners.push(activateShield);
+    HUD.playerSpellsEventListeners.push(activateWalls);
+    HUD.playerSpellsEventListeners.push(activateExplosion);
+    HUD.playerSpellsEventListeners.push(activateAutofire);
+
+    HUD.playerSpell1.addEventListener("click", activateShield);
+    HUD.playerSpell2.addEventListener("click", activateWalls);
+    HUD.playerSpell3.addEventListener("click", activateExplosion);
+    HUD.playerSpell4.addEventListener("click", activateAutofire);
+  }
+
+  removeTouchControls() {
+    HUD.playerSpell1.removeEventListener(
+      "click",
+      HUD.playerSpellsEventListeners[0]
+    );
+    HUD.playerSpell2.removeEventListener(
+      "click",
+      HUD.playerSpellsEventListeners[1]
+    );
+    HUD.playerSpell3.removeEventListener(
+      "click",
+      HUD.playerSpellsEventListeners[2]
+    );
+    HUD.playerSpell4.removeEventListener(
+      "click",
+      HUD.playerSpellsEventListeners[3]
+    );
+  }
+
+  activateShield(spellValue: string) {
+    player.playerShield = this.playerShieldAmount;
+    this.playerShieldDuration = this.playerShieldMaxDuration;
+    this.spellsOnCooldown.push("Shield");
+    this.spell = spellValue;
+    this.shieldActivated = true;
+    inGameSounds.playShield();
+    HUD.activateShieldBar();
+  }
+
+  activateWalls(spellValue: string) {
+    this.spellsOnCooldown.push("Walls");
+    this.playerWallsDuration = this.playerWallsMaxDuration;
+    inGameSounds.playWind();
+    this.spell = spellValue;
+    this.wallsActivated = true;
+  }
+
+  activateExplosion(spellValue: string) {
+    this.spellsOnCooldown.push("Explosion");
+    this.spell = spellValue;
+    this.explosionDealtDmg = false;
+    this.explosionShowRadius = true;
+    this.explosionActivated = true;
+  }
+
+  activateAutofire() {
+    if (!keydown.autoFire) {
+      keydown.autoFire = true;
+      HUD.playerSpell4.style.border = "3px solid white";
+    } else {
+      keydown.autoFire = false;
+      HUD.playerSpell4.style.border = "1px solid black";
     }
   }
 
   activateSpell = (spellValue: string) => {
     if (spellValue === "Shield") {
       if (!this.spellsOnCooldown.includes("Shield")) {
-        player.playerShield = this.playerShieldAmount;
-        this.playerShieldDuration = this.playerShieldMaxDuration;
-        this.spellsOnCooldown.push("Shield");
-        this.spell = spellValue;
-        this.shieldActivated = true;
-        inGameSounds.playShield();
-        HUD.activateShieldBar();
+        this.activateShield(spellValue);
       }
     }
     if (spellValue === "Walls") {
       if (!this.spellsOnCooldown.includes("Walls")) {
-        this.spellsOnCooldown.push("Walls");
-        this.playerWallsDuration = this.playerWallsMaxDuration;
-        inGameSounds.playWind();
-        this.spell = spellValue;
-        this.wallsActivated = true;
+        this.activateWalls(spellValue);
       }
     }
     if (spellValue === "Explosion") {
       if (!this.spellsOnCooldown.includes("Explosion")) {
-        this.spellsOnCooldown.push("Explosion");
-        this.spell = spellValue;
-        this.explosionDealtDmg = false;
-        this.explosionShowRadius = true;
-        this.explosionActivated = true;
+        this.activateExplosion(spellValue);
       }
     }
   };

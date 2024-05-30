@@ -1234,3 +1234,105 @@ resposnsive
     font-size: 32px;
   }
 }
+
+@media screen and (min-width: 350px) {
+  .menu-main-div {
+    width: 100%;
+  }
+
+  #menu-button {
+    font-size: 16px;
+  }
+
+  .player-hp-bar-container {
+    width: 40%;
+    height: 15%;
+  }
+  .player-exp-bar-container {
+    width: 25%;
+    height: 15%;
+  }
+
+  .player-spell-bar-container {
+    top: 92%;
+    width: 50%;
+    z-index: 15;
+  }
+
+  .player-score-container {
+    bottom: 94%;
+  }
+  .power-up-main-div {
+    width: 100%;
+  }
+
+  #power-up-heading {
+    font-size: 24px !important;
+  }
+  #card-heading {
+    font-size: 12px !important;
+  }
+
+  #card-description {
+    font-size: 8px !important;
+  }
+
+  #card-value {
+    font-size: 32px !important;
+  }
+
+  .player-is-dead-main-div {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .menu-main-div {
+    width: 40%;
+  }
+
+  #menu-button {
+    font-size: 24px;
+  }
+  .player-hp-bar-container {
+    width: 20%;
+    height: 10%;
+  }
+
+  .player-exp-bar-container {
+    width: 10%;
+    height: 10%;
+  }
+
+  .player-spell-bar-container {
+    top: 1%;
+    width: 20%;
+    height: 10%;
+  }
+
+  .player-score-container {
+    bottom: 2%;
+  }
+
+  .power-up-main-div {
+    width: 70%;
+  }
+
+  #power-up-heading {
+    font-size: 42px !important;
+  }
+  #card-heading {
+    font-size: 18px !important;
+  }
+
+  #card-description {
+    font-size: 12px !important;
+  }
+
+  #card-value {
+    font-size: 32px !important;
+  }
+  .player-is-dead-main-div {
+    width: 40%;
+  }
+}

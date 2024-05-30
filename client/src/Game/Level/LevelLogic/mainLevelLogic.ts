@@ -80,6 +80,7 @@ export const shield = new Sprite(
   gameOptimization.scale
 );
 
+
 // Player
 export const player = new Player(
   levelImages.images.playerShip1,

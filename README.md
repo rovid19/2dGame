@@ -35,4 +35,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For any inquiries or feedback, please contact:
 
-- Roberto - [robert.vidovic0@gmail.com]
+- Roberto - [roberto.vidovic0@gmail.com]

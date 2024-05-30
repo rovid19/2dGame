@@ -1,0 +1,20 @@
+"filename", "language", "TypeScript", "CSS", "JSON", "JSON with Comments", "XML", "HTML", "comment", "blank", "total"
+"/Users/rock/Documents/Projekti/2dGame/client/index.html", "HTML", 0, 0, 0, 0, 0, 36, 0, 1, 37
+"/Users/rock/Documents/Projekti/2dGame/client/package-lock.json", "JSON", 0, 0, 12886, 0, 0, 0, 0, 1, 12887
+"/Users/rock/Documents/Projekti/2dGame/client/package.json", "JSON", 0, 0, 31, 0, 0, 0, 0, 1, 32
+"/Users/rock/Documents/Projekti/2dGame/client/public/images/SpaceBomberman.html", "HTML", 0, 0, 0, 0, 0, 28, 1, 4, 33
+"/Users/rock/Documents/Projekti/2dGame/client/public/images/SpaceBomberman_files/Level1Styling.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/rock/Documents/Projekti/2dGame/client/public/images/SpaceBomberman_files/LevelSelectionStyling.css", "CSS", 0, 112, 0, 0, 0, 0, 1, 23, 136
+"/Users/rock/Documents/Projekti/2dGame/client/public/images/SpaceBomberman_files/MainMenuStyling.css", "CSS", 0, 274, 0, 0, 0, 0, 13, 37, 324
+"/Users/rock/Documents/Projekti/2dGame/client/public/vite.svg", "XML", 0, 0, 0, 0, 1, 0, 0, 0, 1
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Enemy/EnemySpawner.ts", "TypeScript", 1, 0, 0, 0, 0, 0, 0, 0, 1
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Other/Keydown.ts", "TypeScript", 108, 0, 0, 0, 0, 0, 0, 8, 116
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Other/Tutorial.ts", "TypeScript", 106, 0, 0, 0, 0, 0, 0, 24, 130
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Player/Player.ts", "TypeScript", 1, 0, 0, 0, 0, 0, 0, 0, 1
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/Player/PlayerSpells.ts", "TypeScript", 18, 0, 0, 0, 0, 0, 0, -1, 17
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/LevelLogic/mainLevelLogic.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/Level/levelStyling.css", "CSS", 0, 65, 0, 0, 0, 0, 1, 12, 78
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MainMenu.ts", "TypeScript", 1, 0, 0, 0, 0, 0, 0, 0, 1
+"/Users/rock/Documents/Projekti/2dGame/client/src/Game/MainMenu/MainMenuLogic.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 0, 0, 2
+"/Users/rock/Documents/Projekti/2dGame/client/tsconfig.json", "JSON with Comments", 0, 0, 0, 21, 0, 0, 2, 3, 26
+"Total", "-", 237, 451, 12917, 21, 1, 64, 18, 115, 13824

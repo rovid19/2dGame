@@ -51,6 +51,7 @@ export class Menu {
   }
 
   createMenuPopup() {
+    const isMobile = menuStore.get("mobile");
     document.body.appendChild(this.menuContainer);
     this.menuContainer.className = "menu-container";
     this.menuContainer.appendChild(this.menuMainDiv);
@@ -60,13 +61,19 @@ export class Menu {
     this.menuMainDiv.appendChild(this.menuNote);
     this.menuNote.id = "menu-note";
     this.menuNote.className = "sixtyfour-myapp";
-    this.menuNote.textContent = "press escape to exit";
+    this.menuNote.textContent = isMobile
+      ? "press here to exit menu"
+      : "press escape to exit";
     this.menuButton1.id = "menu-button";
     this.menuButton1.textContent = "Settings";
     this.menuButton1.className = "sixtyfour-myapp";
     this.menuButton2.id = "menu-button";
     this.menuButton2.textContent = "Exit to main menu";
     this.menuButton2.className = "sixtyfour-myapp";
+
+    if (isMobile) {
+      this.menuButton1.remove();
+    }
   }
 
   createMenuEventListeners() {
@@ -97,11 +104,27 @@ export class Menu {
 
     this.menuButton1.addEventListener("click", openSettings);
     this.menuButton2.addEventListener("click", exitToMainMenu);
+
+    const isMobile = menuStore.get("mobile");
+    if (isMobile) {
+      const exitMenu = () => {
+        this.nav = "closeMenu";
+        this.openMenu();
+      };
+
+      this.menuEventListeners.push(exitMenu);
+      this.menuNote.addEventListener("click", exitMenu);
+    }
   }
 
   removeMenuEventListeners() {
     this.menuButton1.removeEventListener("click", this.menuEventListeners[0]);
     this.menuButton2.removeEventListener("click", this.menuEventListeners[1]);
+
+    const isMobile = menuStore.get("mobile");
+    if (isMobile) {
+      this.menuNote.removeEventListener("click", this.menuEventListeners[2]);
+    }
   }
 
   // settings popup
