@@ -50,6 +50,7 @@ body {
   height: 100%;
   width: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 .main-menu-nav {
@@ -482,6 +483,7 @@ body {
   align-items: center;
   z-index: 100;
   animation: 0.2s ease SettingsIn forwards;
+  overflow: hidden;
 }
 
 .menu-screen-main-div {
@@ -803,6 +805,9 @@ responsive
   }
 }
 
+body {
+  overflow: hidden;
+}
 /*
 
 */

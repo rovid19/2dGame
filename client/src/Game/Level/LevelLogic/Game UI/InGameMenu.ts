@@ -1,4 +1,4 @@
-import { enemySpawner, player, projectiles } from "../mainLevelLogic";
+import { enemySpawner, joystick, player, projectiles } from "../mainLevelLogic";
 import { keydown, mainMenu } from "../../../MainMenu/MainMenuLogic";
 import { menuStore } from "../../../../Stores/MenuStore";
 
@@ -85,6 +85,7 @@ export class Menu {
     this.menuEventListeners.push(openSettings);
 
     const exitToMainMenu = () => {
+      const mobile = menuStore.get("mobile");
       menuStore.set("currentMenuNav", "menu");
       mainMenu.setAnimationOut(this.menuContainer);
       player.resetPlayer();
@@ -99,6 +100,10 @@ export class Menu {
       this.menuMainDiv.remove();
       this.removeMenuEventListeners();
       keydown.autoFire = false;
+
+      if (mobile) {
+        joystick.removeJoystick();
+      }
     };
     this.menuEventListeners.push(exitToMainMenu);
 

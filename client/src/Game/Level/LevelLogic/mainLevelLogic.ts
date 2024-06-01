@@ -20,6 +20,8 @@ import { PowerUp } from "./Game UI/PowerUp.ts";
 import { Asteroid } from "./Enemy/Asteroid.ts";
 import { Sounds } from "./Other/Sounds.ts";
 import { GameOptimization } from "./Other/GameOptimization.ts";
+import { Joystick } from "./Player/Joystick.ts";
+import { menuStore } from "../../../Stores/MenuStore.ts";
 
 export let canvasContext: CanvasRenderingContext2D;
 export let canvasContext2: CanvasRenderingContext2D;
@@ -80,7 +82,6 @@ export const shield = new Sprite(
   gameOptimization.scale
 );
 
-
 // Player
 export const player = new Player(
   levelImages.images.playerShip1,
@@ -120,11 +121,17 @@ projectiles.updateProjectileBaseCoordinates();
 export let menu: any;
 export let powerUp: any;
 export let HUD: any;
+export let joystick: any;
 
 export function setHud() {
+  const isMobile = menuStore.get("mobile");
   menu = new Menu();
   powerUp = new PowerUp();
   HUD = new Hud();
+  if (isMobile) {
+    console.log("da");
+    joystick = new Joystick();
+  }
   player.setHpBar(HUD.hpBarFiller);
 }
 

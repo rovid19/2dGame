@@ -19,6 +19,7 @@ export class Hud {
 
   // EXP BAR
   playerExpBarContainer: HTMLElement = document.createElement("div");
+  playerExpBarElementContainer: HTMLElement = document.createElement("div");
   playerExpBar: HTMLElement = document.createElement("div");
   playerExpBarHeading: HTMLElement = document.createElement("div");
   playerExpBarFiller: HTMLElement = document.createElement("div");
@@ -118,11 +119,14 @@ export class Hud {
     // exp bar
     document.body.appendChild(this.playerExpBarContainer);
     this.playerExpBarContainer.className = "player-exp-bar-container";
-    this.playerExpBarContainer.appendChild(this.playerExpBarHeading);
+    this.playerExpBarContainer.appendChild(this.playerExpBarElementContainer);
+    this.playerExpBarElementContainer.className =
+      "player-exp-bar-element-container";
+    this.playerExpBarElementContainer.appendChild(this.playerExpBarHeading);
     this.playerExpBarHeading.innerText = "Lvl 1";
     this.playerExpBarHeading.className = "sixtyfour-myapp";
     this.playerExpBarHeading.id = "player-exp-bar-heading";
-    this.playerExpBarContainer.appendChild(this.playerExpBar);
+    this.playerExpBarElementContainer.appendChild(this.playerExpBar);
     this.playerExpBar.className = "player-exp-bar";
     this.playerExpBar.appendChild(this.playerExpBarFiller);
     this.playerExpBarFiller.className = "player-exp-bar-filler";
