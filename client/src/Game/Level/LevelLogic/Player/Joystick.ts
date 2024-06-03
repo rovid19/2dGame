@@ -90,5 +90,9 @@ export class Joystick {
 
   removeJoystick() {
     document.querySelector(".joystick-container")?.remove();
+    this.up.removeEventListener("click", this.eventListener[0]);
+    this.left.removeEventListener("click", this.eventListener[1]);
+    this.down.removeEventListener("click", this.eventListener[2]);
+    this.right.removeEventListener("click", this.eventListener[3]);
   }
 }

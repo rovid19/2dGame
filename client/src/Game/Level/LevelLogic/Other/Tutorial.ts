@@ -1,3 +1,4 @@
+import { menuStore } from "../../../../Stores/MenuStore";
 import { service } from "../../../MainMenu/MainMenuLogic";
 import { HUD, player } from "../mainLevelLogic";
 
@@ -23,12 +24,15 @@ export class Tutorial {
   }
 
   isTutorialNeeded() {
-    if (service.playerReady) {
-      this.isReady = false;
-      player.isPlayerAlive = false;
-      console.log(player.isPlayerAlive);
-    } else {
-      this.isReady = true;
+    const isMobile = menuStore.get("mobile");
+    if (!isMobile) {
+      if (service.playerReady) {
+        this.isReady = false;
+        player.isPlayerAlive = false;
+        console.log(player.isPlayerAlive);
+      } else {
+        this.isReady = true;
+      }
     }
 
     console.log(this.isReady);

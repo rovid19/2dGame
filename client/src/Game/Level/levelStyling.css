@@ -86,7 +86,7 @@
   left: 1%;
   width: 20%;
   height: 10%;
-  z-index: 3;
+  z-index: 15;
 }
 
 .player-hp-bar {
@@ -1270,7 +1270,6 @@ resposnsive
   }
 
   .player-score-container {
-    bottom: 94%;
     display: none;
   }
   .power-up-main-div {
@@ -1297,7 +1296,7 @@ resposnsive
   }
 }
 
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 720px) {
   .menu-main-div {
     width: 40%;
   }
@@ -1311,8 +1310,24 @@ resposnsive
   }
 
   .player-exp-bar-container {
-    width: 10%;
+    position: absolute;
+    right: auto;
+    top: auto;
+    bottom: 2%;
+    left: 1%;
     height: 10%;
+    width: 10%;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 2%;
+  }
+
+  .player-exp-bar-element-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
   }
 
   .player-spell-bar-container {
@@ -1322,7 +1337,7 @@ resposnsive
   }
 
   .player-score-container {
-    bottom: 2%;
+    display: flex;
   }
 
   .power-up-main-div {
@@ -1370,4 +1385,15 @@ resposnsive
 
 .joystick-block:hover {
   background-color: black;
+}
+
+.mobile-settings-button {
+  height: 30%;
+  width: 30%;
+
+  cursor: pointer;
+}
+
+.mobile-settings-button > svg {
+  color: white;
 }

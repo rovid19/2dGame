@@ -692,6 +692,22 @@ responsive
   #leaderboards-heading {
     font-size: 24px !important;
   }
+
+  .username-div {
+    width: 100%;
+  }
+
+  .username-div > h2 {
+    font-size: 18px;
+  }
+
+  #username-button {
+    width: 60%;
+  }
+
+  #username-input {
+    font-size: 16px;
+  }
 }
 
 @media screen and (min-width: 720px) {
@@ -721,6 +737,21 @@ responsive
 
   #leaderboards-heading {
     font-size: 32px !important;
+  }
+
+  .username-div {
+    width: 40%;
+  }
+  .username-div > h2 {
+    font-size: 32px;
+  }
+
+  #username-button {
+    width: 20%;
+  }
+
+  #username-input {
+    font-size: 24px;
   }
 }
 

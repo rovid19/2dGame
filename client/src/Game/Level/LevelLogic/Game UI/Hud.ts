@@ -1,8 +1,11 @@
 import { menuStore } from "../../../../Stores/MenuStore";
+import { mobileSettings } from "../../../../Utils/IconsExports";
 import { keydown, mainMenu, service } from "../../../MainMenu/MainMenuLogic";
 import {
   enemySpawner,
   inGameSounds,
+  joystick,
+  menu,
   player,
   projectiles,
 } from "../mainLevelLogic";
@@ -16,6 +19,7 @@ export class Hud {
   shieldBar: HTMLElement = document.createElement("div");
   shieldBarFillerContainer: HTMLElement = document.createElement("div");
   shieldBarFiller: HTMLElement = document.createElement("div");
+  mobileSettingsButton: HTMLElement = document.createElement("div");
 
   // EXP BAR
   playerExpBarContainer: HTMLElement = document.createElement("div");
@@ -92,6 +96,7 @@ export class Hud {
   }
 
   setHud() {
+    const isMobile = menuStore.get("mobile");
     //hp bar
     document.body.appendChild(this.hpBarContainer);
     this.hpBarContainer.className = "player-hp-bar-container";
@@ -109,6 +114,17 @@ export class Hud {
     this.shieldBar.className = "player-energy-bar";
     this.shieldBarFillerContainer.className = "player-energy-filler-container";
     this.shieldBarFiller.className = "player-energy-filler";
+
+    if (isMobile) {
+      this.hpBarContainer.appendChild(this.mobileSettingsButton);
+      this.mobileSettingsButton.className = "mobile-settings-button";
+      this.mobileSettingsButton.innerHTML = mobileSettings;
+
+      this.mobileSettingsButton.addEventListener("click", () => {
+        menu.nav = "menu";
+        menu.openMenu();
+      });
+    }
 
     // spell bar
     document.body.appendChild(this.playerSpellBarContainer);
@@ -185,8 +201,6 @@ export class Hud {
     this.playerSpell1.className = "player-spell";
     this.playerSpell2.className = "player-spell";
     this.playerSpell3.className = "player-spell";
-
-    const isMobile = menuStore.get("mobile");
 
     if (isMobile) {
       console.log("pokreuto");
@@ -289,6 +303,7 @@ export class Hud {
       mainMenu.settings.removeSettings();
       this.removePlayerDeadEventListeners();
       keydown.autoFire = false;
+      joystick.removeJoystick();
     };
 
     this.playerDeadEventListeners.push(exitGame);
